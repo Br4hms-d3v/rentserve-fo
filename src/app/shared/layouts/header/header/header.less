@@ -1,0 +1,53 @@
+@dark-bg: #0e3449;
+@dark-text: #cbd1c1;
+
+@light-bg: #387190;
+@light-text: #f0f0f0;
+
+.header-toolbar {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 16px;
+  font-size: 17px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  .lang-selector,
+  .theme-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .icon-btn {
+    font-size: 17px;
+    background: transparent;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  &.dark-mode {
+    background-color: @dark-bg;
+    color: @dark-text;
+
+    --tui-text-primary: @dark-text;
+    --tui-text-action: @dark-text;
+  }
+
+  &.light-mode {
+    background-color: @light-bg;
+    color: @light-text;
+
+    --tui-text-primary: @light-text;
+    --tui-text-action: @light-text;
+  }
+}
+
+.flag-icon {
+  width: 20px;
+  height: auto;
+  margin-right: 8px;
+  vertical-align: middle;
+}
