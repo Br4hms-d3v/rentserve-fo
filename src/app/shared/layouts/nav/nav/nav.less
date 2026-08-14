@@ -1,0 +1,108 @@
+// Variables de couleurs
+@light-bg: #3D4A2A;
+@light-text: white;
+@light-btn-login: #D9764A;
+@light-btn-rent: #6d7c5f;
+
+@dark-bg: #525252;
+@dark-text: #cbd1c1;
+@dark-btn-login: #baf2b5;
+@dark-btn-rent: #ccd5b9;
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  font-size: 17px;
+  height: 3.5vw;
+  min-height: 56px;
+  padding: 0 16px;
+  box-sizing: border-box;
+
+  .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+
+    .logo {
+      padding-top: 7px;
+      height: 50px;
+      margin-right: 16px;
+    }
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .nav-buttons,
+  .action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  button[tuiButton] {
+    height: 50px;
+    border-radius: 25px; // Style arrondi similaire aux boutons extended fab
+  }
+
+  /* Style pour Light Mode */
+  &.light-mode {
+    background-color: @light-bg;
+    color: @light-text;
+
+    #logoText {
+      color: @light-text;
+    }
+
+    .btn-login {
+      background-color: @light-btn-login;
+      color: #ffffff;
+    }
+
+    .btn-rentServeBasket {
+      background-color: @light-btn-rent;
+      color: #ffffff;
+    }
+  }
+
+  /* Style pour Dark Mode */
+  &.dark-mode {
+    background-color: @dark-bg;
+    color: @dark-text;
+
+    #logoText {
+      color: @dark-text;
+    }
+
+    .btn-login {
+      background-color: @dark-btn-login;
+      color: #000000;
+      width: 135px;
+    }
+
+    .btn-rentServeBasket {
+      background-color: @dark-btn-rent;
+      color: #000000;
+    }
+  }
+}
+
+/* Style du Menu Déroulant (Dropdown) */
+.dropdown-menu {
+  padding: 4px 0;
+
+  .btnSetting {
+    background-color: #f0f0f0;
+    color: @light-text;
+    border: none;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      background-color: @light-btn-rent;
+      color: #f0f0f0;
+    }
+  }
+}
