@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TuiButton, TuiError, TuiIcon, TuiTextfield } from '@taiga-ui/core';
-import { TuiFieldErrorPipe, TuiInputDate, TuiPassword } from '@taiga-ui/kit';
+import { TuiButton, TuiError, TuiIcon, TuiInput } from '@taiga-ui/core';
+import { TuiInputDate, TuiPassword } from '@taiga-ui/kit';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -11,11 +11,10 @@ import { AsyncPipe } from '@angular/common';
     ReactiveFormsModule,
     TuiError,
     TuiButton,
-    TuiTextfield,
+    TuiInput,
     TuiInputDate,
     TuiPassword,
     TuiIcon,
-    TuiFieldErrorPipe,
   ],
   templateUrl: './registration.html',
   styleUrl: './registration.less',

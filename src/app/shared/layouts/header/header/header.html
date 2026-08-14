@@ -1,10 +1,5 @@
 <!-- header tag with color change -->
-<header
-  class="header-toolbar"
-  [class.dark-mode]="isDarkMode"
-  [class.light-mode]="!isDarkMode"
->
-
+<header class="header-toolbar" [class.dark-mode]="isDarkMode" [class.light-mode]="!isDarkMode">
   <!-- Change language text -->
   <div class="lang-selector">
     <button
@@ -20,10 +15,13 @@
 
     <span class="lang-text">
       {{
-        selectedLanguage === 'fr' ? 'BE - Français' :
-          selectedLanguage === 'nl' ? 'NL - Nederlands' :
-            selectedLanguage === 'en' ? 'EN - English' :
-              'DE - Deutsch'
+        selectedLanguage === 'fr'
+          ? 'BE - Français'
+          : selectedLanguage === 'nl'
+            ? 'NL - Nederlands'
+            : selectedLanguage === 'en'
+              ? 'EN - English'
+              : 'DE - Deutsch'
       }}
     </span>
   </div>

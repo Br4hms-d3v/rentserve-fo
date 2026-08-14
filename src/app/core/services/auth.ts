@@ -23,5 +23,4 @@ export class Auth {
   getCurrentUserId(): number | null {
     return this._currentUser.getValue()?.id ?? null;
   }
-
 }

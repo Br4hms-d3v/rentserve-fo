@@ -17,7 +17,7 @@ export class Header {
     this.isDarkMode = !this.isDarkMode;
   }
 
-  selectLanguage(lang: string){
+  selectLanguage(lang: string) {
     this.selectedLanguage = lang;
     this.dropdownOpen = false; // close immediately after selected
   }

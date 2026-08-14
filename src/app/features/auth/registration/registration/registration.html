@@ -1,11 +1,5 @@
-<form
-  [formGroup]="registerForm"
-  (ngSubmit)="onSubmitRegister()"
-  class="registration-form"
->
-
+<form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()" class="registration-form">
   <div class="form-fields">
-
     <div class="form-field">
       <tui-textfield>
         <label tuiLabel>Nom</label>
@@ -34,7 +28,7 @@
         <input
           #passwordInput
           formControlName="password"
-          tuiTextfield
+          tuiInput
           type="password"
           [type]="passwordInput.type"
         />
@@ -44,15 +38,12 @@
           tuiIconButton
           type="button"
           tuiPassword
-          (click)="passwordInput.type = (passwordInput.type === 'password' ? 'text' : 'password')"
+          (click)="passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password'"
         >
           Afficher le mot de passe
         </button>
       </tui-textfield>
-      <tui-error
-        formControlName="password"
-        [error]="[] | tuiFieldError | async"
-      />
+      <tui-error formControlName="password" />
     </div>
 
     <div class="form-field">
@@ -65,10 +56,7 @@
     <div class="form-field">
       <tui-textfield>
         <label tuiLabel>Date de naissance</label>
-        <input
-          tuiInputDate
-          formControlName="birthdate"
-        />
+        <input tuiInputDate formControlName="birthdate" />
         <tui-calendar *tuiDropdown />
       </tui-textfield>
     </div>
@@ -96,17 +84,9 @@
         <input tuiInput formControlName="zipCode" />
       </tui-textfield>
     </div>
-
   </div>
 
   <div class="btn-register">
-    <button
-      tuiButton
-      type="submit"
-      appearance="primary"
-    >
-      S'inscrire
-    </button>
+    <button tuiButton type="submit" appearance="primary">S'inscrire</button>
   </div>
-
 </form>

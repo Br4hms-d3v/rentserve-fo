@@ -39,11 +39,8 @@ export class Nav implements OnInit {
     });
   }
 
-
   /**
    * Logout and redirect to home
    */
-  logout(){
-
-  }
+  logout() {}
 }

@@ -6,17 +6,16 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class Theme {
-
   private readonly darkTheme = inject(TUI_DARK_MODE);
 
   private readonly darkMode = new BehaviorSubject<boolean>(false);
   public readonly darkMode$ = this.darkMode.asObservable();
 
   toggleTheme() {
-    this.darkMode.next(!this.darkMode.value)
+    this.darkMode.next(!this.darkMode.value);
   }
 
-  isDarkMode(){
+  isDarkMode() {
     return this.darkMode.value;
   }
 }
