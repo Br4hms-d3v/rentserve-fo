@@ -12,6 +12,8 @@
         "@angular/forms": "^21.2.0",
         "@angular/platform-browser": "^21.2.0",
         "@angular/router": "^21.2.0",
+        "@ng-web-apis/common": "^5.3.0",
+        "@ng-web-apis/screen-orientation": "^5.3.0",
         "@taiga-ui/addon-table": "^5.19.0",
         "@taiga-ui/cdk": "^5.19.0",
         "@taiga-ui/core": "^5.19.0",
@@ -339,7 +341,7 @@
 
     "@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@1.1.1", "", { "dependencies": { "@emnapi/core": "^1.7.1", "@emnapi/runtime": "^1.7.1", "@tybys/wasm-util": "^0.10.1" } }, "sha512-p64ah1M1ld8xjWv3qbvFwHiFVWrq1yFvV4f7w+mzaqiR4IlSgkqhcRdHwsGgomwzBH51sRY4NEowLxnaBjcW/A=="],
 
-    "@ng-web-apis/common": ["@ng-web-apis/common@4.14.0", "", { "dependencies": { "tslib": "^2.3.0" }, "peerDependencies": { "@angular/common": ">=16.0.0", "@angular/core": ">=16.0.0", "rxjs": ">=7.0.0" } }, "sha512-eLrpy9e8R+eJKRUWv06jauaDCJ/6/9llmHPTvmWH3yTS9HIn+twk5ZmyfNwFqA/r8g9Kt4Ap48YuaydQy00nuw=="],
+    "@ng-web-apis/common": ["@ng-web-apis/common@5.3.0", "", { "dependencies": { "tslib": "^2.3.0" }, "peerDependencies": { "@angular/common": ">=19.0.0", "@angular/core": ">=19.0.0", "@types/dom-speech-recognition": "^0.0.10", "rxjs": ">=7.0.0" } }, "sha512-b83gIhb7Kk8O8QoZU6wiwXWx9pzBYLlrxb/XndDgHqKDAJKf4/BoM4QwB0xCRPSK0IYnBATgmuGg332YmYeLCA=="],
 
     "@ng-web-apis/intersection-observer": ["@ng-web-apis/intersection-observer@4.14.0", "", { "dependencies": { "tslib": "^2.3.0" }, "peerDependencies": { "@angular/core": ">=16.0.0", "@ng-web-apis/common": ">=4.12.0" } }, "sha512-VDuak0+jDPwPttqQbgIYCD1tM2F7wKSXZWWUjFdNfkV47GspEPzzf12lY1eiltIiCB4cv6asZNs5ijnsxpnb9A=="],
 
@@ -349,7 +351,7 @@
 
     "@ng-web-apis/resize-observer": ["@ng-web-apis/resize-observer@4.14.0", "", { "dependencies": { "tslib": "^2.3.0" }, "peerDependencies": { "@angular/core": ">=16.0.0", "@ng-web-apis/common": ">=4.12.0" } }, "sha512-W5VXT/y0Vv68Gx/2urgu/JmIQfv0jPtzfvGtyulgGALfBrnei4oVXvJe2aZmLb0/VkxH65qlYOKVEOGqBrwSwQ=="],
 
-    "@ng-web-apis/screen-orientation": ["@ng-web-apis/screen-orientation@4.14.0", "", { "dependencies": { "tslib": "^2.3.0" }, "peerDependencies": { "@angular/core": ">=16.0.0", "@ng-web-apis/common": ">=4.12.0", "rxjs": ">=7.0.0" } }, "sha512-XlXjxhYT7QKW0WKQE4BIJ2OZ7c1EFRXUQ4eXQ41Jwl8ukG0zkixOTrxGlnfy7ijX5df3sX/+0kKCXwsyj/n5BA=="],
+    "@ng-web-apis/screen-orientation": ["@ng-web-apis/screen-orientation@5.3.0", "", { "dependencies": { "tslib": "^2.3.0" }, "peerDependencies": { "@angular/core": ">=19.0.0", "@ng-web-apis/common": "^5.3.0", "rxjs": ">=7.0.0" } }, "sha512-bdBL4sLRNEfG5PjEO/no3mhSf/dFnIYlT/RFJ27Y08kEtSFIGetW/mGjJGLj86EMSeIhmoyins5IkTqJUqYhrA=="],
 
     "@npmcli/agent": ["@npmcli/agent@4.0.0", "", { "dependencies": { "agent-base": "^7.1.0", "http-proxy-agent": "^7.0.0", "https-proxy-agent": "^7.0.1", "lru-cache": "^11.2.1", "socks-proxy-agent": "^8.0.3" } }, "sha512-kAQTcEN9E8ERLVg5AsGwLNoFb+oEG6engbqAU2P43gD4JEIkNGMHdVQ096FsOAAYpZPB0RSt0zgInKIAS1l5QA=="],
 
@@ -528,6 +530,8 @@
     "@types/chai": ["@types/chai@5.2.3", "", { "dependencies": { "@types/deep-eql": "*", "assertion-error": "^2.0.1" } }, "sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA=="],
 
     "@types/deep-eql": ["@types/deep-eql@4.0.2", "", {}, "sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw=="],
+
+    "@types/dom-speech-recognition": ["@types/dom-speech-recognition@0.0.10", "", {}, "sha512-KFET6ha+OhsWU74Oz8NCjOLAkN0gbHyGjQK6CEtRVeO6635tuuvxGjGh9IbLVhfp0DR52djv1fFbr/9thS1dUA=="],
 
     "@types/estree": ["@types/estree@1.0.8", "", {}, "sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w=="],
 
