@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, TuiButton, TuiDropdown, TuiDataList, TuiIcon],
+  imports: [CommonModule, TuiButton, TuiDropdown, TuiDataList],
   templateUrl: './header.html',
   styleUrl: './header.less',
 })
