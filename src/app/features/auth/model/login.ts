@@ -1,4 +1,4 @@
-export interface Login {
+export interface LoginModel {
   pseudo: string;
   password: string;
 }

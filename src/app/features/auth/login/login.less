@@ -1,0 +1,75 @@
+@light-background-color: #F1EFE8;
+@light-btn-login: #D9764A;
+@light-input-light: #5F5E5A;
+@light-icon-input: #5C8A3A !important;
+@light-label-input: #3B6D11 !important;
+
+@dark-background-color: #1C1F17;
+@dark-btn-login: #E8845A;
+@dark-input-light: #F1EFE8;
+@dark-icon-input: #7FB84D !important;
+@dark-label-input: #8FC15C !important;
+
+.login-container {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+  box-sizing: border-box;
+
+}
+
+.login-form {
+  width: 100%;
+  max-width: 550px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.light-mode {
+  background-color: @light-background-color;
+
+  input[tuiInput] {
+    color: @light-input-light;
+  }
+
+  label[tuiLabel] {
+    color: @light-label-input;
+  }
+
+  .btn-login {
+    background-color: @light-btn-login;
+  }
+
+  .custom-icon-textfield,
+  .custom-icon-textfield:focus-within,
+  .custom-icon-textfield:hover {
+    color: @light-icon-input;
+  }
+}
+
+
+.dark-mode {
+  background-color: @dark-background-color;
+
+  input[tuiInput] {
+    color: @dark-input-light;
+  }
+
+  label[tuiLabel] {
+    color: @dark-label-input;
+  }
+
+  .btn-login {
+    background-color: @dark-btn-login;
+  }
+
+  .custom-icon-textfield,
+  .custom-icon-textfield:focus-within,
+  .custom-icon-textfield:hover {
+    color: @light-icon-input;
+  }
+}
