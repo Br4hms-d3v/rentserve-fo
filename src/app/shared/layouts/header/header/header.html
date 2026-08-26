@@ -1,0 +1,67 @@
+<!-- header tag with color change -->
+<header class="header-toolbar" [class.dark-mode]="isDarkMode" [class.light-mode]="!isDarkMode">
+  <!-- Change language text -->
+  <div class="lang-selector">
+    <button
+      tuiIconButton
+      type="button"
+      appearance="flat"
+      size="s"
+      iconStart="@tui.globe"
+      class="icon-btn"
+      [tuiDropdown]="languageMenu"
+      [(tuiDropdownOpen)]="dropdownOpen"
+    ></button>
+
+    <span class="lang-text">
+      {{
+        selectedLanguage === 'fr'
+          ? 'BE - Français'
+          : selectedLanguage === 'nl'
+            ? 'NL - Nederlands'
+            : selectedLanguage === 'en'
+              ? 'EN - English'
+              : 'DE - Deutsch'
+      }}
+    </span>
+  </div>
+
+  <!-- Dropdown menu for language -->
+  <ng-template #languageMenu>
+    <tui-data-list>
+      <button tuiOption (click)="selectLanguage('fr')">
+        <img src="/languages/belgium.png" alt="Belgium" class="flag-icon" />
+        <span>BE - Français</span>
+      </button>
+      <button tuiOption (click)="selectLanguage('nl')">
+        <img src="languages/netherlands.png" alt="Netherlands" class="flag-icon" />
+        <span>NL - Nederlands</span>
+      </button>
+      <button tuiOption (click)="selectLanguage('de')">
+        <img src="languages/german-flag.png" alt="German" class="flag-icon" />
+        <span>DE - Deutsch</span>
+      </button>
+      <button tuiOption (click)="selectLanguage('en')">
+        <img src="languages/uk-flag.png" alt="United Kingdom" class="flag-icon" />
+        <span>EN - English</span>
+      </button>
+    </tui-data-list>
+  </ng-template>
+
+  <!-- Space between buttons -->
+  <span class="spacer"></span>
+
+  <!-- Button for changing color theme -->
+  <div class="theme-selector">
+    <button
+      tuiIconButton
+      type="button"
+      appearance="flat"
+      size="s"
+      [iconStart]="isDarkMode ? '@tui.moon' : '@tui.sun'"
+      class="icon-btn"
+      (click)="toggleTheme()"
+    ></button>
+    <span>Thème</span>
+  </div>
+</header>

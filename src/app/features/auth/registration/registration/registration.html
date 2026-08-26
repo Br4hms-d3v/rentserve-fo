@@ -1,0 +1,97 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()" class="registration-form">
+  <div class="form-fields">
+    <div class="form-field">
+      <tui-textfield>
+        <label tuiLabel>Nom</label>
+        <input tuiInput formControlName="name" />
+      </tui-textfield>
+    </div>
+
+    <div class="form-field">
+      <tui-textfield>
+        <label tuiLabel>Prénom</label>
+        <input tuiInput formControlName="firstName" />
+      </tui-textfield>
+    </div>
+
+    <div class="form-field">
+      <tui-textfield>
+        <label tuiLabel>Email</label>
+        <input tuiInput type="email" formControlName="email" />
+      </tui-textfield>
+    </div>
+
+    <div class="form-field">
+      <tui-textfield>
+        <label tuiLabel>Mot de passe</label>
+        <!-- By default, the field is a password (hidden). -->
+        <input
+          #passwordInput
+          formControlName="password"
+          tuiInput
+          type="password"
+          [type]="passwordInput.type"
+        />
+        <!-- Clicking the icon toggles between visible and hidden -->
+        <button
+          appearance="secondary"
+          size="m"
+          tuiButton
+          type="button"
+          (click)="passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password'"
+        >
+          <tui-icon
+            [icon]="passwordInput.type === 'password' ? '@tui.eye' : '@tui.eye-off'"></tui-icon>
+        </button>
+
+      </tui-textfield>
+      <tui-error formControlName="password"></tui-error>
+    </div>
+
+    <div class="form-field">
+      <tui-textfield>
+        <label tuiLabel>Pseudo</label>
+        <input tuiInput formControlName="pseudo" />
+      </tui-textfield>
+    </div>
+
+    <div class="form-field">
+      <tui-textfield>
+        <label tuiLabel>Date de naissance</label>
+        <input tuiInputDate formControlName="birthdate" />
+        <tui-calendar *tuiDropdown></tui-calendar>
+
+      </tui-textfield>
+    </div>
+
+    <!-- Street takes 2 columns -->
+    <div class="form-field form-field--street">
+      <tui-textfield>
+        <label tuiLabel>Rue</label>
+        <input tuiInput formControlName="street" />
+      </tui-textfield>
+    </div>
+
+    <!-- City -->
+    <div class="form-field">
+      <tui-textfield>
+        <label tuiLabel>Ville</label>
+        <input tuiInput formControlName="city" />
+      </tui-textfield>
+    </div>
+
+    <!-- ZipCode -->
+    <div class="form-field">
+      <tui-textfield>
+        <label tuiLabel>Code postal</label>
+        <input tuiInput formControlName="zipCode" />
+      </tui-textfield>
+    </div>
+
+  </div>
+
+  <!-- Button to register -->
+  <div class="btn-register">
+    <button tuiButton type="submit" appearance="primary">S'inscrire</button>
+  </div>
+</form>

@@ -1,0 +1,61 @@
+<header class="toolbar" [ngClass]="{ 'dark-mode': isDarkMode, 'light-mode': !isDarkMode }">
+  <!-- Logo is on left -->
+  <a routerLink="/" class="logo-link">
+    <img src="/logo/logo_rentserve.jpg" alt="Logo" class="logo" />
+    <span id="logoText">Rent-Serve</span>
+  </a>
+
+  <!-- Space between buttons -->
+  <span class="spacer"></span>
+
+  <!-- First button materials  -->
+  <!-- Display the button when the user is connected -->
+  <div class="action-buttons">
+    @if (isAuthenticated) {
+      <button
+        tuiButton
+        type="button"
+        size="m"
+        appearance="flat"
+        iconEnd="@tui.shopping-bag"
+        class="btn-rentServeBasket"
+      >
+        Panier
+      </button>
+
+      <!-- DropMenu to edit profile -->
+      <button
+        tuiButton
+        type="button"
+        size="m"
+        appearance="custom"
+        iconStart="@tui.user"
+        [tuiDropdown]="settingsMenu"
+        class="btn-login"
+      >
+        {{ firstname }}
+      </button>
+
+      <ng-template #settingsMenu>
+        <div class="dropdown-menu">
+          <a tuiOption [routerLink]="['user', userId, 'edit-profile']" class="btnSetting">
+            Modifier profil
+          </a>
+          <button tuiOption type="button" (click)="logout()" class="btnSetting">Déconnecter</button>
+        </div>
+      </ng-template>
+    } @else {
+      <button
+        tuiButton
+        type="button"
+        size="m"
+        appearance="custom"
+        iconEnd="@tui.user"
+        routerLink="/auth/login"
+        class="btn-login"
+      >
+        Connexion
+      </button>
+    }
+  </div>
+</header>
