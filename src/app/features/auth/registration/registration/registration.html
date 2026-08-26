@@ -24,7 +24,7 @@
     <div class="form-field">
       <tui-textfield>
         <label tuiLabel>Mot de passe</label>
-        <!-- Par défaut le champ est un mot de passe (masqué) -->
+        <!-- By default, the field is a password (hidden). -->
         <input
           #passwordInput
           formControlName="password"
@@ -32,18 +32,20 @@
           type="password"
           [type]="passwordInput.type"
         />
-        <!-- Le clic sur l'icône alterne entre visible et masqué -->
+        <!-- Clicking the icon toggles between visible and hidden -->
         <button
-          appearance="icon"
-          tuiIconButton
+          appearance="secondary"
+          size="m"
+          tuiButton
           type="button"
-          tuiPassword
           (click)="passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password'"
         >
-          Afficher le mot de passe
+          <tui-icon
+            [icon]="passwordInput.type === 'password' ? '@tui.eye' : '@tui.eye-off'"></tui-icon>
         </button>
+
       </tui-textfield>
-      <tui-error formControlName="password" />
+      <tui-error formControlName="password"></tui-error>
     </div>
 
     <div class="form-field">
@@ -57,11 +59,12 @@
       <tui-textfield>
         <label tuiLabel>Date de naissance</label>
         <input tuiInputDate formControlName="birthdate" />
-        <tui-calendar *tuiDropdown />
+        <tui-calendar *tuiDropdown></tui-calendar>
+
       </tui-textfield>
     </div>
 
-    <!-- Rue = 2 colonnes -->
+    <!-- Street takes 2 columns -->
     <div class="form-field form-field--street">
       <tui-textfield>
         <label tuiLabel>Rue</label>
@@ -69,7 +72,7 @@
       </tui-textfield>
     </div>
 
-    <!-- Ville -->
+    <!-- City -->
     <div class="form-field">
       <tui-textfield>
         <label tuiLabel>Ville</label>
@@ -77,7 +80,7 @@
       </tui-textfield>
     </div>
 
-    <!-- Code postal -->
+    <!-- ZipCode -->
     <div class="form-field">
       <tui-textfield>
         <label tuiLabel>Code postal</label>
@@ -87,6 +90,7 @@
 
   </div>
 
+  <!-- Button to register -->
   <div class="btn-register">
     <button tuiButton type="submit" appearance="primary">S'inscrire</button>
   </div>

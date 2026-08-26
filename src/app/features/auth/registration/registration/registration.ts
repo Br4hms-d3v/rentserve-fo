@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TuiButton, TuiError, TuiInput } from '@taiga-ui/core';
+import { TuiButton, TuiError, TuiIcon, TuiInput } from '@taiga-ui/core';
 import { TuiInputDate } from '@taiga-ui/kit';
 
 @Component({
@@ -11,12 +11,13 @@ import { TuiInputDate } from '@taiga-ui/kit';
     TuiButton,
     TuiInput,
     TuiInputDate,
-
+    TuiIcon,
   ],
   templateUrl: './registration.html',
   styleUrl: './registration.less',
+  standalone: true,
 })
-export class Registration {
+export class Registration{
   isDarkMode = false;
   message = '';
   messageSuccess = '';
@@ -40,8 +41,11 @@ export class Registration {
   protected onSubmitRegister() {
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
+      return;
 
-      console.log(this.registerForm.value);
     }
+
+    const formValue = this.registerForm.value;
+    console.log('Formulaire valide, envoie: ', formValue);
   }
 }
