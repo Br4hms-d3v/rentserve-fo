@@ -92,6 +92,23 @@
 
   <!-- Button to register -->
   <div class="btn-register">
-    <button tuiButton type="submit" appearance="primary">S'inscrire</button>
+    <button tuiButton
+            type="submit"
+            appearance="primary"
+    >S'inscrire
+    </button>
   </div>
 </form>
+<ng-template
+  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [(tuiNotification)]="show"
+>
+  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <button
+    tuiButton
+    type="button"
+    (click)="show.set(false)"
+  >
+    Close
+  </button>
+</ng-template>
