@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { UserModel } from '../model/user-model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RegistrationModel } from '../model/registration';
+import { LoginModel } from '../model/login';
 
 @Injectable({
   providedIn: 'root',
@@ -25,11 +26,27 @@ export class AuthService {
    * @param form return a form registered with data from user
    */
   register(form: RegistrationModel): Observable<UserModel> {
+    return this._http.post<UserModel>(this.apiUrl + 'register', form, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    });
+  }
+
+  login(form: LoginModel): Observable<UserModel> {
     return this._http
-      .post<UserModel>(this.apiUrl + 'register', form, {
+      .post<UserModel>(this.apiUrl + 'login', form, {
         headers: new HttpHeaders({
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json', // Send as JSON
         }),
+        withCredentials: true, // Send Cookies
       })
+      .pipe(
+        tap((data) => {
+          this._currentUser.next(data);
+          localStorage.setItem('currentUser', JSON.stringify(data));
+          localStorage.setItem('token', data.token);
+        }
+        ));
   }
 }

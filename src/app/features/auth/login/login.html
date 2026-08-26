@@ -1,1 +1,46 @@
-<p>login works!</p>
+<div class="login-container" [class.dark-mode]="isDarkMode" [class.light-mode]="!isDarkMode">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()" class="login-form">
+    <tui-textfield class="custom-icon-textfield" iconStart="@tui.user-round">
+      <label tuiLabel>Nom d'utilisateur</label>
+      <input
+        tuiInput
+        placeholder="Pseudo"
+        formControlName="pseudo"
+      />
+    </tui-textfield>
+
+    <tui-textfield class="custom-icon-textfield" iconStart="@tui.key-round">
+      <label tuiLabel>Mot de passe</label>
+      <input
+        #passwordInput
+        placeholder="Mot de passe"
+        formControlName="password"
+        tuiInput
+        type="password"
+        [type]="passwordInput.type"
+      />
+      <button
+        class="custom-icon-textfield"
+        appearance="secondary"
+        size="m"
+        tuiButton
+        type="button"
+        (click)="passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password'"
+      >
+        <tui-icon
+          [icon]="passwordInput.type === 'password' ? '@tui.eye' : '@tui.eye-off'"></tui-icon>
+      </button>
+    </tui-textfield>
+
+    <button
+      class="btn-login"
+      appearance="primary"
+      tuiButton
+      type="submit"
+    >
+      Se connecter
+    </button>
+  </form>
+
+
+</div>
