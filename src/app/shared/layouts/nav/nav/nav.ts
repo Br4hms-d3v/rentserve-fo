@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { TuiButton, TuiDataList, TuiDialogService, TuiDropdown } from '@taiga-ui/core';
-import { Theme } from '../../../../core/services/theme';
+import { ThemeService } from '../../../../core/services/ThemeService';
 import { Auth } from '../../../../core/services/auth';
 
 @Component({
@@ -13,7 +13,7 @@ import { Auth } from '../../../../core/services/auth';
 })
 export class Nav implements OnInit {
   private readonly authService = inject(Auth);
-  private readonly themeService = inject(Theme);
+  private readonly themeService = inject(ThemeService);
   private readonly router = inject(Router);
   private readonly dialogs = inject(TuiDialogService);
 

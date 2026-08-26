@@ -22,12 +22,7 @@
   tui-textfield {
     width: 100%;
   }
-  input[tuiInput] {
-    color: #5F5E5A;
-  }
-  label[tuiLabel] {
-    color: #198754 !important;
-  }
+
 }
 
 .btn-register {
@@ -35,8 +30,41 @@
 
   display: flex;
   justify-content: flex-end;
+}
 
-  button[tuiButton]{
-    background-color: #d9764a;
+.light-mode{
+  .form-field {
+    input[tuiInput] {
+      color: #5F5E5A;
+    }
+
+    label[tuiLabel] {
+      color: #3B6D11 !important;
+    }
+  }
+
+  .btn-register {
+    button[tuiButton] {
+      background-color: #D9764A;
+    }
+  }
+}
+
+.dark-mode{
+
+  .form-field {
+    input[tuiInput] {
+      color: #A6A599;
+    }
+
+    label[tuiLabel] {
+      color: #8FC15C !important;
+    }
+  }
+
+  .btn-register {
+    button[tuiButton] {
+      background-color: #E8845A;
+    }
   }
 }
