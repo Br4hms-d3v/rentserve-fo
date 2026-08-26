@@ -1,4 +1,4 @@
-<form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()" class="registration-form">
+<form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()" class="registration-form" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
   <div class="form-fields">
     <div class="form-field">
       <tui-textfield>

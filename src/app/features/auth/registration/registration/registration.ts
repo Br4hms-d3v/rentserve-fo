@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   TuiButton,
@@ -13,11 +13,14 @@ import {
 import { TuiInputDate } from '@taiga-ui/kit';
 import { AuthService } from '../../service/auth-service';
 import { RegistrationModel } from '../../model/registration';
+import { ThemeService } from '../../../../core/services/ThemeService';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-registration',
   imports: [
     ReactiveFormsModule,
+    NgClass,
     TuiTextfield,
     TuiCalendar,
     TuiDropdown,
@@ -33,15 +36,26 @@ import { RegistrationModel } from '../../model/registration';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Registration {
-  isDarkMode = false;
-  protected readonly show = signal(false);
-  protected readonly isSuccess = signal(false);
+export class Registration implements OnInit {
+  isDarkMode = false; // Change theme from light to dark
+  protected readonly show = signal(false); // Show notification
+  protected readonly isSuccess = signal(false); // Change color Green for succes or Red error
   protected messageError = '';
   protected messageSuccess = '';
 
-  constructor(private readonly _authService: AuthService) {}
+  constructor(
+    private readonly _authService: AuthService,
+    private themeService: ThemeService,
+  ) {}
 
+  ngOnInit() {
+    this.isDarkMode = this.themeService.isDarkMode(); // Get current theme
+    this.themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
+  }
+  /**
+   * This is a Form with validators
+   * @protected the data
+   */
   protected registerForm = new FormGroup({
     name: new FormControl('', Validators.required),
     firstName: new FormControl('', Validators.required),
@@ -58,6 +72,10 @@ export class Registration {
     zipCode: new FormControl('', Validators.required),
   });
 
+  /**
+   * Register a user after fill the form
+   * @protected
+   */
   protected onSubmitRegister() {
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
@@ -74,7 +92,7 @@ export class Registration {
         this.show.set(true);
       },
       error: (err) => {
-        console.log(err.error.message);
+        // console.log(err.error.message);
 
         if (!typeof err.error) {
           this.messageError = err.error.message;
@@ -88,6 +106,6 @@ export class Registration {
       },
     });
     const formValue = this.registerForm.value;
-    console.log('Formulaire valide, envoie: ', formValue);
+    // console.log('Formulaire valide, envoie: ', formValue);
   }
 }
