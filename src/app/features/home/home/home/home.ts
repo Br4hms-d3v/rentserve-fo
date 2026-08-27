@@ -18,7 +18,6 @@ export class Home implements OnInit, OnDestroy {
   ngOnInit() {
     this.isDarkMode = this.themeService.isDarkMode();
     this.sub = this.themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode));
-    console.log(this.isDarkMode)
   }
 
   ngOnDestroy() {
