@@ -42,5 +42,18 @@
     </button>
   </form>
 
-
 </div>
+
+<ng-template
+  [tuiNotificationOptions]="{label: titleError , autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [(tuiNotification)]="show"
+>
+  <span tuiSubtitle>{{ messageError }}</span>
+  <button
+    tuiButton
+    type="button"
+    (click)="show.set(false)"
+  >
+    Close
+  </button>
+</ng-template>
