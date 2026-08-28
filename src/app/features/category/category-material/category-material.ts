@@ -14,8 +14,8 @@ import { CategoryModel } from '../model/Category';
   styleUrl: './category-material.less',
 })
 export class CategoryMaterial implements OnInit {
-  isDarkMode = false;
-  role: string | undefined;
+  isDarkMode = false; // Get a false for change theme
+  role: string | undefined; // Get the role to display some infos
   protected messageError = '';
   categoriesMaterials: CategoryModel[] = [];
 
@@ -29,9 +29,9 @@ export class CategoryMaterial implements OnInit {
   protected size = 10;
 
   constructor(
-    private _authService: AuthService,
-    private _categoryService: CategoryService,
-    private _themeService: ThemeService,
+    private readonly _authService: AuthService,
+    private readonly _categoryService: CategoryService,
+    private themeService: ThemeService,
   ) {}
 
   ngOnInit() {
@@ -42,6 +42,8 @@ export class CategoryMaterial implements OnInit {
         this.role = user.role;
       }
     });
+
+    this.themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
   }
 
   protected loadCategories() {
@@ -77,9 +79,8 @@ export class CategoryMaterial implements OnInit {
     this.searchTerm = input.value.toLowerCase().trim();
 
     // Make a new list for category and check if the word exist
-    this.filteredCategoriesMaterials = this.categoriesMaterials.filter(
-      (category) =>
-      category.nameCategory?.toLowerCase().includes(this.searchTerm)
+    this.filteredCategoriesMaterials = this.categoriesMaterials.filter((category) =>
+      category.nameCategory?.toLowerCase().includes(this.searchTerm),
     );
 
     this.index = 0;

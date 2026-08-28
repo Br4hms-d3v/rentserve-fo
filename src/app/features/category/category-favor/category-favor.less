@@ -1,4 +1,4 @@
-.filter-container {
+filter-container {
   width: 100%;
   margin-bottom: 16px;
 
@@ -43,57 +43,168 @@
 // Link to redirect to favor
 #linkToFavor {
   text-decoration: none;
-  color: #2b2b2b;
 
   &:hover {
-    color: #4E9442;
     text-decoration: underline;
   }
 }
 
 // Button to edit
 #btnEdit {
-  color: white;
-  background-color: #FF9720;
   width: 90px;
-
-  &:hover {
-    background-color: darken(#FF9720, 8%);
-  }
 }
 
 // Button to delete
 #btnDelete {
-  color: white;
-  background-color: #C31C19;
   width: 90px;
-
-  &:hover {
-    background-color: darken(#C31C19, 8%);
-  }
 }
 
 // Color table with tr and td
 .category-table {
-  background-color: #3D4A2A;
-
-  tr[tuiThGroup],
-  tr[tuiThGroup] th {
-    background-color: #D3D1C7;
-    color: #3D4A2A;
-  }
-
-  tr[tuiTr],
-  tr[tuiTr] td {
-    background-color: #FFFFFF;
-    color: black;
-  }
-
   tr[tuiTr]:hover,
   tr[tuiTr]:hover td {
-    background-color: #EAF3DE;
-    color: #3B6D11;
     cursor: pointer;
   }
+}
 
+// THEME //
+
+.light-mode {
+  label[tuiLabel]{
+    color: #3B6D11 !important;
+  }
+
+  input[tuiInput]{
+    color: #3D4A2A !important;
+  }
+
+  .custom-icon-textfield,
+  .custom-icon-textfield:focus-within,
+  .custom-icon-textfield:hover {
+    color: #E8845A !important;
+  }
+
+  // Link to redirect to favor
+  #linkToFavor {
+    color: #2b2b2b;
+
+    &:hover {
+      color: #4E9442;
+    }
+  }
+
+  // Button to edit
+  #btnEdit {
+    color: white;
+    background-color: #FF9720;
+
+    &:hover {
+      background-color: darken(#FF9720, 8%);
+    }
+  }
+
+  // Button to delete
+  #btnDelete {
+    color: white;
+    background-color: #C31C19;
+
+
+    &:hover {
+      background-color: darken(#C31C19, 8%);
+    }
+  }
+
+  // Color table with tr and td
+  .category-table {
+    background-color: #3D4A2A;
+
+    tr[tuiThGroup],
+    tr[tuiThGroup] th {
+      background-color: #D3D1C7;
+      color: #3D4A2A;
+    }
+
+    tr[tuiTr],
+    tr[tuiTr] td {
+      background-color: #FFFFFF;
+      color: black;
+    }
+
+    tr[tuiTr]:hover,
+    tr[tuiTr]:hover td {
+      background-color: #EAF3DE;
+      color: #3B6D11;
+      cursor: pointer;
+    }
+
+  }
+}
+
+.dark-mode {
+  label[tuiLabel]{
+    color: #F1EFE8 !important;
+  }
+
+  input[tuiInput]{
+    color: #F1EFE8 !important;
+  }
+
+  .custom-icon-textfield,
+  .custom-icon-textfield:focus-within,
+  .custom-icon-textfield:hover {
+    color: #E8845A !important;
+  }
+
+  // Link to redirect to favor
+  #linkToFavor {
+    color: #33421F;
+    &:hover {
+      color: #171912;
+    }
+  }
+
+  // Button to edit
+  #btnEdit {
+    color: white;
+    background-color: #FF9720;
+
+    &:hover {
+      background-color: darken(#FF9720, 8%);
+    }
+  }
+
+  // Button to delete
+  #btnDelete {
+    color: white;
+    background-color: #C31C19;
+
+
+    &:hover {
+      background-color: darken(#C31C19, 8%);
+    }
+  }
+
+  // Color table with tr and td
+  .category-table {
+    background-color: #A6A599;
+
+    tr[tuiThGroup],
+    tr[tuiThGroup] th {
+      background-color: #7A7A6E;
+      color: #F1EFE8;
+    }
+
+    tr[tuiTr],
+    tr[tuiTr] td {
+      background-color: #A6A599;
+      color: #F1EFE8;
+    }
+
+    tr[tuiTr]:hover,
+    tr[tuiTr]:hover td {
+      background-color: #8FC15C;
+      color: #F1EFE8;
+    }
+
+  }
 }
