@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { NgClass } from '@angular/common';
+import { CategoryMaterial } from '../../category/category-material/category-material';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [NgClass],
+  imports: [NgClass, CategoryMaterial],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.less',
 })
