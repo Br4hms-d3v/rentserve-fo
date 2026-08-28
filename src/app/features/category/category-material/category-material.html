@@ -1,0 +1,57 @@
+<div class="filter-container">
+  <tui-textfield iconStart="@tui.search">
+    <label tuiLabel>Filtre</label>
+    <input
+      tuiInput
+      placeholder="Nom de la catégorie matériel"
+      (input)="onFilter($event)"
+    />
+  </tui-textfield>
+</div>
+
+<table tuiTable class="category-table">
+  <thead>
+  <tr tuiThGroup>
+    <th tuiTh>No.</th>
+    <th tuiTh>Matériels</th>
+    @if (role == 'ADMIN' || role == 'MODERATOR') {
+      <th tuiTh>Modifier</th>
+    }
+    @if (role == 'ADMIN') {
+      <th tuiTh>Supprimer</th>
+    }
+  </tr>
+  </thead>
+
+  <tbody tuiTbody>
+    @for (categoryMat of paginatedCategoriesMaterials; track categoryMat.id) {
+      <tr tuiTr>
+        <td tuiTd>
+          {{ categoryMat.position }}
+        </td>
+
+        <td tuiTd>
+          <a id="linkToMaterial">{{ categoryMat.nameCategory }}</a>
+        </td>
+
+        @if (role == 'ADMIN' || role == 'MODERATOR') {
+          <td tuiTd>
+            <button id="btnEdit" tuiButton type="button" appearance="secondary" size="s">Modifier</button>
+          </td>
+        }
+
+        @if (role == 'ADMIN') {
+          <td tuiTd>
+            <button id="btnDelete" tuiButton type="button" appearance="negative" size="s">Supprimer</button>
+          </td>
+        }
+      </tr>
+    }
+  </tbody>
+</table>
+
+<tui-pagination
+  [length]="length"
+  [style.float]="'center'"
+  [(index)]="index"
+></tui-pagination>
