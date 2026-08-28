@@ -1,57 +1,60 @@
-<div class="filter-container">
-  <tui-textfield iconStart="@tui.search">
-    <label tuiLabel>Filtre</label>
-    <input
-      tuiInput
-      placeholder="Nom de la catégorie service"
-      (input)="onFilter($event)"
-    />
-  </tui-textfield>
+<div [class.dark-mode]="isDarkMode" [class.light-mode]="!isDarkMode">
+  <div class="filter-container">
+    <tui-textfield class="custom-icon-textfield" iconStart="@tui.search">
+      <label tuiLabel>Filtre</label>
+      <input
+        tuiInput
+        placeholder="Nom de la catégorie service"
+        (input)="onFilter($event)"
+      />
+    </tui-textfield>
+    <br />
+  </div>
+
+  <table tuiTable class="category-table">
+    <thead>
+    <tr tuiThGroup>
+      <th tuiTh>No.</th>
+      <th tuiTh>Services</th>
+      @if (role == 'ADMIN' || role == 'MODERATOR') {
+        <th tuiTh>Modifier</th>
+      }
+      @if (role == 'ADMIN') {
+        <th tuiTh>Supprimer</th>
+      }
+    </tr>
+    </thead>
+
+    <tbody tuiTbody>
+      @for (categoryFav of paginatedCategoriesFavours; track categoryFav.id) {
+        <tr tuiTr>
+          <td tuiTd>
+            {{ categoryFav.position }}
+          </td>
+
+          <td tuiTd>
+            <a id="linkToFavor">{{ categoryFav.nameCategory }}</a>
+          </td>
+
+          @if (role == 'ADMIN' || role == 'MODERATOR') {
+            <td tuiTd>
+              <button id="btnEdit" tuiButton type="button" appearance="secondary" size="s">Modifier</button>
+            </td>
+          }
+
+          @if (role == 'ADMIN') {
+            <td tuiTd>
+              <button id="btnDelete" tuiButton type="button" appearance="negative" size="s">Supprimer</button>
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <tui-pagination
+    [length]="length"
+    [style.float]="'center'"
+    [(index)]="index"
+  ></tui-pagination>
 </div>
-
-<table tuiTable class="category-table">
-  <thead>
-  <tr tuiThGroup>
-    <th tuiTh>No.</th>
-    <th tuiTh>Services</th>
-    @if (role == 'ADMIN' || role == 'MODERATOR') {
-      <th tuiTh>Modifier</th>
-    }
-    @if (role == 'ADMIN') {
-      <th tuiTh>Supprimer</th>
-    }
-  </tr>
-  </thead>
-
-  <tbody tuiTbody>
-    @for (categoryFav of paginatedCategoriesFavours; track categoryFav.id) {
-      <tr tuiTr>
-        <td tuiTd>
-          {{ categoryFav.position }}
-        </td>
-
-        <td tuiTd>
-          <a id="linkToFavor">{{ categoryFav.nameCategory }}</a>
-        </td>
-
-        @if (role == 'ADMIN' || role == 'MODERATOR') {
-          <td tuiTd>
-            <button id="btnEdit" tuiButton type="button" appearance="secondary" size="s">Modifier</button>
-          </td>
-        }
-
-        @if (role == 'ADMIN') {
-          <td tuiTd>
-            <button id="btnDelete" tuiButton type="button" appearance="negative" size="s">Supprimer</button>
-          </td>
-        }
-      </tr>
-    }
-  </tbody>
-</table>
-
-<tui-pagination
-  [length]="length"
-  [style.float]="'center'"
-  [(index)]="index"
-></tui-pagination>

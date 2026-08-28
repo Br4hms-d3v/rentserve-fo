@@ -14,8 +14,8 @@ import { TuiPagination } from '@taiga-ui/kit';
   styleUrl: './category-favor.less',
 })
 export class CategoryFavor implements OnInit {
-  isDarkMode = false;
-  role: string | undefined;
+  isDarkMode = false; // Get a false for change theme
+  role: string | undefined; // Get the role to display some infos
   protected messageError = '';
   categoriesFavour: CategoryModel[] = [];
 
@@ -29,9 +29,9 @@ export class CategoryFavor implements OnInit {
   protected size = 10;
 
   constructor(
-    private _authService: AuthService,
-    private _categoryService: CategoryService,
-    private _themeService: ThemeService,
+    private readonly _authService: AuthService,
+    private readonly _categoryService: CategoryService,
+    private themeService: ThemeService,
   ) {}
 
   ngOnInit() {
@@ -42,6 +42,8 @@ export class CategoryFavor implements OnInit {
         this.role = user.role;
       }
     });
+
+    this.themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
   }
 
   protected loadCategories() {
