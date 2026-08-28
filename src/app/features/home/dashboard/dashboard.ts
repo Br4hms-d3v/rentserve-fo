@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { NgClass } from '@angular/common';
 import { CategoryMaterial } from '../../category/category-material/category-material';
+import { CategoryFavor } from '../../category/category-favor/category-favor';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [NgClass, CategoryMaterial],
+  imports: [NgClass, CategoryMaterial, CategoryFavor],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.less',
 })
@@ -18,5 +19,4 @@ export class Dashboard implements OnInit {
     this.isDarkMode = this.themeService.isDarkMode(); // Get current theme
     this.themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
   }
-
 }

@@ -1,0 +1,99 @@
+.filter-container {
+  width: 100%;
+  margin-bottom: 16px;
+
+  tui-textfield {
+    width: 100%;
+  }
+}
+
+/* Table */
+.category-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  // 1. Column for number
+  th:nth-child(1),
+  td:nth-child(1) {
+    width: 60px;
+    min-width: 70px;
+    max-width: 70px;
+    text-align: center;
+  }
+
+  // 2. Column for name of category's favor
+  th:nth-child(2),
+  td:nth-child(2) {
+    width: auto;
+  }
+
+  // 3 and 4. Columns for buttons edit and delete
+  th:nth-child(3),
+  td:nth-child(3),
+  th:nth-child(4),
+  td:nth-child(4) {
+    width: 120px;
+    min-width: 150px;
+    max-width: 150px;
+    text-align: center;
+  }
+
+}
+
+// Link to redirect to favor
+#linkToFavor {
+  text-decoration: none;
+  color: #2b2b2b;
+
+  &:hover {
+    color: #4E9442;
+    text-decoration: underline;
+  }
+}
+
+// Button to edit
+#btnEdit {
+  color: white;
+  background-color: #FF9720;
+  width: 90px;
+
+  &:hover {
+    background-color: darken(#FF9720, 8%);
+  }
+}
+
+// Button to delete
+#btnDelete {
+  color: white;
+  background-color: #C31C19;
+  width: 90px;
+
+  &:hover {
+    background-color: darken(#C31C19, 8%);
+  }
+}
+
+// Color table with tr and td
+.category-table {
+  background-color: #3D4A2A;
+
+  tr[tuiThGroup],
+  tr[tuiThGroup] th {
+    background-color: #D3D1C7;
+    color: #3D4A2A;
+  }
+
+  tr[tuiTr],
+  tr[tuiTr] td {
+    background-color: #FFFFFF;
+    color: black;
+  }
+
+  tr[tuiTr]:hover,
+  tr[tuiTr]:hover td {
+    background-color: #EAF3DE;
+    color: #3B6D11;
+    cursor: pointer;
+  }
+
+}

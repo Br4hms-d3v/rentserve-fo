@@ -34,4 +34,12 @@ export class CategoryService {
       .get<CategoryResponse>(this.apiUrl + 'material', { headers })
       .pipe(map((response) => response._embedded.categoryDTOList));
   }
+
+  getCategoriesFavor(): Observable<CategoryModel[]> {
+    const headers = this.getAuthHeader();
+
+    return this._http
+      .get<CategoryResponse>(this.apiUrl + 'favor', { headers })
+      .pipe(map((response) => response._embedded.categoryDTOList));
+  }
 }
