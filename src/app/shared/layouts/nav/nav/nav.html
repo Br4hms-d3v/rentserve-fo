@@ -9,6 +9,7 @@
   <span class="spacer"></span>
 
   <!-- First button materials  -->
+
   <!-- Display the button when the user is connected -->
   <div class="action-buttons">
     @if (isAuthenticated) {
@@ -26,23 +27,29 @@
       <!-- DropMenu to edit profile -->
       <button
         tuiButton
+        tuiChevron
         type="button"
         size="m"
         appearance="custom"
         iconStart="@tui.user"
         [tuiDropdown]="settingsMenu"
+        [(tuiDropdownOpen)]="isOpen"
         class="btn-login"
       >
         {{ firstname }}
       </button>
 
       <ng-template #settingsMenu>
-        <div class="dropdown-menu">
-          <a tuiOption [routerLink]="['user', userId, 'edit-profile']" class="btnSetting">
-            Modifier profil
-          </a>
-          <button tuiOption type="button" (click)="logout()" class="btnSetting">Déconnecter</button>
-        </div>
+        <tui-data-list>
+          <div class="dropdown-menu">
+            <a tuiOption [routerLink]="['user', userId, 'edit-profile']" class="btnSetting">
+              Modifier profil
+            </a>
+            <a tuiOption type="button" (click)="logout()" class="btnSetting">
+              Se déconnecter
+            </a>
+          </div>
+        </tui-data-list>
       </ng-template>
     } @else {
       <button

@@ -37,7 +37,7 @@ export class CategoryMaterial implements OnInit {
   ngOnInit() {
     this.loadCategories();
 
-    this._authService._currentUser.subscribe((user) => {
+    this._authService.currentUser$.subscribe((user) => {
       if (user) {
         this.role = user.role;
       }
