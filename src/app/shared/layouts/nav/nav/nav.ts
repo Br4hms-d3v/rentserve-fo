@@ -1,34 +1,46 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { TuiButton, TuiDataList, TuiDialogService, TuiDropdown } from '@taiga-ui/core';
+import { TuiButton, TuiDataList, TuiDialogService, TuiDropdown, TuiOption } from '@taiga-ui/core';
 import { ThemeService } from '../../../../core/services/ThemeService';
-import { Auth } from '../../../../core/services/auth';
+
+import { TuiChevron } from '@taiga-ui/kit';
+import { AuthService } from '../../../../features/auth/service/auth-service';
 
 @Component({
   selector: 'app-nav',
-  imports: [CommonModule, RouterLink, TuiButton, TuiDropdown, TuiDataList],
+  imports: [
+    CommonModule,
+    RouterLink,
+    TuiButton,
+    TuiDropdown,
+    TuiDataList,
+    TuiOption,
+    TuiDataList,
+    TuiChevron,
+  ],
   templateUrl: './nav.html',
   styleUrl: './nav.less',
 })
 export class Nav implements OnInit {
-  private readonly authService = inject(Auth);
+  private readonly _authService = inject(AuthService);
   private readonly themeService = inject(ThemeService);
   private readonly router = inject(Router);
-  private readonly dialogs = inject(TuiDialogService);
 
-  isAuthenticated = false;
+  protected isOpen = false;
+  protected isAuthenticated = false;
   isDarkMode = false;
-  firstname: string | null | undefined;
-  userId: number | undefined;
+  protected firstname: string | null | undefined;
+  protected userId: number | undefined;
 
   ngOnInit() {
     this.isDarkMode = this.themeService.isDarkMode();
     this.themeService.darkMode$.subscribe((mode) => (this.isDarkMode = mode));
 
-    this.authService.currentUser$.subscribe((user) => {
+    this._authService.currentUser$.subscribe((user) => {
       if (user) {
-        this.isAuthenticated = !!user;
+        this.isAuthenticated = true;
+        console.log(this.isAuthenticated);
         this.firstname = user.firstName;
         this.userId = user.id;
       } else {
@@ -39,8 +51,9 @@ export class Nav implements OnInit {
     });
   }
 
-  /**
-   * Logout and redirect to home
-   */
-  logout() {}
+  logout() {
+    this._authService.logout();
+    this.router.navigate(['/']);
+    this.isAuthenticated = false;
+  }
 }

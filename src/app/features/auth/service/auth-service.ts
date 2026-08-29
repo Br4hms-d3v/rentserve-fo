@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environment/environment';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { UserModel } from '../model/user-model';
@@ -10,15 +10,27 @@ import { LoginModel } from '../model/login';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = environment.apiBaseUrl + environment.authEndPoint; // API base URM + endPoint for auth
-  _currentUser!: BehaviorSubject<UserModel | null>; //Save the current ser (as an observable)
+  private readonly _http = inject(HttpClient);
 
-  constructor(private readonly _http: HttpClient) {
-    let potentialUser = localStorage.getItem('currentUser'); // Try to read user form localStorage
-    this._currentUser = new BehaviorSubject<UserModel | null>(
-      // If user exists set it, if not, use null
-      potentialUser ? JSON.parse(potentialUser) : null,
-    );
+  private readonly apiUrl = environment.apiBaseUrl + environment.authEndPoint;
+
+  private readonly _currentUser = new BehaviorSubject<UserModel | null>(this.getInitialUser());
+
+  readonly currentUser$ = this._currentUser.asObservable();
+
+  private getInitialUser(): UserModel | null {
+    const potentialUser = localStorage.getItem('currentUser');
+
+    if (!potentialUser) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(potentialUser);
+    } catch {
+      localStorage.removeItem('currentUser');
+      return null;
+    }
   }
 
   /**
@@ -46,7 +58,15 @@ export class AuthService {
           this._currentUser.next(data);
           localStorage.setItem('currentUser', JSON.stringify(data));
           localStorage.setItem('token', data.token);
-        }
-        ));
+        }),
+      );
   }
+
+  logout(): void {
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
+
+    this._currentUser.next(null);
+  }
+
 }
