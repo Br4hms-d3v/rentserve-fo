@@ -1,0 +1,146 @@
+<div class="cards-container">
+  <h1>Liste des matériels</h1>
+
+  <div class="message">
+  </div>
+
+
+  <div class="container-search-filter">
+
+    <!-- Recherche -->
+    <tui-textfield
+      class="searchMat"
+      [tuiTextfieldCleaner]="true"
+    >
+      <label tuiLabel>Rechercher</label>
+
+      <input
+        tuiInput
+        type="search"
+        placeholder="Entrez un matériel"
+      />
+
+      <tui-icon
+        icon="@tui.search"
+        tuiTextfieldIcon
+      />
+    </tui-textfield>
+
+    <span class="spacer"></span>
+
+    <!-- Trier -->
+    <button
+      tuiButton
+      appearance="secondary"
+      type="button"
+      class="btn-filter-new"
+      iconEnd="@tui.arrow-down-up"
+      (click)="onSort()"
+    >
+      Trier
+    </button>
+
+    <span class="spacer"></span>
+
+    <!-- Nouveau matériel -->
+    <a
+      tuiButton
+      appearance="primary"
+      class="btn-filter-new"
+      iconStart="@tui.hammer"
+    >
+      Créer un nouveau matériel
+    </a>
+  </div>
+
+  <!-- Cards -->
+  <div class="cards">
+
+    @for (material of paginatedMaterials; track material.id) {
+      <div
+        tuiCardMedium
+        appearance="floating"
+        class="cards-material-category"
+      >
+
+        <!-- Titre -->
+        <h2 tuiTitle>
+          {{ material.nameMaterial }}
+        </h2>
+
+        <!-- Actions -->
+        <div class="card-actions">
+
+          <!-- Menu -->
+          <button
+            tuiIconButton
+            appearance="flat"
+            type="button"
+            iconStart="@tui.ellipsis"
+            title="Actions"
+            aria-label="Actions"
+            [tuiDropdown]="sousMenuMaterial"
+          >
+          </button>
+
+          <!-- Dropdown -->
+          <ng-template
+            #sousMenuMaterial
+            let-close
+          >
+            <tui-data-list>
+
+              <button
+                tuiOption
+                type="button"
+              >
+                Détailer
+              </button>
+
+              <button
+                tuiOption
+                type="button"
+                (click)="close()"
+              >
+                Modifier
+              </button>
+
+
+              <button
+                tuiOption
+                type="button"
+              >
+                Supprimer
+              </button>
+
+            </tui-data-list>
+          </ng-template>
+
+          <span class="spacer"></span>
+
+          <!-- Voir -->
+          <button
+            tuiButton
+            appearance="flat"
+            size="s"
+            type="button"
+            class="btn-show"
+          >
+            Voir
+          </button>
+
+        </div>
+      </div>
+    }
+  </div>
+  <!-- Pagination -->
+  <div class="pagination-container">
+    <tui-pagination
+      [length]="length"
+      [style.float]="'center'"
+      [(index)]="index"
+    ></tui-pagination>
+  </div>
+
+</div>
+

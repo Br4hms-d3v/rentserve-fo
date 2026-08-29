@@ -1,0 +1,73 @@
+/* Body */
+.cards-container {
+  height: 100vh;
+  width: 100%;
+}
+
+/* Title */
+h1 {
+  font-family: 'Libre Baskerville italic', serif;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Cards for material */
+.cards {
+  width: 100%;
+  padding: 20px 40px;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 20px;
+
+  mat-card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  mat-card-header {
+    justify-content: center;
+  }
+}
+
+.cards-material-category{
+  width: 105%;
+}
+
+
+
+/* Space between button */
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Paginator */
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+/* Div with search, sort and create new material */
+.container-search-filter {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 68%;
+  border-radius: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  mat-form-field {
+    padding-top: 15px;
+    width: 350px;
+  }
+
+  /* To make sure the buttons are in the middle */
+  .spacer {
+    flex: 1 1 auto;
+  }
+}
