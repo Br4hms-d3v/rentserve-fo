@@ -39,7 +39,12 @@ export class MaterialList implements OnInit {
 
   materialsList: MaterialModel[] = [];
   protected messageError = '';
+
   private sortDescending = false;
+
+  protected searchMaterial = '';
+
+  searchedMaterial: MaterialModel[] = [];
 
   // Pagination
   protected index = 0;
@@ -53,20 +58,19 @@ export class MaterialList implements OnInit {
   protected getMaterials() {
     this._materialService.getMaterials().subscribe({
       next: (allMaterials) => {
-        const mappedMaterials = allMaterials.map((material) => ({
+        this.materialsList = allMaterials.map((material) => ({
           id: material.id,
           nameMaterial: material.nameMaterial,
         }));
 
-        this.materialsList = mappedMaterials;
-        this.length = Math.ceil(this.materialsList.length / this.size);
+        this.applyFilterAndSort();
 
         this._cdr.detectChanges();
       },
 
       error: (error) => {
         if (this.materialsList.length === 0) {
-          this.messageError = 'la liste des matériaux est vide';
+          this.messageError = 'La liste des matériaux est vide';
         }
 
         this.messageError = error?.error?.message ?? 'Erreur lors du chargement des matériaux';
@@ -74,21 +78,48 @@ export class MaterialList implements OnInit {
     });
   }
 
-  onSort() {
+  protected onSort() {
     this.sortDescending = !this.sortDescending;
-    this.materialsList.sort((a, b) => {
+
+    this.applyFilterAndSort();
+  }
+
+  protected onSearch(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    this.searchMaterial = input.value.toLowerCase().trim();
+
+    this.applyFilterAndSort();
+  }
+
+  private applyFilterAndSort() {
+    // 1. Recherche
+    this.searchedMaterial = this.materialsList.filter((material) =>
+      material.nameMaterial?.toLowerCase().includes(this.searchMaterial),
+    );
+
+    // 2. Tri alphabétique
+    this.searchedMaterial.sort((a, b) => {
       const nameA = a.nameMaterial?.toLowerCase() ?? '';
       const nameB = b.nameMaterial?.toLowerCase() ?? '';
 
       return this.sortDescending ? nameB.localeCompare(nameA) : nameA.localeCompare(nameB);
     });
 
+    // 3. Revenir à la première page
     this.index = 0;
-    this._cdr.detectChanges();
+
+    // 4. Recalculer le nombre de pages
+    this.updatePagination();
   }
 
   protected get paginatedMaterials(): MaterialModel[] {
     const start = this.index * this.size;
-    return this.materialsList.slice(start, start + this.size);
+
+    return this.searchedMaterial.slice(start, start + this.size);
+  }
+
+  protected updatePagination() {
+    this.length = Math.ceil(this.searchedMaterial.length / this.size);
   }
 }

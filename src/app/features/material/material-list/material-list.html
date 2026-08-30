@@ -8,21 +8,12 @@
   <div class="container-search-filter">
 
     <!-- Recherche -->
-    <tui-textfield
-      class="searchMat"
-      [tuiTextfieldCleaner]="true"
-    >
+    <tui-textfield iconEnd="@tui.search">
       <label tuiLabel>Rechercher</label>
-
       <input
         tuiInput
-        type="search"
         placeholder="Entrez un matériel"
-      />
-
-      <tui-icon
-        icon="@tui.search"
-        tuiTextfieldIcon
+        (input)="onSearch($event)"
       />
     </tui-textfield>
 
