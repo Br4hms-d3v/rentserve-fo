@@ -7,7 +7,6 @@ import {
   TuiButton,
   TuiDataList,
   TuiDropdown,
-  TuiIcon,
   TuiOption,
   TuiTextfield,
   TuiTitle,
@@ -19,7 +18,6 @@ import { TuiPagination } from '@taiga-ui/kit';
   selector: 'app-material-list',
   imports: [
     TuiTextfield,
-    TuiIcon,
     TuiButton,
     TuiCardMedium,
     TuiTitle,
@@ -37,21 +35,23 @@ export class MaterialList implements OnInit {
   private readonly _materialService = inject(MaterialService);
   private readonly _cdr = inject(ChangeDetectorRef);
 
+  role: string | undefined;
   materialsList: MaterialModel[] = [];
   protected messageError = '';
+  openMaterialId: number | null = null;
 
+  // Filter
   private sortDescending = false;
-
   protected searchMaterial = '';
-
-  searchedMaterial: MaterialModel[] = [];
 
   // Pagination
   protected index = 0;
   protected length = 0;
   protected size = 40;
+  searchedMaterial: MaterialModel[] = [];
 
   ngOnInit() {
+    this.currentUser();
     this.getMaterials();
   }
 
@@ -64,7 +64,6 @@ export class MaterialList implements OnInit {
         }));
 
         this.applyFilterAndSort();
-
         this._cdr.detectChanges();
       },
 
@@ -80,15 +79,12 @@ export class MaterialList implements OnInit {
 
   protected onSort() {
     this.sortDescending = !this.sortDescending;
-
     this.applyFilterAndSort();
   }
 
   protected onSearch(event: Event) {
     const input = event.target as HTMLInputElement;
-
     this.searchMaterial = input.value.toLowerCase().trim();
-
     this.applyFilterAndSort();
   }
 
@@ -110,11 +106,18 @@ export class MaterialList implements OnInit {
 
   protected get paginatedMaterials(): MaterialModel[] {
     const start = this.index * this.size;
-
     return this.searchedMaterial.slice(start, start + this.size);
   }
 
   protected updatePagination() {
     this.length = Math.ceil(this.searchedMaterial.length / this.size);
+  }
+
+  currentUser() {
+    this._authService.currentUser$.subscribe((user) => {
+      if (user) {
+        this.role = user.role;
+      }
+    });
   }
 }

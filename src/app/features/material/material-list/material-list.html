@@ -4,14 +4,13 @@
   <div class="message">
   </div>
 
-
   <div class="container-search-filter">
-
-    <!-- Recherche -->
+    <!-- Button search -->
     <tui-textfield iconEnd="@tui.search">
       <label tuiLabel>Rechercher</label>
       <input
         tuiInput
+        type="text"
         placeholder="Entrez un matériel"
         (input)="onSearch($event)"
       />
@@ -19,7 +18,7 @@
 
     <span class="spacer"></span>
 
-    <!-- Trier -->
+    <!-- Button filter -->
     <button
       tuiButton
       appearance="secondary"
@@ -33,7 +32,7 @@
 
     <span class="spacer"></span>
 
-    <!-- Nouveau matériel -->
+    <!-- Button create new material -->
     <a
       tuiButton
       appearance="primary"
@@ -46,7 +45,6 @@
 
   <!-- Cards -->
   <div class="cards">
-
     @for (material of paginatedMaterials; track material.id) {
       <div
         tuiCardMedium
@@ -60,56 +58,59 @@
         </h2>
 
         <!-- Actions -->
+
         <div class="card-actions">
+          @if (role == 'ADMIN' || role == 'MODERATOR') {
+            <!-- Menu -->
+            <button
+              tuiIconButton
+              appearance="flat"
+              type="button"
+              iconStart="@tui.ellipsis"
+              title="Actions"
+              aria-label="Actions"
+              [tuiDropdown]="sousMenuMaterial"
+              [tuiDropdownOpen]="openMaterialId === material.id"
+            >
+            </button>
 
-          <!-- Menu -->
-          <button
-            tuiIconButton
-            appearance="flat"
-            type="button"
-            iconStart="@tui.ellipsis"
-            title="Actions"
-            aria-label="Actions"
-            [tuiDropdown]="sousMenuMaterial"
-          >
-          </button>
+            <!-- Dropdown -->
+            <ng-template
+              #sousMenuMaterial
+              let-close
+            >
 
-          <!-- Dropdown -->
-          <ng-template
-            #sousMenuMaterial
-            let-close
-          >
-            <tui-data-list>
+              <tui-data-list>
+                <!-- Detail about the material -->
+                <button
+                  tuiOption
+                  type="button"
+                >
+                  Détail
+                </button>
+                <!-- Edit the material -->
+                <button
+                  tuiOption
+                  type="button"
+                  (click)="close()"
+                >
+                  Modifier
+                </button>
+                <!-- Delete material -->
+                <button
+                  tuiOption
+                  type="button"
+                >
+                  Supprimer
+                </button>
+              </tui-data-list>
+            </ng-template>
+          }
 
-              <button
-                tuiOption
-                type="button"
-              >
-                Détailer
-              </button>
-
-              <button
-                tuiOption
-                type="button"
-                (click)="close()"
-              >
-                Modifier
-              </button>
-
-
-              <button
-                tuiOption
-                type="button"
-              >
-                Supprimer
-              </button>
-
-            </tui-data-list>
-          </ng-template>
-
+          <!-- Generate space between buttons -->
           <span class="spacer"></span>
 
-          <!-- Voir -->
+          <!-- Go to se all materials -->
           <button
             tuiButton
             appearance="flat"
@@ -124,6 +125,7 @@
       </div>
     }
   </div>
+
   <!-- Pagination -->
   <div class="pagination-container">
     <tui-pagination
