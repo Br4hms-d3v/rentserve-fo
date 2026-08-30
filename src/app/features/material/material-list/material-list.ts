@@ -93,12 +93,10 @@ export class MaterialList implements OnInit {
   }
 
   private applyFilterAndSort() {
-    // 1. Recherche
     this.searchedMaterial = this.materialsList.filter((material) =>
       material.nameMaterial?.toLowerCase().includes(this.searchMaterial),
     );
 
-    // 2. Tri alphabétique
     this.searchedMaterial.sort((a, b) => {
       const nameA = a.nameMaterial?.toLowerCase() ?? '';
       const nameB = b.nameMaterial?.toLowerCase() ?? '';
@@ -106,10 +104,7 @@ export class MaterialList implements OnInit {
       return this.sortDescending ? nameB.localeCompare(nameA) : nameA.localeCompare(nameB);
     });
 
-    // 3. Revenir à la première page
     this.index = 0;
-
-    // 4. Recalculer le nombre de pages
     this.updatePagination();
   }
 
