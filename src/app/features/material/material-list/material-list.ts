@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
 import { AuthService } from '../../auth/service/auth-service';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { MaterialService } from '../service/material-service';
@@ -6,6 +6,7 @@ import { MaterialModel } from '../model/Material';
 import {
   TuiButton,
   TuiDataList,
+  TuiDialogService,
   TuiDropdown,
   TuiOption,
   TuiTextfield,
@@ -13,10 +14,14 @@ import {
 } from '@taiga-ui/core';
 import { TuiCardMedium } from '@taiga-ui/layout';
 import { TuiPagination } from '@taiga-ui/kit';
+import { RouterLink } from '@angular/router';
+import { TuiPopout } from '@taiga-ui/experimental';
+import { MaterialById } from '../material-by-id/material-by-id';
 
 @Component({
   selector: 'app-material-list',
   imports: [
+    RouterLink,
     TuiTextfield,
     TuiButton,
     TuiCardMedium,
@@ -25,6 +30,8 @@ import { TuiPagination } from '@taiga-ui/kit';
     TuiDataList,
     TuiOption,
     TuiPagination,
+    TuiPopout,
+    MaterialById,
   ],
   templateUrl: './material-list.html',
   styleUrl: './material-list.less',
@@ -39,6 +46,7 @@ export class MaterialList implements OnInit {
   materialsList: MaterialModel[] = [];
   protected messageError = '';
   openMaterialId: number | null = null;
+  private readonly dialog = inject(TuiDialogService);
 
   // Filter
   private sortDescending = false;
@@ -111,6 +119,13 @@ export class MaterialList implements OnInit {
 
   protected updatePagination() {
     this.length = Math.ceil(this.searchedMaterial.length / this.size);
+  }
+
+  protected readonly open = signal(false);
+
+  openDetailPopout(id: number): void {
+    this.openMaterialId = id;
+    this.open.set(true);
   }
 
   currentUser() {

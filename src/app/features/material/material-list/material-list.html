@@ -52,7 +52,7 @@
         class="cards-material-category"
       >
 
-        <!-- Titre -->
+        <!-- Title -->
         <h2 tuiTitle>
           {{ material.nameMaterial }}
         </h2>
@@ -85,13 +85,16 @@
                 <button
                   tuiOption
                   type="button"
+                  (click)="openDetailPopout(material.id)"
                 >
                   Détail
                 </button>
+
                 <!-- Edit the material -->
                 <button
                   tuiOption
                   type="button"
+                  [routerLink]="['/material',material.id,'edit']"
                   (click)="close()"
                 >
                   Modifier
@@ -136,4 +139,22 @@
   </div>
 
 </div>
+
+
+  <ng-template
+    let-observer
+    [tuiPopoutOptions]="{
+      pip: true,
+      features: {
+        height: 350,
+        width: 300
+      }
+    }"
+    [(tuiPopout)]="open"
+  >
+    <app-material-by-id
+      [materialId]="openMaterialId!"
+      (close)="observer.complete()"
+    ></app-material-by-id>
+  </ng-template>
 
