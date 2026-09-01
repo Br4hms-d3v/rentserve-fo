@@ -8,15 +8,17 @@ import {
   TuiDataList,
   TuiDialogService,
   TuiDropdown,
+  TuiLink,
   TuiOption,
   TuiTextfield,
   TuiTitle,
 } from '@taiga-ui/core';
 import { TuiCardMedium } from '@taiga-ui/layout';
-import { TuiPagination } from '@taiga-ui/kit';
+import { TuiBreadcrumbs, TuiPagination } from '@taiga-ui/kit';
 import { RouterLink } from '@angular/router';
 import { TuiPopout } from '@taiga-ui/experimental';
 import { MaterialById } from '../material-by-id/material-by-id';
+import { TuiItem } from '@taiga-ui/cdk';
 
 @Component({
   selector: 'app-material-list',
@@ -30,6 +32,10 @@ import { MaterialById } from '../material-by-id/material-by-id';
     TuiDataList,
     TuiOption,
     TuiPagination,
+    RouterLink,
+    TuiBreadcrumbs,
+    TuiItem,
+    TuiLink,
     TuiPopout,
     MaterialById,
   ],
@@ -47,6 +53,18 @@ export class MaterialList implements OnInit {
   protected messageError = '';
   openMaterialId: number | null = null;
   private readonly dialog = inject(TuiDialogService);
+
+  // Breadcrumbs
+  protected links = [
+    {
+      caption: "Page d\'accueil",
+      routerLink: '/dashboard',
+    },
+    {
+      caption: 'Liste materiels',
+      routerLink: '/material/all-materials',
+    }
+  ];
 
   // Filter
   private sortDescending = false;

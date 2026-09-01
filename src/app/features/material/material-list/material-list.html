@@ -1,4 +1,19 @@
 <div class="cards-container">
+
+  <!-- Breadcrumbs -->
+  <tui-breadcrumbs>
+    @for (link of links; track link) {
+      <a
+        *tuiItem
+        tuiLink
+        [routerLink]="link.routerLink"
+      >
+        {{ link.caption }}
+      </a>
+    }
+  </tui-breadcrumbs>
+
+
   <h1>Liste des matériels</h1>
 
   <div class="message">
@@ -33,14 +48,16 @@
     <span class="spacer"></span>
 
     <!-- Button create new material -->
-    <a
+    <button
       tuiButton
       appearance="primary"
       class="btn-filter-new"
       iconStart="@tui.hammer"
+      type="submit"
+      routerLink="../create/new-material"
     >
       Créer un nouveau matériel
-    </a>
+    </button>
   </div>
 
   <!-- Cards -->
@@ -141,20 +158,20 @@
 </div>
 
 
-  <ng-template
-    let-observer
-    [tuiPopoutOptions]="{
+<ng-template
+  let-observer
+  [tuiPopoutOptions]="{
       pip: true,
       features: {
         height: 400,
         width: 320
       }
     }"
-    [(tuiPopout)]="open"
-  >
-    <app-material-by-id
-      [materialId]="openMaterialId!"
-      (close)="observer.complete()"
-    ></app-material-by-id>
-  </ng-template>
+  [(tuiPopout)]="open"
+>
+  <app-material-by-id
+    [materialId]="openMaterialId!"
+    (close)="observer.complete()"
+  ></app-material-by-id>
+</ng-template>
 
