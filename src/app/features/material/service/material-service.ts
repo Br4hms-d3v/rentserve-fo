@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MaterialResponse } from '../model/Material';
 import { map } from 'rxjs';
 import { MaterialDetailModel } from '../model/material-detail';
+import { MaterialForm } from '../model/material-form';
 
 @Injectable({
   providedIn: 'root',
@@ -38,4 +39,10 @@ export class MaterialService {
     const headers = this.getAuthHeader();
     return this._http.get<MaterialDetailModel>(this.apiUrl + id, { headers });
   }
+
+  createMaterial(form: MaterialForm){
+    const headers = this.getAuthHeader();
+    return this._http.post<MaterialForm>(this.apiUrl + 'new', form, {headers});
+  }
+
 }

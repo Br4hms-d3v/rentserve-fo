@@ -1,0 +1,93 @@
+<div class="newCategory-container" [attr.tuiTheme]="isDarkMode ? 'dark-mode' : 'light-mode'">
+  <!-- Breadcrumbs -->
+  <tui-breadcrumbs>
+    @for (link of links; track link) {
+      <a
+        *tuiItem
+        tuiLink
+        [routerLink]="link.routerLink"
+      >
+        {{ link.caption }}
+      </a>
+    }
+  </tui-breadcrumbs>
+
+
+  <h1 class="titleCreateMaterial">
+    {{ title }}
+  </h1>
+
+  <!-- form to create a new material -->
+  <form [formGroup]="newMaterialForm" (ngSubmit)="onSubmitNewMaterial()" class="material-form">
+
+    <!-- Category field with Taiga UI autocomplete -->
+    <tui-textfield tuiTextfieldSize="m" class="inputMatField">
+      <label tuiLabel>Nom de la catégorie:</label>
+      <input
+        #input
+        placeholder="Choisir une catégorie"
+        tuiInput
+        formControlName="category"
+      />
+
+      @if (categoriesList | tuiFilterByInput; as filtered) {
+        @if (input.value) {
+          <tui-data-list-wrapper
+            *tuiDropdown
+            [items]="filtered"
+            [emptyContent]="emptyCategory"
+          />
+        }
+      }
+      <ng-template #emptyCategory>
+        <div class="empty-list">
+          <p>Aucune catégorie trouvée</p>
+        </div>
+      </ng-template>
+    </tui-textfield>
+
+
+    <tui-textfield>
+      <label tuiLabel>Nom du matériel :</label>
+      <input
+        tuiInput
+        type="text"
+        formControlName="nameMaterial"
+      />
+    </tui-textfield>
+
+
+    <!-- Toggle / Switch -->
+    <p id="switchToggle">Rendre publique</p>
+    <input
+      tuiSwitch
+      type="checkbox"
+      formControlName="isAvailable"
+    />
+    <br />
+
+    <button
+      tuiButton
+      type="submit"
+      appearance="primary"
+      size="m"
+    >
+      Sauvegarder
+    </button>
+  </form>
+
+</div>
+
+<ng-template
+  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [(tuiNotification)]="show"
+>
+  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <button
+    tuiButton
+    type="button"
+    (click)="show.set(false)"
+  >
+    Close
+  </button>
+</ng-template>
