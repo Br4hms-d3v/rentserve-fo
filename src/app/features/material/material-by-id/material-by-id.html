@@ -1,13 +1,13 @@
-<main tuiTheme="dark">
+<main [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
   <div>
-    <h1>{{ material!.nameCategory }}</h1>
+    <h1>{{ material?.nameCategory }}</h1>
   </div>
   <header tuiHeader="body-l">
     <hgroup tuiTitle>
-      <h2>{{ material!.nameMaterial }}</h2>
+      <h2>{{ material?.nameMaterial }}</h2>
     </hgroup>
   </header>
   <section>
-    <p>{{ material!.isAvailable }}</p>
+    <p>{{ material?.isAvailable }}</p>
   </section>
 </main>

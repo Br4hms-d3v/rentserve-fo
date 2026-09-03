@@ -1,3 +1,8 @@
+@light-background-color: #F1EFE8;
+@light-title: #3B6D11 !important;
+
+@dark-background-color: #1C1F17;
+@dark-title: #8FC15C;
 
 main {
   display: grid;
@@ -18,4 +23,23 @@ section {
 
 [tuiTitle] {
   text-align: center;
+}
+
+// THEME
+
+.light-mode{
+  background-color: @light-background-color;
+
+  [tuiTitle],h1 ,p {
+    color: @light-title;
+  }
+}
+
+
+.dark-mode{
+  background-color: @dark-background-color;
+
+  [tuiTitle],h1 ,p {
+    color: @dark-title;
+  }
 }
