@@ -1,4 +1,4 @@
-<div class="cards-container">
+<div class="cards-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
 
   <!-- Breadcrumbs -->
   <tui-breadcrumbs>
@@ -16,16 +16,12 @@
 
   <h1>Liste des matériels</h1>
 
-  <div class="message">
-  </div>
-
   <div class="container-search-filter">
     <!-- Button search -->
-    <tui-textfield iconEnd="@tui.search">
+    <tui-textfield class="inputSearch" iconEnd="@tui.search">
       <label tuiLabel>Rechercher</label>
       <input
         tuiInput
-        type="text"
         placeholder="Entrez un matériel"
         (input)="onSearch($event)"
       />
@@ -36,9 +32,9 @@
     <!-- Button filter -->
     <button
       tuiButton
+      class="btn-filter"
       appearance="secondary"
       type="button"
-      class="btn-filter-new"
       iconEnd="@tui.arrow-down-up"
       (click)="onSort()"
     >
@@ -51,7 +47,7 @@
     <button
       tuiButton
       appearance="primary"
-      class="btn-filter-new"
+      class="btn-create"
       iconStart="@tui.hammer"
       type="submit"
       routerLink="../create/new-material"

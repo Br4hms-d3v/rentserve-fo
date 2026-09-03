@@ -6,12 +6,13 @@ import { MaterialModel } from '../model/Material';
 import {
   TuiButton,
   TuiDataList,
-  TuiDialogService,
   TuiDropdown,
   TuiLink,
   TuiOption,
   TuiTextfield,
   TuiTitle,
+  TuiLabel,
+  TuiInput,
 } from '@taiga-ui/core';
 import { TuiCardMedium } from '@taiga-ui/layout';
 import { TuiBreadcrumbs, TuiPagination } from '@taiga-ui/kit';
@@ -19,11 +20,13 @@ import { RouterLink } from '@angular/router';
 import { TuiPopout } from '@taiga-ui/experimental';
 import { MaterialById } from '../material-by-id/material-by-id';
 import { TuiItem } from '@taiga-ui/cdk';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-material-list',
   imports: [
     RouterLink,
+    NgClass,
     TuiTextfield,
     TuiButton,
     TuiCardMedium,
@@ -36,6 +39,8 @@ import { TuiItem } from '@taiga-ui/cdk';
     TuiBreadcrumbs,
     TuiItem,
     TuiLink,
+    TuiInput,
+    TuiLabel,
     TuiPopout,
     MaterialById,
   ],
@@ -48,11 +53,11 @@ export class MaterialList implements OnInit {
   private readonly _materialService = inject(MaterialService);
   private readonly _cdr = inject(ChangeDetectorRef);
 
-  role: string | undefined;
+  isDarkMode = false; // Change theme from light to dark
+  role: string | undefined; // Get a role for display authorization
   materialsList: MaterialModel[] = [];
   protected messageError = '';
   openMaterialId: number | null = null;
-  private readonly dialog = inject(TuiDialogService);
 
   // Breadcrumbs
   protected links = [
@@ -63,7 +68,7 @@ export class MaterialList implements OnInit {
     {
       caption: 'Liste materiels',
       routerLink: '/material/all-materials',
-    }
+    },
   ];
 
   // Filter
@@ -79,6 +84,7 @@ export class MaterialList implements OnInit {
   ngOnInit() {
     this.currentUser();
     this.getMaterials();
+    this.changeTheme();
   }
 
   protected getMaterials() {
@@ -152,5 +158,10 @@ export class MaterialList implements OnInit {
         this.role = user.role;
       }
     });
+  }
+
+  changeTheme() {
+    this.isDarkMode = this._themeService.isDarkMode(); // Get current theme
+    this._themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
   }
 }
