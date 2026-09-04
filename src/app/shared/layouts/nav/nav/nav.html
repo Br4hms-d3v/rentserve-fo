@@ -9,6 +9,22 @@
   <span class="spacer"></span>
 
   <!-- First button materials  -->
+  @if (isAuthenticated) {
+    <button
+      tuiButton
+      type="button"
+      [routerLink]="['/material', 'all-materials']"
+      size="m"
+      appearance="flat"
+      iconEnd="@tui.hammer"
+      class="btn-rentServeBasket"
+    >
+      Matériels
+    </button>
+  }
+
+  <!-- Space between buttons -->
+  <span class="spacer"></span>
 
   <!-- Display the button when the user is connected -->
   <div class="action-buttons">

@@ -1,0 +1,174 @@
+<div class="cards-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+
+  <!-- Breadcrumbs -->
+  <tui-breadcrumbs>
+    @for (link of links; track link) {
+      <a
+        *tuiItem
+        tuiLink
+        [routerLink]="link.routerLink"
+      >
+        {{ link.caption }}
+      </a>
+    }
+  </tui-breadcrumbs>
+
+
+  <h1>Liste des matériels</h1>
+
+  <div class="container-search-filter">
+    <!-- Button search -->
+    <tui-textfield class="inputSearch" iconEnd="@tui.search">
+      <label tuiLabel>Rechercher</label>
+      <input
+        tuiInput
+        placeholder="Entrez un matériel"
+        (input)="onSearch($event)"
+      />
+    </tui-textfield>
+
+    <span class="spacer"></span>
+
+    <!-- Button filter -->
+    <button
+      tuiButton
+      class="btn-filter"
+      appearance="secondary"
+      type="button"
+      iconEnd="@tui.arrow-down-up"
+      (click)="onSort()"
+    >
+      Trier
+    </button>
+
+    <span class="spacer"></span>
+
+    <!-- Button create new material -->
+    <button
+      tuiButton
+      appearance="primary"
+      class="btn-create"
+      iconStart="@tui.hammer"
+      type="submit"
+      routerLink="../create/new-material"
+    >
+      Créer un nouveau matériel
+    </button>
+  </div>
+
+  <!-- Cards -->
+  <div class="cards">
+    @for (material of paginatedMaterials; track material.id) {
+      <div
+        tuiCardMedium
+        appearance="floating"
+        class="cards-material-category"
+      >
+
+        <!-- Title -->
+        <h2 tuiTitle>
+          {{ material.nameMaterial }}
+        </h2>
+
+        <!-- Actions -->
+
+        <div class="card-actions">
+          @if (role == 'ADMIN' || role == 'MODERATOR') {
+            <!-- Menu -->
+            <button
+              tuiIconButton
+              appearance="flat"
+              type="button"
+              iconStart="@tui.ellipsis"
+              title="Actions"
+              aria-label="Actions"
+              [tuiDropdown]="sousMenuMaterial"
+              [tuiDropdownOpen]="openMaterialId === material.id"
+            >
+            </button>
+
+            <!-- Dropdown -->
+            <ng-template
+              #sousMenuMaterial
+              let-close
+            >
+
+              <tui-data-list>
+                <!-- Detail about the material -->
+                <button
+                  tuiOption
+                  type="button"
+                  (click)="openDetailPopout(material.id)"
+                >
+                  Détail
+                </button>
+
+                <!-- Edit the material -->
+                <button
+                  tuiOption
+                  type="button"
+                  [routerLink]="['/material',material.id,'edit']"
+                  (click)="close()"
+                >
+                  Modifier
+                </button>
+                <!-- Delete material -->
+                <button
+                  tuiOption
+                  type="button"
+                  [routerLink]="['/material',material.id,'delete-material']"
+                >
+                  Supprimer
+                </button>
+              </tui-data-list>
+            </ng-template>
+          }
+
+          <!-- Generate space between buttons -->
+          <span class="spacer"></span>
+
+          <!-- Go to se all materials -->
+          <button
+            tuiButton
+            appearance="flat"
+            size="s"
+            type="button"
+            class="btn-show"
+          >
+            Voir
+          </button>
+
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination-container">
+    <tui-pagination
+      [length]="length"
+      [style.float]="'center'"
+      [(index)]="index"
+    ></tui-pagination>
+  </div>
+
+</div>
+
+
+<ng-template
+  let-observer
+  [tuiPopoutOptions]="{
+      pip: true,
+      features: {
+        height: 400,
+        width: 320
+      }
+    }"
+  [(tuiPopout)]="open"
+>
+  <app-material-by-id
+    [materialId]="openMaterialId!"
+    (close)="observer.complete()"
+  ></app-material-by-id>
+</ng-template>
+

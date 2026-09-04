@@ -1,0 +1,167 @@
+import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
+import { AuthService } from '../../auth/service/auth-service';
+import { ThemeService } from '../../../core/services/ThemeService';
+import { MaterialService } from '../service/material-service';
+import { MaterialModel } from '../model/Material';
+import {
+  TuiButton,
+  TuiDataList,
+  TuiDropdown,
+  TuiLink,
+  TuiOption,
+  TuiTextfield,
+  TuiTitle,
+  TuiLabel,
+  TuiInput,
+} from '@taiga-ui/core';
+import { TuiCardMedium } from '@taiga-ui/layout';
+import { TuiBreadcrumbs, TuiPagination } from '@taiga-ui/kit';
+import { RouterLink } from '@angular/router';
+import { TuiPopout } from '@taiga-ui/experimental';
+import { MaterialById } from '../material-by-id/material-by-id';
+import { TuiItem } from '@taiga-ui/cdk';
+import { NgClass } from '@angular/common';
+
+@Component({
+  selector: 'app-material-list',
+  imports: [
+    RouterLink,
+    NgClass,
+    TuiTextfield,
+    TuiButton,
+    TuiCardMedium,
+    TuiTitle,
+    TuiDropdown,
+    TuiDataList,
+    TuiOption,
+    TuiPagination,
+    RouterLink,
+    TuiBreadcrumbs,
+    TuiItem,
+    TuiLink,
+    TuiInput,
+    TuiLabel,
+    TuiPopout,
+    MaterialById,
+  ],
+  templateUrl: './material-list.html',
+  styleUrl: './material-list.less',
+})
+export class MaterialList implements OnInit {
+  private readonly _authService = inject(AuthService);
+  private readonly _themeService = inject(ThemeService);
+  private readonly _materialService = inject(MaterialService);
+  private readonly _cdr = inject(ChangeDetectorRef);
+
+  isDarkMode = false; // Change theme from light to dark
+  role: string | undefined; // Get a role for display authorization
+  materialsList: MaterialModel[] = [];
+  protected messageError = '';
+  openMaterialId: number | null = null;
+
+  // Breadcrumbs
+  protected links = [
+    {
+      caption: "Page d\'accueil",
+      routerLink: '/dashboard',
+    },
+    {
+      caption: 'Liste materiels',
+      routerLink: '/material/all-materials',
+    },
+  ];
+
+  // Filter
+  private sortDescending = false;
+  protected searchMaterial = '';
+
+  // Pagination
+  protected index = 0;
+  protected length = 0;
+  protected size = 40;
+  searchedMaterial: MaterialModel[] = [];
+
+  ngOnInit() {
+    this.currentUser();
+    this.getMaterials();
+    this.changeTheme();
+  }
+
+  protected getMaterials() {
+    this._materialService.getMaterials().subscribe({
+      next: (allMaterials) => {
+        this.materialsList = allMaterials.map((material) => ({
+          id: material.id,
+          nameMaterial: material.nameMaterial,
+        }));
+
+        this.applyFilterAndSort();
+        this._cdr.detectChanges();
+      },
+
+      error: (error) => {
+        if (this.materialsList.length === 0) {
+          this.messageError = 'La liste des matériaux est vide';
+        }
+
+        this.messageError = error?.error?.message ?? 'Erreur lors du chargement des matériaux';
+      },
+    });
+  }
+
+  protected onSort() {
+    this.sortDescending = !this.sortDescending;
+    this.applyFilterAndSort();
+  }
+
+  protected onSearch(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchMaterial = input.value.toLowerCase().trim();
+    this.applyFilterAndSort();
+  }
+
+  private applyFilterAndSort() {
+    this.searchedMaterial = this.materialsList.filter((material) =>
+      material.nameMaterial?.toLowerCase().includes(this.searchMaterial),
+    );
+
+    this.searchedMaterial.sort((a, b) => {
+      const nameA = a.nameMaterial?.toLowerCase() ?? '';
+      const nameB = b.nameMaterial?.toLowerCase() ?? '';
+
+      return this.sortDescending ? nameB.localeCompare(nameA) : nameA.localeCompare(nameB);
+    });
+
+    this.index = 0;
+    this.updatePagination();
+  }
+
+  protected get paginatedMaterials(): MaterialModel[] {
+    const start = this.index * this.size;
+    return this.searchedMaterial.slice(start, start + this.size);
+  }
+
+  protected updatePagination() {
+    this.length = Math.ceil(this.searchedMaterial.length / this.size);
+  }
+
+  protected readonly open = signal(false);
+
+  openDetailPopout(id: number): void {
+    this.openMaterialId = id;
+    this.open.set(true);
+  }
+
+  currentUser() {
+    this._authService.currentUser$.subscribe((user) => {
+      if (user) {
+        this.role = user.role;
+      }
+    });
+  }
+
+  changeTheme() {
+    this.isDarkMode = this._themeService.isDarkMode(); // Get current theme
+    this._themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
+  }
+}

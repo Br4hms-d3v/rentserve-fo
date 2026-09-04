@@ -1,0 +1,107 @@
+@light-background-color: #F1EFE8;
+@light-title: #3B6D11 !important;
+@light-breadcrumb: #5F5E5A !important;
+@light-paraph: #5F5E5A !important;
+@light-span: #3D4A2A !important;
+@light-btn-cancel: #D9764A;
+@light-btn-delete: red;
+
+@dark-background-color: #1C1F17 !important;
+@dark-title: #8FC15C !important;
+@dark-breadcrumb: #A6A599 !important;
+@dark-paraph: #8FC15C !important;
+@dark-span: #A6A599 !important;
+@dark-btn-cancel: #E8845A;
+@dark-btn-delete: red;
+
+.delete-container {
+  height: 80vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.titleDeleteMaterial {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.div-delete {
+  margin: 50px auto;
+  width: 100%;
+  max-width: 550px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;;
+}
+
+#nameMaterialSpan {
+  margin: 25px 0 25px 0;
+  text-align: center;
+}
+
+
+// THEME
+
+.light-mode{
+  background-color: @light-background-color;
+
+  tui-breadcrumbs {
+    color: @light-breadcrumb;
+    a {
+      color: @light-breadcrumb;
+    }
+  }
+
+  .titleDeleteMaterial {
+    color: @light-title;
+  }
+
+  p {
+    color: @light-paraph;
+  }
+
+  #nameMaterialSpan span {
+    color: @light-span;
+  }
+
+  #cancelDelete {
+    background-color: @light-btn-cancel;
+  }
+
+  #butonDelete {
+    background-color: @light-btn-delete;
+  }
+
+}
+
+
+.dark-mode{
+  background-color: @dark-background-color;
+
+  tui-breadcrumbs {
+    color: @dark-breadcrumb;
+    a {
+      color: @dark-breadcrumb;
+    }
+  }
+
+  .titleDeleteMaterial {
+    color: @dark-title;
+  }
+
+  p {
+    color: @dark-paraph;
+  }
+
+  #nameMaterialSpan span {
+    color: @dark-span;
+  }
+
+  #cancelDelete {
+    background-color: @dark-btn-cancel;
+  }
+
+  #butonDelete {
+    background-color: @dark-btn-delete;
+  }
+}

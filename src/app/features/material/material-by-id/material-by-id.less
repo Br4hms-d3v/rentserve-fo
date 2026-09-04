@@ -1,0 +1,45 @@
+@light-background-color: #F1EFE8;
+@light-title: #3B6D11 !important;
+
+@dark-background-color: #1C1F17;
+@dark-title: #8FC15C;
+
+main {
+  display: grid;
+  block-size: 100vh;
+  place-items: center;
+  place-content: center;
+  grid-auto-rows: min-content;
+  gap: 2rem;
+  padding: 2rem;
+  box-sizing: border-box;
+  background: var(--tui-background-base);
+}
+
+section {
+  display: flex;
+  gap: 1rem;
+}
+
+[tuiTitle] {
+  text-align: center;
+}
+
+// THEME
+
+.light-mode{
+  background-color: @light-background-color;
+
+  [tuiTitle],h1 ,p {
+    color: @light-title;
+  }
+}
+
+
+.dark-mode{
+  background-color: @dark-background-color;
+
+  [tuiTitle],h1 ,p {
+    color: @dark-title;
+  }
+}

@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+[tuiTheme="light-mode"] {
+  tui-data-list-wrapper{
+    background-color: #5F5E5A !important;
+  }
+
+  tui-dropdown[data-appearance] {
+    background-color: #F1EFE8 !important;
+  }
+
+  tui-data-list {
+    color: #F1EFE8 !important;
+  }
+
+  button[tuiOption] {
+    color: #F1EFE8 !important;
+
+    &:hover {
+      background-color: #D3D1C7 !important;
+      color: #3D4A2A !important;
+    }
+  }
+
+}
+
+[tuiTheme="dark-mode"] {
+  tui-data-list-wrapper{
+    background-color: #171912;
+  }
+  tui-dropdown[data-appearance] {
+    background-color: #1C1F17 !important;
+  }
+
+  button[tuiOption] {
+    color: #F1EFE8 !important;
+
+    &:hover {
+      background-color: #40261C !important;
+      color: #F1EFE8 !important;
+    }
+  }
+
+}

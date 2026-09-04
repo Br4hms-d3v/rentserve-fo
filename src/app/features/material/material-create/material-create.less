@@ -1,0 +1,114 @@
+@light-background-color: #F1EFE8;
+@light-title: #3B6D11 !important;
+@light-breadcrumb: #5F5E5A !important;
+@light-label-input: #3B6D11 !important;
+@light-label: #5F5E5A !important;
+@light-btn-submit: #D9764A;
+
+@dark-background-color: #1C1F17;
+@dark-title: #8FC15C;
+@dark-breadcrumb: #A6A599 !important;
+@dark-label-input: #8FC15C !important;
+@dark-label: #A6A599 !important;
+@dark-btn-submit: #E8845A;
+
+
+.newCategory-container {
+  height: 80vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.titleCreateMaterial {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.material-form{
+  width: 80%;
+  max-width: 550px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0 auto;
+}
+
+input[tuiSwitch]{
+  &:checked{
+    --tui-background-accent-1: #22c55e;
+    --tui-background-accent-1-hover: #16a34a;
+  }
+  &:not(:checked) {
+    --tui-background-neutral-1: #ef4444;
+    --tui-background-neutral-1-hover: #dc2626;
+  }
+}
+
+// THEME
+
+[tuiTheme="light-mode"]  {
+  background-color: @light-background-color;
+
+  tui-breadcrumbs {
+    a {
+      color: @light-breadcrumb;
+    }
+  }
+
+  .titleCreateMaterial {
+    color: @light-title;
+  }
+
+  input[tuiInput]{
+  color: @light-label-input;
+  }
+
+  label[tuiLabel]{
+    color: @light-label;
+  }
+
+  #switchToggle{
+    color:@light-label;
+  }
+
+  button[tuiButton]{
+    background-color: @light-btn-submit;
+  }
+
+}
+
+
+[tuiTheme="dark-mode"]  {
+  background-color: @dark-background-color;
+
+  tui-breadcrumbs {
+    a {
+      color: @dark-breadcrumb;
+    }
+  }
+
+  .titleCreateMaterial {
+    color: @dark-title;
+  }
+
+  input[tuiInput]{
+    background-color: #2E331F;
+  }
+
+  input[tuiInput]{
+    color: @dark-label-input;
+  }
+
+  label[tuiLabel]{
+    color: @dark-label;
+  }
+
+  #switchToggle{
+    color:@dark-label;
+  }
+
+  button[tuiButton]{
+    background-color: @dark-btn-submit;
+  }
+
+}
