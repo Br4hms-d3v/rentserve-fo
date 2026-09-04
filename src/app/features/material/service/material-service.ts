@@ -45,4 +45,9 @@ export class MaterialService {
     return this._http.post<MaterialForm>(this.apiUrl + 'new', form, {headers});
   }
 
+  editMaterial(id: number, form: MaterialForm){
+    const headers = this.getAuthHeader();
+    return this._http.put(this.apiUrl + 'edit/' + id, form, {headers});
+  }
+
 }
