@@ -51,7 +51,6 @@ export class MaterialEdit implements OnInit {
 
   materialId!: number;
   materialModel!: MaterialDetailModel;
-  updateMaterialModel!: MaterialForm;
   categoriesList: string[] = []; // Get a list of categories
   protected messageError = '';
   protected messageSuccess = '';
