@@ -1,0 +1,56 @@
+<div class="delete-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+
+  <!-- Breadcrumbs -->
+  <tui-breadcrumbs>
+    @for (link of links; track link) {
+      <a
+        *tuiItem
+        tuiLink
+        [routerLink]="link.routerLink"
+      >
+        {{ link.caption }}
+      </a>
+    }
+  </tui-breadcrumbs>
+
+  <h1 class="titleDeleteMaterial">{{ title }}</h1>
+
+  <div class="div-delete">
+    <div>
+      <p>Êtes vous sûr de vouloir supprimer le matériel : </p>
+      <p id="nameMaterialSpan"><span>{{ nameMaterial }}</span></p>
+    </div>
+
+
+    <button
+      tuiButton
+      id="cancelDelete"
+      type="button"
+      [routerLink]="['/material','all-materials']"
+    >Retour
+    </button>
+
+    <button
+      tuiButton
+      id="butonDelete"
+      type="button"
+      (click)="deleteMaterial()"
+    >Supprimer
+    </button>
+
+  </div>
+</div>
+
+<ng-template
+  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [(tuiNotification)]="show"
+>
+  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <button
+    tuiButton
+    type="button"
+    (click)="show.set(false)"
+  >
+    Close
+  </button>
+</ng-template>

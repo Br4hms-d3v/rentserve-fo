@@ -50,4 +50,9 @@ export class MaterialService {
     return this._http.put(this.apiUrl + 'edit/' + id, form, {headers});
   }
 
+  deleteMaterial(id: number | undefined) {
+    const headers = this.getAuthHeader();
+    return this._http.delete(this.apiUrl + 'delete/' + id, {headers, responseType: 'text'});
+  }
+
 }
