@@ -8,8 +8,9 @@
   <!-- Space between buttons -->
   <span class="spacer"></span>
 
-  <!-- First button materials  -->
+
   @if (isAuthenticated) {
+    <!-- First button materials  -->
     <button
       tuiButton
       type="button"
@@ -20,6 +21,22 @@
       class="btn-rentServeBasket"
     >
       Matériels
+    </button>
+
+    <!-- Space between buttons -->
+    <span class="spaceBtwnMatFav"></span>
+
+    <!-- Second button favour  -->
+    <button
+      tuiButton
+      type="button"
+      [routerLink]="['/favor', 'all-favour']"
+      size="m"
+      appearance="flat"
+      iconEnd="@tui.heart-handshake"
+      class="btn-rentServeBasket"
+    >
+      Services
     </button>
   }
 
