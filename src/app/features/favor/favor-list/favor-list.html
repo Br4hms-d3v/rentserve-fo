@@ -1,0 +1,167 @@
+<div class="cards-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+
+  <!-- Breadcrumbs -->
+  <tui-breadcrumbs>
+    @for (link of links; track link) {
+      <a
+        *tuiItem
+        tuiLink
+        [routerLink]="link.routerLink"
+      >
+        {{ link.caption }}
+      </a>
+    }
+  </tui-breadcrumbs>
+
+
+  <h1>Liste des services</h1>
+
+  <div class="container-search-filter">
+    <!-- Button search -->
+    <tui-textfield class="inputSearch" iconStart="@tui.search">
+      <label tuiLabel> Rechercher</label>
+      <input
+        tuiInput
+        placeholder="Entrez le service"
+        (input)="onSearch($event)"
+      />
+    </tui-textfield>
+
+    <span class="spacer"></span>
+
+    <!-- Button filter -->
+    <button
+      tuiButton
+      class="btn-filter"
+      appearance="secondary"
+      type="button"
+      iconStart="@tui.arrow-up-a-z"
+      (click)="onSort()"
+    >
+      Trier
+    </button>
+
+    <span class="spacer"></span>
+
+    <!-- Button create new favor -->
+    <button
+      tuiButton
+      appearance="primary"
+      class="btn-create"
+      iconEnd="@tui.sparkles"
+      type="submit"
+      routerLink=""
+    >
+      Créer un nouveau service
+    </button>
+  </div>
+
+  <!-- Cards -->
+  <div class="cards">
+    @for (favor of paginatedFavor(); track favor.id) {
+      <div
+        tuiCardMedium
+        appearance="floating"
+        class="cards-favor-category"
+      >
+
+        <!-- Title -->
+        <h2 tuiTitle>
+          {{ favor.nameFavor }}
+        </h2>
+
+        <!-- Actions -->
+        <div class="card-actions">
+          @if (role == 'ADMIN' || role == 'MODERATOR') {
+            <!-- Menu -->
+            <button
+              tuiCardMedium
+              appearance="flat"
+              type="button"
+              iconStart="@tui.ellipses"
+              title="Actions"
+              aria-label="Actions"
+              [tuiDropdown]="sousMenuFavor"
+              [tuiDropdownOpen]="openFavorId === favor.id"
+            >
+            </button>
+
+            <!-- Dropdown -->
+            <ng-template
+              #sousMenuFavor
+              let-close
+            >
+
+              <tui-data-list>
+                <!-- Detail about the favor -->
+                <button
+                  tuiOption
+                  type="button"
+                  (click)="openDetailPopout(favor.id)"
+                >
+                  Détail
+                </button>
+
+                <!-- Edit the favor -->
+                <button
+                  tuiOption
+                  type="button"
+
+
+                >
+                  Modifier
+                </button>
+                <!-- Delete favor -->
+                <button
+                  tuiOption
+                  type="button"
+
+                >
+                  Supprimer
+                </button>
+              </tui-data-list>
+            </ng-template>
+          }
+
+          <!-- Generate space between buttons -->
+          <span class="spacer"></span>
+
+          <!-- Go to see all favour -->
+          <button
+            tuiButton
+            appearance="flat"
+            size="s"
+            type="button"
+            class="btn-show"
+          >
+            Voir
+          </button>
+
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination-container">
+    <tui-pagination
+      [length]="length"
+      [style.float]="'center'"
+      [(index)]="index"
+    ></tui-pagination>
+  </div>
+</div>
+
+<ng-template
+  let-observer
+  [tuiPopoutOptions]="{
+    pip: true,
+    features:{
+      height:400,
+      width:320
+    }
+  }"
+  [(tuiPopout)]="open"
+>
+
+</ng-template>
