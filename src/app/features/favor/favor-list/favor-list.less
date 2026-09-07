@@ -79,7 +79,7 @@ h1 {
   justify-content: center;
 }
 
-/* Div with search, sort and create new material */
+/* Div with search, sort and create new favor */
 .container-search-filter {
   margin: auto;
   display: flex;
@@ -101,3 +101,92 @@ h1 {
     flex: 1 1 auto;
   }
 }
+
+// THEME
+
+.light-mode {
+  background-color: @light-background-color;
+
+  tui-breadcrumbs {
+    a {
+      color: @light-breadcrumb;
+    }
+  }
+
+  h1 {
+    color: @light-title;
+  }
+
+  .inputSearch {
+    label[tuiLabel] {
+      color: @light-label;
+    }
+
+    input[tuiInput] {
+      color: @light-input;
+    }
+  }
+
+  .inputSearch,
+  .inputSearch:focus-within,
+  .inputSearch:hover {
+    color: @light-label;
+  }
+
+  .btn-filter, .btn-create {
+    background-color: @light-buton;
+    color: @light-button-text;
+  }
+
+  .cards-favor-category {
+    background-color: @light-background-card;
+    color: @light-text-card;
+
+    button {
+      color: @light-text-button-card;
+    }
+  }
+
+}
+
+/*Theme dark*/
+.dark-mode {
+  background-color: @dark-background-color;
+
+  h1 {
+    color: @dark-title;
+  }
+
+  .inputSearch {
+    label[tuiLabel] {
+      color: @dark-label;
+    }
+
+    input[tuiInput] {
+      color: @dark-input;
+    }
+  }
+
+  .inputSearch,
+  .inputSearch:focus-within,
+  .inputSearch:hover {
+    color: @dark-label;
+  }
+
+
+  .btn-filter, .btn-create {
+    background-color: @dark-buton;
+    color: @dark-button-text;
+  }
+
+  .cards-material-category {
+    background-color: @dark-background-card;
+    color: @dark-text-card;
+
+    button {
+      color: @dark-text-button-card;
+    }
+  }
+
+}
+

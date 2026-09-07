@@ -75,10 +75,10 @@
           @if (role == 'ADMIN' || role == 'MODERATOR') {
             <!-- Menu -->
             <button
-              tuiCardMedium
+              tuiIconButton
               appearance="flat"
               type="button"
-              iconStart="@tui.ellipses"
+              iconStart="@tui.ellipsis"
               title="Actions"
               aria-label="Actions"
               [tuiDropdown]="sousMenuFavor"
@@ -97,7 +97,7 @@
                 <button
                   tuiOption
                   type="button"
-                  (click)="openDetailPopout(favor.id)"
+                  (click)="close(); openDetailPopout(favor.id)"
                 >
                   Détail
                 </button>
@@ -106,8 +106,8 @@
                 <button
                   tuiOption
                   type="button"
-
-
+                  [routerLink]=""
+                  (click)="close()"
                 >
                   Modifier
                 </button>
@@ -115,7 +115,8 @@
                 <button
                   tuiOption
                   type="button"
-
+                  [routerLink]=""
+                  (click)="close()"
                 >
                   Supprimer
                 </button>

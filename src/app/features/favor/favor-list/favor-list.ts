@@ -145,6 +145,7 @@ export class FavorList implements OnInit {
 
   openDetailPopout(id: number) {
     this.openFavorId = id;
+    this.openFavorId = null;
     this.open.set(true);
   }
 
