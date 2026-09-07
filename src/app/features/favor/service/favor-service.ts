@@ -3,6 +3,7 @@ import { environment } from '../../../environment/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FavorResponse } from '../model/favor';
 import { map } from 'rxjs';
+import { FavorForm } from '../model/FavorForm';
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +32,10 @@ export class FavorService {
     return this._http
       .get<FavorResponse>(this.apiUrl + 'list', { headers })
       .pipe(map((response) => response._embedded.favorDTOList));
+  }
+
+  editFavor(id: number, form: FavorForm) {
+    const headers = this.getAuthHeader();
+    return this._http.put(this.apiUrl + 'edit/' + id, form, { headers });
   }
 }
