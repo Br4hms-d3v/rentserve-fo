@@ -24,6 +24,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FavorDetailModel } from '../model/favorlDetail';
 import { NgClass } from '@angular/common';
 import { FavorForm } from '../model/FavorForm';
+import { TuiItem } from '@taiga-ui/cdk';
 
 @Component({
   selector: 'app-favor-edit',
@@ -33,6 +34,7 @@ import { FavorForm } from '../model/FavorForm';
     RouterLink,
     ReactiveFormsModule,
     TuiBreadcrumbs,
+    TuiItem,
     TuiButton,
     TuiDataListWrapperComponent,
     TuiFilterByInputPipe,
@@ -73,7 +75,7 @@ export class FavorEdit implements OnInit {
     },
     {
       caption: 'Liste des services',
-      routerLink: '/all-favour',
+      routerLink: '/favor/all-favour',
     },
     {
       caption: 'Modification du service',
