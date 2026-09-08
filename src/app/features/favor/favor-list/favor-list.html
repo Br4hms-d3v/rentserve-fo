@@ -82,18 +82,15 @@
               title="Actions"
               aria-label="Actions"
               [tuiDropdown]="sousMenuFavor"
-              [tuiDropdownOpen]="openFavorId === favor.id"
+              [tuiDropdownOpen]="openDropdownFavorId === favor.id"
+              (click)="toggleDropdown(favor.id)"
             >
             </button>
 
             <!-- Dropdown -->
-            <ng-template
-              #sousMenuFavor
-              let-close
-            >
-
+            <ng-template #sousMenuFavor let-close>
               <tui-data-list>
-                <!-- Detail about the favor -->
+
                 <button
                   tuiOption
                   type="button"
@@ -102,7 +99,6 @@
                   Détail
                 </button>
 
-                <!-- Edit the favor -->
                 <button
                   tuiOption
                   type="button"
@@ -111,15 +107,15 @@
                 >
                   Modifier
                 </button>
-                <!-- Delete favor -->
+
                 <button
                   tuiOption
                   type="button"
-                  [routerLink]=""
                   (click)="close()"
                 >
                   Supprimer
                 </button>
+
               </tui-data-list>
             </ng-template>
           }
@@ -157,12 +153,17 @@
   let-observer
   [tuiPopoutOptions]="{
     pip: true,
-    features:{
-      height:400,
-      width:320
+    features: {
+      height: 400,
+      width: 320
     }
   }"
   [(tuiPopout)]="open"
 >
-
+  @if (open()) {
+    <app-favor-by-id
+      [favorId]="openFavorId!"
+      (close)="closeDetailPopOut()"
+    ></app-favor-by-id>
+  }
 </ng-template>

@@ -20,6 +20,7 @@ import { RouterLink } from '@angular/router';
 import { TuiItem } from '@taiga-ui/cdk';
 import { TuiCardMedium } from '@taiga-ui/layout';
 import { TuiPopout } from '@taiga-ui/experimental';
+import { FavorById } from '../favor-by-id/favor-by-id';
 
 @Component({
   selector: 'app-favor-list',
@@ -40,6 +41,7 @@ import { TuiPopout } from '@taiga-ui/experimental';
     TuiPopout,
     TuiTitle,
     TuiDropdown,
+    FavorById,
   ],
   templateUrl: './favor-list.html',
   styleUrl: './favor-list.less',
@@ -53,6 +55,13 @@ export class FavorList implements OnInit {
   isDarkMode = false; // Change theme from light to dark
   role: string | undefined; // Get a role for display authorization
   favoursList: FavorModel[] = [];
+  protected messageError = '';
+
+  // PopOut
+  protected open = signal(false);
+
+  // Dropdown
+  openDropdownFavorId: number | null = null;
   openFavorId: number | null = null;
 
   // Breadcrumbs
@@ -75,9 +84,6 @@ export class FavorList implements OnInit {
   protected length = 0;
   protected size = 40;
   searchedFavor: FavorModel[] = [];
-
-  // PopOut
-  protected open = signal(false);
 
   ngOnInit() {
     this.currentUser();
@@ -103,6 +109,14 @@ export class FavorList implements OnInit {
 
         this.applyFilterAndSort();
         this._cdr.detectChanges();
+      },
+
+      error: (err) => {
+        if (this.favoursList.length == 0) {
+          this.messageError = 'La list des services est vide';
+        }
+
+        this.messageError = err?.error?.message ?? 'Erreur lors du chargement';
       },
     });
   }
@@ -144,9 +158,18 @@ export class FavorList implements OnInit {
   }
 
   openDetailPopout(id: number) {
+    this.openDropdownFavorId = null; // ferme le dropdown
     this.openFavorId = id;
-    this.openFavorId = null;
     this.open.set(true);
+  }
+
+  closeDetailPopOut() {
+    this.open.set(false);
+    this.openFavorId = null;
+  }
+
+  toggleDropdown(id: number) {
+    this.openDropdownFavorId = this.openDropdownFavorId === id ? null : id;
   }
 
   changeTheme() {
