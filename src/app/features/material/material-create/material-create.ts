@@ -100,15 +100,7 @@ export class MaterialCreate implements OnInit {
         this.show.set(true);
       },
       error: (err) => {
-        if (!typeof err.error) {
-          this.messageError = err.error.message;
-        } else if (err.error?.message) {
-          this.messageError = err.error.message;
-        } else {
-          this.messageError = "Erreur d'inscription";
-        }
-        this.isSuccess.set(false);
-        this.show.set(true);
+        this.messageError = err.error?.message ?? "Erreur lors de l'enregistrement du matériel";
       },
     });
   }
