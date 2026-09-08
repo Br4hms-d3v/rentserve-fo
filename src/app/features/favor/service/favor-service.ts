@@ -44,4 +44,9 @@ export class FavorService {
     const headers = this.getAuthHeader();
     return this._http.get<FavorDetailModel>(this.apiUrl + id, { headers });
   }
+
+  createFavor(form: FavorForm) {
+    const headers = this.getAuthHeader();
+    return this._http.post<FavorForm>(this.apiUrl + 'new', form, { headers });
+  }
 }
