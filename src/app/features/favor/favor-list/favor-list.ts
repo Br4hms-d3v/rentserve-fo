@@ -76,7 +76,7 @@ export class FavorList implements OnInit {
   ];
 
   // Filter
-  private sortDescending = false;
+  protected sortDescending = false;
   protected searchFavor = '';
 
   // Pagination
@@ -128,7 +128,7 @@ export class FavorList implements OnInit {
 
     this.searchedFavor.sort((a, b) => {
       const nameA = a.nameFavor?.toLowerCase() ?? '';
-      const nameB = a.nameFavor?.toLowerCase() ?? '';
+      const nameB = b.nameFavor?.toLowerCase() ?? '';
 
       return this.sortDescending ? nameB.localeCompare(nameA) : nameA.localeCompare(nameB);
     });

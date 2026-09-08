@@ -72,7 +72,7 @@ export class MaterialList implements OnInit {
   ];
 
   // Filter
-  private sortDescending = false;
+  protected sortDescending = false;
   protected searchMaterial = '';
 
   // Pagination

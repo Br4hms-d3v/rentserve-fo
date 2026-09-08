@@ -35,7 +35,7 @@
       class="btn-filter"
       appearance="secondary"
       type="button"
-      iconEnd="@tui.arrow-down-up"
+      [iconStart]="sortDescending ? '@tui.arrow-up-z-a' : '@tui.arrow-down-a-z'"
       (click)="onSort()"
     >
       Trier
