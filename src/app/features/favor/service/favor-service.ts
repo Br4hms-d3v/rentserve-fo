@@ -49,4 +49,9 @@ export class FavorService {
     const headers = this.getAuthHeader();
     return this._http.post<FavorForm>(this.apiUrl + 'new', form, { headers });
   }
+
+  deleteFavor(id: number | undefined) {
+    const headers = this.getAuthHeader();
+    return this._http.delete(this.apiUrl + 'delete/' + id, { headers, responseType: 'text' });
+  }
 }
