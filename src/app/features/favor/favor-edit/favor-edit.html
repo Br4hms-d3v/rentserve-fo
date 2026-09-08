@@ -18,7 +18,7 @@
   </h1>
 
   <!-- form to edit a new favor -->
-  <form [formGroup]="editFavorForm"  class="favor-form">
+  <form [formGroup]="editFavorForm" (ngSubmit)="onSubmitEditFavor()" class="favor-form">
 
     <!-- Category field with Taiga UI autocomplete -->
     <tui-textfield tuiTextfieldSize="m" class="inputMatField">
@@ -48,7 +48,7 @@
 
 
     <tui-textfield>
-      <label tuiLabel>Nom du matériel :</label>
+      <label tuiLabel>Nom du service :</label>
       <input
         tuiInput
         type="text"
