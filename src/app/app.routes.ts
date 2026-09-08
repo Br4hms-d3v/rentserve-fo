@@ -13,4 +13,8 @@ export const routes: Routes = [
     path: 'material',
     loadChildren: () => import('./features/material/material.routes').then((r) => r.material_routes),
   },
+  {
+    path: 'favor',
+    loadChildren: () => import('./features/favor/favor.routes').then((r) => r.favor_routes),
+  }
 ];

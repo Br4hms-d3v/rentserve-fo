@@ -40,7 +40,7 @@ export class Nav implements OnInit {
     this._authService.currentUser$.subscribe((user) => {
       if (user) {
         this.isAuthenticated = true;
-        console.log(this.isAuthenticated);
+        // console.log(this.isAuthenticated);
         this.firstname = user.firstName;
         this.userId = user.id;
       } else {

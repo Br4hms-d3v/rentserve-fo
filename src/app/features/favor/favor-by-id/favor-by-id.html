@@ -1,0 +1,13 @@
+<main [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+  <div>
+    <h1>{{ favor?.nameCategory }}</h1>
+  </div>
+  <header tuiHeader="body-l">
+    <hgroup tuiTitle>
+      <h2>{{ favor?.nameFavor }}</h2>
+    </hgroup>
+  </header>
+  <section>
+    <p>{{ favor?.isAvailable }}</p>
+  </section>
+</main>

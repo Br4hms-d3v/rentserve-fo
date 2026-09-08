@@ -87,7 +87,7 @@ export class MaterialEdit implements OnInit {
   getRoute() {
     this._route.params.subscribe((params) => {
       this.materialId = params['id'];
-      console.log(this.materialId);
+      // console.log(this.materialId);
     });
   }
 
@@ -115,7 +115,7 @@ export class MaterialEdit implements OnInit {
       .subscribe({
         next: (data) => {
           this.editMaterialForm.patchValue(data);
-          console.log(data);
+          // console.log(data);
           this.messageSuccess = 'La mise à jour a été effectué avec succès.';
           this.isSuccess.set(true);
           this.show.set(true);

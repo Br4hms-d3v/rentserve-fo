@@ -75,8 +75,6 @@ export class MaterialDelete implements OnInit {
         this.nameMaterial = data.nameMaterial;
 
         this.cdr.markForCheck();
-        console.log('ID:', this.materialId);
-        console.log('Nom:', this.nameMaterial);
       },
       error: (error) => {
         console.error(error);
