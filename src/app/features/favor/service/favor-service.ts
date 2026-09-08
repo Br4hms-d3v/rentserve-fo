@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FavorResponse } from '../model/favor';
 import { map } from 'rxjs';
 import { FavorForm } from '../model/FavorForm';
+import { FavorDetailModel } from '../model/favorlDetail';
 
 @Injectable({
   providedIn: 'root',
@@ -37,5 +38,10 @@ export class FavorService {
   editFavor(id: number, form: FavorForm) {
     const headers = this.getAuthHeader();
     return this._http.put(this.apiUrl + 'edit/' + id, form, { headers });
+  }
+
+  getFavor(id: number) {
+    const headers = this.getAuthHeader();
+    return this._http.get<FavorDetailModel>(this.apiUrl + id, { headers });
   }
 }
