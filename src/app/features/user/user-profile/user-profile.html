@@ -1,0 +1,33 @@
+<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+
+  <tui-tabs>
+    <a
+      [routerLink]="['edit']"
+      routerLinkActive
+      tuiTab
+    >
+      Modifier le profil
+    </a>
+
+    <a
+      [routerLink]="['password']"
+      routerLinkActive
+      tuiTab
+    >
+      Mot de passe
+    </a>
+
+    <a
+      [routerLink]="['delete']"
+      routerLinkActive
+      tuiTab
+    >
+      Supprimer le compte
+    </a>
+  </tui-tabs>
+
+  <p [tuiSlides]="direction()">
+    <router-outlet />
+  </p>
+
+</div>
