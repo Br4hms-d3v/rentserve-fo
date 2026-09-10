@@ -35,7 +35,7 @@ import { ThemeService } from '../../../core/services/ThemeService';
   styleUrl: './user-edit.less',
 })
 export class UserEdit implements OnInit {
-  private readonly _AuthService = inject(AuthService); // Get the id from user connected
+  private readonly _authService = inject(AuthService); // Get the id from user connected
   private readonly userService = inject(UserService); // Get the data and edit the user
   private _themeService = inject(ThemeService); // Call the service to change color theme
 
@@ -67,7 +67,7 @@ export class UserEdit implements OnInit {
   });
 
   protected getIdUser() {
-    this._AuthService.currentUser$.subscribe((user) => {
+    this._authService.currentUser$.subscribe((user) => {
       if (user) {
         this.userId = user.id;
         this.userToken = user.token;
@@ -105,6 +105,7 @@ export class UserEdit implements OnInit {
     this.userService.editUser(this.userId, <UserForm>this.editUserForm.value).subscribe({
       next: (userData) => {
         this.editUserForm.patchValue(userData);
+        this._authService.updatePseudo(this.editUserForm.value.firstName);
         this.messageSuccess = 'La mise à jour a été effectué avec succès ';
         this.isSuccess.set(true);
         this.show.set(true);
