@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
@@ -6,13 +6,14 @@ import {
   TuiCalendar,
   TuiDropdown,
   TuiInputDirective,
-  TuiLabel,
+  TuiLabel, TuiNotificationTemplate,
   TuiTextfieldComponent,
 } from '@taiga-ui/core';
 import { TuiInputDateDirective } from '@taiga-ui/kit';
 import { AuthService } from '../../auth/service/auth-service';
 import { UserService } from '../service/user-service';
 import { UserModel } from '../model/user';
+import { UserForm } from '../model/userForm';
 
 @Component({
   selector: 'app-user-edit',
@@ -26,6 +27,7 @@ import { UserModel } from '../model/user';
     TuiLabel,
     TuiTextfieldComponent,
     TuiDropdown,
+    TuiNotificationTemplate,
   ],
   templateUrl: './user-edit.html',
   styleUrl: './user-edit.less',
@@ -35,9 +37,14 @@ export class UserEdit implements OnInit {
   private readonly userService = inject(UserService);
 
   isDarkMode = false; // Change theme from light to dark
+  protected readonly show = signal(false); // Show notification
+  protected readonly isSuccess = signal(false); // Change color Green for success or Red error
 
   protected userId!: number;
+  protected userToken!: string;
   userModel!: UserModel;
+  protected messageError = '';
+  protected messageSuccess = '';
 
   ngOnInit() {
     this.getIdUser();
@@ -59,6 +66,7 @@ export class UserEdit implements OnInit {
     this._AuthService.currentUser$.subscribe((user) => {
       if (user) {
         this.userId = user.id;
+        this.userToken = user.token;
         // console.log(this.userId);
       }
     });
@@ -77,6 +85,23 @@ export class UserEdit implements OnInit {
         this.editUserForm.get('street')?.patchValue(this.userModel.street);
         this.editUserForm.get('city')?.patchValue(this.userModel.city);
         this.editUserForm.get('zipCode')?.patchValue(this.userModel.zipCode);
+      },
+    });
+  }
+
+  protected updateUser() {
+    this.editUserForm.markAllAsTouched();
+
+    if (this.editUserForm.invalid) {
+      this.messageError = 'Le formulaire est invalide';
+      this.isSuccess.set(false);
+      this.show.set(true);
+    }
+
+    this.userService.editUser(this.userId, <UserForm>this.editUserForm.value).subscribe({
+      next: (userData) => {
+        this.editUserForm.patchValue(userData);
+        this.messageSuccess = 'La mise à jour a été effectué avec succès ';
       },
     });
   }
