@@ -37,7 +37,7 @@ import { ThemeService } from '../../../core/services/ThemeService';
 export class UserEdit implements OnInit {
   private readonly _AuthService = inject(AuthService); // Get the id from user connected
   private readonly userService = inject(UserService); // Get the data and edit the user
-  private themeService = inject(ThemeService); // Call the service to change color theme
+  private _themeService = inject(ThemeService); // Call the service to change color theme
 
   isDarkMode = false; // Change theme from light to dark
   protected readonly show = signal(false); // Show notification
@@ -118,7 +118,7 @@ export class UserEdit implements OnInit {
   }
 
   changeTheme() {
-    this.isDarkMode = this.themeService.isDarkMode(); // Get current theme
-    this.themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
+    this.isDarkMode = this._themeService.isDarkMode(); // Get current theme
+    this._themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
   }
 }
