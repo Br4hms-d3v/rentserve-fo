@@ -1,15 +1,15 @@
-<div class="editUser" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+<div class="editUser-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
 
-  <form [formGroup]="editUserForm" (ngSubmit)="updateUser()" )>
+  <form [formGroup]="editUserForm" (ngSubmit)="updateUser()" class="user-form">
 
-    <div class="form-field">
+    <div class="inputMatField">
       <tui-textfield>
         <label tuiLabel>Nom</label>
         <input tuiInput formControlName="name" />
       </tui-textfield>
     </div>
 
-    <div class="form-field">
+    <div class="inputMatField">
       <tui-textfield>
         <label tuiLabel>Prénom</label>
         <input tuiInput formControlName="firstName" />
@@ -23,14 +23,14 @@
       </tui-textfield>
     </div>
 
-    <div class="form-field">
+    <div class="inputMatField">
       <tui-textfield>
         <label tuiLabel>Pseudo</label>
         <input tuiInput formControlName="pseudo" />
       </tui-textfield>
     </div>
 
-    <div class="form-field">
+    <div class="inputMatField">
       <tui-textfield>
         <label tuiLabel>Date de naissance</label>
         <input tuiInputDate formControlName="birthdate" />
@@ -48,7 +48,7 @@
     </div>
 
     <!-- City -->
-    <div class="form-field">
+    <div class="inputMatField">
       <tui-textfield>
         <label tuiLabel>Ville</label>
         <input tuiInput formControlName="city" />
@@ -56,7 +56,7 @@
     </div>
 
     <!-- ZipCode -->
-    <div class="form-field">
+    <div class="inputMatField">
       <tui-textfield>
         <label tuiLabel>Code postal</label>
         <input tuiInput formControlName="zipCode" />
@@ -77,7 +77,7 @@
       <button tuiButton
               type="submit"
               appearance="primary"
-      >S'inscrire
+      >Sauvegarder
       </button>
     </div>
 

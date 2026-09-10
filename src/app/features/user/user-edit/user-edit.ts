@@ -6,7 +6,8 @@ import {
   TuiCalendar,
   TuiDropdown,
   TuiInputDirective,
-  TuiLabel, TuiNotificationTemplate,
+  TuiLabel,
+  TuiNotificationTemplate,
   TuiTextfieldComponent,
 } from '@taiga-ui/core';
 import { TuiInputDateDirective } from '@taiga-ui/kit';
@@ -14,6 +15,7 @@ import { AuthService } from '../../auth/service/auth-service';
 import { UserService } from '../service/user-service';
 import { UserModel } from '../model/user';
 import { UserForm } from '../model/userForm';
+import { ThemeService } from '../../../core/services/ThemeService';
 
 @Component({
   selector: 'app-user-edit',
@@ -34,7 +36,8 @@ import { UserForm } from '../model/userForm';
 })
 export class UserEdit implements OnInit {
   private readonly _AuthService = inject(AuthService); // Get the id from user connected
-  private readonly userService = inject(UserService);
+  private readonly userService = inject(UserService); // Get the data and edit the user
+  private themeService = inject(ThemeService); // Call the service to change color theme
 
   isDarkMode = false; // Change theme from light to dark
   protected readonly show = signal(false); // Show notification
@@ -49,6 +52,7 @@ export class UserEdit implements OnInit {
   ngOnInit() {
     this.getIdUser();
     this.getUserDetail();
+    this.changeTheme();
   }
 
   protected editUserForm = new FormGroup({
@@ -102,7 +106,19 @@ export class UserEdit implements OnInit {
       next: (userData) => {
         this.editUserForm.patchValue(userData);
         this.messageSuccess = 'La mise à jour a été effectué avec succès ';
+        this.isSuccess.set(true);
+        this.show.set(true);
+      },
+      error: (error) => {
+        this.messageError = 'Erreur lors de la mise à jour !';
+        this.isSuccess.set(false);
+        this.show.set(true);
       },
     });
+  }
+
+  changeTheme() {
+    this.isDarkMode = this.themeService.isDarkMode(); // Get current theme
+    this.themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
   }
 }
