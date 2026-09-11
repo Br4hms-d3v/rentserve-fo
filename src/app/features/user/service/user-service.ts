@@ -5,6 +5,7 @@ import { UserModel } from '../model/user';
 import { UserForm } from '../model/userForm';
 import { UserTokenModel } from '../model/userToken';
 import { tap } from 'rxjs';
+import { ChangePasswordForm } from '../model/changePassword';
 
 @Injectable({
   providedIn: 'root',
@@ -42,13 +43,21 @@ export class UserService {
     );
   }
 
+  changePassword(id: number, form: ChangePasswordForm) {
+    const headers = this.getAuthHeader();
+    return this._http.patch(this.apiUrl + id + '/change-password', form, {
+      headers,
+      responseType: 'text',
+    });
+  }
+
   private updateLocalStoredToken(response: UserTokenModel) {
     const userJson = localStorage.getItem('currentUser');
     if (!userJson) return;
 
     const currentUser = JSON.parse(userJson);
 
-    // On fusionne les nouvelles infos (pseudo, email, etc.) et surtout le nouveau token
+    // Update the new currentUser
     const updatedUser = {
       ...currentUser,
       ...response,
