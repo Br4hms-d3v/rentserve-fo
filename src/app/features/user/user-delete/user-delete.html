@@ -1,1 +1,107 @@
-<p>user-delete works!</p>
+<div class="delete-user-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+
+  <h1>{{ title }}</h1>
+
+  <p>
+    Avant de supprimer définitivement votre compte, veuillez prendre connaissance des conséquences de cette
+    action.
+    La suppression de votre compte est définitive et irréversible. Toutes les données associées à votre compte seront
+    supprimées et vous ne pourrez plus y accéder.
+    Pour confirmer la suppression de votre compte,<br />
+    <b>vous devrez saisir l’adresse e-mail associée à votre compte ainsi que votre mot de passe.</b> <br />
+    Une fois la suppression confirmée, il ne sera plus possible de récupérer votre compte ou les données qui lui sont
+    associées.
+  </p>
+
+  <form [formGroup]="deleteUserForm" class="userDelete-form">
+    <tui-textfield class="form-field" iconStart="@tui.at-sign">
+      <label tuiLabel>Email</label>
+      <input
+        tuiInput
+        tuiAutoFocus
+        type="email"
+        formControlName="email"
+      />
+    </tui-textfield>
+
+    <tui-textfield class="form-field" iconStart="@tui.key-round">
+      <label tuiLabel>Mot de passe</label>
+      <input tuiInput
+             tuiAutoFocus
+             type="password"
+             #passwordInput
+             formControlName="password"
+             [type]="passwordInput.type"
+      />
+
+      <button
+        class="custom-icon-textfield"
+        appearance="secondary"
+        size="m"
+        tuiButton
+        type="button"
+        (click)="passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password'"
+      >
+        <tui-icon
+          [icon]="passwordInput.type === 'password' ? '@tui.eye' : '@tui.eye-off'"></tui-icon>
+      </button>
+    </tui-textfield>
+
+    <button
+      tuiButton
+      type="button"
+      (click)="openDialog = true"
+    >
+      Supprimer
+    </button>
+
+  </form>
+
+</div>
+
+<!-- Dialog -->
+<ng-template
+  let-observer
+  [tuiDialogOptions]="{label: 'Suppression de votre compte'}"
+  [(tuiDialog)]="openDialog"
+>
+  <div (submit.prevent)="observer.complete()"
+  >
+    <body>
+    <p>Êtes vous sur de supprimer ?</p>
+    </body>
+    <footer>
+      <button
+        appearance="secondary"
+        tuiButton
+        type="button"
+        (click)="observer.complete()"
+      >
+        NON
+      </button>
+      <button
+        tuiButton
+        type="submit"
+        (click)="onDeleteAccount()"
+      >
+        OUI
+      </button>
+    </footer>
+  </div>
+</ng-template>
+
+<!-- Notifications -->
+<ng-template
+  [tuiNotificationOptions]="{label: 'Message: ', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [(tuiNotification)]="show"
+>
+  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <button
+    tuiButton
+    type="button"
+    (click)="show.set(false)"
+  >
+    Close
+  </button>
+</ng-template>
+

@@ -6,6 +6,7 @@ import { UserForm } from '../model/userForm';
 import { UserTokenModel } from '../model/userToken';
 import { tap } from 'rxjs';
 import { ChangePasswordForm } from '../model/changePassword';
+import { UserDeleteForm } from '../model/userDeleteForm';
 
 @Injectable({
   providedIn: 'root',
@@ -65,5 +66,10 @@ export class UserService {
     };
 
     localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+  }
+
+  delete(id: number, form: UserDeleteForm) {
+    const headers = this.getAuthHeader();
+    return this._http.patch(this.apiUrl + id + '/delete', form, { headers, responseType: 'text' });
   }
 }

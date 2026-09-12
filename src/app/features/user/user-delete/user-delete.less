@@ -1,0 +1,99 @@
+@light-background-color: #F1EFE8;
+@light-title: #3B6D11 !important;
+@light-text: #5C8A3A !important;
+@light-label-input: #3B6D11 !important;
+@light-input: #5C8A3A !important;
+@light-icon-input: #3B6D11 !important;
+
+@dark-background-color: #1C1F17;
+@dark-title: #8FC15C;
+@dark-text: #A6A599 !important;
+@dark-label-input: #8FC15C !important;
+@dark-input: #8FC15C !important;
+@dark-icon-input: #7FB84D !important;
+
+.delete-user-container {
+  height: 70vh;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-family: 'Libre Baskerville italic', serif;
+  text-align: center;
+  padding: 20px;
+}
+
+p {
+  margin: auto;
+  width: 100%;
+  max-width: 600px;
+  text-align: justify;
+}
+
+.userDelete-form {
+  width: 80%;
+  max-width: 900px;
+  flex-direction: column;
+  margin: 25px auto;
+  display: grid;
+  gap: 20px 40px;
+  grid-column: 1 / -1;
+}
+
+// THEME
+
+.light-mode {
+  h1 {
+    color: @light-title;
+  }
+
+  p {
+    color: @light-text;
+  }
+
+  input[tuiInput] {
+    color: @light-label-input;
+  }
+
+  label[tuiLabel] {
+    color: @light-label-input;
+  }
+
+  .form-field,
+  .form-field:focus-within,
+  .form-field:hover {
+    color: @light-icon-input;
+  }
+
+  tui-icon {
+    color: @light-icon-input;
+  }
+}
+
+.dark-mode {
+  h1 {
+    color: @dark-title;
+  }
+
+  p {
+    color: @dark-text;
+  }
+
+  input[tuiInput] {
+    color: @dark-label-input;
+  }
+
+  label[tuiLabel] {
+    color: @dark-label-input;
+  }
+
+  .form-field,
+  .form-field:focus-within,
+  .form-field:hover {
+    color: @dark-icon-input;
+  }
+
+  tui-icon {
+    color: @dark-icon-input;
+  }
+}
