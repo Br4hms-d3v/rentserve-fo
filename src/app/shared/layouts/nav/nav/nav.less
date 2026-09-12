@@ -31,7 +31,7 @@
   }
 
   .spaceBtwnMatFav {
-    margin:10px;
+    margin: 10px;
   }
 
   .spacer {
@@ -50,9 +50,14 @@
     border-radius: 25px; // Style arrondi similaire aux boutons extended fab
   }
 
+  // DRAWER //
+
+
+
   // THEME //
 
   /* Style pour Light Mode */
+
   &.light-mode {
     background-color: @light-bg;
     color: @light-text;
@@ -70,9 +75,15 @@
       background-color: @light-btn-rent;
       color: #ffffff;
     }
+
+    /* Drawer */
+    .drawer{
+      background-color: @light-bg;
+    }
   }
 
   /* Style pour Dark Mode */
+
   &.dark-mode {
     background-color: @dark-bg;
     color: @dark-text;
@@ -92,17 +103,4 @@
       color: @light-text;
     }
   }
-}
-
-/* Style du Menu Déroulant (Dropdown) */
-tui-data-list {
-  background-color: @light-text;
-  padding: 4px 0;
-}
-a[tuiOption]{
-  color:@light-bg;
-}
-a[tuiOption]:hover {
-  background-color: #B4B2A9 !important;
-  color: @light-text !important;
 }

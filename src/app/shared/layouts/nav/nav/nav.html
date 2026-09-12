@@ -9,7 +9,7 @@
   <span class="spacer"></span>
 
 
-  @if (isAuthenticated) {
+  @if (isAuthenticated()) {
     <!-- First button materials  -->
     <button
       tuiButton
@@ -45,45 +45,30 @@
 
   <!-- Display the button when the user is connected -->
   <div class="action-buttons">
-    @if (isAuthenticated) {
+    @if (isAuthenticated()) {
       <button
         tuiButton
         type="button"
         size="m"
-        appearance="flat"
+        appearance="custom"
         iconEnd="@tui.shopping-bag"
         class="btn-rentServeBasket"
       >
         Panier
       </button>
 
-      <!-- DropMenu to edit profile -->
+      <!-- Drawer to see any dropMenu -->
       <button
-        tuiButton
-        tuiChevron
-        type="button"
-        size="m"
-        appearance="custom"
-        iconStart="@tui.user"
-        [tuiDropdown]="settingsMenu"
-        [(tuiDropdownOpen)]="isOpen"
         class="btn-login"
+        tuiButton
+        iconEnd="@tui.chevrons-right"
+        type="button"
+        iconStart="@tui.user"
+        (click)="openDrawer.set(true)"
       >
         {{ firstname }}
       </button>
 
-      <ng-template #settingsMenu>
-        <tui-data-list>
-          <div class="dropdown-menu">
-            <a tuiOption [routerLink]="['user', 'profile']" class="btnSetting">
-              Voir mon profil
-            </a>
-            <a tuiOption type="button" (click)="logout()" class="btnSetting">
-              Se déconnecter
-            </a>
-          </div>
-        </tui-data-list>
-      </ng-template>
     } @else {
       <button
         tuiButton
@@ -99,3 +84,53 @@
     }
   </div>
 </header>
+
+<!-- Drawer -->
+
+<tui-drawer
+  *tuiPopup="openDrawer()"
+  direction="end"
+  class="drawer"
+  [overlay]="true"
+  (tuiClose)="onClose()"
+>
+  <header class="header">
+    <h2 tuiHeader>
+      <div tuiTitle>{{ firstname }}</div>
+
+      <div tuiAccessories>
+        <button tuiButton type="button" (click)="onClose()">
+          X
+        </button>
+      </div>
+    </h2>
+  </header>
+
+  <div class="drawer-links">
+    <div class="link-drawer">
+      <a [routerLink]="['user', 'profile']" (click)="onClose()">
+        Voir mon profil
+      </a>
+    </div>
+
+    <div class="link-drawer">
+      <a>Mes outils</a>
+    </div>
+
+    <div class="link-drawer">
+      <a>Mes services</a>
+    </div>
+
+    <div class="link-drawer">
+      <a>Voir mon solde</a>
+    </div>
+  </div>
+
+  <footer>
+    <a
+      type="button"
+      (click)="logout()">
+      Deconnecter
+    </a>
+  </footer>
+</tui-drawer>
