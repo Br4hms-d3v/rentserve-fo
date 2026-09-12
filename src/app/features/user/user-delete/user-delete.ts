@@ -34,6 +34,7 @@ export class UserDelete implements OnInit {
   isDarkMode = false; // Change theme from light to dark
   protected readonly show = signal(false); // Show notification
   protected readonly isSuccess = signal(false); // Change color Green for success or Red error
+  dialogClass = 'red-dialog';
 
   title = 'Suppression du compte';
   protected userId!: number;

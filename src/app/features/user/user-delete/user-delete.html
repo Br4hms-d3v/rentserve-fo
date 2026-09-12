@@ -49,6 +49,7 @@
 
     <button
       tuiButton
+      class="btn-delete"
       type="button"
       (click)="openDialog = true"
     >
@@ -65,15 +66,15 @@
   [tuiDialogOptions]="{label: 'Suppression de votre compte'}"
   [(tuiDialog)]="openDialog"
 >
-  <div (submit.prevent)="observer.complete()"
-  >
-    <body>
-    <p>Êtes vous sur de supprimer ?</p>
-    </body>
-    <footer>
+  <!-- Ajout de la classe "dialog-suppression" ici 👇 -->
+  <div class="dialog-suppression">
+    <p>Êtes-vous sûr de vouloir supprimer ?</p>
+
+    <footer class="dialog-footer">
       <button
         appearance="secondary"
         tuiButton
+        class="btn-cancel"
         type="button"
         (click)="observer.complete()"
       >
@@ -81,8 +82,9 @@
       </button>
       <button
         tuiButton
-        type="submit"
-        (click)="onDeleteAccount()"
+        class="btn-delete"
+        type="button"
+        (click)="onDeleteAccount(); observer.complete()"
       >
         OUI
       </button>

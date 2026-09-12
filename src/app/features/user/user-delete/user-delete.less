@@ -40,6 +40,42 @@ p {
   grid-column: 1 / -1;
 }
 
+.btn-delete {
+  background-color: red;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+// Dialog
+::ng-deep tui-dialog:has(.dialog-suppression) {
+  background-color: @light-background-color !important;
+  color: red;
+}
+
+/* change also the title of dialog*/
+
+::ng-deep tui-dialog:has(.dialog-suppression) .t-title {
+  color: @light-background-color;
+}
+
+/* Button cancel */
+::ng-deep tui-dialog:has(.dialog-suppression) .btn-cancel {
+  background-color: orange !important;
+  color: white;
+}
+
+/* Button delete */
+::ng-deep tui-dialog:has(.dialog-suppression) .btn-delete {
+  background-color: red !important;
+  color: white;
+}
+
+
 // THEME
 
 .light-mode {
