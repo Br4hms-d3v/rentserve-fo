@@ -75,8 +75,8 @@
       <ng-template #settingsMenu>
         <tui-data-list>
           <div class="dropdown-menu">
-            <a tuiOption [routerLink]="['user', userId, 'edit-profile']" class="btnSetting">
-              Modifier profil
+            <a tuiOption [routerLink]="['user', 'profile']" class="btnSetting">
+              Voir mon profil
             </a>
             <a tuiOption type="button" (click)="logout()" class="btnSetting">
               Se déconnecter

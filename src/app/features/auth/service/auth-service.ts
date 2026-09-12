@@ -62,11 +62,20 @@ export class AuthService {
       );
   }
 
+  /** * Update the name of pseudo when the user edits his pseudo */ updatePseudo(
+    firstName: string | null | undefined,
+  ): void {
+    if (this._currentUser.value && firstName != null) {
+      this._currentUser.value.firstName = firstName;
+      localStorage.setItem('currentUser', JSON.stringify(this._currentUser.value));
+      this._currentUser.next(this._currentUser.value);
+    }
+  }
+
   logout(): void {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
 
     this._currentUser.next(null);
   }
-
 }
