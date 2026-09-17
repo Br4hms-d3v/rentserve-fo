@@ -54,4 +54,11 @@ export class FavorService {
     const headers = this.getAuthHeader();
     return this._http.delete(this.apiUrl + 'delete/' + id, { headers, responseType: 'text' });
   }
+
+  getListFavourByNameOfCategory(nameOfCategory: string) {
+    const headers = this.getAuthHeader();
+    return this._http
+      .get<FavorResponse>(this.apiUrl + 'category/' + nameOfCategory, { headers })
+      .pipe(map((response: FavorResponse) => response._embedded.favorDTOList));
+  }
 }
