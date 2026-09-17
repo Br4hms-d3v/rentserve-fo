@@ -33,7 +33,11 @@
           </td>
 
           <td tuiTd>
-            <a id="linkToMaterial">{{ categoryMat.nameCategory }}</a>
+            <a id="linkToMaterial"
+               [routerLink]="['/material','list',categoryMat.nameCategory]"
+            >
+              {{ categoryMat.nameCategory }}
+            </a>
           </td>
 
           @if (role == 'ADMIN' || role == 'MODERATOR') {
