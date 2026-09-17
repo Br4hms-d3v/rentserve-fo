@@ -40,19 +40,25 @@ export class MaterialService {
     return this._http.get<MaterialDetailModel>(this.apiUrl + id, { headers });
   }
 
-  createMaterial(form: MaterialForm){
+  createMaterial(form: MaterialForm) {
     const headers = this.getAuthHeader();
-    return this._http.post<MaterialForm>(this.apiUrl + 'new', form, {headers});
+    return this._http.post<MaterialForm>(this.apiUrl + 'new', form, { headers });
   }
 
-  editMaterial(id: number, form: MaterialForm){
+  editMaterial(id: number, form: MaterialForm) {
     const headers = this.getAuthHeader();
-    return this._http.put(this.apiUrl + 'edit/' + id, form, {headers});
+    return this._http.put(this.apiUrl + 'edit/' + id, form, { headers });
   }
 
   deleteMaterial(id: number | undefined) {
     const headers = this.getAuthHeader();
-    return this._http.delete(this.apiUrl + 'delete/' + id, {headers, responseType: 'text'});
+    return this._http.delete(this.apiUrl + 'delete/' + id, { headers, responseType: 'text' });
   }
 
+  getListMaterialsByNameCategory(nameOfCategory: string | undefined) {
+    const headers = this.getAuthHeader();
+    return this._http
+      .get<MaterialResponse>(this.apiUrl + 'category/' + nameOfCategory, { headers })
+      .pipe(map((response) => response._embedded.materialDTOList));
+  }
 }
