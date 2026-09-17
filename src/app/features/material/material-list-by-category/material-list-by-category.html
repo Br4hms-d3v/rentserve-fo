@@ -13,16 +13,15 @@
     }
   </tui-breadcrumbs>
 
-
-  <h1>Liste des services</h1>
+  <h1>Liste des matériels: {{categorySelected}}</h1>
 
   <div class="container-search-filter">
     <!-- Button search -->
-    <tui-textfield class="inputSearch" iconStart="@tui.search">
-      <label tuiLabel> Rechercher</label>
+    <tui-textfield class="inputSearch" iconEnd="@tui.search">
+      <label tuiLabel>Rechercher</label>
       <input
         tuiInput
-        placeholder="Entrez le service"
+        placeholder="Entrez un matériel"
         (input)="onSearch($event)"
       />
     </tui-textfield>
@@ -43,34 +42,35 @@
 
     <span class="spacer"></span>
 
-    <!-- Button create new favor -->
+    <!-- Button create new material -->
     <button
       tuiButton
       appearance="primary"
       class="btn-create"
-      iconEnd="@tui.sparkles"
+      iconStart="@tui.hammer"
       type="submit"
-      [routerLink]="['/favor','create', 'new-favor']"
+      [routerLink]="['/material', 'create','new-material']"
     >
-      Créer un nouveau service
+      Créer un nouveau matériel
     </button>
   </div>
 
   <!-- Cards -->
   <div class="cards">
-    @for (favor of paginatedFavor(); track favor.id) {
+    @for (material of paginatedMaterials; track material.id) {
       <div
         tuiCardMedium
         appearance="floating"
-        class="cards-favor-category"
+        class="cards-material-category"
       >
 
         <!-- Title -->
         <h2 tuiTitle>
-          {{ favor.nameFavor }}
+          {{ material.nameMaterial }}
         </h2>
 
         <!-- Actions -->
+
         <div class="card-actions">
           @if (role == 'ADMIN' || role == 'MODERATOR') {
             <!-- Menu -->
@@ -81,42 +81,45 @@
               iconStart="@tui.ellipsis"
               title="Actions"
               aria-label="Actions"
-              [tuiDropdown]="sousMenuFavor"
-              [tuiDropdownOpen]="openDropdownFavorId === favor.id"
-              (click)="toggleDropdown(favor.id)"
+              [tuiDropdown]="sousMenuMaterial"
+              [tuiDropdownOpen]="openMaterialId === material.id"
+              (click)="toggleDropdown(material.id)"
             >
             </button>
 
             <!-- Dropdown -->
-            <ng-template #sousMenuFavor let-close>
-              <tui-data-list>
+            <ng-template
+              #sousMenuMaterial
+              let-close
+            >
 
+              <tui-data-list>
+                <!-- Detail about the material -->
                 <button
                   tuiOption
                   type="button"
-                  (click)="close(); openDetailPopout(favor.id)"
+                  (click)="close(); openDetailPopout(material.id)"
                 >
                   Détail
                 </button>
 
+                <!-- Edit the material -->
                 <button
                   tuiOption
                   type="button"
-                  [routerLink]="['/favor', favor.id, 'edit']"
+                  [routerLink]="['/material',material.id,'edit']"
                   (click)="close()"
                 >
                   Modifier
                 </button>
-
+                <!-- Delete material -->
                 <button
                   tuiOption
                   type="button"
-                  (click)="close()"
-                  [routerLink]="['/favor', favor.id, 'delete-favor']"
+                  [routerLink]="['/material',material.id,'delete-material']"
                 >
                   Supprimer
                 </button>
-
               </tui-data-list>
             </ng-template>
           }
@@ -124,7 +127,7 @@
           <!-- Generate space between buttons -->
           <span class="spacer"></span>
 
-          <!-- Go to see all favour -->
+          <!-- Go to se all materials -->
           <button
             tuiButton
             appearance="flat"
@@ -148,23 +151,25 @@
       [(index)]="index"
     ></tui-pagination>
   </div>
+
 </div>
 
 <ng-template
   let-observer
   [tuiPopoutOptions]="{
-    pip: true,
-    features: {
-      height: 400,
-      width: 320
-    }
-  }"
+      pip: true,
+      features: {
+        height: 400,
+        width: 320
+      }
+    }"
   [(tuiPopout)]="open"
 >
   @if (open()) {
-    <app-favor-by-id
-      [favorId]="openFavorId!"
+    <app-material-by-id
+      [materialId]="openMaterialId!"
       (close)="closeDetailPopOut()"
-    ></app-favor-by-id>
+    ></app-material-by-id>
   }
 </ng-template>
+

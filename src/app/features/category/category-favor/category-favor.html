@@ -33,7 +33,9 @@
           </td>
 
           <td tuiTd>
-            <a id="linkToFavor">{{ categoryFav.nameCategory }}</a>
+            <a id="linkToFavor"
+               [routerLink]="['/favor','list', categoryFav.nameCategory]"
+            >{{ categoryFav.nameCategory }}</a>
           </td>
 
           @if (role == 'ADMIN' || role == 'MODERATOR') {

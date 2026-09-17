@@ -1,0 +1,191 @@
+@light-background-color: #F1EFE8;
+@light-breadcrumb: #5F5E5A !important;
+@light-title: #3B6D11 !important;
+@light-label: #3B6D11 !important;
+@light-input: #5F5E5A !important;
+@light-buton: #5C8A3A !important;
+@light-button-text: #EAF3DE;
+@light-background-card: #D3D1C7;
+@light-text-card: #2C2C2A;
+@light-text-button-card: #993C1D;
+
+@dark-background-color: #1C1F17;
+@dark-title: #8FC15C;
+@dark-label: #8FC15C !important;
+@dark-input: #A6A599 !important;
+@dark-buton: #7FB84D !important;
+@dark-button-text: #40261C;
+@dark-background-card: #A6A599;
+@dark-text-card: #F1EFE8;
+@dark-text-button-card: #40261C;
+
+/* Body */
+.cards-container {
+  height: 150vh;
+  width: 100%;
+}
+
+tui-breadcrumbs{
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+/* Title */
+h1 {
+  font-family: 'Libre Baskerville italic', serif;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Input search */
+.inputSearch {
+  width: 300px;
+}
+
+/* Cards for material */
+.cards {
+  width: 100%;
+  padding: 20px 40px;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 20px;
+
+  mat-card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  mat-card-header {
+    justify-content: center;
+  }
+}
+
+.cards-material-category {
+  width: 105%;
+}
+
+
+/* Space between button */
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Paginator */
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+/* Div with search, sort and create new material */
+.container-search-filter {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 68%;
+  border-radius: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  mat-form-field {
+    padding-top: 15px;
+    width: 350px;
+  }
+
+  /* To make sure the buttons are in the middle */
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+}
+
+// THEME
+
+.light-mode {
+  background-color: @light-background-color;
+
+  tui-breadcrumbs {
+    a {
+      color: @light-breadcrumb;
+    }
+  }
+
+  h1 {
+    color: @light-title;
+  }
+
+  .inputSearch {
+    label[tuiLabel] {
+      color: @light-label;
+    }
+
+    input[tuiInput] {
+      color: @light-input;
+    }
+  }
+
+  .inputSearch,
+  .inputSearch:focus-within,
+  .inputSearch:hover {
+    color: @light-label;
+  }
+
+  .btn-filter, .btn-create {
+    background-color: @light-buton;
+    color: @light-button-text;
+  }
+
+  .cards-material-category {
+    background-color: @light-background-card;
+    color: @light-text-card;
+
+    button {
+      color: @light-text-button-card;
+    }
+  }
+
+}
+
+.dark-mode {
+  background-color: @dark-background-color;
+
+  h1 {
+    color: @dark-title;
+  }
+
+  .inputSearch {
+    label[tuiLabel] {
+      color: @dark-label;
+    }
+
+    input[tuiInput] {
+      color: @dark-input;
+    }
+  }
+
+  .inputSearch,
+  .inputSearch:focus-within,
+  .inputSearch:hover {
+    color: @dark-label;
+  }
+
+
+  .btn-filter, .btn-create {
+    background-color: @dark-buton;
+    color: @dark-button-text;
+  }
+
+  .cards-material-category {
+    background-color: @dark-background-card;
+    color: @dark-text-card;
+
+    button {
+      color: @dark-text-button-card;
+    }
+  }
+
+}

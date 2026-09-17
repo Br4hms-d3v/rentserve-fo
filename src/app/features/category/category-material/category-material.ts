@@ -6,10 +6,11 @@ import { CategoryService } from '../service/category-service';
 import { AuthService } from '../../auth/service/auth-service';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { CategoryModel } from '../model/Category';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-category-material',
-  imports: [TuiInput, TuiTable, TuiTextfield, TuiButton, TuiPagination],
+  imports: [TuiInput, TuiTable, TuiTextfield, TuiButton, TuiPagination, RouterLink],
   templateUrl: './category-material.html',
   styleUrl: './category-material.less',
 })
