@@ -6,10 +6,11 @@ import { ThemeService } from '../../../core/services/ThemeService';
 import { TuiButton, TuiInput, TuiTextfield } from '@taiga-ui/core';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiPagination } from '@taiga-ui/kit';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-category-favor',
-  imports: [TuiInput, TuiTable, TuiTextfield, TuiButton, TuiPagination],
+  imports: [TuiInput, TuiTable, TuiTextfield, TuiButton, TuiPagination, RouterLink],
   templateUrl: './category-favor.html',
   styleUrl: './category-favor.less',
 })
