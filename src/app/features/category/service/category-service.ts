@@ -62,4 +62,9 @@ export class CategoryService {
     const headers = this.getAuthHeader();
     return this._http.put<CategoryForm>(this.apiUrl + 'edit/' + id, form, { headers });
   }
+
+  deleteCategory(id: number) {
+    const headers = this.getAuthHeader();
+    return this._http.delete(this.apiUrl + 'delete/' + id, { headers, responseType: 'text' });
+  }
 }

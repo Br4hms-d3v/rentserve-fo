@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { TuiButton, TuiInput, TuiTextfield } from '@taiga-ui/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { TuiButton, TuiDialog, TuiInput, TuiTextfield } from '@taiga-ui/core';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiPagination } from '@taiga-ui/kit';
 import { CategoryService } from '../service/category-service';
@@ -7,10 +7,20 @@ import { AuthService } from '../../auth/service/auth-service';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { CategoryModel } from '../model/Category';
 import { RouterLink } from '@angular/router';
+import { CategoryDelete } from '../category-delete/category-delete';
 
 @Component({
   selector: 'app-category-material',
-  imports: [TuiInput, TuiTable, TuiTextfield, TuiButton, TuiPagination, RouterLink],
+  imports: [
+    TuiInput,
+    TuiTable,
+    TuiTextfield,
+    TuiButton,
+    TuiPagination,
+    RouterLink,
+    TuiDialog,
+    CategoryDelete,
+  ],
   templateUrl: './category-material.html',
   styleUrl: './category-material.less',
 })
@@ -96,5 +106,18 @@ export class CategoryMaterial implements OnInit {
   // Change the size of pagination
   updatePagination() {
     this.length = Math.ceil(this.filteredCategoriesMaterials.length / this.size);
+  }
+
+  // Dialog to delete
+  protected open = signal<boolean>(false);
+  protected selectId!: number;
+
+  protected openDialogDelete(id: number) {
+    this.selectId = id;
+    this.open.set(true);
+  }
+
+  protected onDelete() {
+    this.open.set(false);
   }
 }

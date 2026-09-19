@@ -57,7 +57,16 @@
 
           @if (role == 'ADMIN') {
             <td tuiTd>
-              <button id="btnDelete" tuiButton type="button" appearance="negative" size="s">Supprimer</button>
+              <button
+                id="btnDelete"
+                tuiButton
+                type="button"
+                appearance="negative"
+                size="s"
+                (click)="openDialogDelete(categoryMat.id)"
+              >
+                Supprimer
+              </button>
             </td>
           }
         </tr>
@@ -70,4 +79,18 @@
     [style.float]="'center'"
     [(index)]="index"
   ></tui-pagination>
+
+  <!-- Dialog to delete category -->
+  <ng-template
+    [tuiDialogOptions]="{size: 's', label: 'Confirmation'}"
+    [(tuiDialog)]="open"
+  >
+    <app-category-delete
+      message="Supprimer cette catégorie ?"
+      [id]="selectId"
+      (confirmed)="onDelete()"
+      (cancelled)="open.set(false)"
+    />
+  </ng-template>
+
 </div>
