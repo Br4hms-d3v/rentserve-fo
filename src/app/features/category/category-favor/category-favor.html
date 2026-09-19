@@ -40,7 +40,16 @@
 
           @if (role == 'ADMIN' || role == 'MODERATOR') {
             <td tuiTd>
-              <button id="btnEdit" tuiButton type="button" appearance="secondary" size="s">Modifier</button>
+              <button
+                id="btnEdit"
+                tuiButton
+                type="button"
+                appearance="secondary"
+                size="s"
+                [routerLink]="['/category', categoryFav.id, 'edit-favor']"
+              >
+                Modifier
+              </button>
             </td>
           }
 
