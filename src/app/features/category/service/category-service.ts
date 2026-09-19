@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { CategoryModel, CategoryResponse } from '../model/Category';
 import { CategoryDetailModel } from '../model/categoryDetail';
+import { CategoryForm } from '../model/category-form';
 
 @Injectable({
   providedIn: 'root',
@@ -55,5 +56,10 @@ export class CategoryService {
   getCategory(id: number) {
     const headers = this.getAuthHeader();
     return this._http.get<CategoryDetailModel>(this.apiUrl + id, { headers });
+  }
+
+  editCategory(id: number, form: CategoryForm) {
+    const headers = this.getAuthHeader();
+    return this._http.put<CategoryForm>(this.apiUrl + 'edit/' + id, form, { headers });
   }
 }
