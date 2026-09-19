@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environment/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import {
-  CategoryModel,
-  CategoryResponse,
-} from '../model/Category';
+import { CategoryModel, CategoryResponse } from '../model/Category';
+import { CategoryDetailModel } from '../model/categoryDetail';
+import { CategoryForm } from '../model/category-form';
 
 @Injectable({
   providedIn: 'root',
@@ -52,5 +51,20 @@ export class CategoryService {
     return this._http
       .get<CategoryResponse>(this.apiUrl + 'list', { headers })
       .pipe(map((response) => response._embedded.categoryDTOList));
+  }
+
+  getCategory(id: number) {
+    const headers = this.getAuthHeader();
+    return this._http.get<CategoryDetailModel>(this.apiUrl + id, { headers });
+  }
+
+  editCategory(id: number, form: CategoryForm) {
+    const headers = this.getAuthHeader();
+    return this._http.put<CategoryForm>(this.apiUrl + 'edit/' + id, form, { headers });
+  }
+
+  deleteCategory(id: number) {
+    const headers = this.getAuthHeader();
+    return this._http.delete(this.apiUrl + 'delete/' + id, { headers, responseType: 'text' });
   }
 }

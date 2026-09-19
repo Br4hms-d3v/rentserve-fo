@@ -1,16 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CategoryModel } from '../model/Category';
 import { AuthService } from '../../auth/service/auth-service';
 import { CategoryService } from '../service/category-service';
 import { ThemeService } from '../../../core/services/ThemeService';
-import { TuiButton, TuiInput, TuiTextfield } from '@taiga-ui/core';
+import { TuiButton, TuiDialog, TuiInput, TuiTextfield } from '@taiga-ui/core';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiPagination } from '@taiga-ui/kit';
 import { RouterLink } from '@angular/router';
+import { CategoryDelete } from '../category-delete/category-delete';
 
 @Component({
   selector: 'app-category-favor',
-  imports: [TuiInput, TuiTable, TuiTextfield, TuiButton, TuiPagination, RouterLink],
+  imports: [
+    TuiInput,
+    TuiTable,
+    TuiTextfield,
+    TuiButton,
+    TuiPagination,
+    RouterLink,
+    CategoryDelete,
+    TuiDialog,
+  ],
   templateUrl: './category-favor.html',
   styleUrl: './category-favor.less',
 })
@@ -96,5 +106,18 @@ export class CategoryFavor implements OnInit {
   // Change the size of pagination
   updatePagination() {
     this.length = Math.ceil(this.filteredCategoriesFavour.length / this.size);
+  }
+
+  // Dialog to delete
+  protected open = signal<boolean>(false);
+  protected selectId!: number;
+
+  protected openDialogDelete(id: number) {
+    this.selectId = id;
+    this.open.set(true);
+  }
+
+  protected onDelete() {
+    this.open.set(false);
   }
 }

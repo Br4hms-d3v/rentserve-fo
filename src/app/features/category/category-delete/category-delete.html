@@ -1,0 +1,25 @@
+<div>
+  <p>{{ message }}</p>
+
+  <button tuiButton type="button" appearance="secondary" (click)="cancelled.emit()">
+    Annuler
+  </button>
+  <button tuiButton type="button" (click)="onConfirm()">
+    Supprimer
+  </button>
+</div>
+
+
+<ng-template
+  [tuiNotificationOptions]="{label: 'Modification', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [(tuiNotification)]="show"
+>
+  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <button
+    tuiButton
+    type="button"
+    (click)="show.set(false)"
+  >
+    Close
+  </button>
+</ng-template>
