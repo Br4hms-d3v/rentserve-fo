@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environment/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import {
-  CategoryModel,
-  CategoryResponse,
-} from '../model/Category';
+import { CategoryModel, CategoryResponse } from '../model/Category';
+import { CategoryDetailModel } from '../model/categoryDetail';
 
 @Injectable({
   providedIn: 'root',
@@ -52,5 +50,10 @@ export class CategoryService {
     return this._http
       .get<CategoryResponse>(this.apiUrl + 'list', { headers })
       .pipe(map((response) => response._embedded.categoryDTOList));
+  }
+
+  getCategory(id: number) {
+    const headers = this.getAuthHeader();
+    return this._http.get<CategoryDetailModel>(this.apiUrl + id, { headers });
   }
 }
