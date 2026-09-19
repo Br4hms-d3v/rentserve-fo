@@ -1,0 +1,103 @@
+@light-background-color: #F1EFE8;
+@light-title: #3B6D11 !important;
+@light-breadcrumb: #5F5E5A !important;
+@light-label-input: #3B6D11 !important;
+@light-label: #5F5E5A !important;
+@light-btn-cancel: #D9764A;
+@light-btn-save: #5C8A3A;
+
+@dark-background-color: #1C1F17 !important;
+@dark-title: #8FC15C !important;
+@dark-breadcrumb: #A6A599 !important;
+@dark-label-input: #8FC15C !important;
+@dark-label: #A6A599 !important;
+@dark-btn-cancel: #E8845A;
+@dark-btn-save: #7FB84D;
+
+.editCategory-container {
+  height: 80vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#titleEditCategory {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.category-form {
+  width: 90%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0 auto;
+}
+
+
+// THEME
+
+.light-mode {
+  background-color: @light-background-color;
+
+  #titleEditCategory {
+    color: @light-title;
+  }
+
+  tui-breadcrumbs {
+    color: @light-breadcrumb;
+
+    a {
+      color: @light-breadcrumb;
+    }
+  }
+
+  input[tuiInput] {
+    color: @light-label-input;
+  }
+
+  label[tuiLabel] {
+    color: @light-label;
+  }
+
+  #cancelDelete {
+    background-color: @light-btn-cancel;
+  }
+
+  #butonUpdate {
+    background-color: @light-btn-save;
+  }
+}
+
+
+.dark-mode {
+  background-color: @dark-background-color;
+
+  #titleEditCategory {
+    color: @dark-title;
+  }
+
+  tui-breadcrumbs {
+    color: @dark-breadcrumb;
+
+    a {
+      color: @dark-breadcrumb;
+    }
+  }
+
+  input[tuiInput] {
+    color: @dark-label-input;
+  }
+
+  label[tuiLabel] {
+    color: @dark-label;
+  }
+
+  #cancelDelete {
+    background-color: @dark-btn-cancel;
+  }
+
+  #butonUpdate {
+    background-color: @light-btn-save;
+  }
+}
