@@ -1,1 +1,27 @@
-<p>user-material-user works!</p>
+@if (userMaterialList.length <= 0) {
+  <p> vide comment ajouter des produits</p>
+} @else {
+
+<table tuiTable>
+  <thead>
+  <tr>
+    <th tuiTh>Image</th>
+    <th tuiTh>Nom du matériel</th>
+    <th tuiTh>Tarif</th>
+    <th tuiTh>Disponible</th>
+  </tr>
+  </thead>
+  <tbody tuiTbody>
+    @for (userMaterial of userMaterialList; track $index) {
+      <tr>
+        <td tuiTd>{{ userMaterial.picture }}</td>
+        <td tuiTd>{{ userMaterial.nameMaterial.nameMaterial }}</td>
+        <td tuiTd>{{ userMaterial.priceHourMaterial }} €</td>
+        <td tuiTd>{{ userMaterial.isAvailable }}</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+
+}

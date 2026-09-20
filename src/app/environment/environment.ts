@@ -6,4 +6,5 @@ export const environment = {
   materialEndPoint: 'api/material/', // Path for material routes
   favorEndPoint: 'api/favor/', // Path for favor routes
   userEndPoint: 'api/user/', // Path for user routes
+  userMaterialEndPoint: 'api/user-material/', // Path for user material routes
 };
