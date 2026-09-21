@@ -3,10 +3,13 @@ import { AuthService } from '../../auth/service/auth-service';
 import { UserMaterialService } from '../service/user-material-service';
 import { UserMaterialModel } from '../model/userMaterial';
 import { TuiTable } from '@taiga-ui/addon-table';
+import { TuiStatus } from '@taiga-ui/kit';
+import { TuiButton } from '@taiga-ui/core';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-user-material-user',
-  imports: [TuiTable],
+  imports: [TuiTable, TuiStatus, TuiButton, NgOptimizedImage],
   templateUrl: './user-material-user.html',
   styleUrl: './user-material-user.less',
 })
@@ -21,7 +24,6 @@ export class UserMaterialUser implements OnInit {
 
   ngOnInit() {
     this.getIdUser();
-    this.getUserMaterialById();
   }
 
   protected getIdUser() {
@@ -29,6 +31,7 @@ export class UserMaterialUser implements OnInit {
       if (user) {
         this.userId = user.id;
         // console.log(this.userId);
+        this.getUserMaterialById();
       }
     });
   }
@@ -36,7 +39,10 @@ export class UserMaterialUser implements OnInit {
   protected getUserMaterialById() {
     this._userMaterialService.getUserMaterialByUser(this.userId).subscribe({
       next: (userMaterials) => {
-        this.userMaterialList = userMaterials;
+        setTimeout(() => {
+          this.userMaterialList = userMaterials;
+        });
+        // this.userMaterialList = userMaterials;
         // console.log(this.userMaterialList);
       },
       error: (err) => {
