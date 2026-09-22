@@ -36,6 +36,6 @@ export class UserMaterialService {
 
   getUserMaterialDetail(id: number) {
     const headers = this.getAuthHeader();
-    return this._http.get<UserMaterialDetailModel>(this.apiUrl + id, { headers });
+    return this._http.get<UserMaterialDetailModel>(this.apiUrl + 'my-material/' + id, { headers });
   }
 }
