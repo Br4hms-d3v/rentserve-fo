@@ -7,6 +7,7 @@ import { TuiStatus } from '@taiga-ui/kit';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { NgOptimizedImage } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user-material-user',
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     NgOptimizedImage,
     TuiTablePagination,
     FormsModule,
-    TuiIcon
+    TuiIcon,
+    RouterLink,
   ],
   templateUrl: './user-material-user.html',
   styleUrl: './user-material-user.less',

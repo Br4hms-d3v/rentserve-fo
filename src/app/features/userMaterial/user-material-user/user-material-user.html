@@ -96,6 +96,8 @@
               size="xs"
               tuiIconButton
               type="button"
+              [routerLink]="['/user-material','user-material-detail']"
+              [state]="{ userMaterialId: userMaterial.id }"
             >
               Voir
             </button>
