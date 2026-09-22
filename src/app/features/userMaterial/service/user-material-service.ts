@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environment/environment';
 import { UserMaterialResponse } from '../model/userMaterial';
 import { map } from 'rxjs';
+import { UserMaterialDetailModel } from '../model/user-material-detail';
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +32,10 @@ export class UserMaterialService {
     return this._http
       .get<UserMaterialResponse>(this.apiUrl + 'user/' + id, { headers })
       .pipe(map((response) => response._embedded.userMaterialDTOList));
+  }
+
+  getUserMaterialDetail(id: number) {
+    const headers = this.getAuthHeader();
+    return this._http.get<UserMaterialDetailModel>(this.apiUrl + id, { headers });
   }
 }
