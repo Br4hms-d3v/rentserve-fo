@@ -2,61 +2,122 @@
   <p> vide comment ajouter des produits</p>
 } @else {
 
-  <h1>Mon matériels</h1>
-
+  <h1> Mon matériels </h1>
   <table tuiTable>
     <thead>
     <tr>
       <th tuiTh id="pictureMaterialTD">Image</th>
-      <th tuiTh id="nameMaterialTD">Nom du matériel</th>
+
+      <th tuiTh id="nameMaterialTD">
+        <div
+          class="name-header"
+          (click)="NameMaterialSearch()"
+        >
+          @if (!showNameMaterialSearch) {
+            <span>
+            Nom du matériel
+            <tui-icon
+              icon="@tui.search"
+              class="search-icon"></tui-icon>
+          </span>
+          }
+
+          @if (showNameMaterialSearch) {
+            <input
+              type="text"
+              class="name-search"
+              placeholder="Rechercher..."
+              [(ngModel)]="nameMaterialSearch"
+              (click)="$event.stopPropagation()"
+              (keydown)="$event.stopPropagation()"
+              autofocus
+            />
+          }
+        </div>
+      </th>
+
       <th tuiTh id="priceMaterialTD">Tarif</th>
       <th tuiTh id="availableMaterialTD">Disponible</th>
       <th tuiTh id="actionMaterialTD">Action</th>
     </tr>
     </thead>
+
     <tbody tuiTbody>
-      @for (userMaterial of userMaterialList; track $index) {
+      @for (userMaterial of paginatedUserMaterialList(); track $index) {
         <tr>
           <td tuiTd>
-            <img id="pictureMaterialIMG"
-                 ngSrc="/userMaterials/{{ userMaterial.picture }}"
-                 alt="{{ userMaterial.picture }}"
-                 width="100" height="100"
-                 priority
+            <img
+              id="pictureMaterialIMG"
+              ngSrc="/userMaterials/{{ userMaterial.picture }}"
+              alt="{{ userMaterial.picture }}"
+              width="100"
+              height="100"
+              priority
             />
-            <!--    inside balise img voir sharp with bun             ngSrcset="100w, 200w, 400w"-->
           </td>
-          <td tuiTd>{{ userMaterial.nameMaterial.nameMaterial }}</td>
-          <td tuiTd>{{ userMaterial.priceHourMaterial }} €</td>
-          <td tuiTd>{{ userMaterial.isAvailable }}</td>
+
           <td tuiTd>
-            <span tuiStatus>
-              <button
-                appearance="action"
-                iconStart="@tui.pencil"
-                size="xs"
-                tuiIconButton
-                type="button"
-              >
-                Modifier
-              </button>
+            {{ userMaterial.nameMaterial.nameMaterial }}
+          </td>
 
-              <button
-                appearance="action"
-                iconStart="@tui.trash"
-                size="xs"
-                tuiIconButton
-                type="button"
-              >
-                Supprimer
-              </button>
+          <td tuiTd>
+            {{ userMaterial.priceHourMaterial }} €
+          </td>
 
-            </span>
+          <td tuiTd>
+            {{ userMaterial.isAvailable }}
+          </td>
+
+          <td tuiTd>
+          <span tuiStatus>
+            <button
+              appearance="action"
+              iconStart="@tui.pencil"
+              size="xs"
+              tuiIconButton
+              type="button"
+            >
+              Modifier
+            </button>
+
+            <button
+              appearance="action"
+              iconStart="@tui.trash"
+              size="xs"
+              tuiIconButton
+              type="button"
+            >
+              Supprimer
+            </button>
+
+            <button
+              appearance="action"
+              iconStart="@tui.scan-eye"
+              size="xs"
+              tuiIconButton
+              type="button"
+            >
+              Voir
+            </button>
+          </span>
           </td>
         </tr>
       }
     </tbody>
+    <tfoot>
+    <tr>
+      <td colspan="5">
+        <tui-table-pagination
+          [items]="sizeOptions"
+          [total]="total"
+          [(page)]="page"
+          [(size)]="size"
+        />
+      </td>
+    </tr>
+    </tfoot>
   </table>
+
 
 
 }
