@@ -5,5 +5,5 @@ import { UserMaterialDetail } from './user-material-detail/user-material-detail'
 
 export const user_material_routes: Routes = [
   { path: 'my-user-material', component: UserMaterialUser, canActivate: [authGuard] },
-  { path: 'user-material-detail', component: UserMaterialDetail, canActivate: [authGuard] },
+  { path: 'user-material-detail/:id', component: UserMaterialDetail, canActivate: [authGuard] },
 ];
