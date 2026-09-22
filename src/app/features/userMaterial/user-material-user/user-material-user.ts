@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/service/auth-service';
 import { UserMaterialService } from '../service/user-material-service';
 import { UserMaterialModel } from '../model/userMaterial';
@@ -27,6 +27,7 @@ import { RouterLink } from '@angular/router';
 export class UserMaterialUser implements OnInit {
   private readonly _authService = inject(AuthService); // Get the id from user connected
   private readonly _userMaterialService = inject(UserMaterialService); // Get all materials from user ID
+  private readonly _cdr = inject(ChangeDetectorRef);
 
   protected userId!: number;
   userMaterialList: UserMaterialModel[] = [];
@@ -62,6 +63,7 @@ export class UserMaterialUser implements OnInit {
       next: (userMaterials) => {
         this.userMaterialList = userMaterials;
         this.total = userMaterials.length;
+        this._cdr.detectChanges();
         // console.log(this.userMaterialList);
       },
       error: (err) => {
