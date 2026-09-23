@@ -1,7 +1,24 @@
+@light-background-color: #F1EFE8;
+@light-title: #3B6D11 !important;
+@light-strong: #993C1D !important;
+@light-text: #3D4A2A;
+@light-border: #D9764A;
+
+@dark-background-color: #1C1F17;
+@dark-title: #8FC15C;
+@dark-strong: #E8845A !important;
+@dark-text: #F1EFE8;
+@dark-border: #A6A599;
+
+.userMaterialDetail {
+  height: 90vh;
+  padding-bottom: 25px;
+}
+
 h1 {
-  padding-top: 20px;
-  margin: 0 0 30px 0;
-  font-size: 24px;
+  margin-top: 0;
+  padding-top: 25px;
+  font-family: 'Libre Baskerville italic', serif;
   text-align: center;
 }
 
@@ -19,10 +36,9 @@ h1 {
 
 
 // ========================================
-// INFORMATIONS
+// INFORMATION'S
 // ========================================
 .material-info {
-  border-right: 4px solid #111;
   padding: 20px;
   box-sizing: border-box;
   min-height: 500px;
@@ -49,7 +65,7 @@ h1 {
 
 
 // ========================================
-// GALERIE
+// PICTURES
 // ========================================
 .material-gallery {
   display: grid;
@@ -61,8 +77,8 @@ h1 {
 
 
 .picture-container {
-  width: 250px;
-  height: 250px;
+  width: 225px;
+  height: 225px;
   border: 2px solid #111;
   box-sizing: border-box;
 
@@ -77,6 +93,53 @@ h1 {
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+}
+
+// THEME
+
+.light-mode {
+  background-color: @light-background-color;
+
+  h1 {
+    color: @light-title;
+  }
+
+  .material-info {
+    border-right: 4px solid @light-border;
+  }
+
+  .material-property strong,
+  .material-description strong {
+    color: @light-strong;
+  }
+
+  .material-property p,
+  .material-description p {
+    color: @light-text;
+  }
+}
+
+
+.dark-mode{
+  background-color: @dark-background-color;
+
+  h1 {
+    color: @dark-title;
+  }
+
+  .material-info {
+    border-right: 4px solid @dark-border;
+  }
+
+  .material-property strong,
+  .material-description strong {
+    color: @dark-strong;
+  }
+
+  .material-property p,
+  .material-description p {
+    color: @dark-text;
   }
 }
 

@@ -1,10 +1,10 @@
-<div>
+<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="userMaterialDetail">
   @if (userMaterialDetail; as userMaterial) {
     <h1>
       {{ userMaterial.material.nameMaterial }}
     </h1>
 
-    <div class="material-detail">
+    <div class="material-detail" >
 
       <!-- Detail about user material -->
       <section class="material-info">
@@ -67,5 +67,4 @@
   } @else {
       <h1>La liste est vide</h1>
   }
-
 </div>
