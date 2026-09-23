@@ -5,9 +5,10 @@ import { UserMaterialModel } from '../model/userMaterial';
 import { TuiTable, TuiTablePagination } from '@taiga-ui/addon-table';
 import { TuiStatus } from '@taiga-ui/kit';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
-import { NgOptimizedImage } from '@angular/common';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { ThemeService } from '../../../core/services/ThemeService';
 
 @Component({
   selector: 'app-user-material-user',
@@ -20,6 +21,7 @@ import { RouterLink } from '@angular/router';
     FormsModule,
     TuiIcon,
     RouterLink,
+    NgClass,
   ],
   templateUrl: './user-material-user.html',
   styleUrl: './user-material-user.less',
@@ -27,8 +29,10 @@ import { RouterLink } from '@angular/router';
 export class UserMaterialUser implements OnInit {
   private readonly _authService = inject(AuthService); // Get the id from user connected
   private readonly _userMaterialService = inject(UserMaterialService); // Get all materials from user ID
+  private _themeService = inject(ThemeService); // Call the service to change color theme
   private readonly _cdr = inject(ChangeDetectorRef);
 
+  isDarkMode = false; // Change theme from light to dark
   protected userId!: number;
   userMaterialList: UserMaterialModel[] = [];
   protected messageSuccess = '';
@@ -56,6 +60,7 @@ export class UserMaterialUser implements OnInit {
         this.getUserMaterialById();
       }
     });
+    this.changeTheme();
   }
 
   protected getUserMaterialById() {
@@ -92,5 +97,10 @@ export class UserMaterialUser implements OnInit {
     }
 
     this.page = 0;
+  }
+
+  changeTheme() {
+    this.isDarkMode = this._themeService.isDarkMode(); // Get current theme
+    this._themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
   }
 }
