@@ -22,7 +22,9 @@ export const routes: Routes = [
     loadChildren: () => import('./features/user/user.routes').then((r) => r.user_routes),
   },
   {
-    path: 'category',
-    loadChildren: () => import('./features/category/category.routes').then((r) => r.category_routes),
-  }
+    path: 'category', loadChildren: () => import('./features/category/category.routes').then((r) => r.category_routes),
+  },
+  {
+    path: 'user-material', loadChildren: () => import('./features/userMaterial/user-material.routes').then((r) => r.user_material_routes),
+  },
 ];

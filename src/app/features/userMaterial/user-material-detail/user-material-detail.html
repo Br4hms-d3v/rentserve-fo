@@ -1,0 +1,70 @@
+<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="userMaterialDetail">
+  @if (userMaterialDetail; as userMaterial) {
+    <h1>
+      {{ userMaterial.material.nameMaterial }}
+    </h1>
+
+    <div class="material-detail" >
+
+      <!-- Detail about user material -->
+      <section class="material-info">
+        <div class="material-description">
+          <strong>Description</strong>
+          <p>
+            {{ userMaterial.descriptionMaterial }}
+          </p>
+        </div>
+
+        <div class="material-property">
+          <strong>Prix</strong>
+          <p>
+            {{ userMaterial.priceHourMaterial }} € de l'heure
+          </p>
+        </div>
+
+        <div class="material-property">
+          <strong>Disponible</strong>
+          <p>
+            {{ userMaterial.isAvailable ? 'Oui' : 'Non' }}
+          </p>
+        </div>
+
+        <div class="material-property">
+          <strong>État</strong>
+          <p>
+            {{ userMaterial.state }}
+          </p>
+        </div>
+
+        <div class="material-property">
+          <strong>Propriétaire</strong>
+          <p>
+            {{ userMaterial.user.pseudo }}
+          </p>
+        </div>
+
+      </section>
+
+
+      <!-- Pictures -->
+      <section class="material-gallery">
+
+        @for (picture of userMaterial.pictures; track picture) {
+
+          <div class="picture-container">
+            <img
+              [src]="'/userMaterials/' + picture"
+              [alt]="userMaterial.material.nameMaterial"
+            />
+          </div>
+
+        }
+
+      </section>
+
+    </div>
+
+  } @else {
+      <h1>La liste est vide</h1>
+  }
+</div>

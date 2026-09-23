@@ -1,0 +1,143 @@
+@light-background-color: #F1EFE8;
+@light-title: #3B6D11 !important;
+@light-th: #993C1D !important;
+@light-background-tr: #FAECE7;
+@light-background-td: #D3D1C7;
+@light-border-td: #B4B2A9;
+@light-text-td: #3D4A2A;
+
+@dark-background-color: #1C1F17;
+@dark-title: #8FC15C;
+@dark-th: #E8845A !important;
+@dark-background-tr: #40261C;
+@dark-background-td: #262A1D;
+@dark-border-td: #3A3F2C;
+@dark-text-td: #F1EFE8;
+
+.userMaterial{
+  height: 95%;
+  padding-bottom: 25px;
+}
+
+h1 {
+  margin-top: 0;
+  padding-top: 25px;
+  font-family: 'Libre Baskerville italic', serif;
+  text-align: center;
+}
+
+table[tuiTable] {
+  margin: auto;
+  padding-top: 25px;
+}
+
+td[tuiTd] {
+  text-align: center;
+  font-weight: bold;
+}
+
+#pictureMaterialTD {
+  width: 200px;
+  height: 55px;
+  min-width: 200px;
+  max-width: 200px;
+}
+
+#nameMaterialTD {
+  width: 450px;
+  height: 55px;
+  min-width: 450px;
+  max-width: 450px;
+}
+
+#priceMaterialTD {
+  width: 110px;
+  height: 55px;
+  min-width: 110px;
+  max-width: 110px;
+}
+
+#availableMaterialTD {
+  width: 120px;
+  height: 55px;
+  min-width: 120px;
+  max-width: 120px;
+}
+
+#actionMaterialTD {
+  width: 150px;
+  height: 55px;
+  min-width: 150px;
+  max-width: 150px;
+}
+
+#editUserMaterial{
+  color: orange;
+}
+
+#deleteUserMaterial{
+  color: red;
+}
+
+#seeUserMaterial{
+  color: green;
+}
+
+// THEME
+.light-mode {
+  background-color: @light-background-color;
+
+  h1 {
+    color: @light-title;
+  }
+
+  #pictureMaterialTD,
+  #nameMaterialTD,
+  #priceMaterialTD,
+  #priceMaterialTD,
+  #availableMaterialTD,
+  #actionMaterialTD{
+    background-color: @light-background-tr !important;
+    color: @light-th;
+  }
+
+  td{
+    background-color: @light-background-td;
+    border:1px @light-border-td solid;
+    color: @light-text-td;
+  }
+
+  #pagination{
+    color: black;
+  }
+
+}
+
+.dark-mode {
+  background-color: @dark-background-color;
+
+  h1 {
+    color: @dark-title;
+  }
+
+  #pictureMaterialTD,
+  #nameMaterialTD,
+  #priceMaterialTD,
+  #priceMaterialTD,
+  #availableMaterialTD,
+  #actionMaterialTD{
+    background-color: @dark-background-tr !important;
+    color: @dark-th;
+  }
+
+  td{
+    background-color: @dark-background-td;
+    border:1px @dark-border-td solid;
+    color: @dark-text-td;
+  }
+
+  #pagination{
+    color: #7FB84D;
+  }
+
+}
