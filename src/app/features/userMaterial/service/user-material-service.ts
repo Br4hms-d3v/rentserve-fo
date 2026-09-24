@@ -38,4 +38,9 @@ export class UserMaterialService {
     const headers = this.getAuthHeader();
     return this._http.get<UserMaterialDetailModel>(this.apiUrl + 'my-material/' + id, { headers });
   }
+
+  deleteUserMaterial(id: number) {
+    const headers = this.getAuthHeader();
+    return this._http.delete(this.apiUrl + id + '/delete', { headers, responseType: 'text' });
+  }
 }

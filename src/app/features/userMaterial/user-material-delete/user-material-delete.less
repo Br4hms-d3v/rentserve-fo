@@ -1,0 +1,82 @@
+@light-background-color: #F1EFE8 !important;
+@light-title: #3B6D11 !important;
+@light-text: #3D4A2A;
+
+@dark-background-color: #1C1F17;
+@dark-title: #8FC15C;
+@dark-text: #F1EFE8;
+
+.deleteUserMaterial-container {
+  height: 80vh;
+
+  h1 {
+    margin-top: 0;
+    padding-top: 35px;
+    padding-bottom: 25px;
+    font-family: 'Libre Baskerville italic', serif;
+    text-align: center;
+  }
+
+  > div {
+    max-width: 800px;
+    width: 90%;
+    margin: 0 auto;
+
+    p {
+      text-align: justify;
+      line-height: 1.6;
+    }
+  }
+
+  // Boutons
+  .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin-top: 40px;
+
+    #btn-back,
+    #btn-delete {
+      width: 250px;
+    }
+
+    #btn-back{
+      background-color: #E8845A;
+      color: white;
+    }
+
+    #btn-delete{
+      background-color: red;
+      color: white;
+    }
+
+  }
+
+}
+
+.light-mode {
+  background-color: @light-background-color;
+
+  h1 {
+    color: @light-title;
+  }
+
+  p {
+    color: @light-text;
+  }
+}
+
+
+.dark-mode {
+  background-color: @dark-background-color;
+
+  h1 {
+    color: @dark-title;
+  }
+
+  p {
+    color: @dark-text;
+  }
+}
+
