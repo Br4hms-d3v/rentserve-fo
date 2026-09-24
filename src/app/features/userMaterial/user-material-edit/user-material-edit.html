@@ -1,0 +1,74 @@
+<div class="editUserMaterial-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+
+  <h1>Modification</h1>
+
+  <form [formGroup]="editUserMaterialForm" class="userMaterial-form">
+
+    <div class="inputNameMaterial">
+      <tui-textfield>
+        <label tuiLabel>Nom du matériel</label>
+        <input
+          formControlName="material"
+          placeholder="Nom du matériel"
+          tuiInput
+        />
+      </tui-textfield>
+    </div>
+
+    <div class="inputAvailability">
+        <input
+          tuiSwitch
+          type="checkbox"
+          formControlName="isAvailable"
+        />
+    </div>
+
+    <div class="textDescription">
+    <tui-textfield>
+      <label tuiLabel>Description</label>
+      <textarea
+        placeholder="Écrivez votre description"
+        tuiTextarea
+        formControlName="descriptionMaterial"
+        [limit]="100"
+        [max]="6"
+        [min]="3"
+      ></textarea>
+    </tui-textfield>
+    </div>
+
+    <div class="inputPrice">
+    <tui-textfield [style.width.rem]="12">
+      <input
+        postfix=" €"
+        tuiFluidTypography
+        tuiInputNumber
+        formControlName="priceHourMaterial"
+        [min]="1.0"
+      />
+    </tui-textfield>
+    </div>
+
+    <div class="inputState">
+    <tui-textfield>
+      <label tuiLabel>État du matériel</label>
+      <input
+        formControlName="state"
+        placeholder="État du matériel"
+        tuiInput
+      />
+    </tui-textfield>
+    </div>
+
+    <div>
+      <button>
+        Annuler
+      </button>
+      <button>
+        Modifier
+      </button>
+    </div>
+
+  </form>
+
+</div>

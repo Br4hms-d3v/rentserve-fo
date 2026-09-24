@@ -4,6 +4,7 @@ import { environment } from '../../../environment/environment';
 import { UserMaterialResponse } from '../model/userMaterial';
 import { map } from 'rxjs';
 import { UserMaterialDetailModel } from '../model/user-material-detail';
+import { UserMaterialEditForm } from '../model/user-material-edit-form';
 
 @Injectable({
   providedIn: 'root',
@@ -42,5 +43,10 @@ export class UserMaterialService {
   deleteUserMaterial(id: number) {
     const headers = this.getAuthHeader();
     return this._http.delete(this.apiUrl + id + '/delete', { headers, responseType: 'text' });
+  }
+
+  editUserMaterial(id: number, fom: UserMaterialEditForm) {
+    const headers = this.getAuthHeader();
+    return this._http.put<UserMaterialEditForm>(this.apiUrl + id + '/edit', fom, { headers });
   }
 }
