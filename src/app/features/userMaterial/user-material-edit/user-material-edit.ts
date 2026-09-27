@@ -58,6 +58,7 @@ export class UserMaterialEdit implements OnInit {
 
   ngOnInit() {
     this.userMaterialId = Number(this._route.snapshot.paramMap.get('id'));
+
     this.getUserMaterial();
     this.getMaterials();
     this.getStates();
@@ -68,12 +69,34 @@ export class UserMaterialEdit implements OnInit {
   }
 
   protected editUserMaterialForm = new FormGroup({
-    materialId: new FormControl<number | null>(null, Validators.required),
-    materialName: new FormControl<string>('', Validators.required),
-    descriptionMaterial: new FormControl('', Validators.required),
-    priceHourMaterial: new FormControl<number>(1.0, [Validators.min(1.0), Validators.required]),
-    isAvailable: new FormControl<boolean>(false, [Validators.required]),
-    state: new FormControl<State>(State.GOOD_STATE, [Validators.required]),
+    materialId: new FormControl<number | null>(null, {
+      validators: Validators.required,
+    }),
+
+    materialName: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+
+    descriptionMaterial: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+
+    priceHourMaterial: new FormControl(1.0, {
+      nonNullable: true,
+      validators: [Validators.min(1.0), Validators.required],
+    }),
+
+    isAvailable: new FormControl(false, {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+
+    state: new FormControl<State>(State.GOOD_STATE, {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
   });
 
   protected getUserMaterial() {
@@ -113,27 +136,28 @@ export class UserMaterialEdit implements OnInit {
   }
 
   private onMaterialNameChange(value: string): void {
-    if (this.isInitializing) return;
+    if (this.isInitializing) {
+      return;
+    }
 
     const search = value.trim().toLowerCase();
 
-    // "Starts with" filter (not "contains")
     this.filteredMaterials.set(
       search
         ? this.materialsList.filter((name) => name.toLowerCase().startsWith(search))
         : this.materialsList,
     );
 
-    // Sync materialId when the text exactly matches an existing material
     const matched = this.materialsModels.find(
-      (material) => material.nameMaterial.toLowerCase() === value.toLowerCase(),
+      (material) => material.nameMaterial.trim().toLowerCase() === search,
     );
-    this.editUserMaterialForm.controls.materialId.setValue(matched ? matched.id : null, {
+
+    this.editUserMaterialForm.controls.materialId.setValue(matched?.id ?? null, {
       emitEvent: false,
     });
   }
 
-  protected updateUserMaterial() {
+  protected updateUserMaterial(): void {
     this.editUserMaterialForm.markAllAsTouched();
 
     if (this.editUserMaterialForm.invalid) {
@@ -143,25 +167,36 @@ export class UserMaterialEdit implements OnInit {
       return;
     }
 
-    const { materialName, ...payload } = this.editUserMaterialForm.getRawValue();
+    const formValue = this.editUserMaterialForm.getRawValue();
 
-    this._userMaterialService
-      .editUserMaterial(this.userMaterialId, payload as UserMaterialEditForm)
-      .subscribe({
-        next: (data) => {
-          this.editUserMaterialForm.patchValue(data);
-          this.getUserMaterial();
-          this.isSuccess.set(true);
-          this.show.set(true);
-          this.messageSuccess = 'Matériel modifié avec succès';
-        },
-        error: (err) => {
-          this.isSuccess.set(false);
-          this.show.set(true);
-          this.messageError = err.error?.message ?? 'Erreur lors de la modification';
-        },
-      });
-    // console.log(this.editUserMaterialForm.getRawValue());
+    const payload: UserMaterialEditForm = {
+      materialId: formValue.materialId!,
+      descriptionMaterial: formValue.descriptionMaterial,
+      priceHourMaterial: formValue.priceHourMaterial,
+      isAvailable: formValue.isAvailable,
+      state: formValue.state,
+    };
+
+    console.log('PUT payload:', payload);
+
+    this._userMaterialService.editUserMaterial(this.userMaterialId, payload).subscribe({
+      next: (data) => {
+        this.editUserMaterialForm.patchValue(data);
+        this.getUserMaterial();
+
+        this.isSuccess.set(true);
+        this.show.set(true);
+        this.messageSuccess = 'Matériel modifié avec succès';
+      },
+      error: (err) => {
+        console.error('Erreur PUT:', err);
+
+        this.isSuccess.set(false);
+        this.show.set(true);
+
+        this.messageError = err.error?.message ?? 'Erreur lors de la modification';
+      },
+    });
   }
 
   protected getStates() {}
