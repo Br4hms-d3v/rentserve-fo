@@ -1,6 +1,6 @@
-import { MaterialModel } from '../../material/model/Material';
 import { UserPseudoModel } from '../../user/model/user-pseudo';
 import { State } from '../enum/state';
+import { MaterialModel } from '../../material/model/Material';
 
 export interface UserMaterialDetailModel {
   id: number;
