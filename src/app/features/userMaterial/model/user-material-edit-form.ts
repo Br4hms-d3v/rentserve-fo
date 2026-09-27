@@ -1,8 +1,7 @@
-import { MaterialModel } from '../../material/model/Material';
 import { State } from '../enum/state';
 
 export interface UserMaterialEditForm {
-  material: MaterialModel;
+  materialId: number;
   descriptionMaterial: string;
   priceHourMaterial: number;
   isAvailable: boolean;
