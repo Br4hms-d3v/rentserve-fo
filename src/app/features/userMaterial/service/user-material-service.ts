@@ -5,6 +5,7 @@ import { UserMaterialResponse } from '../model/userMaterial';
 import { map } from 'rxjs';
 import { UserMaterialDetailModel } from '../model/user-material-detail';
 import { UserMaterialEditForm } from '../model/user-material-edit-form';
+import { UserMaterialCreateForm } from '../model/user-material-create-form';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,20 @@ export class UserMaterialService {
     });
   }
 
+  private getAuthorizationHeader() {
+    const userJson = localStorage.getItem('currentUser');
+    let token = '';
+
+    if (userJson) {
+      const user = JSON.parse(userJson);
+      token = user.token;
+    }
+
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+  }
+
   getUserMaterialByUser(id: number) {
     const headers = this.getAuthHeader();
     return this._http
@@ -45,8 +60,22 @@ export class UserMaterialService {
     return this._http.delete(this.apiUrl + id + '/delete', { headers, responseType: 'text' });
   }
 
-  editUserMaterial(id: number, fom: UserMaterialEditForm) {
+  editUserMaterial(id: number, form: UserMaterialEditForm) {
     const headers = this.getAuthHeader();
-    return this._http.put<UserMaterialEditForm>(this.apiUrl + id + '/edit', fom, { headers });
+    return this._http.put<UserMaterialEditForm>(this.apiUrl + id + '/edit', form, { headers });
+  }
+
+  createUserMaterial(form: UserMaterialCreateForm, pictures: File[]) {
+    const headers = this.getAuthorizationHeader();
+    const formData = new FormData();
+
+    Object.entries(form).forEach(([key, value]) => {
+      if (value !== null && value !== undefined && value !== '') {
+        formData.append(key, String(value));
+      }
+    });
+
+    pictures.forEach((picture) => formData.append('pictures', picture, picture.name));
+    return this._http.post<UserMaterialCreateForm>(this.apiUrl + 'new', formData, { headers });
   }
 }
