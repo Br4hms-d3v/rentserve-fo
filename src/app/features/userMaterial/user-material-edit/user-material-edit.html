@@ -1,6 +1,8 @@
 <div class="editUserMaterial-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
 
-  <h1>Modification</h1>
+  <h1 class="titleEditUserMaterial">
+    {{ title }}
+  </h1>
 
   <form [formGroup]="editUserMaterialForm" (ngSubmit)="updateUserMaterial()" class="userMaterial-form">
 
@@ -77,14 +79,22 @@
       </tui-textfield>
     </div>
 
-    <div>
+    <div class="buttons">
       <button
+        id="btn-cancel"
+        tuiButton
         type="button"
+        size="m"
+        [routerLink]="['/user-material', 'my-user-material']"
       >
         Annuler
       </button>
       <button
+        id="btn-edit"
+        tuiButton
         type="submit"
+        appearance="primary"
+        size="m"
       >
         Modifier
       </button>

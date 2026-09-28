@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TuiButton, TuiDropdown, TuiInput, TuiNotification, TuiTextfield } from '@taiga-ui/core';
@@ -33,6 +33,7 @@ import { MaterialModel } from '../../material/model/Material';
     TuiNotification,
     TuiButton,
     TuiDropdown,
+    RouterLink,
   ],
   templateUrl: './user-material-edit.html',
   styleUrl: './user-material-edit.less',
@@ -53,6 +54,7 @@ export class UserMaterialEdit implements OnInit {
   materialsList: string[] = [];
   materialsModels: MaterialModel[] = [];
   userMaterialModel!: UserMaterialDetailModel;
+  title = 'Modification Material';
   protected messageError = '';
   protected messageSuccess = '';
 
@@ -62,6 +64,7 @@ export class UserMaterialEdit implements OnInit {
     this.getUserMaterial();
     this.getMaterials();
     this.getStates();
+    this.changeTheme();
 
     this.editUserMaterialForm.controls.materialName.valueChanges.subscribe((value) => {
       this.onMaterialNameChange(value ?? '');
@@ -200,4 +203,9 @@ export class UserMaterialEdit implements OnInit {
   }
 
   protected getStates() {}
+
+  changeTheme() {
+    this.isDarkMode = this._themeService.isDarkMode(); // Get current theme
+    this._themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
+  }
 }
