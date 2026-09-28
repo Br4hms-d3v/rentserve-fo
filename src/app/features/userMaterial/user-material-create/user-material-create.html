@@ -40,33 +40,34 @@
       </tui-textfield>
     </div>
 
-    <div class="inputState">
-      <tui-textfield tuiChevron>
-        <label tuiLabel>État du matériel</label>
-        <input tuiSelect formControlName="state" placeholder="Choisir un état" />
-        <tui-data-list-wrapper *tuiDropdown new [items]="states" />
-      </tui-textfield>
-    </div>
+    <div class="material-options">
+      <div class="inputState">
+        <tui-textfield tuiChevron>
+          <label tuiLabel>État du matériel</label>
+          <input tuiSelect formControlName="state" placeholder="Choisir un état" />
+          <tui-data-list-wrapper *tuiDropdown new [items]="states" />
+        </tui-textfield>
+      </div>
 
-    <div class="inputPrice">
-      <tui-textfield [style.width.rem]="12">
-        <label tuiLabel>Prix par heure</label>
-        <input
-          postfix=" €"
-          tuiInputNumber
-          formControlName="priceHourMaterial"
-          [min]="1"
-        />
-      </tui-textfield>
-    </div>
+      <div class="inputPrice">
+        <tui-textfield [style.width.rem]="12">
+          <label tuiLabel>Prix par heure</label>
+          <input
+            postfix=" €"
+            tuiInputNumber
+            formControlName="priceHourMaterial"
+            [min]="1"
+          />
+        </tui-textfield>
+      </div>
 
-    <div class="inputAvailability">
-      <label>
-        <input tuiSwitch type="checkbox" formControlName="isAvailable" />
-        Disponible
-      </label>
+      <div class="inputAvailability">
+        <label>
+          <input tuiSwitch type="checkbox" formControlName="isAvailable" />
+          Disponible
+        </label>
+      </div>
     </div>
-
     <div class="inputImage">
       <label tuiInputFiles>
         <input
@@ -99,7 +100,35 @@
       </tui-error>
     </div>
 
-    <button type="submit">Créer</button>
+  <div class="material-buttons">
+    <button
+      [routerLink]="['/user-material','my-user-material']"
+      id="btn-back"
+      tuiButton
+      size="m"
+    >
+      Retour
+    </button>
+
+    <button
+      (click)="onBack()"
+      type="button"
+      id="btn-cancel"
+      tuiButton
+      size="m"
+    >
+      Annuler
+    </button>
+
+    <button
+      type="submit"
+      id="btn-new"
+      tuiButton
+      size="m"
+    >
+      Créer
+    </button>
+  </div>
   </form>
 
 </div>

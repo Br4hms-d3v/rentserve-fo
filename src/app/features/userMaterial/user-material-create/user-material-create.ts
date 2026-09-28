@@ -37,6 +37,7 @@ import { MaterialModel } from '../../material/model/Material';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TuiValidationError } from '@taiga-ui/cdk';
 import { ThemeService } from '../../../core/services/ThemeService';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user-material-create',
@@ -60,6 +61,7 @@ import { ThemeService } from '../../../core/services/ThemeService';
     TuiNotificationTemplate,
     TuiSelect,
     TuiError,
+    RouterLink,
   ],
   templateUrl: './user-material-create.html',
   styleUrl: './user-material-create.less',
@@ -190,6 +192,12 @@ export class UserMaterialCreate implements OnInit {
         }
       },
     });
+  }
+
+  onBack(){
+    this.createUserMaterialForm.reset();
+    this.rejected = [];
+
   }
 
   changeTheme() {
