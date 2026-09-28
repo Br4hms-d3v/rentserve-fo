@@ -18,7 +18,7 @@
   box-sizing: border-box;
 }
 
-.titleEditMaterial {
+.titleEditUserMaterial {
   margin-top: 25px;
   text-align: center;
 }
@@ -78,6 +78,9 @@ input[tuiSwitch] {
 .light-mode {
   background-color: @light-background-color;
 
+  .titleEditUserMaterial{
+    color: @light-title;
+  }
 
   input[tuiInput] {
     color: @light-label-input;
@@ -89,6 +92,27 @@ input[tuiSwitch] {
 
   .textDescription textarea {
     color: @light-label-input;
+  }
+
+}
+
+.dark-mode {
+  background-color: @dark-background-color;
+
+  .titleEditUserMaterial{
+    color: @dark-title;
+  }
+
+  input[tuiInput] {
+    color: @dark-label-input;
+  }
+
+  label[tuiLabel] {
+    color: @dark-label;
+  }
+
+  .textDescription textarea {
+    color: @dark-label-input;
   }
 
 }
