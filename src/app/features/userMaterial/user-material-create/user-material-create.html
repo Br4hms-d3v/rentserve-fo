@@ -1,0 +1,147 @@
+<div class="createUserMaterial-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+
+  <h1 class="titleEditUserMaterial">
+    {{ title }}
+  </h1>
+
+  <form [formGroup]="createUserMaterialForm" (ngSubmit)="createUserMaterial()" class="userMaterial-form">
+
+    <div class="inputNameMaterial">
+      <tui-textfield tuiChevron [stringify]="stringify">
+        <label tuiLabel>Nom du matériel</label>
+        <input tuiComboBox formControlName="material" placeholder="Choisir un matériel" />
+
+        <tui-data-list-wrapper
+          *tuiDropdown
+          new
+          [items]="materialsList | tuiFilterByInput"
+          [emptyContent]="emptyMaterial"
+        />
+
+        <ng-template #emptyMaterial>
+          <div class="empty-list">
+            <p>Aucun matériel trouvé</p>
+          </div>
+        </ng-template>
+      </tui-textfield>
+    </div>
+
+    <div class="textDescription">
+      <tui-textfield>
+        <label tuiLabel>Description</label>
+        <textarea
+          placeholder="Écrivez votre description"
+          tuiTextarea
+          formControlName="descriptionMaterial"
+          [limit]="150"
+          [max]="6"
+          [min]="3"
+        ></textarea>
+      </tui-textfield>
+    </div>
+
+    <div class="material-options">
+      <div class="inputState">
+        <tui-textfield tuiChevron>
+          <label tuiLabel>État du matériel</label>
+          <input tuiSelect formControlName="state" placeholder="Choisir un état" />
+          <tui-data-list-wrapper *tuiDropdown new [items]="states" />
+        </tui-textfield>
+      </div>
+
+      <div class="inputPrice">
+        <tui-textfield [style.width.rem]="12">
+          <label tuiLabel>Prix par heure</label>
+          <input
+            postfix=" €"
+            tuiInputNumber
+            formControlName="priceHourMaterial"
+            [min]="1"
+          />
+        </tui-textfield>
+      </div>
+
+      <div class="inputAvailability">
+        <label>
+          <input tuiSwitch type="checkbox" formControlName="isAvailable" />
+          Disponible
+        </label>
+      </div>
+    </div>
+    <div class="inputImage">
+      <label tuiInputFiles>
+        <input
+          #validator="tuiInputFilesValidator"
+          accept="image/*"
+          tuiInputFiles
+          formControlName="pictures"
+          [multiple]="true"
+          (reject)="onReject($event)"
+        />
+      </label>
+
+      <tui-files class="tui-space_top-1">
+        @for (file of accepted$ | async; track file) {
+          <tui-file [file]="file" (remove)="onRemove(file)" />
+        }
+
+        @for (file of rejected; track file) {
+          <tui-file
+            state="error"
+            [file]="(file | tuiFileRejected: validator | async) || file"
+            (remove)="onRemove(file)"
+          />
+        }
+      </tui-files>
+
+      <tui-error
+        formControlName="pictures"
+        [order]="['maxLength']">
+      </tui-error>
+    </div>
+
+  <div class="material-buttons">
+    <button
+      [routerLink]="['/user-material','my-user-material']"
+      id="btn-back"
+      tuiButton
+      size="m"
+    >
+      Retour
+    </button>
+
+    <button
+      (click)="onBack()"
+      type="button"
+      id="btn-cancel"
+      tuiButton
+      size="m"
+    >
+      Annuler
+    </button>
+
+    <button
+      type="submit"
+      id="btn-new"
+      tuiButton
+      size="m"
+    >
+      Créer
+    </button>
+  </div>
+  </form>
+
+</div>
+<ng-template
+  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [(tuiNotification)]="show"
+>
+  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <button
+    tuiButton
+    type="button"
+    (click)="show.set(false)"
+  >
+    Close
+  </button>
+</ng-template>

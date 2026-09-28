@@ -1,0 +1,5 @@
+export enum State {
+  GOOD_STATE = 'GOOD_STATE',
+  BAD_STATE = 'BAD_STATE',
+  DAMAGED_STATE = 'DAMAGED_STATE',
+}

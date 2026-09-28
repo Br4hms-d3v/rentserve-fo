@@ -7,6 +7,15 @@
       <h1> Mon matériels </h1>
     </div>
 
+    <button
+      id="btn-createMaterial"
+      tuiButton
+      size="s"
+      [routerLink]="['/user-material','new-material']"
+    >
+      Ajouter mon matériel
+    </button>
+
     <table tuiTable>
       <thead>
       <tr>
@@ -81,6 +90,7 @@
               size="xs"
               tuiIconButton
               type="button"
+              [routerLink]="['/user-material','edit-my-material', userMaterial.id]"
             >
               Modifier
             </button>
@@ -92,6 +102,7 @@
               size="xs"
               tuiIconButton
               type="button"
+              [routerLink]="['/user-material','delete-my-material', userMaterial.id]"
             >
               Supprimer
             </button>

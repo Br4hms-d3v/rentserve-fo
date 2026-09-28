@@ -1,0 +1,125 @@
+@light-background-color: #F1EFE8;
+@light-title: #3B6D11 !important;
+@light-breadcrumb: #5F5E5A !important;
+@light-label-input: #3B6D11 !important;
+@light-label: #5F5E5A !important;
+@light-btn-back: #D9764A;
+@light-btn-new: green;
+@light-btn-cancel: red;
+
+@dark-background-color: #1C1F17;
+@dark-title: #8FC15C;
+@dark-breadcrumb: #A6A599 !important;
+@dark-label-input: #8FC15C !important;
+@dark-label: #A6A599 !important;
+
+
+.createUserMaterial-container {
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.titleEditUserMaterial {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.userMaterial-form {
+  width: 950px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  box-sizing: border-box;
+}
+
+.material-options {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr 0.6fr 0.8fr;
+  align-items: center;
+  gap: 20px;
+}
+
+input[tuiSwitch] {
+  &:checked {
+    --tui-background-accent-1: #22c55e;
+    --tui-background-accent-1-hover: #16a34a;
+  }
+
+  &:not(:checked) {
+    --tui-background-neutral-1: #ef4444;
+    --tui-background-neutral-1-hover: #dc2626;
+  }
+}
+
+.material-buttons{
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+
+  margin-top: 10px;
+
+  #btn-back {
+    background-color: @light-btn-back;
+    width: 250px;
+  }
+
+  #btn-cancel {
+    background-color: @light-btn-cancel;
+    width: 250px;
+  }
+
+  #btn-new {
+    background-color: @light-btn-new;
+    width: 250px;
+  }
+}
+
+
+// THEME
+
+.light-mode {
+  background-color: @light-background-color;
+
+  .titleEditUserMaterial {
+    color: @light-title;
+  }
+
+  input[tuiInput] {
+    color: @light-label-input;
+  }
+
+  label[tuiLabel] {
+    color: @light-label;
+  }
+
+  .textDescription textarea {
+    color: @light-label-input;
+  }
+
+}
+
+.dark-mode {
+  background-color: @dark-background-color;
+
+  .titleEditUserMaterial {
+    color: @dark-title;
+  }
+
+  input[tuiInput] {
+    color: @dark-label-input;
+  }
+
+  label[tuiLabel] {
+    color: @dark-label;
+  }
+
+  .textDescription textarea {
+    color: @dark-label-input;
+  }
+}

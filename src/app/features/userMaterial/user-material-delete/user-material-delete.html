@@ -1,0 +1,34 @@
+<div class="deleteUserMaterial-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+
+  <h1>Suppression de votre matériel</h1>
+
+  <div>
+    <p>Avant de supprimer définitivement ce matériel, veuillez vous assurer que vous en êtes bien le propriétaire et que
+      toutes les informations liées à celui-ci sont correctes et complètes.<br />
+      Une fois la suppression confirmée, le matériel sera retiré de votre espace RentServe et ne sera plus disponible à
+      la location sur la plateforme.<br /><br />
+      Merci d’avoir partagé votre matériel et d’avoir contribué à la communauté RentServe !<br />
+      Votre participation permet à d’autres utilisateurs de découvrir et de louer facilement du matériel auprès de la
+      communauté.
+    </p>
+  </div>
+
+  <div class="buttons">
+    <button tuiButton id="btn-back" (click)="goBack()"> Retour</button>
+    <button tuiButton id="btn-delete" (click)="onDelete()">Supprimer</button>
+  </div>
+</div>
+
+<ng-template
+  [tuiNotificationOptions]="{label: 'Suppression', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [(tuiNotification)]="show"
+>
+  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <button
+    tuiButton
+    type="button"
+    (click)="show.set(false)"
+  >
+    Close
+  </button>
+</ng-template>

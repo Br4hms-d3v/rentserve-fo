@@ -1,0 +1,119 @@
+<div class="editUserMaterial-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+
+  <h1 class="titleEditUserMaterial">
+    {{ title }}
+  </h1>
+
+  <form [formGroup]="editUserMaterialForm" (ngSubmit)="updateUserMaterial()" class="userMaterial-form">
+
+    <div class="inputNameMaterial">
+      <tui-textfield>
+        <label tuiLabel>Nom du matériel</label>
+
+        <input
+          #input
+          formControlName="materialName"
+          placeholder="Nom du matériel"
+          tuiInput
+          (focus)="onMaterialNameFocus()"
+        />
+
+        @if (input.value) {
+          <tui-data-list-wrapper
+            *tuiDropdown
+            [items]="filteredMaterials()"
+            [emptyContent]="emptyMaterial"
+          />
+        }
+
+        <ng-template #emptyMaterial>
+          <div class="empty-list">
+            <p>Aucun matériel trouvé</p>
+          </div>
+        </ng-template>
+      </tui-textfield>
+    </div>
+
+    <div class="inputAvailability">
+      <input
+        tuiSwitch
+        type="checkbox"
+        formControlName="isAvailable"
+      />
+    </div>
+
+    <div class="textDescription">
+      <tui-textfield>
+        <label tuiLabel>Description</label>
+        <textarea
+          placeholder="Écrivez votre description"
+          tuiTextarea
+          formControlName="descriptionMaterial"
+          [limit]="100"
+          [max]="6"
+          [min]="3"
+        ></textarea>
+      </tui-textfield>
+    </div>
+
+    <div class="inputPrice">
+      <tui-textfield [style.width.rem]="12">
+        <input
+          postfix=" €"
+          tuiFluidTypography
+          tuiInputNumber
+          formControlName="priceHourMaterial"
+          [min]="1.0"
+        />
+      </tui-textfield>
+    </div>
+
+    <div class="inputState">
+      <tui-textfield>
+        <label tuiLabel>État du matériel</label>
+        <input
+          formControlName="state"
+          placeholder="État du matériel"
+          tuiInput
+        />
+      </tui-textfield>
+    </div>
+
+    <div class="buttons">
+      <button
+        id="btn-cancel"
+        tuiButton
+        type="button"
+        size="m"
+        [routerLink]="['/user-material', 'my-user-material']"
+      >
+        Annuler
+      </button>
+      <button
+        id="btn-edit"
+        tuiButton
+        type="submit"
+        appearance="primary"
+        size="m"
+      >
+        Modifier
+      </button>
+    </div>
+
+  </form>
+
+</div>
+
+<ng-template
+  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [(tuiNotification)]="show"
+>
+  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <button
+    tuiButton
+    type="button"
+    (click)="show.set(false)"
+  >
+    Close
+  </button>
+</ng-template>
