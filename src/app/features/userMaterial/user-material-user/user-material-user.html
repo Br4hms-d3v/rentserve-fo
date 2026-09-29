@@ -1,6 +1,22 @@
 <div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="userMaterial">
   @if (userMaterialList.length <= 0) {
-    <p> vide comment ajouter des produits</p>
+    <div class="userMaterial">
+      <div>
+        <h1> Mon matériels </h1>
+      </div>
+
+      <button
+        class="btn-createMaterial"
+        tuiButton
+        size="s"
+        [routerLink]="['/user-material','new-material']"
+      >
+        Ajouter mon matériel
+      </button>
+      <p id="text-add-material">
+
+      </p>
+    </div>
   } @else {
 
     <div>
@@ -8,7 +24,7 @@
     </div>
 
     <button
-      id="btn-createMaterial"
+      class="btn-createMaterial"
       tuiButton
       size="s"
       [routerLink]="['/user-material','new-material']"
