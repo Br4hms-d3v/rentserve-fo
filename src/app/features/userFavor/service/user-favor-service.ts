@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environment/environment';
 import { map } from 'rxjs';
 import { UserFavorResponse } from '../model/userFavor';
+import { UserFavorDetailModel } from '../model/user-favor-detail';
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +32,10 @@ export class UserFavorService {
     return this._http
       .get<UserFavorResponse>(this.apiUrl + 'user/' + id, { headers })
       .pipe(map((response) => response._embedded.userFavorDTOList));
+  }
+
+  getUserFavorDetail(id: number) {
+    const headers = this.getAuthHeader();
+    return this._http.get<UserFavorDetailModel>(this.apiUrl + 'my-favor/' + id, { headers });
   }
 }
