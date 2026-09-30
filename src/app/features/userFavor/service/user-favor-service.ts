@@ -38,4 +38,9 @@ export class UserFavorService {
     const headers = this.getAuthHeader();
     return this._http.get<UserFavorDetailModel>(this.apiUrl + 'my-favor/' + id, { headers });
   }
+
+  deleteUserFavor(id: number) {
+    const headers = this.getAuthHeader();
+    return this._http.delete(this.apiUrl + id + '/delete', { headers });
+  }
 }

@@ -1,0 +1,30 @@
+<div class="deleteUserFavor-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+
+  <h1>Suppression de votre service</h1>
+
+  <div>
+    <p> Avant de supprimer définitivement votre service, veuillez vous assurer que vous avez bien réglé le prestataire ou que celui-ci n’a pas encore commencé le service.<br />
+      Une fois la suppression confirmée, le service sera définitivement retiré de votre espace RentServe et ne sera plus visible ni disponible sur la plateforme.<br /><br />
+      Merci d’avoir fait confiance à RentServe !<br />
+      Votre confiance contribue à permettre à d’autres utilisateurs de découvrir notre plateforme et de nous faire confiance à leur tour. </p>
+  </div>
+
+  <div class="buttons">
+    <button tuiButton id="btn-back" (click)="goBack()"> Retour</button>
+    <button tuiButton id="btn-delete" (click)="onDelete()">Supprimer</button>
+  </div>
+</div>
+
+<ng-template
+  [tuiNotificationOptions]="{label: 'Suppression', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [(tuiNotification)]="show"
+>
+  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <button
+    tuiButton
+    type="button"
+    (click)="show.set(false)"
+  >
+    Close
+  </button>
+</ng-template>
