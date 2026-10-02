@@ -4,6 +4,7 @@ import { environment } from '../../../environment/environment';
 import { map } from 'rxjs';
 import { UserFavorResponse } from '../model/userFavor';
 import { UserFavorDetailModel } from '../model/user-favor-detail';
+import { UserFavorEditForm } from '../model/user-favor-edit-form';
 
 @Injectable({
   providedIn: 'root',
@@ -42,5 +43,10 @@ export class UserFavorService {
   deleteUserFavor(id: number) {
     const headers = this.getAuthHeader();
     return this._http.delete(this.apiUrl + id + '/delete', { headers });
+  }
+
+  editUserFavor(id: number, form: UserFavorEditForm) {
+    const headers = this.getAuthHeader();
+    return this._http.put<UserFavorEditForm>(this.apiUrl + id + '/edit', form, { headers });
   }
 }
