@@ -157,6 +157,7 @@ export class UserFavorCreate implements OnInit {
     this.userFavorService.createUserFavor(form, raw.pictures).subscribe({
       next: () => {
         this.messageSuccess = 'Le service a bien été créée';
+        this.isSuccess.set(true);
         this.show.set(true);
         this.createUserFavorForm.reset({ priceHourFavor: 5.0, isAvailable: true });
         this.rejected = [];
@@ -204,7 +205,7 @@ export class UserFavorCreate implements OnInit {
   }
 }
 
-export function maxFilesLength(MaxLength: number) {
+export function maxFilesLength(maxLength: number) {
   return ({ value }: AbstractControl) =>
     value.length > maxLength
       ? {

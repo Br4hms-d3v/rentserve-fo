@@ -183,7 +183,7 @@ export class UserMaterialCreate implements OnInit {
         this.rejected = [];
         this._router.navigate(['/user-material','my-user-material']).then();
       },
-      error: (error) => {
+      error: () => {
         this.messageError = 'Erreur lors de la création';
         this.isSuccess.set(false);
         this.show.set(true);

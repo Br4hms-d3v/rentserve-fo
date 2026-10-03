@@ -75,7 +75,7 @@ export class UserFavorService {
       }
     });
 
-    pictures.forEach((picture: File) => formData.append('pictures', picture.name));
+    pictures.forEach((picture) => formData.append('pictures', picture, picture.name));
     return this._http.post<UserFavorCreateForm>(this.apiUrl + 'new', formData, { headers });
   }
 }
