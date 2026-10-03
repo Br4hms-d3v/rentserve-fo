@@ -75,7 +75,7 @@ export class UserFavorUser implements OnInit {
         this.userFavorList = userFavour;
         this.total = userFavour.length;
         this._cdr.detectChanges();
-        console.log(this.userFavorList);
+        // console.log(this.userFavorList);
       },
       error: (err) => {
         console.log(err.error.message);
