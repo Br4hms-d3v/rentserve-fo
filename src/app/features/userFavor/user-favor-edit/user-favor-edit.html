@@ -1,0 +1,111 @@
+<div class="editUserFavor-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+
+  <h1 class="titleEditUserFavor">
+    {{ title }}
+  </h1>
+
+  <form [formGroup]="editUserFavorForm" (ngSubmit)="updateUserFavor()" class="userFavor-form">
+
+    <div class="inputNameFavor">
+      <tui-textfield>
+        <label tuiLabel>Nom du matériel</label>
+
+        <input
+          #input
+          formControlName="favorName"
+          placeholder="Nom du matériel"
+          tuiInput
+          (focus)="onFavorNameFocus()"
+        />
+
+        @if (input.value) {
+          <tui-data-list-wrapper
+            *tuiDropdown
+            [items]="filteredFavour()"
+            [emptyContent]="emptyFavor"
+          />
+        }
+
+        <ng-template #emptyFavor>
+          <div class="empty-list">
+            <p>Aucun matériel trouvé</p>
+          </div>
+        </ng-template>
+      </tui-textfield>
+    </div>
+
+    <div class="inputAvailability">
+      <input
+        tuiSwitch
+        type="checkbox"
+        formControlName="isAvailable"
+      />
+    </div>
+
+    <div class="textDescription">
+      <tui-textfield>
+        <label tuiLabel>Description</label>
+        <textarea
+          placeholder="Écrivez votre description"
+          tuiTextarea
+          formControlName="descriptionFavor"
+          [limit]="100"
+          [max]="6"
+          [min]="3"
+        ></textarea>
+      </tui-textfield>
+    </div>
+
+    <div class="inputPrice">
+      <tui-textfield [style.width.rem]="12">
+        <input
+          postfix=" €"
+          tuiFluidTypography
+          tuiInputNumber
+          formControlName="priceHourFavor"
+          [min]="1.0"
+        />
+      </tui-textfield>
+    </div>
+
+    <div class="inputState">
+    </div>
+
+    <div class="buttons">
+      <button
+        id="btn-cancel"
+        tuiButton
+        type="button"
+        size="m"
+        [routerLink]="['/user-favor', 'my-user-favor']"
+      >
+        Annuler
+      </button>
+      <button
+        id="btn-edit"
+        tuiButton
+        type="submit"
+        appearance="primary"
+        size="m"
+      >
+        Modifier
+      </button>
+    </div>
+
+  </form>
+
+</div>
+
+<ng-template
+  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [(tuiNotification)]="show"
+>
+  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <button
+    tuiButton
+    type="button"
+    (click)="show.set(false)"
+  >
+    Close
+  </button>
+</ng-template>

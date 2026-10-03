@@ -1,0 +1,63 @@
+<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="userFavorDetail">
+  @if (userFavorDetail; as userFavor) {
+    <h1>
+      {{ userFavor.favor.nameFavor }}
+    </h1>
+
+    <div class="favor-detail" >
+
+      <!-- Detail about user favor -->
+      <section class="favor-info">
+        <div class="favor-description">
+          <strong>Description</strong>
+          <p>
+            {{ userFavor.descriptionFavor }}
+          </p>
+        </div>
+
+        <div class="favor-property">
+          <strong>Prix</strong>
+          <p>
+            {{ userFavor.priceHourFavor }} € de l'heure
+          </p>
+        </div>
+
+        <div class="favor-property">
+          <strong>Disponible</strong>
+          <p>
+            {{ userFavor.isAvailable ? 'Oui' : 'Non' }}
+          </p>
+        </div>
+
+        <div class="favor-property">
+          <strong>Propriétaire</strong>
+          <p>
+            {{ userFavor.user.pseudo }}
+          </p>
+        </div>
+
+      </section>
+
+
+      <!-- Pictures -->
+      <section class="favor-gallery">
+
+        @for (picture of userFavor.pictures; track picture) {
+
+          <div class="picture-container">
+            <img
+              [src]="'/userFavour/' + picture"
+              [alt]="userFavor.favor.nameFavor"
+            />
+          </div>
+
+        }
+
+      </section>
+
+    </div>
+
+  } @else {
+    <h1>La liste est vide</h1>
+  }
+</div>

@@ -37,7 +37,7 @@ import { MaterialModel } from '../../material/model/Material';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TuiValidationError } from '@taiga-ui/cdk';
 import { ThemeService } from '../../../core/services/ThemeService';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user-material-create',
@@ -70,6 +70,7 @@ export class UserMaterialCreate implements OnInit {
   private readonly _materialService = inject(MaterialService); // Get a list of all materials
   private userMaterialService = inject(UserMaterialService); // Call the service to create a new usermaterial
   private _themeService = inject(ThemeService); // Call the service to change color theme
+  private readonly _router = inject(Router); // Tool to navigate
 
   isDarkMode = false; // Change theme from light to dark
   protected readonly show = signal(false); // Show notification
@@ -180,6 +181,7 @@ export class UserMaterialCreate implements OnInit {
         this.show.set(true);
         this.createUserMaterialForm.reset({ priceHourMaterial: 1.0, isAvailable: true });
         this.rejected = [];
+        this._router.navigate(['/user-material','my-user-material']).then();
       },
       error: (error) => {
         this.messageError = 'Erreur lors de la création';
