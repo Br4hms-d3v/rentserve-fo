@@ -78,4 +78,11 @@ export class UserMaterialService {
     pictures.forEach((picture) => formData.append('pictures', picture, picture.name));
     return this._http.post<UserMaterialCreateForm>(this.apiUrl + 'new', formData, { headers });
   }
+
+  getUserMaterialByMaterial(nameMaterial: string) {
+    const headers = this.getAuthHeader();
+    return this._http
+      .get<UserMaterialResponse>(this.apiUrl + 'list/' + nameMaterial, { headers })
+      .pipe(map((response) => response._embedded.userMaterialDTOList));
+  }
 }

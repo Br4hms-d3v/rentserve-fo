@@ -1,0 +1,147 @@
+@light-background-color: #F1EFE8;
+@light-breadcrumb: #5F5E5A !important;
+@light-title: #3B6D11 !important;
+@light-text: #3D4A2A !important;
+@light-background-card: #D3D1C7;
+@light-btn-rental: #D9764A;
+@light-btn-detail: #3D4A2A;
+
+@dark-background-color: #1C1F17;
+@dark-breadcrumb: #A6A599 !important;
+@dark-title: #8FC15C;
+@dark-text: #F1EFE8;
+@dark-background-card: #262A1D;
+@dark-btn-detail: #33421F;
+
+.userMaterial-container {
+  height: 100%;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px 40px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 25px;
+  row-gap: 30px;
+  width: 1300px;
+}
+
+/* Card */
+.card {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 330px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Image */
+.image-container {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+/* Price and details */
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+
+/* Bouton Detail */
+.details-button {
+  width: 90px;
+  margin-top: 20px;
+}
+
+.btn-rental {
+  width: 150px;
+  background-color: @light-btn-rental;
+}
+
+/* Pagination */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+}
+
+// THEME
+
+.light-mode {
+  background-color: @light-background-color;
+
+  tui-breadcrumbs {
+    color: @light-breadcrumb;
+
+    a {
+      color: @light-breadcrumb;
+    }
+  }
+
+  h1 {
+    color: @light-title;
+  }
+
+  .card {
+    background-color: @light-background-card;
+  }
+
+  .priceHour {
+    color: @light-text;
+  }
+
+  .details-button {
+    background-color: @light-btn-detail
+  }
+}
+
+.dark-mode {
+  background-color: @dark-background-color;
+
+  tui-breadcrumbs {
+    color: @dark-breadcrumb;
+
+    a {
+      color: @dark-breadcrumb;
+    }
+  }
+
+  h1 {
+    color: @dark-title;
+  }
+
+  .card {
+    background-color: @dark-background-card;
+  }
+
+  .priceHour {
+    color: @dark-text;
+  }
+
+  .details-button {
+    background-color: @dark-btn-detail;
+  }
+}
