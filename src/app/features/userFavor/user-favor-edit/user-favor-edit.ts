@@ -68,10 +68,10 @@ export class UserFavorEdit implements OnInit {
   protected messageSuccess = '';
 
   ngOnInit() {
-    this.userFavorId = Number(this._route.snapshot.params['id']);
+    this.userFavorId = Number(this._route.snapshot.paramMap.get('id'));
 
     this.getUserFavor();
-    this.getFavor();
+    this.getFavour();
     this.changeTheme();
 
     this.editUserFavorForm.controls.favorName.valueChanges.subscribe((value) => {
@@ -105,9 +105,82 @@ export class UserFavorEdit implements OnInit {
     }),
   });
 
-  protected updateUserFavor() {
-    this.editUserFavorForm.markAsTouched();
+  protected getUserFavor() {
+    this._userFavorService.getUserFavorDetail(this.userFavorId).subscribe({
+      next: (userFavor) => {
+        this.userFavorModel = userFavor;
+        this.isInitializing = true;
+        this.editUserFavorForm.patchValue({
+          favorId: userFavor.favor.id,
+          favorName: userFavor.favor.nameFavor,
+          descriptionFavor: userFavor.descriptionFavor,
+          priceHourFavor: userFavor.priceHourFavor,
+          isAvailable: userFavor.isAvailable,
+        });
+        this.isInitializing = false;
+      },
+    });
+  }
 
+  protected getFavour() {
+    this._favorService.getFavour().subscribe({
+      next: (listFavour) => {
+        this.favourModels = listFavour;
+
+        this.favourList = listFavour
+          .map((favor) => favor.nameFavor)
+          .sort((a, b) => a.localeCompare(b, 'fr'));
+
+        this.filteredFavour.set(this.favourList);
+
+        if (this.userFavorModel) {
+          const currentFavor = this.favourModels.find(
+            (favor) =>
+              favor.nameFavor.trim().toLowerCase() ===
+              this.userFavorModel.favor.nameFavor.trim().toLowerCase(),
+          );
+
+          this.editUserFavorForm.controls.favorId.setValue(currentFavor?.id ?? null, {
+            emitEvent: false,
+          });
+
+        }
+      },
+      error: (err) => console.error('Erreur récupération du service:', err),
+    });
+  }
+
+  // Clear the field clicked to show the full list
+  protected onFavorNameFocus(): void {
+    this.filteredFavour.set(this.favourList);
+  }
+
+  private onFavorNameChange(value: string): void {
+    if (this.isInitializing) {
+      return;
+    }
+
+    const search = value.trim().toLowerCase();
+
+    this.filteredFavour.set(
+      search
+        ? this.favourList.filter((name) => name.toLowerCase().startsWith(search))
+        : this.favourList,
+    );
+
+    const matched = this.favourModels.find(
+      (favor) => favor.nameFavor.trim().toLowerCase() === search,
+    );
+
+    this.editUserFavorForm.controls.favorId.setValue(matched?.id ?? null, {
+      emitEvent: false,
+    });
+  }
+
+  protected updateUserFavor(): void {
+    this.editUserFavorForm.markAllAsTouched();
+
+    // console.log(this.editUserFavorForm.getRawValue());
     if (this.editUserFavorForm.invalid) {
       this.messageError = 'Le formulaire est vide';
       this.isSuccess.set(false);
@@ -127,68 +200,17 @@ export class UserFavorEdit implements OnInit {
     this._userFavorService.editUserFavor(this.userFavorId, payload).subscribe({
       next: (data) => {
         this.editUserFavorForm.patchValue(data);
-        this.getFavor();
+        this.getFavour();
 
         this.isSuccess.set(true);
         this.show.set(true);
         this.messageSuccess = 'Le service est bien à jour';
       },
-    });
-  }
-
-  onFavorNameFocus() {
-    this.filteredFavour.set(this.favourList);
-  }
-
-  private onFavorNameChange(value: string) {
-    if (this.isInitializing) {
-      return;
-    }
-
-    const search = value.toLowerCase();
-
-    this.filteredFavour.set(
-      search
-        ? this.favourList.filter((name) => name.toLowerCase().startsWith(search))
-        : this.favourList,
-    );
-
-    const matched = this.favourModels.find(
-      (favor) => favor.nameFavor.trim().toLowerCase() === search,
-    );
-
-    this.editUserFavorForm.controls.favorId.setValue(matched?.id ?? null, {
-      emitEvent: false,
-    });
-  }
-
-  getUserFavor() {
-    this._userFavorService.getUserFavorDetail(this.userFavorId).subscribe({
-      next: (userFavor) => {
-        this.userFavorModel = userFavor;
-        this.isInitializing = true;
-        this.editUserFavorForm.patchValue({
-          favorId: userFavor.id,
-          favorName: userFavor.favor.nameFavor,
-          descriptionFavor: userFavor.descriptionFavor,
-          priceHourFavor: userFavor.priceHourFavor,
-          isAvailable: userFavor.isAvailable,
-        });
-        this.isInitializing = false;
+      error: (err) => {
+        this.isSuccess.set(false);
+        this.show.set(true);
+        this.messageError = err.error?.message ?? 'Erreur lors de la modification du service';
       },
-    });
-  }
-
-  getFavor() {
-    this._favorService.getFavour().subscribe({
-      next: (listFavour) => {
-        this.favourModels = listFavour;
-        this.favourList = listFavour
-          .map((favor) => favor.nameFavor)
-          .sort((a, b) => a.localeCompare(b, 'fr'));
-        this.filteredFavour.set(this.favourList);
-      },
-      error: (err) => console.error('Erreur récupération du service:', err),
     });
   }
 
