@@ -5,6 +5,7 @@ import { map } from 'rxjs';
 import { UserFavorResponse } from '../model/userFavor';
 import { UserFavorDetailModel } from '../model/user-favor-detail';
 import { UserFavorEditForm } from '../model/user-favor-edit-form';
+import { UserFavorCreateForm } from '../model/user-favor-create-form';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,20 @@ export class UserFavorService {
 
     return new HttpHeaders({
       Accept: 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+  }
+
+  private getAuthorizationHeader() {
+    const userJson = localStorage.getItem('currentUser');
+    let token = '';
+
+    if (userJson) {
+      const user = JSON.parse(userJson);
+      token = user.token;
+    }
+
+    return new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
   }
@@ -48,5 +63,19 @@ export class UserFavorService {
   editUserFavor(id: number, form: UserFavorEditForm) {
     const headers = this.getAuthHeader();
     return this._http.put<UserFavorEditForm>(this.apiUrl + id + '/edit', form, { headers });
+  }
+
+  createUserFavor(form: UserFavorCreateForm, pictures: File[]) {
+    const headers = this.getAuthorizationHeader();
+    const formData = new FormData();
+
+    Object.entries(form).forEach(([key, value]) => {
+      if (value !== null && value !== undefined && value !== '') {
+        formData.append(key, String(value));
+      }
+    });
+
+    pictures.forEach((picture: File) => formData.append('pictures', picture.name));
+    return this._http.post<UserFavorCreateForm>(this.apiUrl + 'new', formData, { headers });
   }
 }

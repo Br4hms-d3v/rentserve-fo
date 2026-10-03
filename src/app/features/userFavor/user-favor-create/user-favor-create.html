@@ -1,0 +1,140 @@
+<div class="createUserFavor-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+
+  <h1 class="titleEditUserFavor">
+    {{ title }}
+  </h1>
+
+  <form [formGroup]="createUserFavorForm" (ngSubmit)="createUserFavor()" class="userFavor-form">
+
+    <div class="inputNameFavor">
+      <tui-textfield tuiChevron [stringify]="stringify">
+        <label tuiLabel>Nom du service</label>
+        <input tuiComboBox formControlName="favor" placeholder="Choisir un service" />
+
+        <tui-data-list-wrapper
+          *tuiDropdown
+          new
+          [items]="favourList | tuiFilterByInput"
+          [emptyContent]="emptyFavor"
+        />
+
+        <ng-template #emptyFavor>
+          <div class="empty-list">
+            <p>Aucun service trouvé</p>
+          </div>
+        </ng-template>
+      </tui-textfield>
+    </div>
+
+    <div class="textDescription">
+      <tui-textfield>
+        <label tuiLabel>Description</label>
+        <textarea
+          placeholder="Écrivez votre description"
+          tuiTextarea
+          formControlName="descriptionFavor"
+          [limit]="150"
+          [max]="6"
+          [min]="3"
+        ></textarea>
+      </tui-textfield>
+    </div>
+
+    <div class="favor-options">
+
+      <div class="inputPrice">
+        <tui-textfield [style.width.rem]="12">
+          <label tuiLabel>Prix par heure</label>
+          <input
+            postfix=" €"
+            tuiInputNumber
+            formControlName="priceHourFavor"
+            [min]="1"
+          />
+        </tui-textfield>
+      </div>
+
+      <div class="inputAvailability">
+        <label>
+          <input tuiSwitch type="checkbox" formControlName="isAvailable" />
+          Disponible
+        </label>
+      </div>
+    </div>
+    <div class="inputImage">
+      <label tuiInputFiles>
+        <input
+          #validator="tuiInputFilesValidator"
+          accept="image/*"
+          tuiInputFiles
+          formControlName="pictures"
+          [multiple]="true"
+          (reject)="onReject($event)"
+        />
+      </label>
+
+      <tui-files class="tui-space_top-1">
+        @for (file of accepted$ | async; track file) {
+          <tui-file [file]="file" (remove)="onRemove(file)" />
+        }
+
+        @for (file of rejected; track file) {
+          <tui-file
+            state="error"
+            [file]="(file | tuiFileRejected: validator | async) || file"
+            (remove)="onRemove(file)"
+          />
+        }
+      </tui-files>
+
+      <tui-error
+        formControlName="pictures"
+        [order]="['maxLength']">
+      </tui-error>
+    </div>
+
+    <div class="favor-buttons">
+      <button
+        [routerLink]="['/user-favor','my-user-favor']"
+        id="btn-back"
+        tuiButton
+        size="m"
+      >
+        Retour
+      </button>
+
+      <button
+        (click)="onBack()"
+        type="button"
+        id="btn-cancel"
+        tuiButton
+        size="m"
+      >
+        Annuler
+      </button>
+
+      <button
+        type="submit"
+        id="btn-new"
+        tuiButton
+        size="m"
+      >
+        Créer
+      </button>
+    </div>
+  </form>
+
+</div>
+<ng-template
+  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [(tuiNotification)]="show"
+>
+  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <button
+    tuiButton
+    type="button"
+    (click)="show.set(false)"
+  >
+    Close
+  </button>
+</ng-template>
