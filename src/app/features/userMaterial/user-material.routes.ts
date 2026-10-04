@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { UserMaterialUser } from './user-material-user/user-material-user';
+import { UserMaterialUser } from '../user/usermaterial/user-material-user/user-material-user';
 import { authGuard } from '../../core/services/authGuard';
-import { UserMaterialDetail } from './user-material-detail/user-material-detail';
+import { UserMaterialDetail } from '../user/usermaterial/user-material-detail/user-material-detail';
 import { UserMaterialDelete } from './user-material-delete/user-material-delete';
 import { UserMaterialEdit } from './user-material-edit/user-material-edit';
 import { UserMaterialCreate } from './user-material-create/user-material-create';

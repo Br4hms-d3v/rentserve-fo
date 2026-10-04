@@ -1,14 +1,14 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
-import { AuthService } from '../../auth/service/auth-service';
-import { UserMaterialService } from '../service/user-material-service';
-import { UserMaterialModel } from '../model/userMaterial';
+import { AuthService } from '../../../auth/service/auth-service';
+import { UserMaterialService } from '../../../userMaterial/service/user-material-service';
+import { UserMaterialModel } from '../../../userMaterial/model/userMaterial';
 import { TuiTable, TuiTablePagination } from '@taiga-ui/addon-table';
 import { TuiStatus } from '@taiga-ui/kit';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { NgClass, NgOptimizedImage } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { ThemeService } from '../../../core/services/ThemeService';
+import { ThemeService } from '../../../../core/services/ThemeService';
 
 @Component({
   selector: 'app-user-material-user',
