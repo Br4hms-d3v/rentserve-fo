@@ -53,7 +53,7 @@ export class UserMaterialList implements OnInit {
   // Pagination
   protected index = 0;
   protected length = 0;
-  protected size = 25;
+  protected size = 32;
 
   ngOnInit() {
     this.nameMaterial = String(this._route.snapshot.paramMap.get('nameMaterial'));

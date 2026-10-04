@@ -56,8 +56,9 @@
             appearance="primary"
             size="xs"
             class="details-button"
+            [routerLink]="['/user-material', 'user-material-detail', userMaterial.id]"
           >
-            détail {{userMaterial.id}}
+            détail
           </button>
 
         </div>
@@ -70,7 +71,7 @@
           size="s"
           class="btn-rental"
         >
-          Réserver
+          Louer
         </button>
 
       </div>
