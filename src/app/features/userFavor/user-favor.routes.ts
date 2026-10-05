@@ -5,6 +5,7 @@ import { UserFavorDetail } from '../user/userfavor/user-favor-detail/user-favor-
 import { UserFavorDelete } from './user-favor-delete/user-favor-delete';
 import { UserFavorEdit } from './user-favor-edit/user-favor-edit';
 import { UserFavorCreate } from './user-favor-create/user-favor-create';
+import { UserFavorList } from './user-favor-list/user-favor-list';
 
 export const user_favor_routes: Route[] = [
   { path: 'my-user-favor', component: UserFavorUser, canActivate: [authGuard] },
@@ -12,4 +13,5 @@ export const user_favor_routes: Route[] = [
   { path: 'delete-my-favor/:id', component: UserFavorDelete, canActivate: [authGuard] },
   { path: 'edit-my-favor/:id', component: UserFavorEdit, canActivate: [authGuard] },
   { path: 'new-favor', component: UserFavorCreate, canActivate: [authGuard] },
+  { path: 'list/:nameFavor', component: UserFavorList, canActivate: [authGuard] },
 ];

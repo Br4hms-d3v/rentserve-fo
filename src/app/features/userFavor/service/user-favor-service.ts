@@ -78,4 +78,11 @@ export class UserFavorService {
     pictures.forEach((picture) => formData.append('pictures', picture, picture.name));
     return this._http.post<UserFavorCreateForm>(this.apiUrl + 'new', formData, { headers });
   }
+
+  getUserFavorByFavor(nameFavor: string) {
+    const headers = this.getAuthHeader();
+    return this._http
+      .get<UserFavorResponse>(this.apiUrl + 'list/' + nameFavor, { headers })
+      .pipe(map((response) => response._embedded.userFavorDTOList));
+  }
 }

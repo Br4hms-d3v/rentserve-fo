@@ -1,0 +1,91 @@
+<div class="userFavor-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+
+  <!-- Breadcrumbs -->
+  <tui-breadcrumbs>
+    @for (link of links; track link) {
+      <a
+        *tuiItem
+        tuiLink
+        [routerLink]="link.routerLink"
+      >
+        {{ link.caption }}
+      </a>
+    }
+  </tui-breadcrumbs>
+
+
+  <h1>Liste des matériels</h1>
+
+  <div class="container-search-filter">
+    <!-- Button sort on state -->
+
+    <span class="spacer"></span>
+
+    <!-- Button filter price -->
+    <span class="spacer"></span>
+
+    <!-- Button create new favor -->
+
+  </div>
+
+  <!-- Cards -->
+  <div class="cards-container">
+    @for (userFavor of paginatedUserFavour(); track userFavor.id) {
+
+      <div class="card" tuiCardMedium>
+
+        <!-- Image -->
+        <div class="image-container">
+          <img
+            [src]="'/userFavour/' + userFavor.picture"
+            [alt]="userFavor.picture"
+            alt="Image"
+          />
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+
+          <div class="priceHour">
+            {{ userFavor.priceHourFavor }} € / heure
+          </div>
+
+          <button
+            tuiButton
+            type="button"
+            appearance="primary"
+            size="xs"
+            class="details-button"
+            [routerLink]="['/user-favor', 'detail', userFavor.id]"
+          >
+            détail
+          </button>
+
+        </div>
+
+        <!-- button rental -->
+        <button
+          tuiButton
+          type="button"
+          appearance="primary"
+          size="s"
+          class="btn-rental"
+        >
+          Louer
+        </button>
+
+      </div>
+    }
+  </div>
+</div>
+
+<!-- Pagination -->
+<div class="pagination-container">
+  <tui-pagination
+    [length]="length"
+    [style.float]="'center'"
+    [(index)]="index"
+  ></tui-pagination>
+</div>
+
+
