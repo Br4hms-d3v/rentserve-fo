@@ -50,6 +50,7 @@ export class UserMaterialService {
       .pipe(map((response) => response._embedded.userMaterialDTOList));
   }
 
+  // Get detail userMaterial see by only owner
   getUserMaterialDetail(id: number) {
     const headers = this.getAuthHeader();
     return this._http.get<UserMaterialDetailModel>(this.apiUrl + 'my-material/' + id, { headers });
@@ -84,5 +85,11 @@ export class UserMaterialService {
     return this._http
       .get<UserMaterialResponse>(this.apiUrl + 'list/' + nameMaterial, { headers })
       .pipe(map((response) => response._embedded.userMaterialDTOList));
+  }
+
+  // Get detail userMaterial see by all users
+  getUserMaterialById(id: number) {
+    const headers = this.getAuthHeader();
+    return this._http.get<UserMaterialDetailModel>(this.apiUrl + id, { headers });
   }
 }

@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
-import { UserMaterialService } from '../service/user-material-service';
-import { UserMaterialDetailModel } from '../model/user-material-detail';
+import { UserMaterialService } from '../../../userMaterial/service/user-material-service';
+import { UserMaterialDetailModel } from '../../../userMaterial/model/user-material-detail';
 import { ActivatedRoute } from '@angular/router';
-import { ThemeService } from '../../../core/services/ThemeService';
+import { ThemeService } from '../../../../core/services/ThemeService';
 import { NgClass } from '@angular/common';
 
 @Component({

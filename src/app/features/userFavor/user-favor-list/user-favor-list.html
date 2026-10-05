@@ -1,4 +1,4 @@
-<div class="userMaterial-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+<div class="userFavor-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
 
   <!-- Breadcrumbs -->
   <tui-breadcrumbs>
@@ -24,21 +24,21 @@
     <!-- Button filter price -->
     <span class="spacer"></span>
 
-    <!-- Button create new material -->
+    <!-- Button create new favor -->
 
   </div>
 
   <!-- Cards -->
   <div class="cards-container">
-    @for (userMaterial of paginatedUserMaterials(); track userMaterial.id) {
+    @for (userFavor of paginatedUserFavour(); track userFavor.id) {
 
       <div class="card" tuiCardMedium>
 
         <!-- Image -->
         <div class="image-container">
           <img
-            [src]="'/userMaterials/' + userMaterial.picture"
-            [alt]="userMaterial.picture"
+            [src]="'/userFavour/' + userFavor.picture"
+            [alt]="userFavor.picture"
             alt="Image"
           />
         </div>
@@ -47,7 +47,7 @@
         <div class="actions">
 
           <div class="priceHour">
-            {{ userMaterial.priceHourMaterial }} € / heure
+            {{ userFavor.priceHourFavor }} € / heure
           </div>
 
           <button
@@ -56,7 +56,7 @@
             appearance="primary"
             size="xs"
             class="details-button"
-            [routerLink]="['/user-material', 'detail', userMaterial.id]"
+            [routerLink]="['/user-favor', 'detail', userFavor.id]"
           >
             détail
           </button>

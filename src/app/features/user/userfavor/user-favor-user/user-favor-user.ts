@@ -11,10 +11,10 @@ import {
   TuiTableTh,
 } from '@taiga-ui/addon-table';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../auth/service/auth-service';
-import { UserFavorService } from '../service/user-favor-service';
-import { ThemeService } from '../../../core/services/ThemeService';
-import { UserFavorModel } from '../model/userFavor';
+import { AuthService } from '../../../auth/service/auth-service';
+import { UserFavorService } from '../../../userFavor/service/user-favor-service';
+import { ThemeService } from '../../../../core/services/ThemeService';
+import { UserFavorModel } from '../../../userFavor/model/userFavor';
 
 @Component({
   selector: 'app-user-favor-user',

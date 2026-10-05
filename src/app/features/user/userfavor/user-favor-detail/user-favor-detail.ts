@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ThemeService } from '../../../core/services/ThemeService';
-import { UserFavorService } from '../service/user-favor-service';
-import { UserFavorDetailModel } from '../model/user-favor-detail';
+import { ThemeService } from '../../../../core/services/ThemeService';
+import { UserFavorService } from '../../../userFavor/service/user-favor-service';
+import { UserFavorDetailModel } from '../../../userFavor/model/user-favor-detail';
 import { NgClass } from '@angular/common';
 
 @Component({
