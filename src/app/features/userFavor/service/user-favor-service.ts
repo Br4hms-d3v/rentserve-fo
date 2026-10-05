@@ -85,4 +85,10 @@ export class UserFavorService {
       .get<UserFavorResponse>(this.apiUrl + 'list/' + nameFavor, { headers })
       .pipe(map((response) => response._embedded.userFavorDTOList));
   }
+
+  // Get detail userFavor see by all users
+  getUserFavorById(id: number) {
+    const headers = this.getAuthHeader();
+    return this._http.get<UserFavorDetailModel>(this.apiUrl + id, { headers });
+  }
 }
