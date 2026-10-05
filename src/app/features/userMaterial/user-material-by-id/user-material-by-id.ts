@@ -1,16 +1,13 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { UserMaterialService } from '../service/user-material-service';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { UserMaterialDetailModel } from '../model/user-material-detail';
 import { NgClass } from '@angular/common';
-import { TuiBreadcrumbs } from '@taiga-ui/kit';
-import { TuiLink } from '@taiga-ui/core';
-import { TuiItem } from '@taiga-ui/cdk';
 
 @Component({
   selector: 'app-user-material-by-id',
-  imports: [NgClass, TuiBreadcrumbs, TuiLink, TuiItem, RouterLink],
+  imports: [NgClass],
   templateUrl: './user-material-by-id.html',
   styleUrl: './user-material-by-id.less',
 })
