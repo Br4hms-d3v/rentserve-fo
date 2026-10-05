@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
 import { CategoryModel } from '../model/Category';
 import { AuthService } from '../../auth/service/auth-service';
 import { CategoryService } from '../service/category-service';
@@ -43,6 +43,7 @@ export class CategoryFavor implements OnInit {
     private readonly _authService: AuthService,
     private readonly _categoryService: CategoryService,
     private themeService: ThemeService,
+    private readonly _cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -72,6 +73,7 @@ export class CategoryFavor implements OnInit {
 
         // Calculate the length for the size of table
         this.length = Math.ceil(this.categoriesFavour.length / this.size);
+        this._cdr.detectChanges();
       },
 
       error: (error) => {

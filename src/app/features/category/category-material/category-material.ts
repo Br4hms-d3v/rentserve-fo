@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
 import { TuiButton, TuiDialog, TuiInput, TuiTextfield } from '@taiga-ui/core';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiPagination } from '@taiga-ui/kit';
@@ -43,6 +43,7 @@ export class CategoryMaterial implements OnInit {
     private readonly _authService: AuthService,
     private readonly _categoryService: CategoryService,
     private themeService: ThemeService,
+    private readonly _cdr :ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -72,6 +73,7 @@ export class CategoryMaterial implements OnInit {
 
         // Calculate the length for the size of table
         this.length = Math.ceil(this.categoriesMaterials.length / this.size);
+        this._cdr.detectChanges();
       },
 
       error: (error) => {
