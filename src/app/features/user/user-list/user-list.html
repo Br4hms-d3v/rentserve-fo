@@ -1,0 +1,67 @@
+<div class="user-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+
+  <div class="filter-container">
+
+    <tui-textfield tuiChevron>
+      <label tuiLabel>Rôle</label>
+      <input tuiSelect [ngModel]="role" (ngModelChange)="onChangeRole($event)" />
+      <tui-data-list-wrapper *tuiDropdown [items]="roles" />
+    </tui-textfield>
+
+    <tui-textfield class="custom-icon-textfield" iconStart="@tui.user-round">
+      <label tuiLabel>Filtre</label>
+      <input
+        tuiInput
+        placeholder="Nom de l'utilisateur"
+        [ngModel]="searchName"
+        (ngModelChange)="onSearchName($event)"
+      />
+    </tui-textfield>
+
+    <button tuiButton type="button" class="sort-btn" (click)="sortByName()">
+      Trier par nom {{ sortAscending ? '↑' : '↓' }}
+    </button>
+
+  </div>
+
+  <div class="table-container">
+    <table tuiTable class="users-table">
+      <thead>
+      <tr tuiThGroup>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Rôle</th>
+      </tr>
+      </thead>
+
+      <tbody tuiTbody>
+        @for (user of paginationUSerRole(); track user.id) {
+          <tr tuiTr>
+            <td tuiTd>{{ user.name }}</td>
+            <td tuiTd>{{ user.firstName }}</td>
+            <td tuiTd>
+              <span class="role-badge">{{ user.role }}</span>
+            </td>
+          </tr>
+        } @empty {
+          <tr tuiTr>
+            <td tuiTd colspan="3" class="empty-message">
+              Aucun utilisateur trouvé.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-footer">
+    <span>{{ filteredUsersRole.length }} utilisateur(s)</span>
+
+    @if (length > 0) {
+      <tui-pagination
+        [length]="length"
+        [(index)]="index"
+      />
+    }
+  </div>
+</div>

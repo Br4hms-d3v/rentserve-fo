@@ -4,9 +4,10 @@ import { environment } from '../../../environment/environment';
 import { UserModel } from '../model/user';
 import { UserForm } from '../model/userForm';
 import { UserTokenModel } from '../model/userToken';
-import { tap } from 'rxjs';
+import { map, tap } from 'rxjs';
 import { ChangePasswordForm } from '../model/changePassword';
 import { UserDeleteForm } from '../model/userDeleteForm';
+import { UserRoleResponse } from '../model/UserRoleModel';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,13 @@ export class UserService {
   getUser(id: number) {
     const headers = this.getAuthHeader();
     return this._http.get<UserModel>(this.apiUrl + id, { headers });
+  }
+
+  getUserRole(role: string){
+    const headers = this.getAuthHeader();
+    return this._http
+      .get<UserRoleResponse>(this.apiUrl + 'list/'+role, {headers})
+      .pipe(map((response) => response._embedded.userRoleDTOList));
   }
 
   editUser(id: number, form: UserForm) {

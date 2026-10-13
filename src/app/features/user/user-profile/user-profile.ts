@@ -12,6 +12,7 @@ import { NgClass } from '@angular/common';
 import { TuiSlides } from '@taiga-ui/layout';
 import { TuiTabs } from '@taiga-ui/kit';
 import { ThemeService } from '../../../core/services/ThemeService';
+import { AuthService } from '../../auth/service/auth-service';
 
 @Component({
   selector: 'app-user-profile',
@@ -20,13 +21,21 @@ import { ThemeService } from '../../../core/services/ThemeService';
   styleUrl: './user-profile.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserProfile implements OnInit{
+export class UserProfile implements OnInit {
+  private _authService = inject(AuthService); // Call the service to get role of user
   private _themeService = inject(ThemeService); // Call the service to change color theme
 
   @Input() userId!: string;
   isDarkMode = false; // Change theme from light to dark
+  role: string | undefined; // Get the role to display some infos
 
   ngOnInit(): void {
+    this._authService.currentUser$.subscribe((user) => {
+      if (user) {
+        this.role = user.role;
+      }
+    });
+
     this.changeTheme();
   }
 

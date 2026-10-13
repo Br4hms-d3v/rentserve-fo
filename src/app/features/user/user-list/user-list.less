@@ -1,0 +1,169 @@
+@border-dark: #2a2a2a;
+@border-light: #3D4A2A;
+@row-height: 3rem; // = the height of the row
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.user-container {
+  padding: 24px;
+  border-radius: 20px;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.filter-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 16px;
+  align-items: center;
+
+  tui-textfield,
+  .sort-btn {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  padding-bottom: 15px;
+}
+
+// ---------- table ----------
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid transparent;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+
+  th,
+  td {
+    height: @row-height;
+    padding: 0 16px;
+    text-align: left;
+    background: transparent;
+  }
+
+  th {
+    font-weight: 700;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr[tuiTr]:hover {
+    cursor: pointer;
+  }
+}
+
+.role-badge {
+  display: inline;
+  padding: 0;
+  background: none;
+  font-size: inherit;
+  font-weight: 400;
+}
+
+.empty-message {
+  text-align: center !important;
+}
+
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  font-size: 14px;
+}
+
+// THEME
+.light-mode {
+  background: #fff;
+  color: #222;
+  border: 1px solid @border-light;
+
+  .field { color: @border-light; }
+
+  .sort-btn {
+    background: #E8845A;
+    color: #fff;
+    &:hover { background: #d9744a; }
+  }
+
+  .custom-icon-textfield,
+  .custom-icon-textfield:focus-within,
+  .custom-icon-textfield:hover {
+    color: #E8845A !important;
+  }
+
+  label{
+    color: #3B6D11;
+  }
+
+  input{
+    color: @border-light;
+  }
+
+  .table-container { border-color: @border-light; }
+
+  .users-table {
+    th,
+    td { border-bottom: 1px solid @border-light; }
+    th { color: @border-light; }
+    tbody tr:hover { background: #fff0e9; }
+  }
+
+  .empty-message { color: #777; }
+}
+
+.dark-mode {
+  background: #000;
+  color: #fff;
+  border: 1px solid @border-dark;
+
+  .field { color: #d0d0d0; }
+
+  .sort-btn {
+    background: #262626;
+    color: #fff;
+    &:hover { background: #333; }
+  }
+
+  .table-container { border-color: @border-dark; }
+
+  .users-table {
+    th,
+    td {
+      color: #fff;
+      border-bottom: 1px solid @border-dark;
+    }
+    th { border-top: 1px solid @border-dark; }
+    tbody tr:hover { background: #141414; }
+  }
+
+  .empty-message { color: #bbb; }
+}
+
+
+// ---------- Mobile ----------
+@media (max-width: 600px) {
+  .user-container { padding: 12px; }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .table-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

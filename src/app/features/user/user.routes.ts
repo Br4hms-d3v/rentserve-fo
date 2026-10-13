@@ -4,6 +4,7 @@ import { authGuard } from '../../core/services/authGuard';
 import { UserProfile } from './user-profile/user-profile';
 import { UserPassword } from './user-password/user-password';
 import { UserDelete } from './user-delete/user-delete';
+import { UserList } from './user-list/user-list';
 
 export const user_routes: Routes = [
   {
@@ -29,6 +30,11 @@ export const user_routes: Routes = [
       {
         path: 'delete',
         component: UserDelete,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'list-user',
+        component: UserList,
         canActivate: [authGuard],
       },
     ],

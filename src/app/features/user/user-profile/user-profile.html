@@ -1,4 +1,4 @@
-<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="slide">
+<div  [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="slide">
 
   <tui-tabs>
     <a
@@ -24,6 +24,16 @@
     >
       Supprimer le compte
     </a>
+
+    @if(role == 'ADMIN'){
+      <a
+        [routerLink]="['list-user']"
+        routerLinkActive
+        tuiTab
+      >
+        Liste des utilisateurs
+      </a>
+    }
   </tui-tabs>
 
   <p [tuiSlides]="direction()">
