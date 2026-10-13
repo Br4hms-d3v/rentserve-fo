@@ -1,12 +1,28 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { UserService } from '../service/user-service';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { NgClass } from '@angular/common';
 import { UserRoleModel } from '../model/UserRoleModel';
 import { TuiTable, TuiTableDirective } from '@taiga-ui/addon-table';
 import { TuiChevron, TuiDataListWrapper, TuiPagination, TuiSelect } from '@taiga-ui/kit';
-import { TuiButton, TuiDropdown, TuiInput, TuiLabel, TuiTextfield } from '@taiga-ui/core';
+import {
+  TuiButton,
+  TuiDialogService,
+  TuiDropdown,
+  TuiIcon,
+  TuiInput,
+  TuiLabel,
+  TuiTextfield,
+} from '@taiga-ui/core';
 import { FormsModule } from '@angular/forms';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
+import { UserRole } from '../user-role/user-role';
 
 @Component({
   selector: 'app-user-list',
@@ -24,9 +40,11 @@ import { FormsModule } from '@angular/forms';
     TuiChevron,
     TuiSelect,
     TuiDataListWrapper,
+    TuiIcon,
   ],
   templateUrl: './user-list.html',
   styleUrl: './user-list.less',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserList implements OnInit {
   private _userService = inject(UserService); // Call the service to get a list of users
@@ -136,5 +154,22 @@ export class UserList implements OnInit {
   changeTheme() {
     this.isDarkMode = this.themeService.isDarkMode(); // Get current theme
     this.themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
+  }
+
+  // MODAL
+  private readonly dialogs = inject(TuiDialogService);
+
+  openRoleModal(event: MouseEvent, user: any): void {
+    event.preventDefault();
+
+    this.dialogs
+      .open(new PolymorpheusComponent(UserRole), {
+        label: 'Modifier le rôle de : ' +user.name ,
+        size: 'm',
+        data: user,
+      })
+      .subscribe(() =>{
+          this.usersRole();
+      });
   }
 }

@@ -8,6 +8,7 @@ import { map, tap } from 'rxjs';
 import { ChangePasswordForm } from '../model/changePassword';
 import { UserDeleteForm } from '../model/userDeleteForm';
 import { UserRoleResponse } from '../model/UserRoleModel';
+import { UserRoleForm } from '../model/userRoleForm';
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +42,11 @@ export class UserService {
     return this._http
       .get<UserRoleResponse>(this.apiUrl + 'list/'+role, {headers})
       .pipe(map((response) => response._embedded.userRoleDTOList));
+  }
+
+  updateUserRole(id: number, form: UserRoleForm){
+    const headers = this.getAuthHeader();
+    return this._http.patch(this.apiUrl + id +  '/role', form, { headers });
   }
 
   editUser(id: number, form: UserForm) {

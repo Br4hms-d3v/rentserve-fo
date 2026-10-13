@@ -5,6 +5,7 @@ import { UserProfile } from './user-profile/user-profile';
 import { UserPassword } from './user-password/user-password';
 import { UserDelete } from './user-delete/user-delete';
 import { UserList } from './user-list/user-list';
+import { UserRole } from './user-role/user-role';
 
 export const user_routes: Routes = [
   {
@@ -39,4 +40,9 @@ export const user_routes: Routes = [
       },
     ],
   },
+  {
+    path: 'edit-role/:id',
+    component: UserRole,
+    canActivate: [authGuard],
+  }
 ];
