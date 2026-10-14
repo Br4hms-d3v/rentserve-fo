@@ -1,0 +1,98 @@
+@light-background-color: #EAF3DE;
+@light-title: #3B6D11 !important;
+@light-text: #3D4A2A;
+@light-strong: #993C1D !important;
+
+@dark-background-color: #33421F;
+@dark-title: #8FC15C;
+
+.userMaterialReview {
+  height:90vh;
+  margin-top:-25px;
+
+  h1{
+    text-align:center;
+    padding-top: 25px;
+    font-family: 'Libre Baskerville italic', serif;
+  }
+
+  .review-table {
+    width: 950px;
+    table-layout: auto;
+    padding-top:50px;
+    border-collapse: collapse;
+    margin: auto;
+
+    th{
+      text-align: center;
+    }
+
+    td:nth-child(1) {
+      width: 450px;
+      min-width: 450px;
+      max-width: 450px;
+      height: 75px;
+      min-height: 75px;
+      max-height: 75px;
+      text-align: center;
+    }
+    td:nth-child(2) {
+      width: 200px;
+      min-width: 200px;
+      max-width: 200px;
+      text-align: center;
+    }
+  }
+}
+
+.rating {
+  font-size: 1.5rem;
+  inline-size: 10rem;
+}
+
+.pagination-container{
+  margin-top:15px;
+}
+
+// THEME
+
+#editReview{
+  color: orange;
+}
+
+#deleteReview{
+  color: red;
+}
+
+.light-mode{
+background-color: @light-background-color;
+
+  h1{
+    color: @light-title;
+  }
+
+  .rawReview{
+    color: @light-text;
+
+    &:hover{
+      color: @light-strong !important;
+    }
+  }
+
+  th{
+    background-color: @light-text;
+  }
+
+  td{
+    background-color: #D3D1C7;
+  }
+}
+
+
+.dark-mode {
+  background-color: @dark-background-color;
+
+  h1{
+    color: @dark-title;
+  }
+}
