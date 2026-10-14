@@ -31,7 +31,7 @@
             </td>
             <td tuiTd>{{ review.user.pseudo }}</td>
             <td tuiTd>
-              @if (review.id == currentUserId) {
+              @if (review.user.id == currentUserId) {
                 <button
                   id="editReview"
                   appearance="action"

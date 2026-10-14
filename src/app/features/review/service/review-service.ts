@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environment/environment';
 import { ReviewUserMaterialResponse } from '../model/reviewUserMaterial';
 import { map } from 'rxjs';
+import { ReviewCreateUserMaterialForm } from '../model/review-create-userMaterial-form';
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +32,10 @@ export class ReviewService {
     return this._http
       .get<ReviewUserMaterialResponse>(this.apiUrl + 'user-material/' + id, { headers, })
       .pipe(map((response) => response._embedded.reviewUserMaterialDTOList));
+  }
+
+  createNewReviewUserMaterial(form: ReviewCreateUserMaterialForm ) {
+    const headers = this.getAuthHeader();
+    return this._http.post<ReviewCreateUserMaterialForm>(this.apiUrl + 'material', form, { headers });
   }
 }

@@ -4,4 +4,5 @@ import { authGuard } from '../../core/services/authGuard';
 
 export const review_routes: Routes = [
   { path: 'review-by-user-material', component: ReviewUserMaterial, canActivate: [authGuard] },
+  { path: 'new-review/:id', component: ReviewUserMaterial, canActivate: [authGuard] },
 ]

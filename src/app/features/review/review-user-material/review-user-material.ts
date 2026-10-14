@@ -14,9 +14,10 @@ import { ReviewService } from '../service/review-service';
 import { ReviewUserMaterialModel } from '../model/reviewUserMaterial';
 import { TuiPagination, TuiRating, TuiRatingContext } from '@taiga-ui/kit';
 import { FormsModule } from '@angular/forms';
-import { PolymorpheusContent } from '@taiga-ui/polymorpheus';
-import { TuiButton } from '@taiga-ui/core';
+import { PolymorpheusComponent, PolymorpheusContent } from '@taiga-ui/polymorpheus';
+import { TuiButton, TuiDialogService } from '@taiga-ui/core';
 import { AuthService } from '../../auth/service/auth-service';
+import { ReviewCreateUserMaterial } from '../review-create-user-material/review-create-user-material.component';
 
 @Component({
   selector: 'app-review-user-material',
@@ -31,6 +32,7 @@ export class ReviewUserMaterial implements OnInit {
   private readonly _route = inject(ActivatedRoute); // Get the id of the material (by url)s
   private readonly _cdr = inject(ChangeDetectorRef);
   private _themeService = inject(ThemeService); // Call the service to change color theme
+  private readonly dialogs = inject(TuiDialogService); // Call Service to display modal
 
   isDarkMode = false; // Change theme from light to dark
   title = 'Commentaires';
@@ -43,7 +45,7 @@ export class ReviewUserMaterial implements OnInit {
   // Pagination
   protected index = 0;
   protected length = 0;
-  protected size = 10;
+  protected size = 7;
 
   ngOnInit() {
     this.getRoute();
@@ -69,7 +71,7 @@ export class ReviewUserMaterial implements OnInit {
     this._reviewService.getReviewUserMaterial(this.userMaterialId).subscribe({
       next: (reviews) => {
         this.reviewUserMaterialModel = reviews.sort(
-          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+          (a, b) => new Date(b.id).getTime() - new Date(a.id).getTime(),
         );
         this.length = reviews.length;
         this.index = 0;
@@ -87,5 +89,18 @@ export class ReviewUserMaterial implements OnInit {
     this._themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
   }
 
-  createReview() {}
+  protected createReview() {
+    this.dialogs.open(
+      new PolymorpheusComponent(ReviewCreateUserMaterial),
+      {
+      label:'Nouveau commentaire',
+      size: 'l',
+      data: { userMaterialId: this.userMaterialId }
+      }
+    ).subscribe({
+      complete: () =>{
+        this.userMaterialReviews();
+      }
+    });
+  }
 }

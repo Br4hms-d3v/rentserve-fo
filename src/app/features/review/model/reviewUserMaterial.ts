@@ -5,6 +5,7 @@ export interface ReviewUserMaterialModel {
   comment: string;
   rating: number;
   user: {
+    id: number;
     pseudo: UserPseudoModel;
   };
   createdAt: Date;
