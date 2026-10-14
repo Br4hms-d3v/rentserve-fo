@@ -1,0 +1,92 @@
+<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="userMaterialReview">
+  <h1> Commmentaire</h1>
+  <table tuiTable class="review-table">
+    <thead>
+    <tr tuiThGroup>
+      <th tuiTh>Commentaires</th>
+      <th tuiTh>Note</th>
+      <th tuiTh>Pseudo</th>
+      <th tuiTh>Action</th>
+    </tr>
+    </thead>
+    <tbody tuiTbody>
+      @if (reviewUserMaterialModel.length == 0) {
+        <tr tuiThGroup>
+          <td tuiTd colspan="4">
+            Il n' y aucun commentaire
+          </td>
+        </tr>
+      } @else {
+        @for (review of reviewUserMaterialModel.slice(index * size, (index + 1) * size); track review.id) {
+          <tr tuiThGroup class="rawReview">
+            <td tuiTd>{{ review.comment }}</td>
+            <td tuiTd>
+              <tui-rating
+                class="rating"
+                [icon]="icon"
+                [max]="5"
+                [ngModel]="review.rating"
+                [readonly]="true"
+              />
+            </td>
+            <td tuiTd>{{ review.user.pseudo }}</td>
+            <td tuiTd>
+              @if (review.user.id == currentUserId) {
+                <button
+                  id="editReview"
+                  appearance="action"
+                  iconStart="@tui.pencil"
+                  size="xs"
+                  tuiIconButton
+                  type="button"
+                  tuiButton
+                  (click)="onEditReview(review.id)"
+                >
+                  Modifier
+                </button>
+
+                <button
+                  id="deleteReview"
+                  appearance="action"
+                  iconStart="@tui.trash"
+                  size="xs"
+                  tuiIconButton
+                  type="button"
+                  (click)="onDeleteReview(review.id)"
+                >
+                  Supprimer
+                </button>
+              }
+            </td>
+          </tr>
+        }
+      }
+    </tbody>
+    <tfoot>
+    <tr>
+      <td colspan="4">
+        <div class="table-footer">
+          <tui-pagination
+            [index]="index"
+            [length]="Math.ceil(length / size)"
+            (indexChange)="index = $event"
+          />
+
+          @if (showCreateButton) {
+            <button
+              tuiButton
+              type="button"
+              appearance="primary"
+              iconStart="@tui.plus"
+              (click)="createReview()"
+            >
+              Écrire un commentaire
+            </button>
+          }
+        </div>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+
+</div>

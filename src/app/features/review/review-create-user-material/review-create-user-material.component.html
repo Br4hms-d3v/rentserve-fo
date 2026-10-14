@@ -1,0 +1,55 @@
+<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="userMaterialReview">
+
+  <form [formGroup]="createReviewUserMaterialForm">
+
+    <tui-textfield iconStart="@tui.pencil">
+      <label tuiLabel>Commentaire</label>
+      <textarea
+        tuiTextarea
+        formControlName="comment"
+        placeholder="Écrivez votre commentaire"
+        [limit]="100"
+        [max]="6"
+        [min]="3"
+      ></textarea>
+    </tui-textfield>
+
+    <div class="rating-footer">
+      <div class="rating-container">
+        <label tuiLabel>Note</label>
+        <tui-rating
+          class="rating"
+          [max]="5"
+          formControlName="rating"
+        />
+      </div>
+
+      <button
+        id="btn-save"
+        tuiButton
+        type="button"
+        appearance="primary"
+        size="m"
+        iconStart="@tui.save"
+        (click)="submitReview()"
+      >
+        Enregistrer le commentaire
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<ng-template
+  [tuiNotificationOptions]="{label: 'Commentaire', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [(tuiNotification)]="show"
+>
+  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <button
+    tuiButton
+    type="button"
+    (click)="show.set(false)"
+  >
+    Close
+  </button>
+</ng-template>
