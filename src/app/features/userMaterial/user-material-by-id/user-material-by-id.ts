@@ -4,10 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { UserMaterialDetailModel } from '../model/user-material-detail';
 import { NgClass } from '@angular/common';
+import { ReviewUserMaterial } from '../../review/review-user-material/review-user-material';
 
 @Component({
   selector: 'app-user-material-by-id',
-  imports: [NgClass],
+  imports: [NgClass, ReviewUserMaterial],
   templateUrl: './user-material-by-id.html',
   styleUrl: './user-material-by-id.less',
 })
