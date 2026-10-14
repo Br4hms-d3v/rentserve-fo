@@ -29,5 +29,8 @@ export const routes: Routes = [
   },
   {
     path: 'user-favor', loadChildren: () => import('./features/userFavor/user-favor.routes').then((r) => r.user_favor_routes),
+  },
+  {
+    path: 'review', loadChildren: () => import('./features/review/review.routes').then((r) => r.review_routes),
   }
 ];
