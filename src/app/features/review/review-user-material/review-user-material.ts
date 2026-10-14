@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   inject,
+  Input,
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +16,7 @@ import { TuiPagination, TuiRating, TuiRatingContext } from '@taiga-ui/kit';
 import { FormsModule } from '@angular/forms';
 import { PolymorpheusContent } from '@taiga-ui/polymorpheus';
 import { TuiButton } from '@taiga-ui/core';
+import { AuthService } from '../../auth/service/auth-service';
 
 @Component({
   selector: 'app-review-user-material',
@@ -24,7 +26,8 @@ import { TuiButton } from '@taiga-ui/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReviewUserMaterial implements OnInit {
-  private readonly _reviewService = inject(ReviewService);
+  private readonly _reviewService = inject(ReviewService); // Call the service to display comments
+  private readonly _authService = inject(AuthService); // Call the service auth to get the pseudo
   private readonly _route = inject(ActivatedRoute); // Get the id of the material (by url)s
   private readonly _cdr = inject(ChangeDetectorRef);
   private _themeService = inject(ThemeService); // Call the service to change color theme
@@ -32,7 +35,10 @@ export class ReviewUserMaterial implements OnInit {
   isDarkMode = false; // Change theme from light to dark
   title = 'Commentaires';
   userMaterialId!: number;
+  currentUserId!: number;
   protected reviewUserMaterialModel: ReviewUserMaterialModel[] = [];
+  protected readonly Math = Math;
+  @Input() showCreateButton = true; // Display the button write a com
 
   // Pagination
   protected index = 0;
@@ -41,6 +47,7 @@ export class ReviewUserMaterial implements OnInit {
 
   ngOnInit() {
     this.getRoute();
+    this.currentUser();
     this.userMaterialReviews();
     this.changeTheme();
   }
@@ -48,6 +55,13 @@ export class ReviewUserMaterial implements OnInit {
   getRoute() {
     this._route.params.subscribe((params) => {
       this.userMaterialId = params['id'];
+    });
+  }
+  currentUser() {
+    this._authService.currentUser$.subscribe((user) => {
+      if (user) {
+        this.currentUserId = user.id;
+      }
     });
   }
 
@@ -64,6 +78,7 @@ export class ReviewUserMaterial implements OnInit {
     });
   }
 
+  // Star for rating
   protected readonly icon: PolymorpheusContent<TuiRatingContext> = ({ filled }) =>
     filled ? '@tui.star-filled' : '@tui.star';
 
@@ -72,5 +87,5 @@ export class ReviewUserMaterial implements OnInit {
     this._themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
   }
 
-  protected readonly Math = Math;
+  createReview() {}
 }

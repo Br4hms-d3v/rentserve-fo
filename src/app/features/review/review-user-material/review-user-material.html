@@ -17,7 +17,7 @@
           </td>
         </tr>
       } @else {
-        @for (review of reviewUserMaterialModel.slice(index * size, (index+1) *size); track review.id) {
+        @for (review of reviewUserMaterialModel.slice(index * size, (index + 1) * size); track review.id) {
           <tr tuiThGroup class="rawReview">
             <td tuiTd>{{ review.comment }}</td>
             <td tuiTd>
@@ -31,38 +31,58 @@
             </td>
             <td tuiTd>{{ review.user.pseudo }}</td>
             <td tuiTd>
-              <button
-                id="editReview"
-                appearance="action"
-                iconStart="@tui.pencil"
-                size="xs"
-                tuiIconButton
-                type="button"
-                tuiButton>
-                Modifier
-              </button>
+              @if (review.id == currentUserId) {
+                <button
+                  id="editReview"
+                  appearance="action"
+                  iconStart="@tui.pencil"
+                  size="xs"
+                  tuiIconButton
+                  type="button"
+                  tuiButton>
+                  Modifier
+                </button>
 
-              <button
-                id="deleteReview"
-                appearance="action"
-                iconStart="@tui.trash"
-                size="xs"
-                tuiIconButton
-                type="button">
-                Supprimer
-              </button>
+                <button
+                  id="deleteReview"
+                  appearance="action"
+                  iconStart="@tui.trash"
+                  size="xs"
+                  tuiIconButton
+                  type="button">
+                  Supprimer
+                </button>
+              }
             </td>
           </tr>
         }
       }
     </tbody>
+    <tfoot>
+    <tr>
+      <td colspan="4">
+        <div class="table-footer">
+          <tui-pagination
+            [index]="index"
+            [length]="Math.ceil(length / size)"
+            (indexChange)="index = $event"
+          />
+
+          @if (showCreateButton) {
+            <button
+              tuiButton
+              type="button"
+              appearance="primary"
+              iconStart="@tui.plus"
+              (click)="createReview()"
+            >
+              Écrire un commentaire
+            </button>
+          }
+        </div>
+      </td>
+    </tr>
+    </tfoot>
   </table>
 
-  <!-- pagination table -->
-  <tui-pagination
-    class="pagination-container"
-    [index]="index"
-    [length]="Math.ceil(length / size)"
-    (indexChange)="index = $event"
-  />
 </div>

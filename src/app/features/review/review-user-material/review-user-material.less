@@ -42,6 +42,12 @@
       max-width: 200px;
       text-align: center;
     }
+
+    tfoot{
+      td{
+        height: 35px;
+      }
+    }
   }
 }
 
@@ -52,6 +58,25 @@
 
 .pagination-container{
   margin-top:15px;
+}
+
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  tui-pagination {
+    margin-right: auto;
+    transform: scale(0.8);
+    transform-origin: left center;
+  }
+
+  button {
+    padding: 4px 8px;
+    min-height: 28px;
+    font-size: 12px;
+  }
 }
 
 // THEME
@@ -85,6 +110,12 @@ background-color: @light-background-color;
 
   td{
     background-color: #D3D1C7;
+  }
+
+  tfoot{
+    td{
+      background-color: @light-text;
+    }
   }
 }
 
