@@ -1,0 +1,60 @@
+<div class="userMaterialReturn" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+
+  <h1>Retour du matériel</h1>
+
+  <form [formGroup]="returnUserMaterialForm" (ngSubmit)="returnUserMaterial()">
+    <div class="form-row">
+      <div class="inputAvailability">
+        <label>
+          <input tuiSwitch type="checkbox" formControlName="isAvailable" />
+          Disponible
+        </label>
+      </div>
+
+      <tui-textfield tuiChevron>
+        <label tuiLabel>État du matériel</label>
+        <input
+          tuiSelect
+          formControlName="state"
+          placeholder="Choisir un état"
+        />
+        <tui-data-list-wrapper *tuiDropdown new [items]="states" />
+      </tui-textfield>
+    </div>
+
+    <div class="form-actions">
+      <button
+        id="btn-return"
+        tuiButton
+        type="submit"
+      >
+        Enregistrer
+      </button>
+
+      <button
+        id="btn-back"
+        tuiButton
+        type="button"
+        (click)="onBack()"
+      >
+        Annuler
+      </button>
+    </div>
+  </form>
+
+
+</div>
+
+<ng-template
+  [tuiNotificationOptions]="{label: 'confirmation du retour', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [(tuiNotification)]="show"
+>
+  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <button
+    tuiButton
+    type="button"
+    (click)="show.set(false)"
+  >
+    Close
+  </button>
+</ng-template>

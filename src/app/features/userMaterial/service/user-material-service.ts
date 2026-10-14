@@ -6,6 +6,7 @@ import { map } from 'rxjs';
 import { UserMaterialDetailModel } from '../model/user-material-detail';
 import { UserMaterialEditForm } from '../model/user-material-edit-form';
 import { UserMaterialCreateForm } from '../model/user-material-create-form';
+import { UserMaterialReturnForm } from '../model/user-material-return-form';
 
 @Injectable({
   providedIn: 'root',
@@ -91,5 +92,10 @@ export class UserMaterialService {
   getUserMaterialById(id: number) {
     const headers = this.getAuthHeader();
     return this._http.get<UserMaterialDetailModel>(this.apiUrl + id, { headers });
+  }
+
+  returnUserMaterial(id: number, form: UserMaterialReturnForm ) {
+    const headers = this.getAuthHeader();
+    return this._http.put<UserMaterialReturnForm>(this.apiUrl + id+ '/return', form, { headers });
   }
 }

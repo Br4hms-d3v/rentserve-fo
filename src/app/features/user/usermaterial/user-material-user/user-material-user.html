@@ -134,6 +134,19 @@
             >
               Voir
             </button>
+
+          @if(userMaterial.isAvailable == false){
+            <button
+              id="returnUserMaterial"
+              appearance="action"
+              iconStart="@tui.undo-2"
+              size="xs"
+              tuiIconButton
+              type="button"
+              [routerLink]="['/user-material','return', userMaterial.id]">
+              retour
+            </button>
+            }
           </span>
             </td>
           </tr>

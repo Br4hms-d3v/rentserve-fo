@@ -7,6 +7,7 @@ import { UserMaterialEdit } from './user-material-edit/user-material-edit';
 import { UserMaterialCreate } from './user-material-create/user-material-create';
 import { UserMaterialList } from './user-material-list/user-material-list';
 import { UserMaterialById } from './user-material-by-id/user-material-by-id';
+import { UserMaterialReturn } from './user-material-return/user-material-return';
 
 export const user_material_routes: Routes = [
   { path: 'my-user-material', component: UserMaterialUser, canActivate: [authGuard] },
@@ -16,4 +17,5 @@ export const user_material_routes: Routes = [
   { path: 'new-material', component: UserMaterialCreate, canActivate: [authGuard] },
   { path: 'list/:nameMaterial', component: UserMaterialList, canActivate: [authGuard] },
   { path: 'detail/:id', component: UserMaterialById, canActivate: [authGuard] },
+  { path: 'return/:id', component: UserMaterialReturn, canActivate: [authGuard] },
 ];
