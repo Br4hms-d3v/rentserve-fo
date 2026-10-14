@@ -4,6 +4,8 @@ import { environment } from '../../../environment/environment';
 import { ReviewUserMaterialResponse } from '../model/reviewUserMaterial';
 import { map } from 'rxjs';
 import { ReviewCreateUserMaterialForm } from '../model/review-create-userMaterial-form';
+import { ReviewEditUserMaterialForm } from '../model/review-edit-userMaterial-form';
+import { ReviewByIdModel } from '../model/review-by-id';
 
 @Injectable({
   providedIn: 'root',
@@ -27,20 +29,32 @@ export class ReviewService {
     });
   }
 
+  getReviewById(id: number) {
+  const headers = this.getAuthHeader();
+  return this._http.get<ReviewByIdModel>(this.apiUrl + id, { headers: headers });
+  }
+
   getReviewUserMaterial(id: number) {
     const headers = this.getAuthHeader();
     return this._http
-      .get<ReviewUserMaterialResponse>(this.apiUrl + 'user-material/' + id, { headers, })
+      .get<ReviewUserMaterialResponse>(this.apiUrl + 'user-material/' + id, { headers })
       .pipe(map((response) => response._embedded.reviewUserMaterialDTOList));
   }
 
-  createNewReviewUserMaterial(form: ReviewCreateUserMaterialForm ) {
+  createNewReviewUserMaterial(form: ReviewCreateUserMaterialForm) {
     const headers = this.getAuthHeader();
-    return this._http.post<ReviewCreateUserMaterialForm>(this.apiUrl + 'material', form, { headers });
+    return this._http.post<ReviewCreateUserMaterialForm>(this.apiUrl + 'material', form, {
+      headers,
+    });
   }
 
   deleteReviewUserMaterial(id: number) {
     const headers = this.getAuthHeader();
-    return this._http.delete(this.apiUrl + 'delete/' +id, { headers, responseType: 'text' });
+    return this._http.delete(this.apiUrl + 'delete/' + id, { headers, responseType: 'text' });
+  }
+
+  updateReviewUserMaterial(id: number, form: ReviewEditUserMaterialForm) {
+    const headers = this.getAuthHeader();
+    return this._http.put(this.apiUrl + 'edit/' + id, form, { headers });
   }
 }

@@ -1,0 +1,67 @@
+@light-background-color: #F1EFE8 !important;
+@light-label: #5F5E5A !important;
+@light-label-input: #3B6D11 !important;
+@light-btn-back: #D9764A;
+@light-btn-new: green;
+
+@dark-background-color: #1C1F17;
+@dark-label: #A6A599 !important;
+@dark-label-input: #8FC15C !important;
+
+.userMaterialReview {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  tui-textfield {
+    width: 100%;
+  }
+
+  .rating-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .rating-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+}
+
+// THEME
+#btn-save {
+  background-color: @light-btn-new;
+  color: white;
+}
+
+.light-mode {
+  background-color: @light-background-color;
+
+  label[tuiLabel] {
+    color: @light-label;
+  }
+
+  textarea {
+    color: @light-label-input;
+  }
+
+  tui-textfield {
+    --tui-textfield-icon-color: #f44336;
+  }
+
+}
+
+.dark-mode {
+  background-color: @dark-background-color;
+
+  label {
+    color: @dark-label;
+  }
+}

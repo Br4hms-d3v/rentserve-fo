@@ -73,8 +73,6 @@ export class ReviewCreateUserMaterial implements OnInit {
   });
 
   submitReview() {
-    console.log('1. Clic sur Enregistrer');
-
     if (this.createReviewUserMaterialForm.invalid) {
       this.createReviewUserMaterialForm.markAsTouched();
       this.show.set(true);
