@@ -5,6 +5,8 @@
 
 @dark-background-color: #33421F;
 @dark-title: #8FC15C;
+@dark-text: #F1EFE8;
+@dark-strong: #E8845A !important;
 
 .userMaterialReview {
   height:100vh;
@@ -125,5 +127,28 @@ background-color: @light-background-color;
 
   h1{
     color: @dark-title;
+  }
+
+  .rawReview{
+    color: @light-text;
+
+    &:hover{
+      color: @light-strong !important;
+    }
+  }
+
+  th{
+    background-color: @dark-strong;
+  }
+
+  td{
+    background-color: #A6A599;
+    color: black;
+  }
+
+  tfoot{
+    td{
+      background-color: @dark-strong;
+    }
   }
 }
