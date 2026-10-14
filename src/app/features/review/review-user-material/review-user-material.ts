@@ -18,6 +18,7 @@ import { PolymorpheusComponent, PolymorpheusContent } from '@taiga-ui/polymorphe
 import { TuiButton, TuiDialogService } from '@taiga-ui/core';
 import { AuthService } from '../../auth/service/auth-service';
 import { ReviewCreateUserMaterial } from '../review-create-user-material/review-create-user-material.component';
+import { ReviewDeleteUserMaterial } from '../review-delete-user-material/review-delete-user-material';
 
 @Component({
   selector: 'app-review-user-material',
@@ -90,17 +91,30 @@ export class ReviewUserMaterial implements OnInit {
   }
 
   protected createReview() {
-    this.dialogs.open(
-      new PolymorpheusComponent(ReviewCreateUserMaterial),
-      {
-      label:'Nouveau commentaire',
-      size: 'l',
-      data: { userMaterialId: this.userMaterialId }
-      }
-    ).subscribe({
-      complete: () =>{
-        this.userMaterialReviews();
-      }
-    });
+    this.dialogs
+      .open(new PolymorpheusComponent(ReviewCreateUserMaterial), {
+        label: 'Nouveau commentaire',
+        size: 'l',
+        data: { userMaterialId: this.userMaterialId },
+      })
+      .subscribe({
+        complete: () => {
+          this.userMaterialReviews();
+        },
+      });
   }
+
+  protected onDeleteReview(reviewId: number) {
+    this.dialogs
+      .open(new PolymorpheusComponent(ReviewDeleteUserMaterial), {
+        label: 'Confirmer la suppression',
+        size: 's',
+        data: { reviewId },
+      })
+      .subscribe({
+        complete: () => {
+          this.userMaterialReviews();
+        }
+      });
+  };
 }

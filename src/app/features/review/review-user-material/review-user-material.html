@@ -49,7 +49,9 @@
                   iconStart="@tui.trash"
                   size="xs"
                   tuiIconButton
-                  type="button">
+                  type="button"
+                  (click)="onDeleteReview(review.id)"
+                >
                   Supprimer
                 </button>
               }

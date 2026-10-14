@@ -38,4 +38,9 @@ export class ReviewService {
     const headers = this.getAuthHeader();
     return this._http.post<ReviewCreateUserMaterialForm>(this.apiUrl + 'material', form, { headers });
   }
+
+  deleteReviewUserMaterial(id: number) {
+    const headers = this.getAuthHeader();
+    return this._http.delete(this.apiUrl + 'delete/' +id, { headers, responseType: 'text' });
+  }
 }
