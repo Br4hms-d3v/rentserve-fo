@@ -25,6 +25,7 @@
     "@ng-web-apis/common": "^5.3.0",
     "@ng-web-apis/experimental": "^5.3.0",
     "@ng-web-apis/screen-orientation": "^5.3.0",
+    "@taiga-ui/addon-charts": "5.26",
     "@taiga-ui/addon-table": "^5.26.0",
     "@taiga-ui/cdk": "^5.26.0",
     "@taiga-ui/core": "^5.26.0",

@@ -32,5 +32,8 @@ export const routes: Routes = [
   },
   {
     path: 'review', loadChildren: () => import('./features/review/review.routes').then((r) => r.review_routes),
+  },
+  {
+    path: 'earn', loadChildren: () => import('./features/earn/earn.routes').then((r) => r.earn_routes),
   }
 ];
