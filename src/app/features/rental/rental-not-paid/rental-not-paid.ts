@@ -65,4 +65,11 @@ export class RentalNotPaid implements OnInit {
     });
   }
 
+  protected onEditRental(){
+
+  };
+
+  protected onDeleteRental(){
+
+  }
 }

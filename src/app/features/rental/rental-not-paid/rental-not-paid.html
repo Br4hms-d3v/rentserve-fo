@@ -17,6 +17,7 @@
         <th tuiTh>Total de jour</th>
         <th tuiTh>Total heure</th>
         <th tuiTh>Montant</th>
+        <th tuiTh>Action</th>
       </tr>
       </thead>
 
@@ -32,6 +33,32 @@
             <td tuiTd>{{ rental.durationDays }}</td>
             <td tuiTd>{{ rental.durationHours }}</td>
             <td tuiTd>{{ rental.amount }} €</td>
+            <td tuiTd>
+              <button
+                id="editRental"
+                appearance="action"
+                iconStart="@tui.pencil"
+                size="xs"
+                tuiIconButton
+                type="button"
+                tuiButton
+                (click)="onEditRental()"
+              >
+                Modifier
+              </button>
+
+              <button
+                id="deleteRental"
+                appearance="action"
+                iconStart="@tui.trash"
+                size="xs"
+                tuiIconButton
+                type="button"
+                (click)="onDeleteRental()"
+              >
+                Supprimer
+              </button>
+            </td>
           </tr>
         }
       </tbody>
