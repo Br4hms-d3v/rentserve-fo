@@ -5,10 +5,11 @@ import { ThemeService } from '../../../core/services/ThemeService';
 import { UserMaterialDetailModel } from '../model/user-material-detail';
 import { NgClass } from '@angular/common';
 import { ReviewUserMaterial } from '../../review/review-user-material/review-user-material';
+import { RentalCreate } from '../../rental/rental-create/rental-create';
 
 @Component({
   selector: 'app-user-material-by-id',
-  imports: [NgClass, ReviewUserMaterial],
+  imports: [NgClass, ReviewUserMaterial, RentalCreate],
   templateUrl: './user-material-by-id.html',
   styleUrl: './user-material-by-id.less',
 })

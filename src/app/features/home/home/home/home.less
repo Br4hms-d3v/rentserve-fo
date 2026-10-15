@@ -3,23 +3,36 @@
 
 @dark-background-color_section2: #262A1D;
 @dark-h5_section2: #8FC15C;
+
+// =========================
+// VARIABLES RESPONSIVE
+// =========================
+
+@mobile: 576px;
+@tablet: 768px;
+@desktop: 1024px;
+
 :host {
   display: block;
-  height: 100dvh;
+  width: 100%;
+  min-height: 100dvh;
 }
 
 tui-root {
   display: block;
-  height: 100dvh;
+  width: 100%;
+  min-height: 100dvh;
 }
+
+// =========================
+// STRUCTURE GENERALE
+// =========================
 
 .page-scroll {
   width: 100%;
   height: 100dvh;
-
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
-
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
@@ -27,12 +40,11 @@ tui-root {
   }
 
   scroll-snap-type: y mandatory;
-  overscroll-behavior: none;
+  overscroll-behavior-y: contain;
 }
 
 .rentserve_section {
   width: 100%;
-  height: 100dvh;
   min-height: 100dvh;
   display: grid;
   box-sizing: border-box;
@@ -41,57 +53,87 @@ tui-root {
 
   &__presentation {
     min-width: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 4rem 5rem;
     box-sizing: border-box;
     font-family: 'Libre Baskerville', serif;
-    font-size: 35px;
-    text-align: justify;
-    color: #2C2C2A;
+    font-size: clamp(1.2rem, 2.2vw, 2.2rem);
+    line-height: 1.6;
+    text-align: left;
+    overflow-wrap: anywhere;
   }
 
   &__registration {
     min-width: 0;
-
+    display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 3rem;
     box-sizing: border-box;
   }
 
-  &__picto1, &__picto2, &__picto3 {
-    width: 400px;
-    height: 500px;
+  &__picto1,
+  &__picto2,
+  &__picto3 {
+    width: 100%;
+    max-width: 400px;
+    min-width: 0;
+    min-height: 350px;
+    height: auto;
+    box-sizing: border-box;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 1rem;
+    border-radius: 12px;
     text-align: center;
-    font-size: 35px;
-    font-family: 'Libre Baskerville italic', serif;
+    font-family: 'Libre Baskerville', serif;
   }
-
 }
 
 .section-1 {
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  align-items: stretch;
 }
 
 .section-2 {
-  grid-template-columns: repeat(3, 1fr);
-  // Each div are centre about height and with
-  & > div {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  justify-items: center;
+  gap: 1.5rem;
+  padding: 3rem;
+
+  > div {
     justify-self: center;
     align-self: center;
   }
 
+  h5 {
+    margin: 0;
+    font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+    line-height: 1.5;
+  }
 }
+
+.section-3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3rem;
+  overflow: hidden;
+}
+
+// =========================
+// PRESENTATION
+// =========================
 
 .presentation-content {
   width: 100%;
   max-width: 55rem;
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -107,21 +149,25 @@ tui-root {
 
   h1 {
     margin: 0 0 1rem;
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    line-height: 1.2;
   }
 
   p {
     max-width: 48rem;
     margin: 0;
-
-    font-size: 1.15rem;
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
     line-height: 1.7;
   }
 }
 
+// =========================
+// FORMULAIRE
+// =========================
+
 .registration-form {
   width: 100%;
   max-width: 24rem;
-
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -136,71 +182,58 @@ tui-root {
   }
 }
 
+// =========================
+// IMAGES
+// =========================
+
 .imgHomePresentation {
-  width: 400px;
-}
-
-
-// Carousel //
-
-/**
- * Pictures carousel
- * <-- forward <--
- */
-.carousel-forward {
+  display: block;
   width: 100%;
-  height: 250px;
-  position: relative;
-  overflow: hidden;
-
-  .carousel-track {
-    display: flex;
-    animation: scroll-left 30s linear infinite;
-  }
-
-  .carousel-item {
-    width: 250px;
-    height: 250px;
-    margin-right: 25px;
-    flex: 0 0 auto;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-  }
+  max-width: 300px;
+  height: auto;
+  object-fit: contain;
 }
 
-/**
- * Pictures carousel
- * --> backward -->
- */
+// =========================
+// CARROUSEL
+// =========================
+
+.carousel-forward,
 .carousel-backward {
   width: 100%;
-  height: 250px;
+  max-width: 100%;
+  height: clamp(120px, 20vw, 250px);
   position: relative;
   overflow: hidden;
 
   .carousel-track {
     display: flex;
-    animation: scroll-right 30s linear infinite;
+    width: max-content;
+    height: 100%;
+    will-change: transform;
   }
 
   .carousel-item {
-    width: 250px;
-    height: 250px;
-    margin-right: 25px;
+    width: clamp(120px, 20vw, 250px);
+    height: 100%;
+    margin-right: clamp(12px, 2vw, 25px);
     flex: 0 0 auto;
 
     img {
+      display: block;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      display: block;
+      object-fit: contain;
     }
   }
+}
+
+.carousel-forward .carousel-track {
+  animation: scroll-left 30s linear infinite;
+}
+
+.carousel-backward .carousel-track {
+  animation: scroll-right 30s linear infinite;
 }
 
 @keyframes scroll-left {
@@ -223,10 +256,27 @@ tui-root {
   }
 }
 
-// THEME //
+// Respecte les préférences d'accessibilité
+@media (prefers-reduced-motion: reduce) {
+  .carousel-forward .carousel-track,
+  .carousel-backward .carousel-track {
+    animation: none;
+  }
+
+  .page-scroll {
+    scroll-snap-type: none;
+  }
+}
+
+// =========================
+// THEME CLAIR
+// =========================
 
 .light-mode {
-  .section-1 {
+  color: #2C2C2A;
+
+  .section-1,
+  .section-3 {
     background: #F1EFE8;
   }
 
@@ -234,32 +284,28 @@ tui-root {
     background: #EAF3DE;
   }
 
-  .section-3 {
-    background: #F1EFE8;
-  }
-
   .rentserve_section {
-    &__picto1, &__picto2, &__picto3 {
-      width: 400px;
-      height: 500px;
+    &__picto1,
+    &__picto2,
+    &__picto3 {
       background-color: @light-background-color_section2;
     }
+  }
 
-    h5 {
-      color: @light-h5_section2;
-    }
+  h5 {
+    color: @light-h5_section2;
   }
 }
 
+// =========================
+// THEME SOMBRE
+// =========================
+
 .dark-mode {
+  color: #F1EFE8;
 
-  .rentserve_section {
-    &__presentation {
-      color: #F1EFE8;
-    }
-  }
-
-  .section-1 {
+  .section-1,
+  .section-3 {
     background: #1C1F17;
   }
 
@@ -267,20 +313,229 @@ tui-root {
     background: #33421F;
   }
 
-  .section-3 {
-    background: #1C1F17;
+  .rentserve_section {
+    &__presentation {
+      color: #F1EFE8;
+    }
+
+    &__picto1,
+    &__picto2,
+    &__picto3 {
+      background-color: @dark-background-color_section2;
+    }
+  }
+
+  h5 {
+    color: @dark-h5_section2;
+  }
+}
+
+// =========================
+// TABLETTE
+// 577px - 1024px
+// =========================
+
+@media (max-width: 1024px) {
+  .rentserve_section {
+    &__presentation {
+      padding: 2.5rem;
+      font-size: clamp(1.15rem, 2.5vw, 1.7rem);
+    }
+
+    &__registration {
+      padding: 2rem;
+    }
+
+    &__picto1,
+    &__picto2,
+    &__picto3 {
+      min-height: 300px;
+      padding: 1.2rem;
+    }
+  }
+
+  .section-2 {
+    gap: 1rem;
+    padding: 2rem;
+
+    h5 {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+    }
+  }
+
+  .imgHomePresentation {
+    max-width: 220px;
+  }
+}
+
+// =========================
+// MOBILE
+// 576px et moins
+// =========================
+
+@media (max-width: 576px) {
+  :host,
+  tui-root {
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  .page-scroll {
+    height: auto;
+    min-height: 100dvh;
+    overflow-y: visible;
+    overflow-x: hidden;
+    scroll-snap-type: none;
+    overscroll-behavior-y: auto;
   }
 
   .rentserve_section {
-    &__picto1, &__picto2, &__picto3 {
-      width: 400px;
-      height: 500px;
-      background-color: @dark-background-color_section2;
+    width: 100%;
+    min-height: 100dvh;
+    height: auto;
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
+
+    &__presentation {
+      padding: 2rem 1.25rem;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      text-align: left;
     }
 
-    h5 {
-      color: @dark-h5_section2;
+    &__registration {
+      padding: 1.5rem 1.25rem 2rem;
+    }
+
+    &__picto1,
+    &__picto2,
+    &__picto3 {
+      width: 100%;
+      max-width: 340px;
+      min-height: 250px;
+      padding: 1.25rem;
     }
   }
 
+  // Présentation et inscription empilées
+  .section-1 {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    gap: 0;
+    padding: 1rem 0;
+  }
+
+  .registration-form {
+    max-width: 100%;
+  }
+
+  .section-2 {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+    padding: 2rem 1rem;
+
+    > div {
+      width: 100%;
+      max-width: 340px;
+    }
+
+    h5 {
+      font-size: 1.2rem;
+    }
+  }
+
+  .imgHomePresentation {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  // Carrousels plus compacts
+  .section-3 {
+    min-height: 100dvh;
+    gap: 2rem;
+    padding: 2rem 0;
+    justify-content: center;
+  }
+
+  .carousel-forward,
+  .carousel-backward {
+    height: 130px;
+
+    .carousel-item {
+      width: 130px;
+      margin-right: 15px;
+    }
+  }
+
+  .presentation-content {
+    h1 {
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+}
+
+// =========================
+// PETITS MOBILES
+// 375px et moins
+// =========================
+
+@media (max-width: 375px) {
+  .rentserve_section {
+    &__presentation {
+      padding: 1.5rem 1rem;
+      font-size: 1rem;
+    }
+
+    &__registration {
+      padding: 1rem;
+    }
+  }
+
+  .section-2 {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .rentserve_section {
+    &__picto1,
+    &__picto2,
+    &__picto3 {
+      min-height: 220px;
+    }
+  }
+
+  .imgHomePresentation {
+    max-width: 160px;
+  }
+
+  .carousel-forward,
+  .carousel-backward {
+    height: 100px;
+
+    .carousel-item {
+      width: 100px;
+      margin-right: 12px;
+    }
+  }
+}
+
+// =========================
+// GRANDS ECRANS
+// =========================
+
+@media (min-width: 1440px) {
+  .rentserve_section {
+    &__presentation {
+      padding: 5rem 7rem;
+      font-size: 2rem;
+    }
+  }
+
+  .section-2 {
+    gap: 2rem;
+    padding: 4rem;
+  }
 }

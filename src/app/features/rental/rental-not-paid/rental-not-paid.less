@@ -1,0 +1,125 @@
+/* Conteneur principal */
+.rentalNotPaid-container {
+  min-height: 90vh;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px 28px 40px;
+  background-color: #eaf2df;
+  transition: background-color 0.3s ease;
+}
+
+/* Titre */
+h1 {
+  text-align: center;
+  padding-top: 25px;
+  margin-bottom: 35px;
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  color: #3b492b;
+}
+
+/* Conteneur permettant le défilement horizontal */
+.rental-table-wrapper {
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+/* Tableau */
+.rental-table {
+  width: 100%;
+  min-width: 950px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  background-color: #d3d1c7;
+  color: #344536;
+}
+#btn-pay{
+  margin: 10px auto 0;
+  width: 300px;
+  display: block;
+  text-align: center;
+}
+/* En-tête vert foncé */
+.rental-table thead th {
+  background-color: #3b492b !important;
+  color: #f4f3eb !important;
+  font-weight: 600;
+  text-align: center;
+  padding: 18px 14px;
+  border: 1px solid #eaf2df !important;
+  white-space: nowrap;
+}
+
+/* Cellules */
+.rental-table tbody td {
+  background-color: #d3d1c7 !important;
+  color: #344536 !important;
+  text-align: center;
+  vertical-align: middle;
+  padding: 24px 14px;
+  border: 1px solid #eaf2df !important;
+  white-space: nowrap;
+}
+
+/* Effet au survol des lignes */
+.rental-table tbody tr:hover td {
+  background-color: #c5c7b8 !important;
+  transition: background-color 0.2s ease;
+}
+
+/* Mode sombre */
+.rentalNotPaid-container.dark-mode {
+  background-color: #20251d;
+}
+
+.rentalNotPaid-container.dark-mode h1 {
+  color: #eaf2df;
+}
+
+.dark-mode .rental-table {
+  background-color: #30372b;
+  color: #eaf2df;
+}
+
+.dark-mode .rental-table tbody td {
+  background-color: #30372b !important;
+  color: #eaf2df !important;
+  border-color: #59614f !important;
+}
+
+.dark-mode .rental-table tbody tr:hover td {
+  background-color: #414a38 !important;
+}
+
+.dark-mode .rental-table thead th {
+  background-color: #28321f !important;
+  color: #f4f3eb !important;
+  border-color: #59614f !important;
+}
+
+/* Adaptation aux petits écrans */
+@media (max-width: 768px) {
+  .rentalNotPaid-container {
+    padding: 12px;
+  }
+
+  h1 {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+
+  .rental-table {
+    min-width: 950px;
+  }
+}
+
+
+#editRental{
+  color: orange;
+}
+
+#deleteRental{
+  color: red;
+}

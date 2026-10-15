@@ -1,0 +1,75 @@
+<div
+  [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}"
+  class="rentalNotPaid-container"
+>
+  <h1>Mon panier</h1>
+
+  <div class="rental-table-wrapper">
+    <table tuiTable class="rental-table">
+      <thead>
+      <tr tuiThGroup>
+        <th tuiTh>Matériel</th>
+        <th tuiTh>Service</th>
+        <th tuiTh>Date de début</th>
+        <th tuiTh>Date de fin</th>
+        <th tuiTh>Heure de début</th>
+        <th tuiTh>Heure de fin</th>
+        <th tuiTh>Total de jour</th>
+        <th tuiTh>Total heure</th>
+        <th tuiTh>Montant</th>
+        <th tuiTh>Action</th>
+      </tr>
+      </thead>
+
+      <tbody>
+        @for (rental of rentalsNotPaid; track rental.id) {
+          <tr tuiThGroup>
+            <td tuiTd>{{ rental.userMaterial?.nameMaterial ?? '/' }}</td>
+            <td tuiTd>{{ rental.userFavor?.nameFavor ?? '/' }}</td>
+            <td tuiTd>{{ rental.dateStart }}</td>
+            <td tuiTd>{{ rental.dateEnd }}</td>
+            <td tuiTd>{{ rental.startTime }}</td>
+            <td tuiTd>{{ rental.endTime }}</td>
+            <td tuiTd>{{ rental.durationDays }}</td>
+            <td tuiTd>{{ rental.durationHours }}</td>
+            <td tuiTd>{{ rental.amount }} €</td>
+            <td tuiTd>
+              <button
+                id="editRental"
+                appearance="action"
+                iconStart="@tui.pencil"
+                size="xs"
+                tuiIconButton
+                type="button"
+                tuiButton
+                (click)="onEditRental()"
+              >
+                Modifier
+              </button>
+
+              <button
+                id="deleteRental"
+                appearance="action"
+                iconStart="@tui.trash"
+                size="xs"
+                tuiIconButton
+                type="button"
+                (click)="onDeleteRental()"
+              >
+                Supprimer
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <button
+    id="btn-pay"
+    tuiButton
+    (click)="onPay()"
+  >
+    Payer
+  </button>
+</div>

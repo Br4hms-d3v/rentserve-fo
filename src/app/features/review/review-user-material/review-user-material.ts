@@ -47,7 +47,7 @@ export class ReviewUserMaterial implements OnInit {
   // Pagination
   protected index = 0;
   protected length = 0;
-  protected size = 7;
+  protected size = 6;
 
   ngOnInit() {
     this.getRoute();

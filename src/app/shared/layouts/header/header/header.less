@@ -7,8 +7,14 @@
 .header-toolbar {
   display: flex;
   align-items: center;
-  height: 48px;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: 48px;
+  box-sizing: border-box;
   padding: 0 16px;
+  gap: 12px;
+
   font-size: 17px;
   transition:
     background-color 0.3s ease,
@@ -19,15 +25,37 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    min-width: 0;
+  }
+
+  .lang-selector {
+    flex: 0 1 auto;
+  }
+
+  .theme-selector {
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+
+  .lang-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .icon-btn {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+
     font-size: 17px;
     background: transparent;
   }
 
   .spacer {
     flex: 1 1 auto;
+    min-width: 0;
   }
 
   &.dark-mode {
@@ -52,4 +80,85 @@
   height: auto;
   margin-right: 8px;
   vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* Tablette */
+@media (max-width: 768px) {
+  .header-toolbar {
+    min-height: 48px;
+    padding: 0 12px;
+    gap: 8px;
+    font-size: 15px;
+
+    .lang-selector,
+    .theme-selector {
+      gap: 6px;
+    }
+
+    .icon-btn {
+      font-size: 16px;
+    }
+  }
+
+  .flag-icon {
+    width: 18px;
+    margin-right: 6px;
+  }
+}
+
+/* GSM */
+@media (max-width: 480px) {
+  .header-toolbar {
+    min-height: 44px;
+    padding: 0 8px;
+    gap: 6px;
+    font-size: 13px;
+
+    .lang-selector,
+    .theme-selector {
+      gap: 4px;
+    }
+
+    .lang-selector {
+      flex: 1 1 auto;
+      overflow: hidden;
+    }
+
+    .lang-text {
+      min-width: 0;
+      font-size: 12px;
+    }
+
+    .theme-selector {
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+
+    .icon-btn {
+      font-size: 15px;
+    }
+  }
+
+  .flag-icon {
+    width: 16px;
+    margin-right: 5px;
+  }
+}
+
+/* Très petits GSM */
+@media (max-width: 360px) {
+  .header-toolbar {
+    padding: 0 6px;
+    gap: 4px;
+
+    .lang-selector,
+    .theme-selector {
+      gap: 3px;
+    }
+
+    .lang-text {
+      font-size: 11px;
+    }
+  }
 }

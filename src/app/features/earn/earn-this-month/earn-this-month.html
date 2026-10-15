@@ -1,0 +1,39 @@
+<div
+  [ngClass]="{
+    'dark-mode': isDarkMode,
+    'light-mode': !isDarkMode
+  }"
+  class="earn-container"
+>
+  <h1>Mon solde de ce mois-ci</h1>
+
+  <div class="wrapper">
+    <tui-arc-chart
+      [value]="[percentage, remainingPercentage]"
+      size="l"
+      class="stacked"
+    >
+      <div class="salary-info">
+        <h2 [tuiSensitive]="sensitive">{{ salary | number: '1.0-0' }} €</h2>
+        <p [tuiSensitive]="sensitive">sur {{ maxSalary | number: '1.0-0' }} €</p>
+        <span>{{ percentage | number: '1.0-0' }} %</span>
+      </div>
+    </tui-arc-chart>
+
+    <div class="salary-details">
+      <p>Reste jusqu'au plafond</p>
+      <strong [tuiSensitive]="sensitive">{{ remainingSalary | number: '1.0-0' }} €</strong>
+    </div>
+
+
+
+    <label tuiLabel>
+      <input
+        tuiSwitch
+        type="checkbox"
+        [(ngModel)]="sensitive"
+      />
+      Masqué
+    </label>
+  </div>
+</div>
