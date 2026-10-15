@@ -2,6 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environment/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RentalCreateForm } from '../model/rentalCreateForm';
+import { map } from 'rxjs';
+import { RentalNotPaidResponse } from '../model/rentalNotPaid';
 
 @Injectable({
   providedIn: 'root',
@@ -28,5 +30,12 @@ export class RentalService {
   rentalCreate(id: number, form: RentalCreateForm) {
     const headers = this.getAuthHeader();
     return this._http.post<RentalCreateForm>(this.apiUrl + 'new-rental/' + id, form, { headers });
+  }
+
+  rentalNotPaid(id: number) {
+    const headers = this.getAuthHeader();
+    return this._http
+      .get<RentalNotPaidResponse>(this.apiUrl + 'user/' + id, { headers })
+      .pipe(map((response) => response._embedded.rentalByIdDTOList));
   }
 }

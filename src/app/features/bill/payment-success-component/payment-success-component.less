@@ -1,0 +1,263 @@
+@light-background-color: #F1EFE8;
+@light-title: #3B6D11;
+@light-breadcrumb: #5F5E5A;
+@light-label-input: #3B6D11;
+@light-label: #5F5E5A;
+@light-btn-back: #D9764A;
+@light-btn-new: green;
+@light-btn-cancel: red;
+
+@dark-background-color: #1C1F17;
+@dark-title: #8FC15C;
+@dark-breadcrumb: #A6A599;
+@dark-label-input: #8FC15C;
+@dark-label: #A6A599;
+
+:host {
+  display: block;
+  min-height: 100%;
+}
+
+.payment-page {
+  min-height: 75vh;
+  padding: 40px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  background-color: @light-background-color;
+  transition: background-color 0.25s ease;
+}
+
+.success-card {
+  width: 100%;
+  max-width: 520px;
+  padding: 42px 38px 30px;
+  box-sizing: border-box;
+  text-align: center;
+  background-color: lighten(@light-background-color, 5%);
+  border: 1px solid fade(@light-title, 15%);
+  border-radius: 22px;
+  box-shadow: 0 12px 35px fade(#3B6D11, 10%);
+  animation: fade-in 0.45s ease both;
+}
+
+.success-icon {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: fade(@light-title, 12%);
+  color: @light-title;
+
+  span {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1;
+  }
+}
+
+.success-badge {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 30px;
+  background-color: fade(@light-title, 9%);
+  color: @light-title;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+h1 {
+  margin: 22px 0 10px;
+  color: @light-title;
+  font-size: clamp(28px, 5vw, 36px);
+  font-weight: 750;
+  line-height: 1.25;
+}
+
+h2 {
+  margin: 0;
+  color: @light-breadcrumb;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.description {
+  max-width: 380px;
+  margin: 18px auto 30px;
+  color: @light-label;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.button-icon {
+  margin-right: 8px;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.download-button,
+.back-button {
+  width: 100%;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 650;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.download-button {
+  background-color: @light-title;
+  color: #fff;
+  box-shadow: 0 4px 12px fade(@light-title, 20%);
+
+  &:hover {
+    background-color: darken(@light-title, 7%);
+    box-shadow: 0 6px 16px fade(@light-title, 25%);
+  }
+}
+
+.back-button {
+  background-color: transparent;
+  color: @light-btn-back;
+  border: 1px solid fade(@light-btn-back, 60%);
+
+  &:hover {
+    background-color: fade(@light-btn-back, 9%);
+  }
+}
+
+.footer-text {
+  margin: 26px 0 0;
+  color: @light-label;
+  font-size: 13px;
+}
+
+/* Thème sombre : ajouter .dark-theme sur un parent */
+
+:host-context(.dark-theme) .payment-page {
+  background-color: @dark-background-color;
+}
+
+:host-context(.dark-theme) .success-card {
+  background-color: lighten(@dark-background-color, 4%);
+  border-color: fade(@dark-title, 16%);
+  box-shadow: 0 12px 35px fade(#000, 20%);
+}
+
+:host-context(.dark-theme) .success-icon {
+  background-color: fade(@dark-title, 13%);
+  color: @dark-title;
+}
+
+:host-context(.dark-theme) .success-badge {
+  background-color: fade(@dark-title, 12%);
+  color: @dark-title;
+}
+
+:host-context(.dark-theme) h1 {
+  color: @dark-title;
+}
+
+:host-context(.dark-theme) h2,
+:host-context(.dark-theme) .description,
+:host-context(.dark-theme) .footer-text {
+  color: @dark-label;
+}
+
+:host-context(.dark-theme) .download-button {
+  background-color: @dark-title;
+  color: @dark-background-color;
+
+  &:hover {
+    background-color: darken(@dark-title, 7%);
+  }
+}
+
+:host-context(.dark-theme) .back-button {
+  color: @light-btn-back;
+  border-color: fade(@light-btn-back, 65%);
+
+  &:hover {
+    background-color: fade(@light-btn-back, 10%);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-page {
+    min-height: 70vh;
+    padding: 24px 14px;
+  }
+
+  .success-card {
+    padding: 32px 22px 26px;
+    border-radius: 18px;
+  }
+
+  .success-icon {
+    width: 66px;
+    height: 66px;
+
+    span {
+      font-size: 36px;
+    }
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .success-card {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}

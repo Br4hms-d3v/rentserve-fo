@@ -11,4 +11,6 @@ export const environment = {
   reviewEndPoint: 'api/review/', // Path for review
   earnEndPoint: 'api/earn/', // Path for earn
   rentalEndPoint: 'api/rental/', // Path for rental
+  billEndPoint: 'api/bill/', // Path for bill
+  stripEndPoint: 'api/stripe/' // Path for stripe,
 };
