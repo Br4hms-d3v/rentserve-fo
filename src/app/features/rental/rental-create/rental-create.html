@@ -1,0 +1,87 @@
+<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="rental-container">
+  <h1>Location du matériel</h1>
+
+  <form [formGroup]="rentalCreateForm" (ngSubmit)="rentalCreate()" class="rental-form">
+    <div class="rental-grid">
+
+      <!-- Colonne gauche : dates -->
+      <div class="rental-column">
+        <h3>Dates</h3>
+
+        <div class="form-field">
+          <label for="dateStart">Date de début</label>
+          <input
+            id="dateStart"
+            type="date"
+            formControlName="dateStart"
+            [min]="min"
+            [max]="max"
+          />
+        </div>
+
+        <div class="field-separator"></div>
+
+        <div class="form-field">
+          <label for="dateEnd">Date de fin</label>
+          <input
+            id="dateEnd"
+            type="date"
+            formControlName="dateEnd"
+            [min]="rentalCreateForm.controls.dateStart.value || min"
+            [max]="max"
+          />
+        </div>
+      </div>
+
+      <!-- Colonne droite : heures -->
+      <div class="rental-column">
+        <h3>Horaires</h3>
+
+        <div class="form-field">
+          <label for="startTime">Heure de début</label>
+          <input id="startTime" type="time" formControlName="startTime" />
+        </div>
+
+        <div class="field-separator"></div>
+
+        <div class="form-field">
+          <label for="endTime">Heure de fin</label>
+          <input id="endTime" type="time" formControlName="endTime" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="rental-actions">
+      <button
+        id="btn-cancel"
+        tuiButton
+        appearance="secondary"
+        type="button"
+        size="l"
+        (click)="rentalCreateForm.reset()"
+      >
+        Annuler
+      </button>
+
+      <button id="btn-new" tuiButton appearance="primary" type="submit" size="l">
+        Louer
+      </button>
+    </div>
+  </form>
+</div>
+
+
+<ng-template
+  [tuiNotificationOptions]="{label: 'Location', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [(tuiNotification)]="show"
+>
+  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <button
+    tuiButton
+    type="button"
+    (click)="show.set(false)"
+  >
+    Close
+  </button>
+</ng-template>

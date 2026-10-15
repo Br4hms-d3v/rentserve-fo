@@ -1,0 +1,382 @@
+//@light-background-color: #F1EFE8 !important;
+//@light-breadcrumb: #5F5E5A !important;
+//@light-title: #3B6D11 !important;
+//@light-strong: #993C1D !important;
+//@light-text: #3D4A2A !important;
+//@light-border: #D9764A !important;
+//@light-btn-back: #D9764A !important;
+//@light-btn-new: green !important;
+//
+//@dark-background-color: #1C1F17 !important;
+//@dark-breadcrumb: #A6A599 !important;
+//@dark-title: #8FC15C !important;
+//@dark-strong: #E8845A !important;
+//@dark-text: #F1EFE8 !important;
+//@dark-border: #A6A599 !important;
+//
+//.rental-container {
+//  height: 90vh;
+//  width: 100%;
+//  margin-top: -20px;
+//
+//}
+//
+//h1 {
+//  text-align: center;
+//  padding-top: 25px;
+//  font-family: 'Libre Baskerville italic', serif;
+//}
+//
+//.rental-form {
+//  width: 700px;
+//  max-width: 100%;
+//  display: block;
+//  margin: 0 auto;
+//}
+//
+//.rental-grid {
+//  display: grid;
+//  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+//  gap: 32px;
+//}
+//
+//.rental-column {
+//  display: flex;
+//  flex-direction: column;
+//  min-width: 0;
+//
+//  h3 {
+//    margin: 0 0 24px;
+//    font-size: 16px;
+//    font-weight: 600;
+//  }
+//
+//  .form-field {
+//    width: 100%;
+//
+//    tui-textfield {
+//      width: 100%;
+//    }
+//  }
+//
+//  .field-separator {
+//    width: 100%;
+//    margin: 28px 0;
+//    border-top: 1px dashed var(--separator-color);
+//  }
+//}
+//
+//.rental-actions {
+//  display: flex;
+//  justify-content: space-between;
+//  align-items: center;
+//  gap: 16px;
+//  margin-top: 36px;
+//  padding-top: 24px;
+//  border-top: 1px solid var(--separator-color);
+//}
+//
+//
+//// THEME
+//
+//#btn-cancel {
+//  background-color: @light-btn-back;
+//  color: #fff;
+//  width: 250px;
+//}
+//
+//#btn-new {
+//  background-color: @light-btn-new;
+//  color: #FFFFFF;
+//  width: 250px;
+//}
+//
+//
+//.light-mode{
+//  background-color: @light-background-color;
+//
+//  h1{
+//    color: @light-title;
+//  }
+//
+//  label[tuiLabel] {
+//    color: @light-breadcrumb;
+//  }
+//
+//  input[tuiInputDate]{
+//    color: @light-title;
+//  }
+//
+//  input[tuiInputTime]{
+//    color: @light-title;
+//  }
+//  h3{
+//    color: @light-strong;
+//  }
+//}
+//
+//.dark-mode{
+//  background-color: @dark-background-color;
+//
+//  h1{
+//    color: @dark-title;
+//  }
+//
+//  label[tuiLabel] {
+//    color: @dark-breadcrumb;
+//  }
+//
+//  input[tuiInputDate]{
+//    color: @dark-title;
+//  }
+//
+//  input[tuiInputTime]{
+//    color: @dark-title;
+//  }
+//  h3{
+//    color: @dark-strong;
+//  }
+//}
+//
+///* Responsive */
+//@media (max-width: 600px) {
+//  .rental-container {
+//    margin: 12px auto;
+//    padding: 18px;
+//
+//    h1 {
+//      font-size: 22px;
+//    }
+//
+//    .rental-grid {
+//      grid-template-columns: 1fr;
+//      gap: 32px;
+//    }
+//
+//    .rental-actions {
+//      margin-top: 28px;
+//
+//      button {
+//        flex: 1;
+//      }
+//    }
+//  }
+//}
+//
+//
+
+// ===== Palette (ta palette, sans !important) =====
+@light-background-color: #F1EFE8;
+@light-breadcrumb: #5F5E5A;
+@light-title: #3B6D11;
+@light-strong: #993C1D;
+@light-text: #3D4A2A;
+@light-border: #D9764A;
+@light-btn-back: #D9764A;
+@light-btn-new: green;
+
+@dark-background-color: #1C1F17;
+@dark-breadcrumb: #A6A599;
+@dark-title: #8FC15C;
+@dark-strong: #E8845A;
+@dark-text: #F1EFE8;
+@dark-border: #A6A599;
+
+// Couleurs ajoutées pour les champs
+@light-field-bg: #FFFFFF;
+@light-field-border: #E3DFD2;
+@dark-field-bg: #262A1F;
+@dark-field-border: #3A3F2F;
+@danger: #E5484D;
+
+@radius: 16px;
+
+// ===== Structure =====
+.rental-container {
+  min-height: 90vh;
+  width: 100%;
+  margin-top: -20px;
+  padding-bottom: 40px;
+}
+
+h1 {
+  text-align: center;
+  padding-top: 25px;
+  font-family: 'Libre Baskerville', serif;
+}
+
+.rental-form {
+  width: 700px;
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.rental-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+}
+
+.rental-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  h3 {
+    margin: 0 0 24px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .field-separator {
+    width: 100%;
+    margin: 28px 0;
+  }
+}
+
+// ===== Champs date / heure =====
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  input[type='date'],
+  input[type='time'] {
+    width: 100%;
+    box-sizing: border-box;
+    height: 3.6rem;
+    padding: 0 1.25rem;
+    font: inherit;
+    font-size: 1.05rem;
+    border: 1px solid;
+    border-radius: @radius;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &.ng-touched.ng-invalid {
+      border-color: @danger !important;
+    }
+
+    &::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 6px;
+      opacity: 0.6;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+// ===== Boutons =====
+.rental-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 36px;
+  padding-top: 24px;
+}
+
+#btn-cancel {
+  background-color: @light-btn-back !important;
+  color: #fff !important;
+  width: 250px;
+  max-width: 100%;
+}
+
+#btn-new {
+  background-color: @light-btn-new !important;
+  color: #fff !important;
+  width: 250px;
+  max-width: 100%;
+}
+
+// ===== Thèmes =====
+.light-mode {
+  background-color: @light-background-color;
+
+  h1 { color: @light-title; }
+  h3 { color: @light-strong; }
+
+  .field-separator { border-top: 1px dashed @light-field-border; }
+  .rental-actions { border-top: 1px solid @light-field-border; }
+
+  .form-field {
+    label { color: @light-breadcrumb; }
+
+    input[type='date'],
+    input[type='time'] {
+      color: @light-title;
+      background: @light-field-bg;
+      border-color: @light-field-border;
+      color-scheme: light;
+
+      &:focus {
+        border-color: @light-border;
+        box-shadow: 0 0 0 4px fade(@light-border, 20%);
+      }
+    }
+  }
+}
+
+.dark-mode {
+  background-color: @dark-background-color;
+
+  h1 { color: @dark-title; }
+  h3 { color: @dark-strong; }
+
+  .field-separator { border-top: 1px dashed @dark-field-border; }
+  .rental-actions { border-top: 1px solid @dark-field-border; }
+
+  .form-field {
+    label { color: @dark-breadcrumb; }
+
+    input[type='date'],
+    input[type='time'] {
+      color: @dark-text;
+      background: @dark-field-bg;
+      border-color: @dark-field-border;
+      color-scheme: dark; // popup du calendrier en sombre
+
+      &:focus {
+        border-color: @dark-border;
+        box-shadow: 0 0 0 4px fade(@dark-border, 20%);
+      }
+    }
+  }
+}
+
+// ===== Responsive =====
+@media (max-width: 600px) {
+  .rental-container {
+    margin: 12px auto;
+    padding: 18px;
+
+    h1 { font-size: 22px; }
+
+    .rental-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .rental-actions {
+      margin-top: 28px;
+
+      button { flex: 1; }
+    }
+  }
+}

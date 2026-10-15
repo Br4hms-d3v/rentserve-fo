@@ -10,4 +10,5 @@ export const environment = {
   userFavorEndPoint: 'api/user-favor/', // Path for user favor routes,
   reviewEndPoint: 'api/review/', // Path for review
   earnEndPoint: 'api/earn/', // Path for earn
+  rentalEndPoint: 'api/rental/', // Path for rental
 };

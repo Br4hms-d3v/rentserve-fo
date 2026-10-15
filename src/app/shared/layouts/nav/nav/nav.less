@@ -1,4 +1,7 @@
-// Variables de couleurs
+// ==============================
+// COULEURS
+// ==============================
+
 @light-bg: #3D4A2A;
 @light-text: #F1EFE8;
 @light-btn-login: #d9764a;
@@ -9,54 +12,99 @@
 @dark-btn-login: #E8845A;
 @dark-btn-rent: #ccd5b9;
 
+
+// ==============================
+// TOOLBAR PRINCIPALE
+// ==============================
+
 .toolbar {
   display: flex;
   align-items: center;
-  font-size: 17px;
-  height: 3.5vw;
+  gap: 16px;
+
+  width: 100%;
   min-height: 56px;
-  padding: 0 16px;
+  padding: 6px 16px;
+
   box-sizing: border-box;
+  font-size: 17px;
+
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+
+  // LOGO
 
   .logo-link {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
+    gap: 12px;
+
     text-decoration: none;
+    min-width: 0;
 
     .logo {
-      padding-top: 7px;
-      height: 50px;
-      margin-right: 16px;
+      display: block;
+      width: auto;
+      height: 42px;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    #logoText {
+      font-size: 20px;
+      font-weight: 600;
+      white-space: nowrap;
     }
   }
 
-  .spaceBtwnMatFav {
-    margin: 10px;
-  }
+  // ESPACEMENT
 
   .spacer {
     flex: 1 1 auto;
+    min-width: 8px;
   }
+
+  // NAVIGATION ET ACTIONS
 
   .nav-buttons,
   .action-buttons {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 12px;
+    min-width: 0;
   }
+
+  .nav-buttons {
+    flex-shrink: 0;
+  }
+
+  .action-buttons {
+    flex-shrink: 0;
+  }
+
+  // BOUTONS
 
   button[tuiButton] {
-    height: 50px;
-    border-radius: 25px; // Style arrondi similaire aux boutons extended fab
+    min-height: 44px;
+    height: auto;
+    max-width: 100%;
+    border-radius: 25px;
+    box-sizing: border-box;
   }
 
-  // DRAWER //
+  .btn-login,
+  .btn-rentServeBasket {
+    white-space: nowrap;
+  }
 
+  .user-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-
-  // THEME //
-
-  /* Style pour Light Mode */
+  // THÈME CLAIR
 
   &.light-mode {
     background-color: @light-bg;
@@ -75,14 +123,9 @@
       background-color: @light-btn-rent;
       color: #ffffff;
     }
-
-    /* Drawer */
-    .drawer{
-      background-color: @light-bg;
-    }
   }
 
-  /* Style pour Dark Mode */
+  // THÈME SOMBRE
 
   &.dark-mode {
     background-color: @dark-bg;
@@ -94,13 +137,250 @@
 
     .btn-login {
       background-color: @dark-btn-login;
-      color: @light-text;
-      width: 135px;
+      color: @dark-text;
     }
 
     .btn-rentServeBasket {
       background-color: @dark-btn-rent;
-      color: @light-text;
+      color: @dark-bg;
     }
+  }
+}
+
+
+// ==============================
+// DRAWER
+// ==============================
+
+.drawer {
+  width: min(360px, 100%);
+  max-width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+
+  overflow-y: auto;
+
+  .drawer-header {
+    margin-bottom: 24px;
+  }
+
+  .drawer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .link-drawer {
+    width: 100%;
+    box-sizing: border-box;
+
+    a {
+      display: flex;
+      align-items: center;
+
+      min-height: 48px;
+      padding: 10px 12px;
+
+      box-sizing: border-box;
+      border-radius: 8px;
+
+      text-decoration: none;
+      overflow-wrap: anywhere;
+      transition: background-color 0.2s ease;
+    }
+  }
+
+  .drawer-footer {
+    margin-top: 32px;
+
+    .btn-logout {
+      width: 100%;
+    }
+  }
+}
+
+
+// ==============================
+// GSM ET PETITS ÉCRANS
+// ==============================
+
+@media (max-width: 480px) {
+  .toolbar {
+    gap: 6px;
+    min-height: 48px;
+    padding: 6px 8px;
+    font-size: 13px;
+
+    .logo-link {
+      gap: 5px;
+
+      .logo {
+        height: 30px;
+      }
+
+      #logoText {
+        font-size: 14px;
+      }
+    }
+
+    .spacer {
+      min-width: 0;
+    }
+
+    .nav-buttons,
+    .action-buttons {
+      gap: 4px;
+    }
+
+    .nav-buttons button[tuiButton],
+    .action-buttons button[tuiButton] {
+      min-height: 36px;
+      padding-inline: 8px;
+      font-size: 12px;
+    }
+
+    .btn-login,
+    .btn-rentServeBasket {
+      border-radius: 18px;
+    }
+
+    .user-name {
+      max-width: 64px;
+    }
+  }
+
+  .drawer {
+    padding: 16px;
+
+    .drawer-header {
+      margin-bottom: 16px;
+    }
+
+    .drawer-links {
+      gap: 6px;
+    }
+  }
+}
+
+
+// ==============================
+// TRÈS PETITS GSM
+// ==============================
+
+@media (max-width: 360px) {
+  .toolbar {
+    gap: 4px;
+    padding-inline: 5px;
+
+    .logo-link {
+      gap: 4px;
+
+      .logo {
+        height: 26px;
+      }
+
+      #logoText {
+        font-size: 12px;
+      }
+    }
+
+    .nav-buttons,
+    .action-buttons {
+      gap: 3px;
+    }
+
+    .nav-buttons button[tuiButton],
+    .action-buttons button[tuiButton] {
+      min-height: 34px;
+      padding-inline: 5px;
+      font-size: 11px;
+    }
+
+    .user-name {
+      max-width: 42px;
+    }
+  }
+}
+
+
+// ==============================
+// TABLETTES
+// ==============================
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .toolbar {
+    gap: 10px;
+    padding-inline: 12px;
+
+    .logo-link {
+      gap: 8px;
+
+      .logo {
+        height: 36px;
+      }
+
+      #logoText {
+        font-size: 17px;
+      }
+    }
+
+    .nav-buttons,
+    .action-buttons {
+      gap: 8px;
+    }
+
+    .nav-buttons button[tuiButton],
+    .action-buttons button[tuiButton] {
+      padding-inline: 10px;
+      font-size: 14px;
+    }
+
+    .user-name {
+      max-width: 110px;
+    }
+  }
+}
+
+
+// ==============================
+// PC ET GRANDS ÉCRANS
+// ==============================
+
+@media (min-width: 769px) {
+  .toolbar {
+    gap: 16px;
+    padding-inline: 20px;
+
+    .logo-link {
+      .logo {
+        height: 44px;
+      }
+
+      #logoText {
+        font-size: 20px;
+      }
+    }
+
+    .nav-buttons,
+    .action-buttons {
+      gap: 16px;
+    }
+
+    .user-name {
+      max-width: 180px;
+    }
+  }
+}
+
+
+// ==============================
+// ACCESSIBILITÉ
+// ==============================
+
+@media (prefers-reduced-motion: reduce) {
+  .toolbar,
+  .drawer .link-drawer a {
+    transition: none;
   }
 }

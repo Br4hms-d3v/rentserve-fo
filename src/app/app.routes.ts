@@ -35,5 +35,8 @@ export const routes: Routes = [
   },
   {
     path: 'earn', loadChildren: () => import('./features/earn/earn.routes').then((r) => r.earn_routes),
+  },
+  {
+    path: 'rental', loadChildren: () => import('./features/rental/rental.routes').then((r) => r.rental_routes)
   }
 ];

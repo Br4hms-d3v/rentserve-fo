@@ -1,49 +1,54 @@
-<header class="toolbar" [ngClass]="{ 'dark-mode': isDarkMode, 'light-mode': !isDarkMode }">
-  <!-- Logo is on left -->
+<header
+  class="toolbar"
+  [ngClass]="{
+    'dark-mode': isDarkMode,
+    'light-mode': !isDarkMode
+  }"
+>
+  <!-- Logo -->
   <a [routerLink]="['dashboard']" class="logo-link">
-    <img src="/logo/logoSmall.jpg" alt="Logo" class="logo" />
+    <img
+      src="/logo/logoSmall.jpg"
+      alt=""
+      class="logo"
+    />
     <span id="logoText">Rent-Serve</span>
   </a>
 
-  <!-- Space between buttons -->
   <span class="spacer"></span>
 
-
+  <!-- Navigation -->
   @if (isAuthenticated()) {
-    <!-- First button materials  -->
-    <button
-      tuiButton
-      type="button"
-      [routerLink]="['/material', 'all-materials']"
-      size="m"
-      appearance="flat"
-      iconEnd="@tui.hammer"
-      class="btn-rentServeBasket"
-    >
-      Matériels
-    </button>
+    <nav class="nav-buttons" aria-label="Navigation principale">
+      <button
+        tuiButton
+        type="button"
+        [routerLink]="['/material', 'all-materials']"
+        size="m"
+        appearance="flat"
+        iconEnd="@tui.hammer"
+        class="btn-rentServeBasket"
+      >
+        Matériels
+      </button>
 
-    <!-- Space between buttons -->
-    <span class="spaceBtwnMatFav"></span>
-
-    <!-- Second button favour  -->
-    <button
-      tuiButton
-      type="button"
-      [routerLink]="['/favor', 'all-favour']"
-      size="m"
-      appearance="flat"
-      iconEnd="@tui.heart-handshake"
-      class="btn-rentServeBasket"
-    >
-      Services
-    </button>
+      <button
+        tuiButton
+        type="button"
+        [routerLink]="['/favor', 'all-favour']"
+        size="m"
+        appearance="flat"
+        iconEnd="@tui.heart-handshake"
+        class="btn-rentServeBasket"
+      >
+        Services
+      </button>
+    </nav>
   }
 
-  <!-- Space between buttons -->
   <span class="spacer"></span>
 
-  <!-- Display the button when the user is connected -->
+  <!-- Actions utilisateur -->
   <div class="action-buttons">
     @if (isAuthenticated()) {
       <button
@@ -52,23 +57,22 @@
         size="m"
         appearance="custom"
         iconEnd="@tui.shopping-bag"
-        class="btn-rentServeBasket"
+        class="btn-rentServeBasket btn-cart"
       >
         Panier
       </button>
 
-      <!-- Drawer to see any dropMenu -->
       <button
-        class="btn-login"
         tuiButton
-        iconEnd="@tui.chevrons-right"
         type="button"
         iconStart="@tui.user"
+        iconEnd="@tui.chevrons-right"
+        class="btn-login"
+        [attr.aria-label]="'Ouvrir le menu de ' + firstname"
         (click)="openDrawer.set(true)"
       >
-        {{ firstname }}
+        <span class="user-name">{{ firstname }}</span>
       </button>
-
     } @else {
       <button
         tuiButton
@@ -85,8 +89,7 @@
   </div>
 </header>
 
-<!-- Drawer -->
-
+<!-- Drawer utilisateur -->
 <tui-drawer
   *tuiPopup="openDrawer()"
   direction="end"
@@ -94,19 +97,25 @@
   [overlay]="true"
   (tuiClose)="onClose()"
 >
-  <header class="header">
+  <header class="drawer-header">
     <h2 tuiHeader>
       <div tuiTitle>{{ firstname }}</div>
 
       <div tuiAccessories>
-        <button tuiButton type="button" (click)="onClose()">
+        <button
+          tuiButton
+          type="button"
+          appearance="flat"
+          aria-label="Fermer le menu"
+          (click)="onClose()"
+        >
           X
         </button>
       </div>
     </h2>
   </header>
 
-  <div class="drawer-links">
+  <nav class="drawer-links" aria-label="Menu utilisateur">
     <div class="link-drawer">
       <a [routerLink]="['user', 'profile']" (click)="onClose()">
         Voir mon profil
@@ -114,23 +123,41 @@
     </div>
 
     <div class="link-drawer">
-      <a [routerLink]="['user-material', 'my-user-material']" (click)="onClose()">Mes outils</a>
+      <a
+        [routerLink]="['user-material', 'my-user-material']"
+        (click)="onClose()"
+      >
+        Mes outils
+      </a>
     </div>
 
     <div class="link-drawer">
-      <a [routerLink]="['user-favor', 'my-user-favor']" (click)="onClose()"> Mes services</a>
+      <a
+        [routerLink]="['user-favor', 'my-user-favor']"
+        (click)="onClose()"
+      >
+        Mes services
+      </a>
     </div>
 
     <div class="link-drawer">
-      <a [routerLink]="['earn','my-earn-this-month', userId]"  (click)="onClose()">Voir mon solde</a>
+      <a
+        [routerLink]="['earn', 'my-earn-this-month', userId]"
+        (click)="onClose()"
+      >
+        Voir mon solde
+      </a>
     </div>
-  </div>
+  </nav>
 
-  <footer>
-    <a
+  <footer class="drawer-footer">
+    <button
+      tuiButton
       type="button"
-      (click)="logout()">
-      Deconnecter
-    </a>
+      class="btn-logout"
+      (click)="logout()"
+    >
+      Déconnexion
+    </button>
   </footer>
 </tui-drawer>
