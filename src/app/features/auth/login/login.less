@@ -1,75 +1,394 @@
-@light-background-color: #F1EFE8;
-@light-btn-login: #D9764A;
-@light-input-light: #5F5E5A;
-@light-icon-input: #5C8A3A !important;
-@light-label-input: #3B6D11 !important;
+/* Thème clair */
+@light-page: #F1EFE8;
+@light-surface: #FFFFFF;
+@light-surface-hover: #EAF3DE;
+@light-border: #D3D1C7;
+@light-text: #2C2C2A;
+@light-text-secondary: #5F5E5A;
+@light-primary: #3D4A2A;
+@light-action: #5C8A3A;
+@light-action-hover: #3B6D11;
+@light-accent: #D9764A;
+@light-accent-hover: #993C1D;
+@light-button-text: #FFFFFF;
+@light-shadow: 0 4px 20px rgb(44 44 42 / 5%);
 
-@dark-background-color: #1C1F17;
-@dark-btn-login: #E8845A;
-@dark-input-light: #F1EFE8;
-@dark-icon-input: #7FB84D !important;
-@dark-label-input: #8FC15C !important;
+/* Thème sombre */
+@dark-page: #1C1F17;
+@dark-surface: #262A1D;
+@dark-surface-hover: #2E331F;
+@dark-border: #3A3F2C;
+@dark-text: #F1EFE8;
+@dark-text-secondary: #A6A599;
+@dark-primary: #F1EFE8;
+@dark-action: #7FB84D;
+@dark-action-hover: #8FC15C;
+@dark-accent: #E8845A;
+@dark-accent-hover: #F0916B;
+@dark-button-text: #171912;
+@dark-shadow: 0 4px 20px rgb(0 0 0 / 12%);
+
+/* Dimensions */
+@login-max-width: 700px;
+@login-padding: 30px;
+@login-radius: 18px;
+@field-radius: 10px;
+@button-height: 48px;
+@transition-speed: 180ms;
+
+
+/* =========================
+   CONTENEUR PRINCIPAL
+   ========================= */
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
 
 .login-container {
-  height: 80vh;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
-  padding: 20px;
+  width: 100%;
+  min-height: min(80vh, 760px);
+  padding: 32px 20px;
   box-sizing: border-box;
 
+  background: @light-page;
+  color: @light-text;
+
+  transition:
+    background-color @transition-speed ease,
+    color @transition-speed ease;
 }
+
+
+/* =========================
+   FORMULAIRE
+   ========================= */
 
 .login-form {
-  width: 100%;
-  max-width: 550px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-}
+  gap: 18px;
 
-.light-mode {
-  background-color: @light-background-color;
+  width: 100%;
+  max-width: @login-max-width;
+  padding: @login-padding;
 
-  input[tuiInput] {
-    color: @light-input-light;
-  }
+  box-sizing: border-box;
 
-  label[tuiLabel] {
-    color: @light-label-input;
-  }
+  background: @light-surface;
+  border: 1px solid @light-border;
+  border-radius: @login-radius;
+  box-shadow: @light-shadow;
 
-  .btn-login {
-    background-color: @light-btn-login;
-  }
-
-  .custom-icon-textfield,
-  .custom-icon-textfield:focus-within,
-  .custom-icon-textfield:hover {
-    color: @light-icon-input;
-  }
+  transition:
+    background-color @transition-speed ease,
+    border-color @transition-speed ease,
+    box-shadow @transition-speed ease;
 }
 
 
-.dark-mode {
-  background-color: @dark-background-color;
+/* =========================
+   TITRE ET INTRODUCTION
+   ========================= */
+
+.login-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  margin-bottom: 4px;
+
+  h1 {
+    margin: 0;
+    color: @light-primary;
+
+    font-size: clamp(24px, 4vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.25;
+  }
+
+  p {
+    margin: 0;
+    color: @light-text-secondary;
+
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
+
+/* =========================
+   CHAMPS TAIGA UI
+   ========================= */
+
+.custom-icon-textfield {
+  width: 100%;
+  min-width: 0;
+
+  color: @light-action;
+
+  &:focus-within {
+    color: @light-action-hover;
+  }
 
   input[tuiInput] {
-    color: @dark-input-light;
+    color: @light-text;
+    caret-color: @light-action;
+  }
+
+  input[tuiInput]::placeholder {
+    color: @light-text-secondary;
+    opacity: 0.8;
   }
 
   label[tuiLabel] {
-    color: @dark-label-input;
+    color: @light-text-secondary;
+  }
+
+  button[tuiButton] {
+    flex-shrink: 0;
+    color: @light-text-secondary;
+  }
+
+  button[tuiButton]:hover {
+    color: @light-action-hover;
+  }
+}
+
+
+/* =========================
+   ERREURS DE VALIDATION
+   ========================= */
+
+.field-error {
+  margin: -10px 0 0;
+
+  color: @light-accent-hover;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* =========================
+   BOUTON DE CONNEXION
+   ========================= */
+
+.btn-login {
+  width: 100%;
+  min-height: @button-height;
+  margin-top: 2px;
+  padding: 12px 18px;
+
+  box-sizing: border-box;
+  border: none;
+  border-radius: @field-radius;
+
+  background: @light-accent;
+  color: @light-button-text;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  transition:
+    background-color @transition-speed ease,
+    transform @transition-speed ease;
+
+  &:hover {
+    background: @light-accent-hover;
+  }
+
+  &:active {
+    transform: scale(0.99);
+  }
+
+  &:focus-visible {
+    outline: 2px solid @light-accent;
+    outline-offset: 3px;
+  }
+}
+
+
+/* =========================
+   THÈME CLAIR
+   ========================= */
+
+.login-container.light-mode {
+  background: @light-page;
+  color: @light-text;
+
+  .login-form {
+    background: @light-surface;
+    border-color: @light-border;
+    box-shadow: @light-shadow;
+  }
+
+  .login-heading h1 {
+    color: @light-primary;
+  }
+
+  .custom-icon-textfield {
+    color: @light-action;
   }
 
   .btn-login {
-    background-color: @dark-btn-login;
+    background: @light-accent;
+    color: @light-button-text;
+
+    &:hover {
+      background: @light-accent-hover;
+    }
   }
 
-  .custom-icon-textfield,
-  .custom-icon-textfield:focus-within,
-  .custom-icon-textfield:hover {
-    color: @light-icon-input;
+  .field-error {
+    color: @light-accent-hover;
+  }
+}
+
+
+/* =========================
+   THÈME SOMBRE
+   ========================= */
+
+.login-container.dark-mode {
+  background: @dark-page;
+  color: @dark-text;
+
+  .login-form {
+    background: @dark-surface;
+    border-color: @dark-border;
+    box-shadow: @dark-shadow;
+  }
+
+  .login-heading h1 {
+    color: @dark-primary;
+  }
+
+  .login-heading p {
+    color: @dark-text-secondary;
+  }
+
+  .custom-icon-textfield {
+    color: @dark-action;
+
+    &:focus-within {
+      color: @dark-action-hover;
+    }
+
+    input[tuiInput] {
+      color: @dark-text;
+      caret-color: @dark-action;
+    }
+
+    input[tuiInput]::placeholder,
+    label[tuiLabel],
+    button[tuiButton] {
+      color: @dark-text-secondary;
+    }
+
+    button[tuiButton]:hover {
+      color: @dark-action-hover;
+    }
+  }
+
+  .field-error {
+    color: @dark-accent-hover;
+  }
+
+  .btn-login {
+    background: @dark-accent;
+    color: @dark-button-text;
+
+    &:hover {
+      background: @dark-accent-hover;
+    }
+  }
+}
+
+
+/* =========================
+   TABLETTES
+   ========================= */
+
+@media (max-width: 768px) {
+  .login-container {
+    min-height: 70vh;
+    padding: 28px 20px;
+  }
+
+  .login-form {
+    max-width: @login-max-width;
+    padding: 26px;
+    gap: 18px;
+  }
+}
+
+
+/* =========================
+   TÉLÉPHONES
+   ========================= */
+
+@media (max-width: 480px) {
+  .login-container {
+    min-height: 60vh;
+    padding: 24px 14px;
+  }
+
+  .login-form {
+    max-width: @login-max-width;
+    padding: 22px 18px;
+    gap: 16px;
+    border-radius: 16px;
+  }
+
+  .login-heading h1 {
+    font-size: 25px;
+  }
+
+  .login-heading p {
+    font-size: 13px;
+  }
+
+  .btn-login {
+    min-height: 46px;
+  }
+}
+
+
+/* =========================
+   TRÈS PETITS TÉLÉPHONES
+   ========================= */
+
+@media (max-width: 360px) {
+  .login-container {
+    padding: 20px 10px;
+  }
+
+  .login-form {
+    padding: 20px 14px;
+    gap: 15px;
+  }
+}
+
+
+/* =========================
+   ACCESSIBILITÉ
+   ========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .login-container,
+  .login-form,
+  .btn-login {
+    transition: none;
+  }
+
+  .btn-login:active {
+    transform: none;
   }
 }

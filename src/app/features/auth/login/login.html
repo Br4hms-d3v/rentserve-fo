@@ -1,59 +1,126 @@
-<div class="login-container" [class.dark-mode]="isDarkMode" [class.light-mode]="!isDarkMode">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()" class="login-form">
-    <tui-textfield class="custom-icon-textfield" iconStart="@tui.user-round">
-      <label tuiLabel>Nom d'utilisateur</label>
+
+<div
+  class="login-container"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmitLogin()"
+    class="login-form"
+    aria-labelledby="login-title"
+  >
+    <!-- Introduction -->
+    <div class="login-heading">
+      <h1 id="login-title">Connexion</h1>
+      <p>Connectez-vous à votre compte RentServe pour continuer.</p>
+    </div>
+
+    <!-- Nom d'utilisateur -->
+    <tui-textfield
+      class="custom-icon-textfield"
+      iconStart="@tui.user-round"
+    >
+      <label tuiLabel for="login-pseudo">Nom d'utilisateur</label>
+
       <input
         tuiInput
-        placeholder="Pseudo"
+        id="login-pseudo"
+        type="text"
+        placeholder="Votre pseudo"
         formControlName="pseudo"
+        autocomplete="username"
+        required
       />
     </tui-textfield>
 
-    <tui-textfield class="custom-icon-textfield" iconStart="@tui.key-round">
-      <label tuiLabel>Mot de passe</label>
+    @if (
+      loginForm.controls.pseudo.touched &&
+      loginForm.controls.pseudo.invalid
+      ) {
+      <p class="field-error" role="alert">
+        @if (loginForm.controls.pseudo.hasError('required')) {
+          Veuillez saisir votre nom d'utilisateur.
+        } @else if (loginForm.controls.pseudo.hasError('minlength')) {
+          Votre pseudo doit contenir au moins 3 caractères.
+        } @else if (loginForm.controls.pseudo.hasError('maxlength')) {
+          Votre pseudo ne peut pas dépasser 100 caractères.
+        }
+      </p>
+    }
+
+    <!-- Mot de passe -->
+    <tui-textfield
+      class="custom-icon-textfield"
+      iconStart="@tui.key-round"
+    >
+      <label tuiLabel for="login-password">Mot de passe</label>
+
       <input
-        #passwordInput
-        placeholder="Mot de passe"
-        formControlName="password"
         tuiInput
-        type="password"
-        [type]="passwordInput.type"
+        id="login-password"
+        [type]="showPassword() ? 'text' : 'password'"
+        placeholder="Votre mot de passe"
+        formControlName="password"
+        autocomplete="current-password"
+        required
       />
+
       <button
-        class="custom-icon-textfield"
-        appearance="secondary"
-        size="m"
         tuiButton
         type="button"
-        (click)="passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password'"
-      >
-        <tui-icon
-          [icon]="passwordInput.type === 'password' ? '@tui.eye' : '@tui.eye-off'"></tui-icon>
-      </button>
+        appearance="flat"
+        size="s"
+        [iconStart]="showPassword() ? '@tui.eye-off' : '@tui.eye'"
+        [attr.aria-label]="
+          showPassword()
+            ? 'Masquer le mot de passe'
+            : 'Afficher le mot de passe'
+        "
+        (click)="togglePasswordVisibility()"
+      ></button>
     </tui-textfield>
 
+    @if (
+      loginForm.controls.password.touched &&
+      loginForm.controls.password.invalid
+      ) {
+      <p class="field-error" role="alert">
+        Veuillez saisir votre mot de passe.
+      </p>
+    }
+
+    <!-- Connexion -->
     <button
-      class="btn-login"
-      appearance="primary"
       tuiButton
       type="submit"
+      appearance="primary"
+      class="btn-login"
+      [disabled]="loginForm.invalid"
     >
       Se connecter
     </button>
   </form>
-
 </div>
 
+<!-- Notification de connexion -->
 <ng-template
-  [tuiNotificationOptions]="{label: titleError , autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: titleError,
+    autoClose: 0,
+    closable: false,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageError }}</span>
+  <span>{{ messageError }}</span>
+
   <button
     tuiButton
     type="button"
+    appearance="flat"
     (click)="show.set(false)"
   >
-    Close
+    Fermer
   </button>
 </ng-template>
