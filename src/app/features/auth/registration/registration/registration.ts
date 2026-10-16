@@ -1,3 +1,4 @@
+
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -7,7 +8,12 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import {
   TuiButton,
   TuiCalendar,
@@ -17,13 +23,15 @@ import {
   TuiTextfield,
 } from '@taiga-ui/core';
 import { TuiInputDate } from '@taiga-ui/kit';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 import { AuthService } from '../../service/auth-service';
 import { RegistrationModel } from '../../model/registration';
 import { ThemeService } from '../../../../core/services/ThemeService';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-registration',
+  standalone: true,
   imports: [
     ReactiveFormsModule,
     TuiTextfield,
@@ -36,28 +44,24 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   ],
   templateUrl: './registration.html',
   styleUrl: './registration.less',
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Registration implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly cdr = inject(ChangeDetectorRef);
 
-  isDarkMode = false; // Change theme from light to dark
-  protected readonly show = signal(false); // Show notification
-  protected readonly isSuccess = signal(false); // Change color Green for success or Red error
+  isDarkMode = false;
+
+  protected readonly show = signal(false);
+  protected readonly isSuccess = signal(false);
   protected readonly showPassword = signal(false);
 
   protected messageError = '';
   protected messageSuccess = '';
 
-  protected togglePasswordVisibility(): void {
-    this.showPassword.update((visible) => !visible);
-  }
-
   constructor(
     private readonly _authService: AuthService,
-    private themeService: ThemeService,
+    private readonly themeService: ThemeService,
   ) {}
 
   ngOnInit(): void {
@@ -70,30 +74,33 @@ export class Registration implements OnInit {
         this.cdr.markForCheck();
       });
   }
-  /**
-   * This is a Form with validators
-   * @protected the data
-   */
+
+  protected togglePasswordVisibility(): void {
+    this.showPassword.update((visible) => !visible);
+  }
+
   protected registerForm = new FormGroup({
     name: new FormControl('', Validators.required),
     firstName: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email,
+    ]),
     password: new FormControl('', Validators.required),
     pseudo: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
       Validators.maxLength(100),
     ]),
-    birthdate: new FormControl<Date | null>(null, Validators.required),
+    birthdate: new FormControl<Date | null>(
+      null,
+      Validators.required,
+    ),
     street: new FormControl('', Validators.required),
     city: new FormControl('', Validators.required),
     zipCode: new FormControl('', Validators.required),
   });
 
-  /**
-   * Register a user after fill the form
-   * @protected
-   */
   protected onSubmitRegister(): void {
     this.registerForm.markAllAsTouched();
 
@@ -104,13 +111,15 @@ export class Registration implements OnInit {
     this.show.set(false);
 
     this._authService
-      .register(this.registerForm.getRawValue() as RegistrationModel)
+      .register(
+        this.registerForm.getRawValue() as RegistrationModel,
+      )
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
           this.messageError = '';
           this.messageSuccess =
-            'Votre inscription a été enregistrée. Veuillez consulter votre boîte e-mail pour activer votre compte.';
+            'Veuillez vérifier votre boîte e-mail pour activer votre compte.';
 
           this.registerForm.reset();
           this.showPassword.set(false);
@@ -121,7 +130,6 @@ export class Registration implements OnInit {
 
         error: (err) => {
           this.messageSuccess = '';
-
           this.messageError =
             typeof err?.error?.message === 'string'
               ? err.error.message
