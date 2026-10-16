@@ -1,70 +1,469 @@
-.registration-form {
-  width: 100%;
-  height: 85%;
+/* Palette — thème clair */
+@light-page: #F1EFE8;
+@light-surface: #FFFFFF;
+@light-surface-hover: #EAF3DE;
+@light-border: #D3D1C7;
+@light-text: #2C2C2A;
+@light-text-secondary: #5F5E5A;
+@light-primary: #3D4A2A;
+@light-action: #5C8A3A;
+@light-action-hover: #3B6D11;
+@light-accent: #D9764A;
+@light-accent-hover: #993C1D;
+@light-button-text: #FFFFFF;
+@light-error: #993C1D;
+@light-shadow: 0 6px 24px rgb(44 44 42 / 5%);
 
+/* Palette — thème sombre */
+@dark-page: #1C1F17;
+@dark-surface: #262A1D;
+@dark-surface-hover: #2E331F;
+@dark-border: #3A3F2C;
+@dark-text: #F1EFE8;
+@dark-text-secondary: #A6A599;
+@dark-primary: #F1EFE8;
+@dark-action: #7FB84D;
+@dark-action-hover: #8FC15C;
+@dark-accent: #E8845A;
+@dark-accent-hover: #F0916B;
+@dark-button-text: #171912;
+@dark-error: #F0916B;
+@dark-shadow: 0 6px 24px rgb(0 0 0 / 12%);
+
+/* Dimensions */
+@form-max-width: 760px;
+@form-padding: 32px;
+@form-radius: 18px;
+@field-gap: 18px;
+@control-radius: 10px;
+@transition-speed: 180ms;
+
+
+/* =========================================================
+   CONTENEUR DE PAGE
+   ========================================================= */
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.registration-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  width: 100%;
+  min-height: 80vh;
+  padding: 36px 20px;
+
+  box-sizing: border-box;
+  background: @light-page;
+  color: @light-text;
+
+  transition:
+    background-color @transition-speed ease,
+    color @transition-speed ease;
+}
+
+
+/* =========================================================
+   CARTE D'INSCRIPTION
+   ========================================================= */
+
+.registration-form {
   display: flex;
   flex-direction: column;
+  gap: 26px;
+
+  width: 100%;
+  max-width: @form-max-width;
+  height: auto;
+  margin: 0 auto;
+  padding: @form-padding;
+
+  box-sizing: border-box;
+  border: 1px solid @light-border;
+  border-radius: @form-radius;
+
+  background: @light-surface;
+  box-shadow: @light-shadow;
+
+  transition:
+    background-color @transition-speed ease,
+    border-color @transition-speed ease,
+    box-shadow @transition-speed ease;
 }
+
+
+/* =========================================================
+   TITRE ET INTRODUCTION
+   ========================================================= */
+
+.registration-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  h1 {
+    margin: 0;
+    color: @light-primary;
+
+    font-size: clamp(24px, 3vw, 30px);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+  }
+
+  p {
+    max-width: 560px;
+    margin: 0;
+
+    color: @light-text-secondary;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
+
+/* =========================================================
+   GRILLE DES CHAMPS
+   ========================================================= */
 
 .form-fields {
   display: grid;
-
   grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  column-gap: 16px;
-  row-gap: 10px;
+  column-gap: @field-gap;
+  row-gap: 18px;
+  align-items: start;
+
+  width: 100%;
+  min-width: 0;
 }
 
 .form-field {
-  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
   min-width: 0;
 
   tui-textfield {
     width: 100%;
+    min-width: 0;
   }
 
+  input[tuiInput],
+  input[tuiInputDate] {
+    min-width: 0;
+    color: @light-text;
+  }
+
+  label[tuiLabel] {
+    color: @light-text-secondary;
+  }
+
+  &:focus-within label[tuiLabel] {
+    color: @light-action;
+  }
+}
+
+/* La rue occupe les deux colonnes */
+.form-field--street {
+  grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   MESSAGES DE VALIDATION
+   ========================================================= */
+
+.field-error {
+  margin: 0;
+  color: @light-error;
+
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.required-note {
+  margin: 0;
+  color: @light-text-secondary;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   ACTIONS ET BOUTON
+   ========================================================= */
+
+.registration-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  gap: 16px;
+  padding-top: 20px;
+
+  border-top: 1px solid @light-border;
 }
 
 .btn-register {
-  margin-top: auto;
+  min-height: 46px;
+  padding: 12px 24px;
 
-  display: flex;
-  justify-content: flex-end;
+  border: none;
+  border-radius: @control-radius;
+
+  background: @light-accent;
+  color: @light-button-text;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  transition:
+    background-color @transition-speed ease,
+    transform @transition-speed ease;
+
+  &:hover:not(:disabled) {
+    background: @light-accent-hover;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.99);
+  }
+
+  &:focus-visible {
+    outline: 2px solid @light-accent;
+    outline-offset: 3px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
 }
 
-.light-mode{
+
+/* =========================================================
+   THÈME CLAIR
+   ========================================================= */
+
+.registration-page.light-mode {
+  background: @light-page;
+  color: @light-text;
+
+  .registration-form {
+    background: @light-surface;
+    border-color: @light-border;
+    box-shadow: @light-shadow;
+  }
+
+  .registration-heading h1 {
+    color: @light-primary;
+  }
+
   .form-field {
-    input[tuiInput] {
-      color: #5F5E5A;
+    input[tuiInput],
+    input[tuiInputDate] {
+      color: @light-text;
     }
 
     label[tuiLabel] {
-      color: #3B6D11 !important;
+      color: @light-text-secondary;
+    }
+
+    &:focus-within label[tuiLabel] {
+      color: @light-action;
     }
   }
 
+  .field-error {
+    color: @light-error;
+  }
+
+  .registration-actions {
+    border-top-color: @light-border;
+  }
+
+  .required-note {
+    color: @light-text-secondary;
+  }
+
   .btn-register {
-    button[tuiButton] {
-      background-color: #D9764A;
+    background: @light-accent;
+    color: @light-button-text;
+
+    &:hover:not(:disabled) {
+      background: @light-accent-hover;
     }
   }
 }
 
-.dark-mode{
+
+/* =========================================================
+   THÈME SOMBRE
+   ========================================================= */
+
+.registration-page.dark-mode {
+  background: @dark-page;
+  color: @dark-text;
+
+  .registration-form {
+    background: @dark-surface;
+    border-color: @dark-border;
+    box-shadow: @dark-shadow;
+  }
+
+  .registration-heading h1 {
+    color: @dark-primary;
+  }
+
+  .registration-heading p,
+  .required-note {
+    color: @dark-text-secondary;
+  }
 
   .form-field {
-    input[tuiInput] {
-      color: #A6A599;
+    input[tuiInput],
+    input[tuiInputDate] {
+      color: @dark-text;
     }
 
     label[tuiLabel] {
-      color: #8FC15C !important;
+      color: @dark-text-secondary;
+    }
+
+    &:focus-within label[tuiLabel] {
+      color: @dark-action;
     }
   }
 
+  .field-error {
+    color: @dark-error;
+  }
+
+  .registration-actions {
+    border-top-color: @dark-border;
+  }
+
   .btn-register {
-    button[tuiButton] {
-      background-color: #E8845A;
+    background: @dark-accent;
+    color: @dark-button-text;
+
+    &:hover:not(:disabled) {
+      background: @dark-accent-hover;
     }
+  }
+}
+
+
+/* =========================================================
+   TABLETTES
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .registration-page {
+    min-height: auto;
+    padding: 28px 16px;
+  }
+
+  .registration-form {
+    padding: 26px;
+    gap: 22px;
+  }
+
+  .form-fields {
+    column-gap: 14px;
+    row-gap: 16px;
+  }
+}
+
+
+/* =========================================================
+   TÉLÉPHONES
+   ========================================================= */
+
+@media (max-width: 560px) {
+  .registration-page {
+    padding: 20px 12px;
+  }
+
+  .registration-form {
+    padding: 22px 18px;
+    gap: 22px;
+    border-radius: 14px;
+  }
+
+  .registration-heading h1 {
+    font-size: 25px;
+  }
+
+  .registration-heading p {
+    font-size: 13px;
+  }
+
+  .form-fields {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 16px;
+  }
+
+  .form-field--street {
+    grid-column: auto;
+  }
+
+  .registration-actions {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 18px;
+  }
+
+  .btn-register {
+    width: 100%;
+    min-height: 46px;
+  }
+}
+
+
+/* =========================================================
+   TRÈS PETITS ÉCRANS
+   ========================================================= */
+
+@media (max-width: 360px) {
+  .registration-page {
+    padding: 14px 8px;
+  }
+
+  .registration-form {
+    padding: 18px 14px;
+    gap: 18px;
+  }
+
+  .form-fields {
+    row-gap: 14px;
+  }
+}
+
+
+/* =========================================================
+   ACCESSIBILITÉ
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .registration-page,
+  .registration-form,
+  .btn-register {
+    transition: none;
+  }
+
+  .btn-register:active:not(:disabled) {
+    transform: none;
   }
 }

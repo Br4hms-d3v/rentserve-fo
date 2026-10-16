@@ -1,4 +1,8 @@
-/* Thème clair */
+
+/* =========================================================
+   THÈME CLAIR
+   ========================================================= */
+
 @light-page: #F1EFE8;
 @light-surface: #FFFFFF;
 @light-surface-hover: #EAF3DE;
@@ -13,7 +17,10 @@
 @light-button-text: #FFFFFF;
 @light-shadow: 0 4px 20px rgb(44 44 42 / 5%);
 
-/* Thème sombre */
+/* =========================================================
+   THÈME SOMBRE
+   ========================================================= */
+
 @dark-page: #1C1F17;
 @dark-surface: #262A1D;
 @dark-surface-hover: #2E331F;
@@ -28,7 +35,10 @@
 @dark-button-text: #171912;
 @dark-shadow: 0 4px 20px rgb(0 0 0 / 12%);
 
-/* Dimensions */
+/* =========================================================
+   DIMENSIONS
+   ========================================================= */
+
 @login-max-width: 700px;
 @login-padding: 30px;
 @login-radius: 18px;
@@ -37,9 +47,9 @@
 @transition-speed: 180ms;
 
 
-/* =========================
+/* =========================================================
    CONTENEUR PRINCIPAL
-   ========================= */
+   ========================================================= */
 
 :host {
   display: block;
@@ -55,6 +65,7 @@
   width: 100%;
   min-height: min(80vh, 760px);
   padding: 32px 20px;
+
   box-sizing: border-box;
 
   background: @light-page;
@@ -66,9 +77,78 @@
 }
 
 
-/* =========================
+/* =========================================================
+   CONTENU GLOBAL
+   Logo + identité + formulaire
+   ========================================================= */
+
+.login-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  max-width: @login-max-width;
+  min-width: 0;
+  gap: 24px;
+}
+
+
+/* =========================================================
+   IDENTITÉ RENTSERVE
+   ========================================================= */
+
+.login-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  gap: 8px;
+
+  text-align: center;
+}
+
+/* Logo */
+.login-brand-logo {
+  display: block;
+  flex: 0 0 auto;
+
+  width: 160px;
+  height: auto;
+  max-width: 100%;
+
+  object-fit: contain;
+  border-radius: 16px;
+}
+
+/* Nom RentServe */
+.login-brand-title {
+  margin: 0;
+
+  color: @light-primary;
+
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  line-height: 1.2;
+}
+
+/* Message de bienvenue */
+.login-brand-subtitle {
+  margin: 0;
+
+  color: @light-text-secondary;
+
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
    FORMULAIRE
-   ========================= */
+   ========================================================= */
 
 .login-form {
   display: flex;
@@ -76,7 +156,8 @@
   gap: 18px;
 
   width: 100%;
-  max-width: @login-max-width;
+  max-width: 100%;
+  min-width: 0;
   padding: @login-padding;
 
   box-sizing: border-box;
@@ -93,9 +174,9 @@
 }
 
 
-/* =========================
-   TITRE ET INTRODUCTION
-   ========================= */
+/* =========================================================
+   TITRE ET INTRODUCTION DU FORMULAIRE
+   ========================================================= */
 
 .login-heading {
   display: flex;
@@ -104,8 +185,10 @@
 
   margin-bottom: 4px;
 
-  h1 {
+  h1,
+  h2 {
     margin: 0;
+
     color: @light-primary;
 
     font-size: clamp(24px, 4vw, 28px);
@@ -116,6 +199,7 @@
 
   p {
     margin: 0;
+
     color: @light-text-secondary;
 
     font-size: 14px;
@@ -124,9 +208,9 @@
 }
 
 
-/* =========================
+/* =========================================================
    CHAMPS TAIGA UI
-   ========================= */
+   ========================================================= */
 
 .custom-icon-textfield {
   width: 100%;
@@ -163,22 +247,23 @@
 }
 
 
-/* =========================
+/* =========================================================
    ERREURS DE VALIDATION
-   ========================= */
+   ========================================================= */
 
 .field-error {
   margin: -10px 0 0;
 
   color: @light-accent-hover;
+
   font-size: 12px;
   line-height: 1.5;
 }
 
 
-/* =========================
+/* =========================================================
    BOUTON DE CONNEXION
-   ========================= */
+   ========================================================= */
 
 .btn-login {
   width: 100%;
@@ -187,6 +272,7 @@
   padding: 12px 18px;
 
   box-sizing: border-box;
+
   border: none;
   border-radius: @field-radius;
 
@@ -215,13 +301,21 @@
 }
 
 
-/* =========================
+/* =========================================================
    THÈME CLAIR
-   ========================= */
+   ========================================================= */
 
 .login-container.light-mode {
   background: @light-page;
   color: @light-text;
+
+  .login-brand-title {
+    color: @light-primary;
+  }
+
+  .login-brand-subtitle {
+    color: @light-text-secondary;
+  }
 
   .login-form {
     background: @light-surface;
@@ -229,8 +323,15 @@
     box-shadow: @light-shadow;
   }
 
-  .login-heading h1 {
-    color: @light-primary;
+  .login-heading {
+    h1,
+    h2 {
+      color: @light-primary;
+    }
+
+    p {
+      color: @light-text-secondary;
+    }
   }
 
   .custom-icon-textfield {
@@ -252,13 +353,21 @@
 }
 
 
-/* =========================
+/* =========================================================
    THÈME SOMBRE
-   ========================= */
+   ========================================================= */
 
 .login-container.dark-mode {
   background: @dark-page;
   color: @dark-text;
+
+  .login-brand-title {
+    color: @dark-primary;
+  }
+
+  .login-brand-subtitle {
+    color: @dark-text-secondary;
+  }
 
   .login-form {
     background: @dark-surface;
@@ -266,12 +375,15 @@
     box-shadow: @dark-shadow;
   }
 
-  .login-heading h1 {
-    color: @dark-primary;
-  }
+  .login-heading {
+    h1,
+    h2 {
+      color: @dark-primary;
+    }
 
-  .login-heading p {
-    color: @dark-text-secondary;
+    p {
+      color: @dark-text-secondary;
+    }
   }
 
   .custom-icon-textfield {
@@ -312,9 +424,9 @@
 }
 
 
-/* =========================
+/* =========================================================
    TABLETTES
-   ========================= */
+   ========================================================= */
 
 @media (max-width: 768px) {
   .login-container {
@@ -322,17 +434,21 @@
     padding: 28px 20px;
   }
 
+  .login-content {
+    gap: 22px;
+  }
+
   .login-form {
-    max-width: @login-max-width;
+    max-width: 100%;
     padding: 26px;
     gap: 18px;
   }
 }
 
 
-/* =========================
+/* =========================================================
    TÉLÉPHONES
-   ========================= */
+   ========================================================= */
 
 @media (max-width: 480px) {
   .login-container {
@@ -340,19 +456,43 @@
     padding: 24px 14px;
   }
 
+  .login-content {
+    gap: 20px;
+  }
+
+  .login-brand {
+    gap: 7px;
+  }
+
+  .login-brand-logo {
+    width: 72px;
+  }
+
+  .login-brand-title {
+    font-size: 30px;
+  }
+
+  .login-brand-subtitle {
+    font-size: 14px;
+  }
+
   .login-form {
-    max-width: @login-max-width;
+    max-width: 100%;
     padding: 22px 18px;
     gap: 16px;
+
     border-radius: 16px;
   }
 
-  .login-heading h1 {
-    font-size: 25px;
-  }
+  .login-heading {
+    h1,
+    h2 {
+      font-size: 25px;
+    }
 
-  .login-heading p {
-    font-size: 13px;
+    p {
+      font-size: 13px;
+    }
   }
 
   .btn-login {
@@ -361,13 +501,29 @@
 }
 
 
-/* =========================
+/* =========================================================
    TRÈS PETITS TÉLÉPHONES
-   ========================= */
+   ========================================================= */
 
 @media (max-width: 360px) {
   .login-container {
     padding: 20px 10px;
+  }
+
+  .login-content {
+    gap: 18px;
+  }
+
+  .login-brand-logo {
+    width: 64px;
+  }
+
+  .login-brand-title {
+    font-size: 28px;
+  }
+
+  .login-brand-subtitle {
+    font-size: 13px;
   }
 
   .login-form {
@@ -377,9 +533,9 @@
 }
 
 
-/* =========================
+/* =========================================================
    ACCESSIBILITÉ
-   ========================= */
+   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   .login-container,

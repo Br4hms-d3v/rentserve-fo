@@ -1,11 +1,17 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  OnInit,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   TuiButton,
   TuiCalendar,
   TuiDropdown,
-  TuiError,
-  TuiIcon,
   TuiInput,
   TuiNotification,
   TuiTextfield,
@@ -14,21 +20,18 @@ import { TuiInputDate } from '@taiga-ui/kit';
 import { AuthService } from '../../service/auth-service';
 import { RegistrationModel } from '../../model/registration';
 import { ThemeService } from '../../../../core/services/ThemeService';
-import { NgClass } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-registration',
   imports: [
     ReactiveFormsModule,
-    NgClass,
     TuiTextfield,
     TuiCalendar,
     TuiDropdown,
-    TuiError,
     TuiButton,
     TuiInput,
     TuiInputDate,
-    TuiIcon,
     TuiNotification,
   ],
   templateUrl: './registration.html',
@@ -37,20 +40,35 @@ import { NgClass } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Registration implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly cdr = inject(ChangeDetectorRef);
+
   isDarkMode = false; // Change theme from light to dark
   protected readonly show = signal(false); // Show notification
-  protected readonly isSuccess = signal(false); // Change color Green for succes or Red error
+  protected readonly isSuccess = signal(false); // Change color Green for success or Red error
+  protected readonly showPassword = signal(false);
+
   protected messageError = '';
   protected messageSuccess = '';
+
+  protected togglePasswordVisibility(): void {
+    this.showPassword.update((visible) => !visible);
+  }
 
   constructor(
     private readonly _authService: AuthService,
     private themeService: ThemeService,
   ) {}
 
-  ngOnInit() {
-    this.isDarkMode = this.themeService.isDarkMode(); // Get current theme
-    this.themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
+  ngOnInit(): void {
+    this.isDarkMode = this.themeService.isDarkMode();
+
+    this.themeService.darkMode$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((mode: boolean) => {
+        this.isDarkMode = mode;
+        this.cdr.markForCheck();
+      });
   }
   /**
    * This is a Form with validators
@@ -76,36 +94,43 @@ export class Registration implements OnInit {
    * Register a user after fill the form
    * @protected
    */
-  protected onSubmitRegister() {
+  protected onSubmitRegister(): void {
+    this.registerForm.markAllAsTouched();
+
     if (this.registerForm.invalid) {
-      this.registerForm.markAllAsTouched();
       return;
     }
 
-    this._authService.register(<RegistrationModel>this.registerForm.value).subscribe({
-      next: () => {
-        this.messageError = '';
-        this.messageSuccess = 'Veuillez vérifier votre boite email pour activer votre compte';
-        this.registerForm.clearAsyncValidators();
-        this.registerForm.reset();
-        this.isSuccess.set(true);
-        this.show.set(true);
-      },
-      error: (err) => {
-        // console.log(err.error.message);
+    this.show.set(false);
 
-        if (!typeof err.error) {
-          this.messageError = err.error.message;
-        } else if (err.error?.message) {
-          this.messageError = err.error.message;
-        } else {
-          this.messageError = "Erreur d'inscription";
-        }
-        this.isSuccess.set(false);
-        this.show.set(true);
-      },
-    });
-    const formValue = this.registerForm.value;
-    // console.log('Formulaire valide, envoie: ', formValue);
+    this._authService
+      .register(this.registerForm.getRawValue() as RegistrationModel)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.messageError = '';
+          this.messageSuccess =
+            'Votre inscription a été enregistrée. Veuillez consulter votre boîte e-mail pour activer votre compte.';
+
+          this.registerForm.reset();
+          this.showPassword.set(false);
+          this.isSuccess.set(true);
+          this.show.set(true);
+          this.cdr.markForCheck();
+        },
+
+        error: (err) => {
+          this.messageSuccess = '';
+
+          this.messageError =
+            typeof err?.error?.message === 'string'
+              ? err.error.message
+              : "Une erreur est survenue lors de l'inscription. Veuillez réessayer.";
+
+          this.isSuccess.set(false);
+          this.show.set(true);
+          this.cdr.markForCheck();
+        },
+      });
   }
 }

@@ -1,114 +1,319 @@
-<form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()" class="registration-form" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
-  <div class="form-fields">
-    <div class="form-field">
-      <tui-textfield>
-        <label tuiLabel>Nom</label>
-        <input tuiInput formControlName="name" />
-      </tui-textfield>
-    </div>
-
-    <div class="form-field">
-      <tui-textfield>
-        <label tuiLabel>Prénom</label>
-        <input tuiInput formControlName="firstName" />
-      </tui-textfield>
-    </div>
-
-    <div class="form-field">
-      <tui-textfield>
-        <label tuiLabel>Email</label>
-        <input tuiInput type="email" formControlName="email" />
-      </tui-textfield>
-    </div>
-
-    <div class="form-field">
-      <tui-textfield>
-        <label tuiLabel>Mot de passe</label>
-        <!-- By default, the field is a password (hidden). -->
-        <input
-          #passwordInput
-          formControlName="password"
-          tuiInput
-          type="password"
-          [type]="passwordInput.type"
-        />
-        <!-- Clicking the icon toggles between visible and hidden -->
-        <button
-          appearance="secondary"
-          size="m"
-          tuiButton
-          type="button"
-          (click)="passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password'"
-        >
-          <tui-icon
-            [icon]="passwordInput.type === 'password' ? '@tui.eye' : '@tui.eye-off'"></tui-icon>
-        </button>
-
-      </tui-textfield>
-      <tui-error formControlName="password"></tui-error>
-    </div>
-
-    <div class="form-field">
-      <tui-textfield>
-        <label tuiLabel>Pseudo</label>
-        <input tuiInput formControlName="pseudo" />
-      </tui-textfield>
-    </div>
-
-    <div class="form-field">
-      <tui-textfield>
-        <label tuiLabel>Date de naissance</label>
-        <input tuiInputDate formControlName="birthdate" />
-        <tui-calendar *tuiDropdown></tui-calendar>
-
-      </tui-textfield>
-    </div>
-
-    <!-- Street takes 2 columns -->
-    <div class="form-field form-field--street">
-      <tui-textfield>
-        <label tuiLabel>Rue</label>
-        <input tuiInput formControlName="street" />
-      </tui-textfield>
-    </div>
-
-    <!-- City -->
-    <div class="form-field">
-      <tui-textfield>
-        <label tuiLabel>Ville</label>
-        <input tuiInput formControlName="city" />
-      </tui-textfield>
-    </div>
-
-    <!-- ZipCode -->
-    <div class="form-field">
-      <tui-textfield>
-        <label tuiLabel>Code postal</label>
-        <input tuiInput formControlName="zipCode" />
-      </tui-textfield>
-    </div>
-
+<form
+  [formGroup]="registerForm"
+  (ngSubmit)="onSubmitRegister()"
+  class="registration-form"
+  aria-labelledby="registration-title"
+>
+  <div class="registration-heading">
+    <h1 id="registration-title">Créer un compte</h1>
+    <p>
+      Rejoignez RentServe pour louer du matériel et découvrir des services
+      près de chez vous.
+    </p>
   </div>
 
-  <!-- Button to register -->
-  <div class="btn-register">
-    <button tuiButton
-            type="submit"
-            appearance="primary"
-    >S'inscrire
+  <div class="form-fields">
+    <!-- Nom -->
+    <div class="form-field">
+      <tui-textfield>
+        <label tuiLabel for="register-name">Nom</label>
+        <input
+          tuiInput
+          id="register-name"
+          formControlName="name"
+          autocomplete="family-name"
+          placeholder="Votre nom"
+          required
+        />
+      </tui-textfield>
+
+      @if (registerForm.controls.name.touched && registerForm.controls.name.invalid) {
+        <p class="field-error" role="alert">
+          @if (registerForm.controls.name.hasError('required')) {
+            Veuillez saisir votre nom.
+          } @else if (registerForm.controls.name.hasError('minlength')) {
+            Le nom est trop court.
+          } @else if (registerForm.controls.name.hasError('maxlength')) {
+            Le nom est trop long.
+          } @else {
+            Le nom saisi est invalide.
+          }
+        </p>
+      }
+    </div>
+
+    <!-- Prénom -->
+    <div class="form-field">
+      <tui-textfield>
+        <label tuiLabel for="register-first-name">Prénom</label>
+        <input
+          tuiInput
+          id="register-first-name"
+          formControlName="firstName"
+          autocomplete="given-name"
+          placeholder="Votre prénom"
+          required
+        />
+      </tui-textfield>
+
+      @if (registerForm.controls.firstName.touched && registerForm.controls.firstName.invalid) {
+        <p class="field-error" role="alert">
+          @if (registerForm.controls.firstName.hasError('required')) {
+            Veuillez saisir votre prénom.
+          } @else if (registerForm.controls.firstName.hasError('minlength')) {
+            Le prénom est trop court.
+          } @else if (registerForm.controls.firstName.hasError('maxlength')) {
+            Le prénom est trop long.
+          } @else {
+            Le prénom saisi est invalide.
+          }
+        </p>
+      }
+    </div>
+
+    <!-- Adresse e-mail -->
+    <div class="form-field">
+      <tui-textfield>
+        <label tuiLabel for="register-email">Adresse e-mail</label>
+        <input
+          tuiInput
+          id="register-email"
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          placeholder="exemple@domaine.be"
+          required
+        />
+      </tui-textfield>
+
+      @if (registerForm.controls.email.touched && registerForm.controls.email.invalid) {
+        <p class="field-error" role="alert">
+          @if (registerForm.controls.email.hasError('required')) {
+            Veuillez saisir votre adresse e-mail.
+          } @else if (registerForm.controls.email.hasError('email')) {
+            Veuillez saisir une adresse e-mail valide.
+          } @else {
+            L'adresse e-mail saisie est invalide.
+          }
+        </p>
+      }
+    </div>
+
+    <!-- Pseudo -->
+    <div class="form-field">
+      <tui-textfield>
+        <label tuiLabel for="register-pseudo">Pseudo</label>
+        <input
+          tuiInput
+          id="register-pseudo"
+          formControlName="pseudo"
+          autocomplete="username"
+          placeholder="Choisissez un pseudo"
+          required
+        />
+      </tui-textfield>
+
+      @if (registerForm.controls.pseudo.touched && registerForm.controls.pseudo.invalid) {
+        <p class="field-error" role="alert">
+          @if (registerForm.controls.pseudo.hasError('required')) {
+            Veuillez choisir un pseudo.
+          } @else if (registerForm.controls.pseudo.hasError('minlength')) {
+            Le pseudo doit contenir au moins 3 caractères.
+          } @else if (registerForm.controls.pseudo.hasError('maxlength')) {
+            Le pseudo ne peut pas dépasser 100 caractères.
+          } @else {
+            Le pseudo saisi est invalide.
+          }
+        </p>
+      }
+    </div>
+
+    <!-- Mot de passe -->
+    <div class="form-field">
+      <tui-textfield>
+        <label tuiLabel for="register-password">Mot de passe</label>
+        <input
+          tuiInput
+          id="register-password"
+          [type]="showPassword() ? 'text' : 'password'"
+          formControlName="password"
+          autocomplete="new-password"
+          placeholder="Choisissez un mot de passe"
+          required
+        />
+        <button
+          tuiButton
+          type="button"
+          appearance="flat"
+          size="s"
+          [iconStart]="showPassword() ? '@tui.eye-off' : '@tui.eye'"
+          [attr.aria-label]="
+            showPassword()
+              ? 'Masquer le mot de passe'
+              : 'Afficher le mot de passe'
+          "
+          (click)="togglePasswordVisibility()"
+        ></button>
+      </tui-textfield>
+
+      @if (registerForm.controls.password.touched && registerForm.controls.password.invalid) {
+        <p class="field-error" role="alert">
+          @if (registerForm.controls.password.hasError('required')) {
+            Veuillez saisir un mot de passe.
+          } @else if (registerForm.controls.password.hasError('minlength')) {
+            Le mot de passe est trop court.
+          } @else {
+            Le mot de passe ne respecte pas les critères requis.
+          }
+        </p>
+      }
+    </div>
+
+    <!-- Date de naissance -->
+    <div class="form-field">
+      <tui-textfield>
+        <label tuiLabel for="register-birthdate">Date de naissance</label>
+        <input
+          tuiInputDate
+          id="register-birthdate"
+          formControlName="birthdate"
+          autocomplete="bday"
+          required
+        />
+        <tui-calendar *tuiDropdown></tui-calendar>
+      </tui-textfield>
+
+      @if (registerForm.controls.birthdate.touched && registerForm.controls.birthdate.invalid) {
+        <p class="field-error" role="alert">
+          @if (registerForm.controls.birthdate.hasError('required')) {
+            Veuillez sélectionner votre date de naissance.
+          } @else if (registerForm.controls.birthdate.hasError('pastDate')) {
+            La date de naissance doit être antérieure à aujourd'hui.
+          } @else {
+            Veuillez saisir une date de naissance valide.
+          }
+        </p>
+      }
+    </div>
+
+    <!-- Rue et numéro -->
+    <div class="form-field form-field--street">
+      <tui-textfield>
+        <label tuiLabel for="register-street">Rue et numéro</label>
+        <input
+          tuiInput
+          id="register-street"
+          formControlName="street"
+          autocomplete="street-address"
+          placeholder="Ex. : Rue de la Gare, 12"
+          required
+        />
+      </tui-textfield>
+
+      @if (registerForm.controls.street.touched && registerForm.controls.street.invalid) {
+        <p class="field-error" role="alert">
+          @if (registerForm.controls.street.hasError('required')) {
+            Veuillez saisir votre rue et votre numéro.
+          } @else if (registerForm.controls.street.hasError('minlength')) {
+            L'adresse est trop courte.
+          } @else if (registerForm.controls.street.hasError('maxlength')) {
+            L'adresse est trop longue.
+          } @else {
+            Veuillez saisir une adresse valide.
+          }
+        </p>
+      }
+    </div>
+
+    <!-- Ville -->
+    <div class="form-field">
+      <tui-textfield>
+        <label tuiLabel for="register-city">Ville</label>
+        <input
+          tuiInput
+          id="register-city"
+          formControlName="city"
+          autocomplete="address-level2"
+          placeholder="Votre ville"
+          required
+        />
+      </tui-textfield>
+
+      @if (registerForm.controls.city.touched && registerForm.controls.city.invalid) {
+        <p class="field-error" role="alert">
+          @if (registerForm.controls.city.hasError('required')) {
+            Veuillez saisir votre ville.
+          } @else if (registerForm.controls.city.hasError('minlength')) {
+            Le nom de la ville est trop court.
+          } @else if (registerForm.controls.city.hasError('maxlength')) {
+            Le nom de la ville est trop long.
+          } @else {
+            Veuillez saisir une ville valide.
+          }
+        </p>
+      }
+    </div>
+
+    <!-- Code postal -->
+    <div class="form-field">
+      <tui-textfield>
+        <label tuiLabel for="register-zip-code">Code postal</label>
+        <input
+          tuiInput
+          id="register-zip-code"
+          formControlName="zipCode"
+          autocomplete="postal-code"
+          placeholder="Ex. : 5000"
+          required
+        />
+      </tui-textfield>
+
+      @if (registerForm.controls.zipCode.touched && registerForm.controls.zipCode.invalid) {
+        <p class="field-error" role="alert">
+          @if (registerForm.controls.zipCode.hasError('required')) {
+            Veuillez saisir votre code postal.
+          } @else if (registerForm.controls.zipCode.hasError('pattern')) {
+            Le format du code postal est invalide.
+          } @else {
+            Veuillez saisir un code postal valide.
+          }
+        </p>
+      }
+    </div>
+  </div>
+
+  <div class="registration-actions">
+    <p class="required-note">Tous les champs sont obligatoires.</p>
+
+    <button
+      tuiButton
+      type="submit"
+      appearance="primary"
+      class="btn-register"
+      [disabled]="registerForm.invalid"
+    >
+      Créer mon compte
     </button>
   </div>
 </form>
+
 <ng-template
-  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: isSuccess() ? 'Inscription réussie' : 'Inscription impossible',
+    autoClose: 0,
+    closable: false,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
   <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+
   <button
     tuiButton
     type="button"
+    appearance="flat"
     (click)="show.set(false)"
   >
-    Close
+    Fermer
   </button>
 </ng-template>

@@ -4,6 +4,23 @@
   [class.dark-mode]="isDarkMode"
   [class.light-mode]="!isDarkMode"
 >
+  <div class="login-content">
+
+    <!-- Logo et identité de marque -->
+    <div class="login-brand">
+      <img
+        src="/logo/logoSmall.jpg"
+        alt="Logo RentServe"
+        class="login-brand-logo"
+      />
+
+      <h1 class="login-brand-title">RentServe</h1>
+
+      <p class="login-brand-subtitle">
+        Heureux de vous retrouver !
+      </p>
+    </div>
+
   <form
     [formGroup]="loginForm"
     (ngSubmit)="onSubmitLogin()"

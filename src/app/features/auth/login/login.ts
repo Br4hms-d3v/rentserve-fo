@@ -29,7 +29,6 @@ import { LoginModel } from '../model/login';
   imports: [
     ReactiveFormsModule,
     TuiButton,
-    TuiIcon,
     TuiInput,
     TuiLabel,
     TuiTextfield,
