@@ -25,7 +25,7 @@
     "@ng-web-apis/common": "^5.4.0",
     "@ng-web-apis/experimental": "^5.4.0",
     "@ng-web-apis/screen-orientation": "^5.4.0",
-    "@taiga-ui/addon-charts": "~5.26.0",
+    "@taiga-ui/addon-charts": "^5.28.0",
     "@taiga-ui/addon-table": "^5.28.0",
     "@taiga-ui/cdk": "^5.28.0",
     "@taiga-ui/core": "^5.28.0",
@@ -39,13 +39,13 @@
     "tslib": "^2.8.1"
   },
   "devDependencies": {
-    "@angular/build": "^21.2.26",
-    "@angular/cli": "^21.2.26",
+    "@angular/build": "21.2.27",
+    "@angular/cli": "21.2.27",
     "@angular/compiler-cli": "^21.2.25",
     "jsdom": "^28.1.0",
     "less": "^4.9.1",
     "prettier": "^3.9.10",
     "typescript": "~5.9.3",
-    "vitest": "^4.1.11"
+    "vitest": "4.1.12"
   }
 }
