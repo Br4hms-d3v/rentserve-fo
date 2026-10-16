@@ -1,94 +1,131 @@
-<div [class.dark-mode]="isDarkMode" [class.light-mode]="!isDarkMode">
+<div
+  class="category-favor"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
   <div class="filter-container">
-    <tui-textfield class="custom-icon-textfield" iconStart="@tui.search">
-      <label tuiLabel>Filtre</label>
+    <tui-textfield
+      class="custom-icon-textfield"
+      iconStart="@tui.search"
+    >
+      <label tuiLabel>Rechercher une catégorie</label>
       <input
         tuiInput
-        placeholder="Nom de la catégorie service"
+        type="search"
+        placeholder="Ex. : jardinage, nettoyage..."
+        [value]="searchTerm"
         (input)="onFilter($event)"
       />
     </tui-textfield>
-    <br />
   </div>
 
-  <table tuiTable class="category-table">
-    <thead>
-    <tr tuiThGroup>
-      <th tuiTh>No.</th>
-      <th tuiTh>Services</th>
-      @if (role == 'ADMIN' || role == 'MODERATOR') {
-        <th tuiTh>Modifier</th>
-      }
-      @if (role == 'ADMIN') {
-        <th tuiTh>Supprimer</th>
-      }
-    </tr>
-    </thead>
+  <div
+    class="table-scroll"
+    role="region"
+    aria-label="Liste des catégories de services"
+    tabindex="0"
+  >
+    <table tuiTable class="category-table">
+      <thead>
+      <tr tuiThGroup>
+        <th tuiTh scope="col" class="column-number">N°</th>
+        <th tuiTh scope="col">Catégorie</th>
 
-    <tbody tuiTbody>
-      @for (categoryFav of paginatedCategoriesFavours; track categoryFav.id) {
-        <tr tuiTr>
-          <td tuiTd>
-            {{ categoryFav.position }}
-          </td>
+        @if (role === 'ADMIN' || role === 'MODERATOR') {
+          <th tuiTh scope="col" class="column-action">Modifier</th>
+        }
 
-          <td tuiTd>
-            <a id="linkToFavor"
-               [routerLink]="['/favor','list', categoryFav.nameCategory]"
-            >{{ categoryFav.nameCategory }}</a>
-          </td>
+        @if (role === 'ADMIN') {
+          <th tuiTh scope="col" class="column-action">Supprimer</th>
+        }
+      </tr>
+      </thead>
 
-          @if (role == 'ADMIN' || role == 'MODERATOR') {
-            <td tuiTd>
-              <button
-                id="btnEdit"
-                tuiButton
-                type="button"
-                appearance="secondary"
-                size="s"
-                [routerLink]="['/category', categoryFav.id, 'edit-favor']"
-              >
-                Modifier
-              </button>
+      <tbody tuiTbody>
+        @for (categoryFav of paginatedCategoriesFavours; track categoryFav.id) {
+          <tr tuiTr>
+            <td tuiTd class="column-number">
+              {{ categoryFav.position }}
             </td>
-          }
 
-          @if (role == 'ADMIN') {
-            <td tuiTd>
-              <button
-                id="btnDelete"
-                tuiButton
-                type="button"
-                appearance="negative"
-                size="s"
-                (click)="openDialogDelete(categoryFav.id)"
+            <td tuiTd class="category-name">
+              <a
+                class="category-link"
+                [routerLink]="['/favor', 'list', categoryFav.nameCategory]"
+                [attr.aria-label]="'Voir les services de la catégorie ' + categoryFav.nameCategory"
               >
-                Supprimer
-              </button>
+                {{ categoryFav.nameCategory }}
+              </a>
             </td>
-          }
-        </tr>
-      }
-    </tbody>
-  </table>
 
-  <tui-pagination
-    [length]="length"
-    [style.float]="'center'"
-    [(index)]="index"
-  ></tui-pagination>
+            @if (role === 'ADMIN' || role === 'MODERATOR') {
+              <td tuiTd class="column-action">
+                <button
+                  tuiButton
+                  type="button"
+                  appearance="secondary"
+                  size="s"
+                  class="btn-edit"
+                  [routerLink]="['/category', categoryFav.id, 'edit-favor']"
+                  [attr.aria-label]="'Modifier la catégorie ' + categoryFav.nameCategory"
+                >
+                  Modifier
+                </button>
+              </td>
+            }
 
-  <!-- Dialog to delete category -->
+            @if (role === 'ADMIN') {
+              <td tuiTd class="column-action">
+                <button
+                  tuiButton
+                  type="button"
+                  appearance="secondary"
+                  size="s"
+                  class="btn-delete"
+                  (click)="openDialogDelete(categoryFav.id)"
+                  [attr.aria-label]="'Supprimer la catégorie ' + categoryFav.nameCategory"
+                >
+                  Supprimer
+                </button>
+              </td>
+            }
+          </tr>
+        } @empty {
+          <tr tuiTr>
+            <td
+              tuiTd
+              class="empty-state"
+              [attr.colspan]="role === 'ADMIN' ? 4 : role === 'MODERATOR' ? 3 : 2"
+            >
+              Aucune catégorie trouvée.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (length > 1) {
+    <div class="pagination-container">
+      <tui-pagination
+        [length]="length"
+        [(index)]="index"
+      />
+    </div>
+  }
+
   <ng-template
-    [tuiDialogOptions]="{size: 's', label: 'Confirmation'}"
+    [tuiDialogOptions]="{
+      size: 's',
+      label: 'Confirmation de suppression'
+    }"
     [(tuiDialog)]="open"
   >
     <app-category-delete
-      message="Supprimer cette catégorie ?"
+      message="Voulez-vous vraiment supprimer cette catégorie ?"
       [id]="selectId"
       (confirmed)="onDelete()"
       (cancelled)="open.set(false)"
     />
   </ng-template>
-
 </div>

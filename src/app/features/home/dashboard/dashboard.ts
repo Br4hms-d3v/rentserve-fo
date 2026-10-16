@@ -1,22 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { DestroyRef } from '@angular/core';
+
 import { ThemeService } from '../../../core/services/ThemeService';
-import { NgClass } from '@angular/common';
 import { CategoryMaterial } from '../../category/category-material/category-material';
 import { CategoryFavor } from '../../category/category-favor/category-favor';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [NgClass, CategoryMaterial, CategoryFavor],
+  imports: [CategoryMaterial, CategoryFavor],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.less',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Dashboard implements OnInit {
-  isDarkMode = false; // Change theme from light to dark
+export class Dashboard {
+  private readonly themeService = inject(ThemeService);
+  private readonly destroyRef = inject(DestroyRef);
 
-  constructor(private themeService: ThemeService) {}
+  readonly isDarkMode = toSignal(this.themeService.darkMode$, {
+    initialValue: this.themeService.isDarkMode(),
+  });
 
-  ngOnInit() {
-    this.isDarkMode = this.themeService.isDarkMode(); // Get current theme
-    this.themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
-  }
 }
