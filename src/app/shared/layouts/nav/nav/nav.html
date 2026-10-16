@@ -1,3 +1,4 @@
+
 <header
   class="toolbar"
   [ngClass]="{
@@ -5,29 +6,38 @@
     'light-mode': !isDarkMode
   }"
 >
-  <!-- Logo -->
-  <a [routerLink]="['dashboard']" class="logo-link">
+  <!-- Logo RentServe -->
+  <a
+    [routerLink]="['dashboard']"
+    class="logo-link"
+    aria-label="RentServe — Accueil"
+  >
     <img
       src="/logo/logoSmall.jpg"
       alt=""
       class="logo"
     />
-    <span id="logoText">Rent-Serve</span>
+    <span id="logoText">RentServe</span>
   </a>
 
-  <span class="spacer"></span>
+  <span class="spacer" aria-hidden="true"></span>
 
-  <!-- Navigation -->
+  <!-- Navigation principale -->
   @if (isAuthenticated()) {
-    <nav class="nav-buttons" aria-label="Navigation principale">
+    <nav
+      class="nav-buttons"
+      aria-label="Navigation principale"
+    >
       <button
         tuiButton
         type="button"
-        [routerLink]="['/material', 'all-materials']"
-        size="m"
         appearance="flat"
+        size="m"
         iconEnd="@tui.hammer"
         class="btn-rentServeBasket"
+        [routerLink]="['/material', 'all-materials']"
+        routerLinkActive="nav-active"
+        aria-label="Consulter les matériels"
       >
         Matériels
       </button>
@@ -35,18 +45,20 @@
       <button
         tuiButton
         type="button"
-        [routerLink]="['/favor', 'all-favour']"
-        size="m"
         appearance="flat"
+        size="m"
         iconEnd="@tui.heart-handshake"
         class="btn-rentServeBasket"
+        [routerLink]="['/favor', 'all-favour']"
+        routerLinkActive="nav-active"
+        aria-label="Consulter les services"
       >
         Services
       </button>
     </nav>
   }
 
-  <span class="spacer"></span>
+  <span class="spacer" aria-hidden="true"></span>
 
   <!-- Actions utilisateur -->
   <div class="action-buttons">
@@ -58,7 +70,8 @@
         appearance="custom"
         iconEnd="@tui.shopping-bag"
         class="btn-rentServeBasket btn-cart"
-        [routerLink]="['/rental','basket',userId ]"
+        [routerLink]="['/rental', 'basket', userId]"
+        aria-label="Ouvrir mon panier"
       >
         Panier
       </button>
@@ -69,7 +82,8 @@
         iconStart="@tui.user"
         iconEnd="@tui.chevrons-right"
         class="btn-login"
-        [attr.aria-label]="'Ouvrir le menu de ' + firstname"
+        [attr.aria-label]="'Ouvrir le menu de ' + (firstname ?? 'mon compte')"
+        [attr.aria-expanded]="openDrawer()"
         (click)="openDrawer.set(true)"
       >
         <span class="user-name">{{ firstname }}</span>
@@ -90,7 +104,7 @@
   </div>
 </header>
 
-<!-- Drawer utilisateur -->
+<!-- Menu latéral du compte utilisateur -->
 <tui-drawer
   *tuiPopup="openDrawer()"
   direction="end"
@@ -100,7 +114,7 @@
 >
   <header class="drawer-header">
     <h2 tuiHeader>
-      <div tuiTitle>{{ firstname }}</div>
+      <div tuiTitle>Mon compte</div>
 
       <div tuiAccessories>
         <button
@@ -110,43 +124,55 @@
           aria-label="Fermer le menu"
           (click)="onClose()"
         >
-          X
+          Fermer
         </button>
       </div>
     </h2>
+
+    <p>{{ firstname }}</p>
   </header>
 
-  <nav class="drawer-links" aria-label="Menu utilisateur">
+  <nav
+    class="drawer-links"
+    aria-label="Menu utilisateur"
+  >
     <div class="link-drawer">
-      <a [routerLink]="['user', 'profile']" (click)="onClose()">
-        Voir mon profil
+      <a
+        [routerLink]="['user', 'profile']"
+        routerLinkActive="nav-active"
+        (click)="onClose()"
+      >
+        <span>Mon profil</span>
       </a>
     </div>
 
     <div class="link-drawer">
       <a
         [routerLink]="['user-material', 'my-user-material']"
+        routerLinkActive="nav-active"
         (click)="onClose()"
       >
-        Mes outils
+        <span>Mes outils</span>
       </a>
     </div>
 
     <div class="link-drawer">
       <a
         [routerLink]="['user-favor', 'my-user-favor']"
+        routerLinkActive="nav-active"
         (click)="onClose()"
       >
-        Mes services
+        <span>Mes services</span>
       </a>
     </div>
 
     <div class="link-drawer">
       <a
         [routerLink]="['earn', 'my-earn-this-month', userId]"
+        routerLinkActive="nav-active"
         (click)="onClose()"
       >
-        Voir mon solde
+        <span>Mon solde</span>
       </a>
     </div>
   </nav>

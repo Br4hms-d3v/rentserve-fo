@@ -1,386 +1,136 @@
-// ==============================
-// COULEURS
-// ==============================
-
-@light-bg: #3D4A2A;
-@light-text: #F1EFE8;
-@light-btn-login: #d9764a;
-@light-btn-rent: #6d7c5f;
-
-@dark-bg: #2E331F;
-@dark-text: #F1EFE8;
-@dark-btn-login: #E8845A;
-@dark-btn-rent: #ccd5b9;
-
-
-// ==============================
-// TOOLBAR PRINCIPALE
-// ==============================
-
 .toolbar {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-
-  width: 100%;
-  min-height: 56px;
-  padding: 6px 16px;
-
-  box-sizing: border-box;
-  font-size: 17px;
-
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
-
-  // LOGO
+  background: var(--rs-page, #F1EFE8);
+  color: var(--rs-text, #2C2C2A);
+  border-bottom: 1px solid var(--rs-border, #D3D1C7);
+  box-shadow: 0 3px 12px rgb(44 44 42 / 4%);
 
   .logo-link {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    gap: 12px;
-
-    text-decoration: none;
-    min-width: 0;
-
-    .logo {
-      display: block;
-      width: auto;
-      height: 42px;
-      max-width: 100%;
-      object-fit: contain;
-    }
+    color: var(--rs-header, #3D4A2A);
 
     #logoText {
-      font-size: 20px;
-      font-weight: 600;
-      white-space: nowrap;
+      color: var(--rs-header, #3D4A2A);
     }
   }
 
-  // ESPACEMENT
-
-  .spacer {
-    flex: 1 1 auto;
-    min-width: 8px;
-  }
-
-  // NAVIGATION ET ACTIONS
-
-  .nav-buttons,
-  .action-buttons {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    min-width: 0;
-  }
-
-  .nav-buttons {
-    flex-shrink: 0;
-  }
-
-  .action-buttons {
-    flex-shrink: 0;
-  }
-
-  // BOUTONS
-
-  button[tuiButton] {
-    min-height: 44px;
-    height: auto;
-    max-width: 100%;
-    border-radius: 25px;
-    box-sizing: border-box;
-  }
-
-  .btn-login,
+  /* Navigation secondaire */
   .btn-rentServeBasket {
-    white-space: nowrap;
+    color: var(--rs-header, #3D4A2A);
+    background: transparent;
+    border: 1px solid transparent;
+
+    &:hover {
+      color: var(--rs-text-green, #3B6D11);
+      background: var(--rs-green-soft, #EAF3DE);
+    }
   }
 
-  .user-name {
-    overflow: hidden;
-    text-overflow: ellipsis;
+  /* Page active */
+  .nav-buttons .nav-active {
+    color: var(--rs-text-green, #3B6D11);
+    background: var(--rs-green-soft, #EAF3DE);
+    font-weight: 700;
   }
 
-  // THÈME CLAIR
+  /* Panier : bouton discret */
+  .btn-cart {
+    color: var(--rs-header, #3D4A2A);
+    background: var(--rs-surface, #FFFFFF);
+    border: 1px solid var(--rs-border, #D3D1C7);
 
+    &:hover {
+      background: var(--rs-green-soft, #EAF3DE);
+    }
+  }
+
+  /* Compte : accent terracotta */
+  .btn-login {
+    color: #FFFFFF;
+    background: var(--rs-accent, #D9764A);
+    border: 1px solid transparent;
+
+    &:hover {
+      background: var(--rs-accent-text, #993C1D);
+    }
+  }
+
+  /* Thème clair */
   &.light-mode {
-    background-color: @light-bg;
-    color: @light-text;
+    background: var(--rs-page, #F1EFE8);
+    color: var(--rs-text, #2C2C2A);
 
-    #logoText {
-      color: @light-text;
-    }
-
-    .btn-login {
-      background-color: @light-btn-login;
-      color: #ffffff;
+    .logo-link,
+    .logo-link #logoText {
+      color: var(--rs-header, #3D4A2A);
     }
 
     .btn-rentServeBasket {
-      background-color: @light-btn-rent;
-      color: #ffffff;
+      color: var(--rs-header, #3D4A2A);
+    }
+
+    .btn-login {
+      color: #FFFFFF;
+      background: var(--rs-accent, #D9764A);
     }
   }
 
-  // THÈME SOMBRE
-
+  /* Thème sombre */
   &.dark-mode {
-    background-color: @dark-bg;
-    color: @dark-text;
+    background: var(--rs-surface, #262A1D);
+    color: var(--rs-text, #F1EFE8);
+    border-bottom-color: var(--rs-border, #3A3F2C);
+    box-shadow: 0 3px 12px rgb(0 0 0 / 10%);
 
-    #logoText {
-      color: @dark-text;
+    .logo-link,
+    .logo-link #logoText {
+      color: var(--rs-text, #F1EFE8);
+    }
+
+    .btn-rentServeBasket {
+      color: var(--rs-text, #F1EFE8);
+
+      &:hover {
+        background: var(--rs-green-soft, #33421F);
+      }
+    }
+
+    .nav-buttons .nav-active {
+      color: var(--rs-price, #8FC15C);
+      background: var(--rs-green-soft, #33421F);
+    }
+
+    .btn-cart {
+      color: var(--rs-text, #F1EFE8);
+      background: var(--rs-surface-raised, #2E331F);
+      border-color: var(--rs-border, #3A3F2C);
+
+      &:hover {
+        background: var(--rs-green-soft, #33421F);
+      }
     }
 
     .btn-login {
-      background-color: @dark-btn-login;
-      color: @dark-text;
-    }
+      color: #171912;
+      background: var(--rs-accent, #E8845A);
 
-    .btn-rentServeBasket {
-      background-color: @dark-btn-rent;
-      color: @dark-bg;
+      &:hover {
+        filter: brightness(1.08);
+      }
     }
   }
 }
 
-
-// ==============================
-// DRAWER
-// ==============================
-
+/* Liens actifs du menu utilisateur */
 .drawer {
-  width: min(360px, 100%);
-  max-width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  padding: 20px;
-
-  overflow-y: auto;
-
-  .drawer-header {
-    margin-bottom: 24px;
-  }
-
-  .drawer-links {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .link-drawer {
-    width: 100%;
-    box-sizing: border-box;
-
-    a {
-      display: flex;
-      align-items: center;
-
-      min-height: 48px;
-      padding: 10px 12px;
-
-      box-sizing: border-box;
-      border-radius: 8px;
-
-      text-decoration: none;
-      overflow-wrap: anywhere;
-      transition: background-color 0.2s ease;
-    }
-  }
-
-  .drawer-footer {
-    margin-top: 32px;
-
-    .btn-logout {
-      width: 100%;
-    }
+  .link-drawer a.nav-active {
+    color: var(--rs-text-green, #3B6D11);
+    background: var(--rs-green-soft, #EAF3DE);
+    font-weight: 700;
   }
 }
 
-
-// ==============================
-// GSM ET PETITS ÉCRANS
-// ==============================
-
-@media (max-width: 480px) {
-  .toolbar {
-    gap: 6px;
-    min-height: 48px;
-    padding: 6px 8px;
-    font-size: 13px;
-
-    .logo-link {
-      gap: 5px;
-
-      .logo {
-        height: 30px;
-      }
-
-      #logoText {
-        font-size: 14px;
-      }
-    }
-
-    .spacer {
-      min-width: 0;
-    }
-
-    .nav-buttons,
-    .action-buttons {
-      gap: 4px;
-    }
-
-    .nav-buttons button[tuiButton],
-    .action-buttons button[tuiButton] {
-      min-height: 36px;
-      padding-inline: 8px;
-      font-size: 12px;
-    }
-
-    .btn-login,
-    .btn-rentServeBasket {
-      border-radius: 18px;
-    }
-
-    .user-name {
-      max-width: 64px;
-    }
-  }
-
-  .drawer {
-    padding: 16px;
-
-    .drawer-header {
-      margin-bottom: 16px;
-    }
-
-    .drawer-links {
-      gap: 6px;
-    }
-  }
-}
-
-
-// ==============================
-// TRÈS PETITS GSM
-// ==============================
-
-@media (max-width: 360px) {
-  .toolbar {
-    gap: 4px;
-    padding-inline: 5px;
-
-    .logo-link {
-      gap: 4px;
-
-      .logo {
-        height: 26px;
-      }
-
-      #logoText {
-        font-size: 12px;
-      }
-    }
-
-    .nav-buttons,
-    .action-buttons {
-      gap: 3px;
-    }
-
-    .nav-buttons button[tuiButton],
-    .action-buttons button[tuiButton] {
-      min-height: 34px;
-      padding-inline: 5px;
-      font-size: 11px;
-    }
-
-    .user-name {
-      max-width: 42px;
-    }
-  }
-}
-
-
-// ==============================
-// TABLETTES
-// ==============================
-
-@media (min-width: 481px) and (max-width: 768px) {
-  .toolbar {
-    gap: 10px;
-    padding-inline: 12px;
-
-    .logo-link {
-      gap: 8px;
-
-      .logo {
-        height: 36px;
-      }
-
-      #logoText {
-        font-size: 17px;
-      }
-    }
-
-    .nav-buttons,
-    .action-buttons {
-      gap: 8px;
-    }
-
-    .nav-buttons button[tuiButton],
-    .action-buttons button[tuiButton] {
-      padding-inline: 10px;
-      font-size: 14px;
-    }
-
-    .user-name {
-      max-width: 110px;
-    }
-  }
-}
-
-
-// ==============================
-// PC ET GRANDS ÉCRANS
-// ==============================
-
-@media (min-width: 769px) {
-  .toolbar {
-    gap: 16px;
-    padding-inline: 20px;
-
-    .logo-link {
-      .logo {
-        height: 44px;
-      }
-
-      #logoText {
-        font-size: 20px;
-      }
-    }
-
-    .nav-buttons,
-    .action-buttons {
-      gap: 16px;
-    }
-
-    .user-name {
-      max-width: 180px;
-    }
-  }
-}
-
-
-// ==============================
-// ACCESSIBILITÉ
-// ==============================
-
-@media (prefers-reduced-motion: reduce) {
-  .toolbar,
-  .drawer .link-drawer a {
-    transition: none;
+:host-context([data-theme='dark']) .drawer {
+  .link-drawer a.nav-active {
+    color: var(--rs-price, #8FC15C);
+    background: var(--rs-green-soft, #33421F);
   }
 }

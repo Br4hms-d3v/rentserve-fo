@@ -1,30 +1,68 @@
-@dark-bg: #0e3449;
-@dark-text: #cbd1c1;
+/* Palette RentServe */
+@page-light: #F1EFE8;
+@surface-light: #FFFFFF;
+@header-light: #3D4A2A;
+@action-light: #5C8A3A;
+@soft-green-light: #EAF3DE;
+@text-green-light: #3B6D11;
+@terracotta-light: #D9764A;
+@text-light: #2C2C2A;
+@text-muted-light: #5F5E5A;
+@border-light: #D3D1C7;
 
-@light-bg: #387190;
-@light-text: #f0f0f0;
+@page-dark: #1C1F17;
+@surface-dark: #262A1D;
+@surface-raised-dark: #2E331F;
+@header-dark: #171912;
+@action-dark: #7FB84D;
+@text-green-dark: #8FC15C;
+@terracotta-dark: #E8845A;
+@text-dark: #F1EFE8;
+@text-muted-dark: #A6A599;
+@border-dark: #3A3F2C;
+
+:host {
+  display: block;
+  width: 100%;
+}
 
 .header-toolbar {
+  /* Thème clair par défaut */
+  --header-bg: @header-light;
+  --header-text: @page-light;
+  --header-hover: fade(@page-light, 12%);
+  --header-border: fade(@page-light, 16%);
+  --header-focus: @terracotta-light;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
 
   width: 100%;
-  min-height: 48px;
+  min-height: 64px;
   box-sizing: border-box;
-  padding: 0 16px;
-  gap: 12px;
+  padding: 10px 24px;
 
-  font-size: 17px;
+  background-color: var(--header-bg);
+  color: var(--header-text);
+
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+
+  border-bottom: 1px solid var(--header-border);
+
   transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
 
   .lang-selector,
   .theme-selector {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     min-width: 0;
   }
 
@@ -37,83 +75,116 @@
     margin-left: auto;
   }
 
+  .lang-text,
+  .theme-text {
+    color: var(--header-text);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
   .lang-text {
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .icon-btn {
     display: inline-flex;
-    flex-shrink: 0;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 
-    font-size: 17px;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 12px;
+
+    color: var(--header-text);
     background: transparent;
+
+    transition:
+      background-color 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
+
+    &:hover {
+      background-color: var(--header-hover);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--header-focus);
+      outline-offset: 3px;
+    }
+
+    &:active {
+      transform: scale(0.96);
+    }
   }
 
   .spacer {
     flex: 1 1 auto;
-    min-width: 0;
-  }
-
-  &.dark-mode {
-    background-color: @dark-bg;
-    color: @dark-text;
-
-    --tui-text-primary: @dark-text;
-    --tui-text-action: @dark-text;
+    min-width: 8px;
   }
 
   &.light-mode {
-    background-color: @light-bg;
-    color: @light-text;
+    --header-bg: @header-light;
+    --header-text: @page-light;
+    --header-hover: fade(@page-light, 12%);
+    --header-border: fade(@page-light, 16%);
+    --header-focus: @terracotta-light;
+  }
 
-    --tui-text-primary: @light-text;
-    --tui-text-action: @light-text;
+  &.dark-mode {
+    --header-bg: @header-dark;
+    --header-text: @text-dark;
+    --header-hover: fade(@text-dark, 10%);
+    --header-border: @border-dark;
+    --header-focus: @terracotta-dark;
   }
 }
 
 .flag-icon {
+  display: inline-block;
   width: 20px;
-  height: auto;
+  height: 14px;
   margin-right: 8px;
-  vertical-align: middle;
   flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 2px;
+  vertical-align: middle;
 }
 
-/* Tablette */
+/* Tablettes */
 @media (max-width: 768px) {
   .header-toolbar {
-    min-height: 48px;
-    padding: 0 12px;
-    gap: 8px;
-    font-size: 15px;
+    min-height: 58px;
+    padding: 8px 16px;
+    gap: 10px;
 
     .lang-selector,
     .theme-selector {
-      gap: 6px;
+      gap: 8px;
+    }
+
+    .lang-text,
+    .theme-text {
+      font-size: 13px;
     }
 
     .icon-btn {
-      font-size: 16px;
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
     }
-  }
-
-  .flag-icon {
-    width: 18px;
-    margin-right: 6px;
   }
 }
 
-/* GSM */
+/* Téléphones */
 @media (max-width: 480px) {
   .header-toolbar {
-    min-height: 44px;
-    padding: 0 8px;
+    min-height: 54px;
+    padding: 7px 10px;
     gap: 6px;
-    font-size: 13px;
 
     .lang-selector,
     .theme-selector {
@@ -135,21 +206,29 @@
       margin-left: auto;
     }
 
+    .theme-text {
+      font-size: 12px;
+    }
+
     .icon-btn {
-      font-size: 15px;
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      border-radius: 10px;
     }
   }
 
   .flag-icon {
-    width: 16px;
-    margin-right: 5px;
+    width: 18px;
+    height: 12px;
+    margin-right: 6px;
   }
 }
 
-/* Très petits GSM */
+/* Très petits écrans */
 @media (max-width: 360px) {
   .header-toolbar {
-    padding: 0 6px;
+    padding-inline: 6px;
     gap: 4px;
 
     .lang-selector,
@@ -157,8 +236,33 @@
       gap: 3px;
     }
 
-    .lang-text {
+    .lang-text,
+    .theme-text {
       font-size: 11px;
     }
+
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+    }
+  }
+
+  .flag-icon {
+    width: 16px;
+    height: 11px;
+    margin-right: 4px;
+  }
+}
+
+/* Accessibilité : animations réduites */
+@media (prefers-reduced-motion: reduce) {
+  .header-toolbar,
+  .header-toolbar .icon-btn {
+    transition: none;
+  }
+
+  .header-toolbar .icon-btn:active {
+    transform: none;
   }
 }
