@@ -1,136 +1,428 @@
+@nav-light-bg: #D3D1C7;
+@nav-light-text: #2C2C2A;
+@nav-dark-bg: #262A1D;
+@nav-dark-text: #F1EFE8;
+
+@nav-logo-height: 38px;
+@nav-height: 64px;
+@nav-gap: 12px;
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
 .toolbar {
-  background: var(--rs-page, #F1EFE8);
-  color: var(--rs-text, #2C2C2A);
-  border-bottom: 1px solid var(--rs-border, #D3D1C7);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  min-width: 0;
+  min-height: @nav-height;
+  padding: 8px 20px;
+  gap: @nav-gap;
+
+  box-sizing: border-box;
+
+  /* Empêche les éléments de passer à la ligne */
+  flex-wrap: nowrap;
+
+  background: @nav-light-bg;
+  color: @nav-light-text;
+  border-bottom: 1px solid #D3D1C7;
   box-shadow: 0 3px 12px rgb(44 44 42 / 4%);
 
+  /* Logo */
   .logo-link {
-    color: var(--rs-header, #3D4A2A);
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 0 0 auto;
+
+    gap: 10px;
+    min-width: 0;
+    text-decoration: none;
+    white-space: nowrap;
+
+
+    .logo {
+      display: block;
+      flex: 0 0 auto;
+
+      width: 85px;
+      height: auto;
+      max-width: none;
+
+      object-fit: contain;
+    }
 
     #logoText {
-      color: var(--rs-header, #3D4A2A);
+      display: inline-block;
+      margin: 0;
+
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+      white-space: nowrap;
     }
   }
 
-  /* Navigation secondaire */
+  /* Espace flexible entre les groupes */
+  .spacer {
+    display: block;
+    flex: 1 1 0;
+    min-width: 12px;
+  }
+
+  /* Liens de navigation */
+  .nav-buttons,
+  .action-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    flex: 0 0 auto;
+    gap: @nav-gap;
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  /* Dimensions des boutons Taiga UI */
+  button[tuiButton] {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 42px;
+    height: auto;
+    max-width: 100%;
+    padding: 8px 14px;
+
+    box-sizing: border-box;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+
+  .btn-login,
   .btn-rentServeBasket {
-    color: var(--rs-header, #3D4A2A);
-    background: transparent;
-    border: 1px solid transparent;
-
-    &:hover {
-      color: var(--rs-text-green, #3B6D11);
-      background: var(--rs-green-soft, #EAF3DE);
-    }
+    white-space: nowrap;
   }
 
-  /* Page active */
-  .nav-buttons .nav-active {
-    color: var(--rs-text-green, #3B6D11);
-    background: var(--rs-green-soft, #EAF3DE);
-    font-weight: 700;
+  .user-name {
+    display: inline-block;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  /* Panier : bouton discret */
-  .btn-cart {
-    color: var(--rs-header, #3D4A2A);
-    background: var(--rs-surface, #FFFFFF);
-    border: 1px solid var(--rs-border, #D3D1C7);
-
-    &:hover {
-      background: var(--rs-green-soft, #EAF3DE);
-    }
-  }
-
-  /* Compte : accent terracotta */
-  .btn-login {
-    color: #FFFFFF;
-    background: var(--rs-accent, #D9764A);
-    border: 1px solid transparent;
-
-    &:hover {
-      background: var(--rs-accent-text, #993C1D);
-    }
-  }
-
-  /* Thème clair */
+  /* Couleurs — thème clair */
   &.light-mode {
-    background: var(--rs-page, #F1EFE8);
-    color: var(--rs-text, #2C2C2A);
+    background: @nav-light-bg;
+    color: @nav-light-text;
 
     .logo-link,
     .logo-link #logoText {
-      color: var(--rs-header, #3D4A2A);
+      color: #3D4A2A;
     }
 
     .btn-rentServeBasket {
-      color: var(--rs-header, #3D4A2A);
-    }
-
-    .btn-login {
-      color: #FFFFFF;
-      background: var(--rs-accent, #D9764A);
-    }
-  }
-
-  /* Thème sombre */
-  &.dark-mode {
-    background: var(--rs-surface, #262A1D);
-    color: var(--rs-text, #F1EFE8);
-    border-bottom-color: var(--rs-border, #3A3F2C);
-    box-shadow: 0 3px 12px rgb(0 0 0 / 10%);
-
-    .logo-link,
-    .logo-link #logoText {
-      color: var(--rs-text, #F1EFE8);
-    }
-
-    .btn-rentServeBasket {
-      color: var(--rs-text, #F1EFE8);
+      color: #3D4A2A;
+      background: transparent;
+      border: 1px solid transparent;
 
       &:hover {
-        background: var(--rs-green-soft, #33421F);
+        color: #3B6D11;
+        background: #EAF3DE;
       }
     }
 
     .nav-buttons .nav-active {
-      color: var(--rs-price, #8FC15C);
-      background: var(--rs-green-soft, #33421F);
+      color: #3B6D11;
+      background: #EAF3DE;
+      font-weight: 700;
     }
 
     .btn-cart {
-      color: var(--rs-text, #F1EFE8);
-      background: var(--rs-surface-raised, #2E331F);
-      border-color: var(--rs-border, #3A3F2C);
+      color: #3D4A2A;
+      background: #FFFFFF;
+      border: 1px solid #D3D1C7;
 
       &:hover {
-        background: var(--rs-green-soft, #33421F);
+        background: #EAF3DE;
+      }
+    }
+
+    .btn-login {
+      color: #FFFFFF;
+      background: #D9764A;
+      border: 1px solid transparent;
+
+      &:hover {
+        background: #993C1D;
+      }
+    }
+  }
+
+  /* Couleurs — thème sombre */
+  &.dark-mode {
+    background: @nav-dark-bg;
+    color: @nav-dark-text;
+    border-bottom-color: #3A3F2C;
+    box-shadow: 0 3px 12px rgb(0 0 0 / 10%);
+
+    .logo-link,
+    .logo-link #logoText {
+      color: #F1EFE8;
+    }
+
+    .btn-rentServeBasket {
+      color: #F1EFE8;
+      background: transparent;
+      border: 1px solid transparent;
+
+      &:hover {
+        background: #33421F;
+      }
+    }
+
+    .nav-buttons .nav-active {
+      color: #8FC15C;
+      background: #33421F;
+      font-weight: 700;
+    }
+
+    .btn-cart {
+      color: #F1EFE8;
+      background: #2E331F;
+      border: 1px solid #3A3F2C;
+
+      &:hover {
+        background: #33421F;
       }
     }
 
     .btn-login {
       color: #171912;
-      background: var(--rs-accent, #E8845A);
+      background: #E8845A;
+      border: 1px solid transparent;
 
       &:hover {
-        filter: brightness(1.08);
+        background: #F0916B;
       }
     }
   }
 }
 
-/* Liens actifs du menu utilisateur */
+/* =========================================================
+   MENU LATÉRAL
+   ========================================================= */
+
 .drawer {
-  .link-drawer a.nav-active {
-    color: var(--rs-text-green, #3B6D11);
-    background: var(--rs-green-soft, #EAF3DE);
-    font-weight: 700;
+  width: min(360px, 100%);
+  max-width: 100%;
+  height: 100%;
+  padding: 20px;
+
+  box-sizing: border-box;
+  overflow-y: auto;
+
+  .drawer-header {
+    margin-bottom: 24px;
+  }
+
+  .drawer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .link-drawer {
+    width: 100%;
+    box-sizing: border-box;
+
+    a {
+      display: flex;
+      align-items: center;
+
+      min-height: 48px;
+      padding: 10px 12px;
+
+      box-sizing: border-box;
+      border-radius: 8px;
+      color: inherit;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+
+      transition: background-color 180ms ease;
+
+      &:hover {
+        background: #EAF3DE;
+      }
+    }
+
+    a.nav-active {
+      color: #3B6D11;
+      background: #EAF3DE;
+      font-weight: 700;
+    }
+  }
+
+  .drawer-footer {
+    margin-top: 32px;
+
+    .btn-logout {
+      width: 100%;
+    }
   }
 }
 
-:host-context([data-theme='dark']) .drawer {
-  .link-drawer a.nav-active {
-    color: var(--rs-price, #8FC15C);
-    background: var(--rs-green-soft, #33421F);
+/* =========================================================
+   TABLETTES
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .toolbar {
+    gap: 8px;
+    padding: 8px 12px;
+
+    .logo-link {
+      gap: 7px;
+
+      .logo {
+        width: 32px;
+        height: 32px;
+        max-width: 32px;
+      }
+
+      #logoText {
+        font-size: 17px;
+      }
+    }
+
+    .nav-buttons,
+    .action-buttons {
+      gap: 6px;
+    }
+
+    button[tuiButton] {
+      min-height: 38px;
+      padding-inline: 9px;
+      font-size: 13px;
+    }
+
+    .spacer {
+      min-width: 4px;
+    }
+
+    .user-name {
+      max-width: 90px;
+    }
+  }
+}
+
+/* =========================================================
+   TÉLÉPHONES
+   ========================================================= */
+
+@media (max-width: 480px) {
+  .toolbar {
+    min-height: 52px;
+    padding: 8px;
+    gap: 5px;
+
+    .logo-link {
+      gap: 5px;
+
+      .logo {
+        width: 27px;
+        height: 27px;
+        max-width: 27px;
+      }
+
+      #logoText {
+        font-size: 13px;
+      }
+    }
+
+    .nav-buttons,
+    .action-buttons {
+      gap: 4px;
+    }
+
+    button[tuiButton] {
+      min-height: 34px;
+      padding-inline: 6px;
+      font-size: 11px;
+      border-radius: 9px;
+    }
+
+    .spacer {
+      min-width: 0;
+    }
+
+    .user-name {
+      max-width: 52px;
+    }
+  }
+
+  .drawer {
+    padding: 16px;
+
+    .drawer-header {
+      margin-bottom: 16px;
+    }
+
+    .drawer-links {
+      gap: 6px;
+    }
+  }
+}
+
+/* Très petits téléphones */
+@media (max-width: 360px) {
+  .toolbar {
+    gap: 3px;
+    padding-inline: 5px;
+
+    .logo-link {
+      gap: 4px;
+
+      .logo {
+        width: 24px;
+        height: 24px;
+        max-width: 24px;
+      }
+
+      #logoText {
+        font-size: 12px;
+      }
+    }
+
+    .nav-buttons,
+    .action-buttons {
+      gap: 2px;
+    }
+
+    button[tuiButton] {
+      padding-inline: 4px;
+      font-size: 10px;
+    }
+
+    .user-name {
+      max-width: 38px;
+    }
+  }
+}
+
+/* Accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  .toolbar,
+  .drawer .link-drawer a {
+    transition: none;
   }
 }
