@@ -1,25 +1,36 @@
-/* Palette RentServe */
-@page-light: #F1EFE8;
-@surface-light: #FFFFFF;
-@header-light: #3D4A2A;
-@action-light: #5C8A3A;
-@soft-green-light: #EAF3DE;
-@text-green-light: #3B6D11;
-@terracotta-light: #D9764A;
-@text-light: #2C2C2A;
-@text-muted-light: #5F5E5A;
-@border-light: #D3D1C7;
+/* ======================================
+   PALETTE RENTSERVE ADMIN — THÈME CLAIR
+   ====================================== */
 
-@page-dark: #1C1F17;
-@surface-dark: #262A1D;
-@surface-raised-dark: #2E331F;
-@header-dark: #171912;
-@action-dark: #7FB84D;
-@text-green-dark: #8FC15C;
-@terracotta-dark: #E8845A;
-@text-dark: #F1EFE8;
-@text-muted-dark: #A6A599;
-@border-dark: #3A3F2C;
+@page-light: #F3F6F8;
+@surface-light: #FFFFFF;
+@header-light: #263745;
+@action-light: #2563EB;
+@soft-green-light: #E8EEF3;
+@text-green-light: #2563EB;
+@terracotta-light: #3B82F6;
+@text-light: #263746;
+@text-muted-light: #64748B;
+@border-light: #D8E1E9;
+
+/* ======================================
+   PALETTE RENTSERVE ADMIN — THÈME SOMBRE
+   ====================================== */
+
+@page-dark: #071522;
+@surface-dark: #172A3D;
+@surface-raised-dark: #20364D;
+@header-dark: #071522;
+@action-dark: #3B82F6;
+@text-green-dark: #60A5FA;
+@terracotta-dark: #60A5FA;
+@text-dark: #F1F5F9;
+@text-muted-dark: #A8B7C9;
+@border-dark: #30465C;
+
+/* ======================================
+   STRUCTURE GÉNÉRALE
+   ====================================== */
 
 :host {
   display: block;
@@ -29,9 +40,9 @@
 .header-toolbar {
   /* Thème clair par défaut */
   --header-bg: @header-light;
-  --header-text: @page-light;
-  --header-hover: fade(@page-light, 12%);
-  --header-border: fade(@page-light, 16%);
+  --header-text: #FFFFFF;
+  --header-hover: fade(#FFFFFF, 12%);
+  --header-border: fade(#FFFFFF, 16%);
   --header-focus: @terracotta-light;
 
   display: flex;
@@ -57,6 +68,10 @@
     background-color 180ms ease,
     color 180ms ease,
     border-color 180ms ease;
+
+  /* ======================================
+     SÉLECTEUR DE LANGUE ET DE THÈME
+     ====================================== */
 
   .lang-selector,
   .theme-selector {
@@ -87,6 +102,10 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  /* ======================================
+     BOUTONS ET ICÔNES
+     ====================================== */
 
   .icon-btn {
     display: inline-flex;
@@ -121,18 +140,30 @@
     }
   }
 
+  /* ======================================
+     ESPACEUR
+     ====================================== */
+
   .spacer {
     flex: 1 1 auto;
     min-width: 8px;
   }
 
+  /* ======================================
+     THÈME CLAIR
+     ====================================== */
+
   &.light-mode {
     --header-bg: @header-light;
-    --header-text: @page-light;
-    --header-hover: fade(@page-light, 12%);
-    --header-border: fade(@page-light, 16%);
+    --header-text: #FFFFFF;
+    --header-hover: fade(#FFFFFF, 12%);
+    --header-border: fade(#FFFFFF, 16%);
     --header-focus: @terracotta-light;
   }
+
+  /* ======================================
+     THÈME SOMBRE
+     ====================================== */
 
   &.dark-mode {
     --header-bg: @header-dark;
@@ -142,6 +173,10 @@
     --header-focus: @terracotta-dark;
   }
 }
+
+/* ======================================
+   DRAPEAUX DES LANGUES
+   ====================================== */
 
 .flag-icon {
   display: inline-block;
@@ -154,7 +189,10 @@
   vertical-align: middle;
 }
 
-/* Tablettes */
+/* ======================================
+   TABLETTES
+   ====================================== */
+
 @media (max-width: 768px) {
   .header-toolbar {
     min-height: 58px;
@@ -179,7 +217,10 @@
   }
 }
 
-/* Téléphones */
+/* ======================================
+   TÉLÉPHONES
+   ====================================== */
+
 @media (max-width: 480px) {
   .header-toolbar {
     min-height: 54px;
@@ -225,7 +266,10 @@
   }
 }
 
-/* Très petits écrans */
+/* ======================================
+   TRÈS PETITS ÉCRANS
+   ====================================== */
+
 @media (max-width: 360px) {
   .header-toolbar {
     padding-inline: 6px;
@@ -255,7 +299,10 @@
   }
 }
 
-/* Accessibilité : animations réduites */
+/* ======================================
+   ACCESSIBILITÉ — ANIMATIONS RÉDUITES
+   ====================================== */
+
 @media (prefers-reduced-motion: reduce) {
   .header-toolbar,
   .header-toolbar .icon-btn {
