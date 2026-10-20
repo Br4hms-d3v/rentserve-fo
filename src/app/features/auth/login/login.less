@@ -1,39 +1,38 @@
-
 /* =========================================================
    THÈME CLAIR
    ========================================================= */
 
-@light-page: #F1EFE8;
+@light-page: #FFFFFF;
 @light-surface: #FFFFFF;
-@light-surface-hover: #EAF3DE;
-@light-border: #D3D1C7;
-@light-text: #2C2C2A;
-@light-text-secondary: #5F5E5A;
-@light-primary: #3D4A2A;
-@light-action: #5C8A3A;
-@light-action-hover: #3B6D11;
-@light-accent: #D9764A;
-@light-accent-hover: #993C1D;
+@light-surface-hover: #F3F6F8;
+@light-border: #D8E1E9;
+@light-text: #263746;
+@light-text-secondary: #64748B;
+@light-primary: #173B57;
+@light-action: #3B82F6;
+@light-action-hover: #2563EB;
+@light-accent: #173B57;
+@light-accent-hover: #102D43;
 @light-button-text: #FFFFFF;
-@light-shadow: 0 4px 20px rgb(44 44 42 / 5%);
+@light-shadow: 0 4px 20px rgb(23 59 87 / 6%);
 
 /* =========================================================
    THÈME SOMBRE
    ========================================================= */
 
-@dark-page: #1C1F17;
-@dark-surface: #262A1D;
-@dark-surface-hover: #2E331F;
-@dark-border: #3A3F2C;
-@dark-text: #F1EFE8;
-@dark-text-secondary: #A6A599;
-@dark-primary: #F1EFE8;
-@dark-action: #7FB84D;
-@dark-action-hover: #8FC15C;
-@dark-accent: #E8845A;
-@dark-accent-hover: #F0916B;
-@dark-button-text: #171912;
-@dark-shadow: 0 4px 20px rgb(0 0 0 / 12%);
+@dark-page: #071522;
+@dark-surface: #172A3D;
+@dark-surface-hover: #20364D;
+@dark-border: #30465C;
+@dark-text: #F1F5F9;
+@dark-text-secondary: #A8B7C9;
+@dark-primary: #F1F5F9;
+@dark-action: #3B82F6;
+@dark-action-hover: #60A5FA;
+@dark-accent: #3B82F6;
+@dark-accent-hover: #60A5FA;
+@dark-button-text: #FFFFFF;
+@dark-shadow: 0 4px 20px rgb(0 0 0 / 16%);
 
 /* =========================================================
    DIMENSIONS
@@ -214,6 +213,7 @@
 
 .custom-icon-textfield {
   width: 100%;
+  height: 65px;
   min-width: 0;
 
   color: @light-action;
@@ -295,7 +295,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid @light-accent;
+    outline: 2px solid @light-action;
     outline-offset: 3px;
   }
 }
