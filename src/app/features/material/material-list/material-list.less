@@ -1,196 +1,651 @@
-@light-background-color: #F1EFE8;
-@light-breadcrumb: #5F5E5A !important;
-@light-title: #3B6D11 !important;
-@light-label: #3B6D11 !important;
-@light-input: #5F5E5A !important;
-@light-buton: #5C8A3A !important;
-@light-button-text: #EAF3DE;
-@light-background-card: #D3D1C7;
-@light-text-card: #2C2C2A;
-@light-text-button-card: #993C1D;
 
-@dark-background-color: #1C1F17;
-@dark-title: #8FC15C;
-@dark-label: #8FC15C !important;
-@dark-input: #A6A599 !important;
-@dark-buton: #7FB84D !important;
-@dark-button-text: #40261C;
-@dark-background-card: #A6A599;
-@dark-text-card: #F1EFE8;
-@dark-text-button-card: #40261C;
+/* =========================================================
+   PALETTE DE COULEURS
+   ========================================================= */
 
-/* Body */
-.cards-container {
-  height: 155vh;
+/* Thème clair */
+@light-primary: #173B57;
+@light-accent: #3B82F6;
+@light-active: #2563EB;
+@light-background: #FFFFFF;
+@light-section: #F3F6F8;
+@light-surface: #E8EEF3;
+@light-text: #263746;
+@light-text-secondary: #64748B;
+@light-border: #D8E1E9;
+
+/* Thème sombre */
+@dark-primary: #0B1F33;
+@dark-accent: #3B82F6;
+@dark-active: #60A5FA;
+@dark-background: #071522;
+@dark-section: #172A3D;
+@dark-surface: #20364D;
+@dark-text: #F1F5F9;
+@dark-text-secondary: #A8B7C9;
+@dark-border: #30465C;
+
+/* Dimensions */
+@radius-card: 14px;
+@radius-control: 10px;
+
+
+/* =========================================================
+   CONTENEUR PRINCIPAL
+   ========================================================= */
+
+:host {
+  display: block;
   width: 100%;
+  min-width: 0;
+  min-height: 100%;
 }
 
-tui-breadcrumbs{
-  padding-left: 20px;
-  padding-top: 20px;
-}
-
-/* Title */
-h1 {
-  font-family: 'Libre Baskerville italic', serif;
-  text-align: center;
-  padding: 20px;
-}
-
-/* Input search */
-.inputSearch {
-  width: 300px;
-}
-
-/* Cards for material */
-.cards {
-  width: 100%;
-  padding: 20px 40px;
+.dashboard {
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
+  width: 100%;
+  min-height: 100vh;
+  padding: 32px;
+  transition: background-color 180ms ease, color 180ms ease;
+}
 
+.dashboard *,
+.dashboard *::before,
+.dashboard *::after {
+  box-sizing: border-box;
+}
+
+.dashboard.light-mode {
+  color: @light-text;
+  background-color: @light-background;
+}
+
+.dashboard.dark-mode {
+  color: @dark-text;
+  background-color: @dark-background;
+}
+
+
+/* =========================================================
+   FIL D'ARIANE
+   ========================================================= */
+
+tui-breadcrumbs {
+  display: block;
+  margin-bottom: 24px;
+  padding: 0;
+  font-size: 13px;
+}
+
+.light-mode tui-breadcrumbs a {
+  color: @light-text-secondary;
+  text-decoration: none;
+}
+
+.light-mode tui-breadcrumbs a:hover {
+  color: @light-active;
+}
+
+.dark-mode tui-breadcrumbs a {
+  color: @dark-text-secondary;
+  text-decoration: none;
+}
+
+.dark-mode tui-breadcrumbs a:hover {
+  color: @dark-active;
+}
+
+
+/* =========================================================
+   EN-TÊTE CENTRÉ
+   ========================================================= */
+
+.page-header {
+  width: 100%;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.page-header h1 {
+  margin: 0 0 10px;
+  font-family: inherit;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.6px;
+  text-align: center;
+}
+
+.page-description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.light-mode .page-header h1 {
+  color: @light-primary;
+}
+
+.light-mode .page-description {
+  color: @light-text-secondary;
+}
+
+.dark-mode .page-header h1 {
+  color: @dark-text;
+}
+
+.dark-mode .page-description {
+  color: @dark-text-secondary;
+}
+
+
+/* =========================================================
+   RECHERCHE ET ACTIONS
+   ========================================================= */
+
+.container-search-filter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+.inputSearch {
+  flex: 1 1 280px;
+  width: auto;
+  min-width: 0;
+  max-width: 440px;
+}
+
+.btn-filter,
+.btn-create {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding-inline: 16px;
+  border-radius: @radius-control;
+  font-weight: 600;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.btn-create {
+  white-space: nowrap;
+}
+
+.light-mode .inputSearch {
+  color: @light-text;
+}
+
+.light-mode .inputSearch label[tuiLabel] {
+  color: @light-text-secondary;
+}
+
+.light-mode .inputSearch input[tuiInput] {
+  color: @light-text;
+}
+
+.dark-mode .inputSearch {
+  color: @dark-text;
+}
+
+.dark-mode .inputSearch label[tuiLabel] {
+  color: @dark-text-secondary;
+}
+
+.dark-mode .inputSearch input[tuiInput] {
+  color: @dark-text;
+}
+
+
+/* Boutons - thème clair */
+.light-mode .btn-filter {
+  color: @light-primary;
+  background-color: @light-section;
+  border: 1px solid @light-border;
+}
+
+.light-mode .btn-filter:hover {
+  background-color: @light-surface;
+}
+
+.light-mode .btn-create {
+  color: #FFFFFF;
+  background-color: @light-primary;
+  border: 1px solid @light-primary;
+}
+
+.light-mode .btn-create:hover {
+  background-color: #204E70;
+}
+
+
+/* Boutons - thème sombre */
+.dark-mode .btn-filter {
+  color: @dark-text;
+  background-color: @dark-surface;
+  border: 1px solid @dark-border;
+}
+
+.dark-mode .btn-filter:hover {
+  background-color: #29445E;
+}
+
+.dark-mode .btn-create {
+  color: #FFFFFF;
+  background-color: @dark-accent;
+  border: 1px solid @dark-accent;
+}
+
+.dark-mode .btn-create:hover {
+  background-color: #2563EB;
+}
+
+
+/* =========================================================
+   SECTION DES MATÉRIELS
+   ========================================================= */
+
+.materials-section {
+  flex: 1 0 auto;
+  width: 100%;
+  min-width: 0;
+}
+
+.results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.results-count {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.light-mode .results-count {
+  color: @light-text-secondary;
+}
+
+.dark-mode .results-count {
+  color: @dark-text-secondary;
+}
+
+
+/* =========================================================
+   GRILLE : 5 CARTES PAR LIGNE
+   ========================================================= */
+
+.cards {
   display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  gap: 20px;
-
-  mat-card {
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-  }
-
-  mat-card-header {
-    justify-content: center;
-  }
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-content: start;
+  align-items: stretch;
+  gap: 18px;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
 }
 
 .cards-material-category {
-  width: 105%;
-}
-
-
-/* Space between button */
-.spacer {
-  flex: 1 1 auto;
-}
-
-/* Paginator */
-.pagination {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 22px;
+  width: 100%;
+  min-width: 0;
+  min-height: 142px;
+  padding: 20px;
+  overflow-wrap: anywhere;
+  border: 1px solid transparent;
+  border-radius: @radius-card;
+  box-shadow: 0 2px 8px rgb(15 35 55 / 4%);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
-/* Div with search, sort and create new material */
-.container-search-filter {
-  margin: auto;
+.cards-material-category h2[tuiTitle] {
+  margin: 0;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+
+/* Cartes - thème clair */
+.light-mode .cards-material-category {
+  color: @light-text;
+  background-color: #FFFFFF;
+  border-color: @light-border;
+  box-shadow: 0 2px 8px rgb(23 59 87 / 5%);
+}
+
+.light-mode .cards-material-category h2[tuiTitle] {
+  color: @light-primary;
+}
+
+
+/* Cartes - thème sombre */
+.dark-mode .cards-material-category {
+  color: @dark-text;
+  background-color: @dark-section;
+  border-color: @dark-border;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
+}
+
+.dark-mode .cards-material-category h2[tuiTitle] {
+  color: @dark-text;
+}
+
+
+/* =========================================================
+   ACTIONS DES CARTES
+   ========================================================= */
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  width: 100%;
+  margin-top: auto;
+}
+
+.card-actions .btn-show {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  min-height: 38px;
+  padding-inline: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.light-mode .cards-material-category .card-actions button {
+  color: @light-active;
+}
+
+.light-mode .cards-material-category .btn-show {
+  background-color: @light-section;
+}
+
+.light-mode .cards-material-category .btn-show:hover {
+  background-color: @light-surface;
+}
+
+.dark-mode .cards-material-category .card-actions button {
+  color: @dark-active;
+}
+
+.dark-mode .cards-material-category .btn-show {
+  background-color: @dark-surface;
+}
+
+.dark-mode .cards-material-category .btn-show:hover {
+  background-color: #29445E;
+}
+
+
+/* =========================================================
+   ÉTAT VIDE
+   ========================================================= */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 220px;
+  padding: 32px 20px;
+  text-align: center;
+  border: 1px dashed;
+  border-radius: @radius-card;
+}
+
+.empty-state h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 650;
+}
+
+.empty-state p {
+  max-width: 440px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.light-mode .empty-state {
+  color: @light-text-secondary;
+  background-color: @light-section;
+  border-color: @light-border;
+}
+
+.light-mode .empty-state h2 {
+  color: @light-primary;
+}
+
+.dark-mode .empty-state {
+  color: @dark-text-secondary;
+  background-color: @dark-section;
+  border-color: @dark-border;
+}
+
+.dark-mode .empty-state h2 {
+  color: @dark-text;
+}
+
+.empty-state-icon {
+  font-size: 24px;
+}
+
+
+/* =========================================================
+   MESSAGE D'ERREUR
+   ========================================================= */
+
+.error-state {
+  width: 100%;
+  margin-bottom: 24px;
+  padding: 16px 18px;
+  border: 1px solid;
+  border-radius: @radius-control;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.light-mode .error-state {
+  color: #9F2929;
+  background-color: #FEF2F2;
+  border-color: #FECACA;
+}
+
+.dark-mode .error-state {
+  color: #FCA5A5;
+  background-color: #3B1D2A;
+  border-color: #713344;
+}
+
+
+/* =========================================================
+   PAGINATION
+   ========================================================= */
+
+.pagination-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
-  width: 68%;
-  border-radius: 20px;
-  padding-left: 15px;
-  padding-right: 15px;
+  width: 100%;
+  min-width: 0;
+  margin: 28px 0 12px;
+}
 
-  mat-form-field {
-    padding-top: 15px;
-    width: 350px;
+tui-pagination {
+  max-width: 100%;
+}
+
+
+/* =========================================================
+   ACCESSIBILITÉ
+   ========================================================= */
+
+.light-mode .btn-filter:focus-visible,
+.light-mode .btn-create:focus-visible,
+.light-mode .cards-material-category button:focus-visible {
+  outline: 3px solid @light-accent;
+  outline-offset: 3px;
+}
+
+.dark-mode .btn-filter:focus-visible,
+.dark-mode .btn-create:focus-visible,
+.dark-mode .cards-material-category button:focus-visible {
+  outline: 3px solid @dark-active;
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   RESPONSIVE : ORDINATEURS
+   ========================================================= */
+
+@media (max-width: 1200px) {
+  .dashboard {
+    padding: 28px;
   }
 
-  /* To make sure the buttons are in the middle */
+  .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
 
-  .spacer {
+
+/* =========================================================
+   RESPONSIVE : TABLETTES
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .dashboard {
+    padding: 24px;
+  }
+
+  .container-search-filter {
+    gap: 10px;
+  }
+
+  .inputSearch {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+
+  .btn-filter,
+  .btn-create {
     flex: 1 1 auto;
   }
+
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
 }
 
-tui-pagination{
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
 
-// THEME
+/* =========================================================
+   RESPONSIVE : TÉLÉPHONES
+   ========================================================= */
 
-.light-mode {
-  background-color: @light-background-color;
+@media (max-width: 560px) {
+  .dashboard {
+    padding: 18px 14px;
+  }
 
   tui-breadcrumbs {
-    a {
-      color: @light-breadcrumb;
-    }
+    margin-bottom: 18px;
+    font-size: 12px;
   }
 
-  h1 {
-    color: @light-title;
+  .page-header {
+    margin-bottom: 22px;
+  }
+
+  .page-header h1 {
+    font-size: 25px;
+    letter-spacing: -0.4px;
+  }
+
+  .page-description {
+    font-size: 13px;
+  }
+
+  .container-search-filter {
+    gap: 10px;
+    margin-bottom: 22px;
   }
 
   .inputSearch {
-    label[tuiLabel] {
-      color: @light-label;
-    }
-
-    input[tuiInput] {
-      color: @light-input;
-    }
+    flex: 1 1 100%;
+    max-width: none;
   }
 
-  .inputSearch,
-  .inputSearch:focus-within,
-  .inputSearch:hover {
-    color: @light-label;
+  .btn-filter,
+  .btn-create {
+    flex: 1 1 100%;
+    width: 100%;
+    min-height: 44px;
   }
 
-  .btn-filter, .btn-create {
-    background-color: @light-buton;
-    color: @light-button-text;
+  .btn-create {
+    white-space: normal;
+    text-align: center;
+  }
+
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
   }
 
   .cards-material-category {
-    background-color: @light-background-card;
-    color: @light-text-card;
-
-    button {
-      color: @light-text-button-card;
-    }
+    min-height: 120px;
+    padding: 18px;
+    gap: 18px;
   }
 
+  .cards-material-category h2[tuiTitle] {
+    font-size: 16px;
+  }
+
+  .pagination-container {
+    justify-content: center;
+    margin-top: 24px;
+    overflow-x: auto;
+  }
+
+  tui-pagination {
+    flex-shrink: 0;
+  }
 }
 
-.dark-mode {
-  background-color: @dark-background-color;
 
-  h1 {
-    color: @dark-title;
+/* =========================================================
+   MOUVEMENTS RÉDUITS
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard,
+  .cards-material-category,
+  .btn-filter,
+  .btn-create {
+    transition: none;
   }
-
-  .inputSearch {
-    label[tuiLabel] {
-      color: @dark-label;
-    }
-
-    input[tuiInput] {
-      color: @dark-input;
-    }
-  }
-
-  .inputSearch,
-  .inputSearch:focus-within,
-  .inputSearch:hover {
-    color: @dark-label;
-  }
-
-
-  .btn-filter, .btn-create {
-    background-color: @dark-buton;
-    color: @dark-button-text;
-  }
-
-  .cards-material-category {
-    background-color: @dark-background-card;
-    color: @dark-text-card;
-
-    button {
-      color: @dark-text-button-card;
-    }
-  }
-
 }
