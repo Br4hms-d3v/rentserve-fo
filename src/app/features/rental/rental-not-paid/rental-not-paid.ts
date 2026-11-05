@@ -1,24 +1,28 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { RentalService } from '../service/rental-service';
 import { AuthService } from '../../auth/service/auth-service';
-import { NgClass } from '@angular/common';
-import { TuiButton } from '@taiga-ui/core';
+import { DecimalPipe } from '@angular/common';
+import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { BillService } from '../../bill/service/bill-service';
+import { ThemeService } from '../../../core/services/ThemeService';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-rental-not-paid',
-  imports: [TuiTable, NgClass, TuiButton],
+  imports: [TuiTable, TuiButton, DecimalPipe, TuiIcon],
   templateUrl: './rental-not-paid.html',
   styleUrl: './rental-not-paid.less',
 })
 export class RentalNotPaid implements OnInit {
   private _rentalService = inject(RentalService); // Call the service to display list rental not paid
   private _authService = inject(AuthService); // call the service auth to display user identifier
+  private readonly themeService = inject(ThemeService); // Change theme
   private _stripe = inject(BillService); // Call the service to pay
-  private _cdr = inject(ChangeDetectorRef);
+  private readonly _cdr = inject(ChangeDetectorRef);
+  private readonly destroyRef = inject(DestroyRef);
 
-  isDarkMode = false; // Get a false for change theme
+  protected isDarkMode = false; // Get a false for change theme
   userId!: number;
   rentalsNotPaid: any[] = [];
   billId!: number;
@@ -29,6 +33,15 @@ export class RentalNotPaid implements OnInit {
         this.userId = user.id;
       }
     });
+
+    this.isDarkMode = this.themeService.isDarkMode();
+
+    this.themeService.darkMode$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((mode: boolean) => {
+        this.isDarkMode = mode;
+        this._cdr.markForCheck();
+      });
 
     this.rentalNotPaidList();
   }
@@ -65,11 +78,15 @@ export class RentalNotPaid implements OnInit {
     });
   }
 
-  protected onEditRental(){
+  protected get totalAmount(): number {
+    return this.rentalsNotPaid.reduce((total, rental) => total + Number(rental.amount ?? 0), 0);
+  }
 
-  };
+  protected onEditRental(rental: any) {
+    console.log(rental);
+  }
 
-  protected onDeleteRental(){
-
+  protected onDeleteRental(rental: any) {
+    console.log(rental);
   }
 }

@@ -1,75 +1,245 @@
+
 <div
-  [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}"
-  class="rentalNotPaid-container"
+  class="rental-container"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
 >
-  <h1>Mon panier</h1>
+  <main class="rental-content">
 
-  <div class="rental-table-wrapper">
-    <table tuiTable class="rental-table">
-      <thead>
-      <tr tuiThGroup>
-        <th tuiTh>Matériel</th>
-        <th tuiTh>Service</th>
-        <th tuiTh>Date de début</th>
-        <th tuiTh>Date de fin</th>
-        <th tuiTh>Heure de début</th>
-        <th tuiTh>Heure de fin</th>
-        <th tuiTh>Total de jour</th>
-        <th tuiTh>Total heure</th>
-        <th tuiTh>Montant</th>
-        <th tuiTh>Action</th>
-      </tr>
-      </thead>
+    <!-- En-tête -->
+    <header class="page-header">
+      <div>
+        <span class="page-eyebrow">ESPACE CLIENT</span>
+        <h1>Mon panier</h1>
+        <p>Consultez vos locations en attente de paiement.</p>
+      </div>
 
-      <tbody>
+      <div class="rental-count">
+        <span class="count-number">{{ rentalsNotPaid.length }}</span>
+        <span>location(s)</span>
+      </div>
+    </header>
+
+    @if (rentalsNotPaid.length > 0) {
+
+      <!-- Tableau ordinateur / tablette -->
+      <section class="table-card">
+        <div class="section-heading">
+          <h2>Mes locations</h2>
+          <span>En attente de paiement</span>
+        </div>
+
+        <div class="rental-table-wrapper">
+          <table tuiTable class="rental-table">
+            <thead>
+            <tr tuiThGroup>
+              <th tuiTh>Matériel</th>
+              <th tuiTh>Service</th>
+              <th tuiTh>Période</th>
+              <th tuiTh>Horaires</th>
+              <th tuiTh>Durée</th>
+              <th tuiTh>Montant</th>
+              <th tuiTh>Actions</th>
+            </tr>
+            </thead>
+
+            <tbody>
+              @for (rental of rentalsNotPaid; track rental.id) {
+                <tr>
+                  <td tuiTd>
+                    <span class="material-name">
+                      {{ rental.userMaterial?.nameMaterial ?? 'Non renseigné' }}
+                    </span>
+                  </td>
+
+                  <td tuiTd>
+                    {{ rental.userFavor?.nameFavor ?? 'Aucun service' }}
+                  </td>
+
+                  <td tuiTd>
+                    <div class="cell-stack">
+                      <span>{{ rental.dateStart }}</span>
+                      <span class="secondary-text">au {{ rental.dateEnd }}</span>
+                    </div>
+                  </td>
+
+                  <td tuiTd>
+                    <div class="cell-stack">
+                      <span>{{ rental.startTime }} - {{ rental.endTime }}</span>
+                    </div>
+                  </td>
+
+                  <td tuiTd>
+                    <div class="cell-stack">
+                      <span>{{ rental.durationDays }} jour(s)</span>
+                      <span class="secondary-text">
+                        {{ rental.durationHours }} heure(s)
+                      </span>
+                    </div>
+                  </td>
+
+                  <td tuiTd>
+                    <span class="amount">
+                      {{ rental.amount | number:'1.2-2' }} €
+                    </span>
+                  </td>
+
+                  <td tuiTd>
+                    <div class="action-buttons">
+                      <button
+                        tuiButton
+                        type="button"
+                        appearance="action"
+                        size="s"
+                        iconStart="@tui.pencil"
+                        (click)="onEditRental(rental)"
+                        aria-label="Modifier cette location"
+                      >
+                        Modifier
+                      </button>
+
+                      <button
+                        tuiButton
+                        type="button"
+                        appearance="action"
+                        size="s"
+                        iconStart="@tui.trash"
+                        (click)="onDeleteRental(rental)"
+                        aria-label="Supprimer cette location"
+                      >
+                        Supprimer
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Cartes smartphone -->
+      <section class="mobile-rentals">
+        <h2>Mes locations</h2>
+
         @for (rental of rentalsNotPaid; track rental.id) {
-          <tr tuiThGroup>
-            <td tuiTd>{{ rental.userMaterial?.nameMaterial ?? '/' }}</td>
-            <td tuiTd>{{ rental.userFavor?.nameFavor ?? '/' }}</td>
-            <td tuiTd>{{ rental.dateStart }}</td>
-            <td tuiTd>{{ rental.dateEnd }}</td>
-            <td tuiTd>{{ rental.startTime }}</td>
-            <td tuiTd>{{ rental.endTime }}</td>
-            <td tuiTd>{{ rental.durationDays }}</td>
-            <td tuiTd>{{ rental.durationHours }}</td>
-            <td tuiTd>{{ rental.amount }} €</td>
-            <td tuiTd>
-              <button
-                id="editRental"
-                appearance="action"
-                iconStart="@tui.pencil"
-                size="xs"
-                tuiIconButton
-                type="button"
-                tuiButton
-                (click)="onEditRental()"
-              >
-                Modifier
-              </button>
+          <article class="rental-mobile-card">
 
-              <button
-                id="deleteRental"
-                appearance="action"
-                iconStart="@tui.trash"
-                size="xs"
-                tuiIconButton
-                type="button"
-                (click)="onDeleteRental()"
-              >
-                Supprimer
-              </button>
-            </td>
-          </tr>
+            <div class="mobile-card-header">
+              <div>
+                <span class="mobile-label">MATÉRIEL</span>
+                <h3>
+                  {{ rental.userMaterial?.nameMaterial ?? 'Non renseigné' }}
+                </h3>
+              </div>
+
+              <span class="status-badge">À payer</span>
+            </div>
+
+            <div class="mobile-card-details">
+              <div class="detail-item">
+                <span>Service</span>
+                <strong>{{ rental.userFavor?.nameFavor ?? 'Aucun service' }}</strong>
+              </div>
+
+              <div class="detail-item">
+                <span>Date de début</span>
+                <strong>{{ rental.dateStart }}</strong>
+              </div>
+
+              <div class="detail-item">
+                <span>Date de fin</span>
+                <strong>{{ rental.dateEnd }}</strong>
+              </div>
+
+              <div class="detail-item">
+                <span>Horaires</span>
+                <strong>{{ rental.startTime }} - {{ rental.endTime }}</strong>
+              </div>
+
+              <div class="detail-item">
+                <span>Durée</span>
+                <strong>
+                  {{ rental.durationDays }} jour(s),
+                  {{ rental.durationHours }} heure(s)
+                </strong>
+              </div>
+            </div>
+
+            <div class="mobile-card-footer">
+              <div>
+                <span class="mobile-label">MONTANT</span>
+                <strong class="amount">
+                  {{ rental.amount | number:'1.2-2' }} €
+                </strong>
+              </div>
+
+              <div class="action-buttons">
+                <button
+                  tuiButton
+                  type="button"
+                  appearance="action"
+                  size="s"
+                  iconStart="@tui.pencil"
+                  (click)="onEditRental(rental)"
+                  aria-label="Modifier cette location"
+                ></button>
+
+                <button
+                  tuiButton
+                  type="button"
+                  appearance="action"
+                  size="s"
+                  iconStart="@tui.trash"
+                  (click)="onDeleteRental(rental)"
+                  aria-label="Supprimer cette location"
+                ></button>
+              </div>
+            </div>
+
+          </article>
         }
-      </tbody>
-    </table>
-  </div>
+      </section>
 
-  <button
-    id="btn-pay"
-    tuiButton
-    (click)="onPay()"
-  >
-    Payer
-  </button>
+      <!-- Récapitulatif -->
+      <section class="payment-summary">
+        <div class="summary-information">
+          <span>Total de votre panier</span>
+          <p>{{ rentalsNotPaid.length }} location(s) à régler</p>
+        </div>
+
+        <div class="summary-total">
+          <span>Montant total</span>
+          <strong>{{ totalAmount | number:'1.2-2' }} €</strong>
+        </div>
+
+        <button
+          id="btn-pay"
+          tuiButton
+          type="button"
+          (click)="onPay()"
+          [disabled]="!billId"
+          class="pay-button"
+        >
+          Procéder au paiement
+        </button>
+      </section>
+
+    } @else {
+
+      <!-- Panier vide -->
+      <section class="empty-state">
+        <div class="empty-icon">
+          <tui-icon icon="@tui.shopping-basket" />
+        </div>
+
+        <h2>Votre panier est vide</h2>
+        <p>
+          Vous n'avez aucune location en attente de paiement pour le moment.
+        </p>
+      </section>
+
+    }
+
+  </main>
 </div>
