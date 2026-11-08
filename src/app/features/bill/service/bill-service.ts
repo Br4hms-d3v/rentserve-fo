@@ -28,7 +28,7 @@ export class BillService {
 
   payStripe(id: number) {
     const headers = this.getAuthHeader();
-    return this._http.post<StripeModel>(this.apiUrl + id + '/pay', { headers });
+    return this._http.post<StripeModel>(this.apiUrl + id + '/pay',{}, { headers });
   }
 
   getBillPdf(id: number) {
