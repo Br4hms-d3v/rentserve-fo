@@ -1,67 +1,413 @@
-@light-background-color: #F1EFE8 !important;
-@light-label: #5F5E5A !important;
-@light-label-input: #3B6D11 !important;
-@light-btn-back: #D9764A;
-@light-btn-new: green;
+/* ==========================================
+   VARIABLES - LIGHT THEME
+========================================== */
 
-@dark-background-color: #1C1F17;
-@dark-label: #A6A599 !important;
-@dark-label-input: #8FC15C !important;
+@light-primary: #173B57;
+@light-secondary: #3B82F6;
+@light-background: #FFFFFF;
+@light-card: #F3F6F8;
+@light-surface: #E8EEF3;
+@light-text: #263746;
+@light-muted: #64748B;
+@light-border: #D8E1E9;
+@light-active: #2563EB;
+
+
+/* ==========================================
+   VARIABLES - DARK THEME
+========================================== */
+
+@dark-primary: #0B1F33;
+@dark-secondary: #3B82F6;
+@dark-background: #071522;
+@dark-card: #172A3D;
+@dark-surface: #20364D;
+@dark-text: #F1F5F9;
+@dark-muted: #A8B7C9;
+@dark-border: #30465C;
+@dark-active: #60A5FA;
+
+
+/* ==========================================
+   GENERAL COMPONENT
+========================================== */
 
 .userMaterialReview {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 28px;
+  border: 1px solid @light-border;
+  border-radius: 16px;
+  background: @light-background;
+  color: @light-text;
+  box-sizing: border-box;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+
+  * {
+    box-sizing: border-box;
+  }
+
   form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 26px;
   }
 
   tui-textfield {
     width: 100%;
   }
-
-  .rating-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    width: 100%;
-  }
-
-  .rating-container {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
 }
 
-// THEME
-#btn-save {
-  background-color: @light-btn-new;
-  color: white;
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid @light-border;
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: @light-card;
+    color: @light-primary;
+    font-size: 23px;
+  }
+
+  &__content {
+    min-width: 0;
+
+    h2 {
+      margin: 0;
+      color: @light-text;
+      font-size: 21px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    p {
+      margin: 5px 0 0;
+      color: @light-muted;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  }
 }
+
+
+/* ==========================================
+   FORM CONTENT
+========================================== */
+
+.review-content {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field-label {
+  display: block;
+  color: @light-text;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.required-indicator {
+  color: @light-secondary;
+  margin-left: 3px;
+}
+
+.field-hint,
+.rating-description {
+  color: @light-muted;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.field-hint {
+  margin-top: 2px;
+}
+
+.rating-description {
+  margin: 5px 0 0;
+}
+
+.field-error {
+  margin: 0;
+  color: #DC2626;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+
+/* ==========================================
+   TAIGA UI INPUT
+========================================== */
 
 .light-mode {
-  background-color: @light-background-color;
-
-  label[tuiLabel] {
-    color: @light-label;
+  tui-textfield {
+    --tui-textfield-background: @light-surface;
+    --tui-textfield-border-color: @light-border;
+    --tui-textfield-text: @light-text;
+    --tui-textfield-placeholder-color: @light-muted;
+    --tui-textfield-icon-color: @light-muted;
   }
 
   textarea {
-    color: @light-label-input;
+    color: @light-text;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
+
+/* ==========================================
+   RATING
+========================================== */
+
+.rating-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid @light-border;
+  border-radius: 12px;
+  background: @light-card;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rating {
+    align-self: flex-start;
+  }
+}
+
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.review-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 22px;
+  border-top: 1px solid @light-border;
+}
+
+.required-hint {
+  color: @light-muted;
+  font-size: 12px;
+}
+
+#btn-save {
+  min-height: 44px;
+  padding-inline: 20px;
+  border-radius: 9px;
+  background: @light-primary;
+  color: #FFFFFF;
+  font-weight: 600;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: @light-active;
+  }
+
+  &:focus-visible {
+    outline: 3px solid @light-secondary;
+    outline-offset: 3px;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+
+/* ==========================================
+   NOTIFICATION
+========================================== */
+
+.notification-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+
+/* ==========================================
+   DARK THEME
+========================================== */
+
+.dark-mode {
+  background: @dark-background;
+  border-color: @dark-border;
+  color: @dark-text;
+
+  .review-header {
+    border-color: @dark-border;
+
+    &__icon {
+      background: @dark-surface;
+      color: @dark-active;
+    }
+
+    &__content {
+      h2 {
+        color: @dark-text;
+      }
+
+      p {
+        color: @dark-muted;
+      }
+    }
+  }
+
+  .field-label {
+    color: @dark-text;
+  }
+
+  .field-hint,
+  .rating-description,
+  .required-hint {
+    color: @dark-muted;
+  }
+
+  .rating-section {
+    background: @dark-card;
+    border-color: @dark-border;
+  }
+
+  .review-footer {
+    border-color: @dark-border;
   }
 
   tui-textfield {
-    --tui-textfield-icon-color: #f44336;
+    --tui-textfield-background: @dark-surface;
+    --tui-textfield-border-color: @dark-border;
+    --tui-textfield-text: @dark-text;
+    --tui-textfield-placeholder-color: @dark-muted;
+    --tui-textfield-icon-color: @dark-muted;
   }
 
+  textarea {
+    color: @dark-text;
+  }
+
+  #btn-save {
+    background: @dark-secondary;
+    color: #FFFFFF;
+
+    &:hover:not(:disabled) {
+      background: @dark-active;
+      color: @dark-primary;
+    }
+
+    &:focus-visible {
+      outline-color: @dark-active;
+    }
+  }
 }
 
-.dark-mode {
-  background-color: @dark-background-color;
 
-  label {
-    color: @dark-label;
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 768px) {
+  .userMaterialReview {
+    max-width: 100%;
+    padding: 22px;
+    border-radius: 14px;
+  }
+
+  .review-content {
+    gap: 22px;
+  }
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 480px) {
+  .userMaterialReview {
+    padding: 18px;
+    border-radius: 12px;
+
+    form {
+      gap: 22px;
+    }
+  }
+
+  .review-header {
+    align-items: flex-start;
+    gap: 12px;
+    padding-bottom: 18px;
+
+    &__icon {
+      width: 40px;
+      height: 40px;
+      font-size: 19px;
+    }
+
+    &__content {
+      h2 {
+        font-size: 18px;
+      }
+
+      p {
+        font-size: 13px;
+      }
+    }
+  }
+
+  .review-content {
+    gap: 20px;
+  }
+
+  .rating-section {
+    padding: 16px;
+  }
+
+  .review-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .required-hint {
+    order: 2;
+  }
+
+  #btn-save {
+    width: 100%;
+    justify-content: center;
   }
 }

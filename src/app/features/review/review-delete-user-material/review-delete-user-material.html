@@ -1,33 +1,87 @@
-<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="userMaterialReview">
-  <p>Souhaitez-vous supprimer votre commentaire ?</p>
-  <button
-    id="btn-delete"
-    size="m"
-    tuiButton
-    (click)="onDelete()"
-  >Oui
-  </button>
+<div
+  class="userMaterialReview"
+  [class.dark-mode]="isDarkMode()"
+  [class.light-mode]="!isDarkMode()"
+>
+  <div class="delete-header">
+    <div class="delete-header__icon">
+      <tui-icon icon="@tui.trash-2"></tui-icon>
+    </div>
 
-  <button
-    id="btn-cancel"
-    size="m"
-    tuiButton
-    (click)="onBack()"
-  >
-    Non
-  </button>
+    <div class="delete-header__content">
+      <h2>Supprimer votre avis</h2>
+      <p>
+        Cette action nécessite votre confirmation.
+      </p>
+    </div>
+  </div>
+
+  <div class="delete-content">
+    <p class="delete-question">
+      Souhaitez-vous vraiment supprimer votre commentaire ?
+    </p>
+
+    <div class="delete-warning">
+      <tui-icon icon="@tui.info"></tui-icon>
+
+      <span>
+        Cette action est irréversible. Votre commentaire
+        sera définitivement supprimé.
+      </span>
+    </div>
+  </div>
+
+  <div class="delete-footer">
+    <button
+      id="btn-cancel"
+      tuiButton
+      type="button"
+      appearance="secondary"
+      size="m"
+      iconStart="@tui.arrow-left"
+      [disabled]="isDeleting()"
+      (click)="onBack()"
+    >
+      Annuler
+    </button>
+
+    <button
+      id="btn-delete"
+      tuiButton
+      type="button"
+      appearance="primary"
+      size="m"
+      iconStart="@tui.trash-2"
+      [disabled]="isDeleting()"
+      (click)="onDelete()"
+    >
+      {{ isDeleting() ? 'Suppression...' : 'Supprimer définitivement' }}
+    </button>
+  </div>
 </div>
 
 <ng-template
-  [tuiNotificationOptions]="{label: 'Commentaire', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: isSuccess() ? 'Suppression réussie' : 'Une erreur est survenue',
+    autoClose: 0,
+    closable: false,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
-  <button
-    tuiButton
-    type="button"
-    (click)="show.set(false)"
-  >
-    Close
-  </button>
+  <div class="notification-content">
+    <span tuiSubtitle>
+      {{ messageSuccess || messageError }}
+    </span>
+
+    <button
+      tuiButton
+      type="button"
+      appearance="secondary"
+      size="s"
+      (click)="show.set(false)"
+    >
+      Fermer
+    </button>
+  </div>
 </ng-template>

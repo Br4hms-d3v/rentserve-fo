@@ -145,7 +145,7 @@ export class ReviewUserMaterial implements OnInit {
     this.dialogs
       .open(new PolymorpheusComponent(ReviewDeleteUserMaterial), {
         label: 'Confirmer la suppression',
-        size: 's',
+        size: 'm',
         data: { reviewId },
       })
       .subscribe({

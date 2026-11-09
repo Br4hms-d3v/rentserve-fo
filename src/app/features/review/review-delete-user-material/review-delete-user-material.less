@@ -1,10 +1,545 @@
 
-.light-mode {
+/* ==========================================
+   LIGHT THEME
+========================================== */
+
+@light-primary: #173B57;
+@light-secondary: #3B82F6;
+@light-background: #FFFFFF;
+@light-card: #F3F6F8;
+@light-surface: #E8EEF3;
+@light-text: #263746;
+@light-muted: #64748B;
+@light-border: #D8E1E9;
+@light-active: #2563EB;
+
+@danger: #DC2626;
+@danger-hover: #B91C1C;
+@danger-background: #FEF2F2;
+
+
+/* ==========================================
+   DARK THEME
+========================================== */
+
+@dark-primary: #0B1F33;
+@dark-secondary: #3B82F6;
+@dark-background: #071522;
+@dark-card: #172A3D;
+@dark-surface: #20364D;
+@dark-text: #F1F5F9;
+@dark-muted: #A8B7C9;
+@dark-border: #30465C;
+@dark-active: #60A5FA;
+
+@dark-danger: #F87171;
+@dark-danger-hover: #EF4444;
+@dark-danger-background: #3B2530;
+
+
+/* ==========================================
+   GLOBAL
+========================================== */
+
+.userMaterialReview {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: 540px;
+  min-width: 0;
+
+  margin-inline: auto;
+  padding: 20px;
+
+  border: 1px solid @light-border;
+  border-radius: 16px;
+
+  background: @light-background;
+  color: @light-text;
+
+  box-sizing: border-box;
+
+  overflow-wrap: break-word;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.delete-header {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+  min-width: 0;
+
+  padding-bottom: 24px;
+
+  border-bottom: 1px solid @light-border;
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 48px;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 12px;
+
+    background: @danger-background;
+    color: @danger;
+
+    font-size: 22px;
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+
+    h2 {
+      margin: 0;
+
+      color: @light-text;
+
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.4;
+
+      overflow-wrap: anywhere;
+    }
+
+    p {
+      margin: 5px 0 0;
+
+      color: @light-muted;
+
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  }
+}
+
+
+/* ==========================================
+   CONTENT
+========================================== */
+
+.delete-content {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  gap: 18px;
+
+  padding: 24px 0;
+}
+
+.delete-question {
+  margin: 0;
+
+  color: @light-text;
+
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.delete-warning {
+  display: flex;
+  align-items: flex-start;
+
+  min-width: 0;
+  gap: 12px;
+
+  padding: 14px;
+
+  border: 1px solid #FECACA;
+  border-radius: 10px;
+
+  background: @danger-background;
+  color: #991B1B;
+
+  font-size: 13px;
+  line-height: 1.6;
+
+  tui-icon {
+    flex: 0 0 auto;
+
+    margin-top: 2px;
+
+    font-size: 17px;
+  }
+
+  span {
+    min-width: 0;
+  }
+}
+
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.delete-footer {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: flex-end;
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 12px;
+  min-width: 0;
+
+  padding-top: 20px;
+
+  border-top: 1px solid @light-border;
+
+  button {
+    min-height: 44px;
+    max-width: 100%;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    white-space: normal;
+
+    &:focus-visible {
+      outline: 3px solid @light-secondary;
+      outline-offset: 3px;
+    }
+  }
+}
+
+
+/* ==========================================
+   CANCEL BUTTON
+========================================== */
+
+#btn-cancel {
+  background: @light-surface;
+  color: @light-text;
+
+  &:hover:not(:disabled) {
+    background: @light-border;
+  }
+}
+
+
+/* ==========================================
+   DELETE BUTTON
+========================================== */
+
+#btn-delete {
+  background: @danger;
+  color: #FFFFFF;
+
+  &:hover:not(:disabled) {
+    background: @danger-hover;
+  }
+
+  &:focus-visible {
+    outline-color: @danger;
+  }
+}
+
+
+/* ==========================================
+   NOTIFICATION
+========================================== */
+
+.notification-content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+  min-width: 0;
+}
+
+
+/* ==========================================
+   DARK MODE
+========================================== */
+
+.dark-mode {
+  background: @dark-background;
+  border-color: @dark-border;
+  color: @dark-text;
+
+  .delete-header {
+    border-color: @dark-border;
+
+    &__icon {
+      background: @dark-danger-background;
+      color: @dark-danger;
+    }
+
+    &__content {
+      h2 {
+        color: @dark-text;
+      }
+
+      p {
+        color: @dark-muted;
+      }
+    }
+  }
+
+  .delete-question {
+    color: @dark-text;
+  }
+
+  .delete-warning {
+    background: @dark-danger-background;
+    border-color: #70404A;
+    color: #FECACA;
+  }
+
+  .delete-footer {
+    border-color: @dark-border;
+  }
+
   #btn-cancel {
-    background-color: orange;
+    background: @dark-surface;
+    color: @dark-text;
+
+    &:hover:not(:disabled) {
+      background: @dark-border;
+    }
+
+    &:focus-visible {
+      outline-color: @dark-active;
+    }
   }
 
   #btn-delete {
-    background-color: red;
+    background: @dark-danger;
+    color: @dark-primary;
+
+    &:hover:not(:disabled) {
+      background: @dark-danger-hover;
+      color: #FFFFFF;
+    }
+
+    &:focus-visible {
+      outline-color: @dark-danger;
+    }
+  }
+}
+
+
+/* ==========================================
+   LARGE DESKTOP
+   1025px and above
+========================================== */
+
+@media (min-width: 1025px) {
+  .userMaterialReview {
+    max-width: 540px;
+    padding: 28px;
+  }
+
+  .delete-footer {
+    flex-wrap: nowrap;
+
+    button {
+      flex: 0 0 auto;
+    }
+  }
+}
+
+
+/* ==========================================
+   TABLET
+   481px - 1024px
+========================================== */
+
+@media (min-width: 481px) and (max-width: 1024px) {
+  .userMaterialReview {
+    width: 100%;
+    max-width: 540px;
+
+    padding: 24px;
+  }
+
+  .delete-header {
+    gap: 14px;
+  }
+
+  .delete-content {
+    gap: 16px;
+    padding: 22px 0;
+  }
+
+  .delete-footer {
+    flex-wrap: nowrap;
+
+    button {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+  }
+}
+
+
+/* ==========================================
+   MOBILE
+   320px - 480px
+========================================== */
+
+@media (max-width: 480px) {
+  .userMaterialReview {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    margin: 0;
+    padding: 18px;
+
+    border-radius: 12px;
+  }
+
+  .delete-header {
+    align-items: flex-start;
+    gap: 12px;
+
+    padding-bottom: 18px;
+
+    &__icon {
+      flex-basis: 42px;
+
+      width: 42px;
+      height: 42px;
+
+      font-size: 19px;
+    }
+
+    &__content {
+      h2 {
+        font-size: 18px;
+      }
+
+      p {
+        font-size: 13px;
+      }
+    }
+  }
+
+  .delete-content {
+    gap: 16px;
+    padding: 20px 0;
+  }
+
+  .delete-question {
+    font-size: 15px;
+  }
+
+  .delete-warning {
+    gap: 10px;
+    padding: 12px;
+
+    font-size: 12px;
+  }
+
+  .delete-footer {
+    display: flex;
+    flex-direction: column;
+
+    align-items: stretch;
+    justify-content: flex-start;
+
+    gap: 10px;
+
+    button {
+      display: flex;
+
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+
+      min-height: 46px;
+
+      justify-content: center;
+    }
+
+    #btn-cancel {
+      order: 1;
+    }
+
+    #btn-delete {
+      order: 2;
+    }
+  }
+}
+
+
+/* ==========================================
+   EXTRA SMALL MOBILE
+   320px and below
+========================================== */
+
+@media (max-width: 360px) {
+  .userMaterialReview {
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  .delete-header {
+    gap: 10px;
+
+    &__icon {
+      flex-basis: 36px;
+
+      width: 36px;
+      height: 36px;
+
+      font-size: 17px;
+    }
+
+    &__content {
+      h2 {
+        font-size: 16px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .delete-question {
+    font-size: 14px;
+  }
+
+  .delete-warning {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .delete-footer {
+    button {
+      min-height: 44px;
+      padding-inline: 10px;
+      font-size: 13px;
+    }
   }
 }

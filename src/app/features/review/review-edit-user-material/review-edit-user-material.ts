@@ -1,8 +1,16 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { NgClass } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
+
 import {
   TuiButton,
   TuiDialogContext,
+  TuiIcon,
   TuiLabel,
   TuiNotificationTemplate,
   TuiTextfield,
@@ -20,18 +28,20 @@ import { ReviewService } from '../service/review-service';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { ReviewByIdModel } from '../model/review-by-id';
 import { ReviewEditUserMaterialForm } from '../model/review-edit-userMaterial-form';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-review-edit-user-material',
   imports: [
-    NgClass,
-    TuiTextfield,
-    TuiRating,
     FormsModule,
     ReactiveFormsModule,
+    TuiTextfield,
+    TuiRating,
     TuiTextarea,
     TuiButton,
     TuiLabel,
+    TuiIcon,
     TuiNotificationTemplate,
   ],
   templateUrl: './review-edit-user-material.html',
@@ -41,82 +51,119 @@ import { ReviewEditUserMaterialForm } from '../model/review-edit-userMaterial-fo
 export class ReviewEditUserMaterial implements OnInit {
   private readonly context =
     inject<TuiDialogContext<void, { reviewId: number }>>(POLYMORPHEUS_CONTEXT);
-  private readonly _reviewService = inject(ReviewService); // Call the service to display comments
-  private _themeService = inject(ThemeService); // Call the service to change color theme
+  private readonly reviewService = inject(ReviewService); // Call the service to display comments
+  private themeService = inject(ThemeService); // Call the service to change color theme
+  private readonly destroyRef = inject(DestroyRef);
 
   protected readonly reviewId = this.context.data.reviewId;
-  isDarkMode = false; // Change theme from light to dark
+  protected readonly isDarkMode = signal(false); // Change theme from light to dark
+  protected readonly isSaving = signal(false);
+
   reviewByIdModel!: ReviewByIdModel;
   protected readonly show = signal(false); // Show notification
   protected readonly isSuccess = signal(false); // Change color Green for success or Red error
   protected messageError = '';
   protected messageSuccess = '';
 
-  ngOnInit() {
-    this.changeTheme();
-    this.getReviewById();
-  }
-
-  protected editReviewUserMaterialForm = new FormGroup({
+  protected readonly editReviewUserMaterialForm = new FormGroup({
     comment: new FormControl('', {
       nonNullable: true,
-      validators: Validators.required,
+      validators: [Validators.required],
     }),
+
     rating: new FormControl<number>(0, {
       nonNullable: true,
       validators: [Validators.required, Validators.min(1), Validators.max(5)],
     }),
+
     isActive: new FormControl(true, {
       nonNullable: true,
     }),
   });
 
-  protected getReviewById() {
-    this._reviewService.getReviewById(this.context.data.reviewId).subscribe({
-      next: (review) => {
-        this.reviewByIdModel = review;
-        this.editReviewUserMaterialForm.get('comment')?.patchValue(this.reviewByIdModel.comment);
-        this.editReviewUserMaterialForm.get('rating')?.patchValue(this.reviewByIdModel.rating);
-        this.editReviewUserMaterialForm.get('isActive')?.patchValue(true);
-      },
-    });
+  ngOnInit() {
+    this.changeTheme();
+    this.getReviewById();
   }
 
-  onEditReview(): void {
-    if (this.editReviewUserMaterialForm.invalid) {
+  protected getReviewById(): void {
+    this.reviewService
+      .getReviewById(this.reviewId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (review) => {
+          this.reviewByIdModel = review;
+
+          this.editReviewUserMaterialForm.patchValue({
+            comment: review.comment,
+            rating: review.rating,
+            isActive: true,
+          });
+        },
+
+        error: (error) => {
+          console.error('Erreur lors du chargement de l’avis :', error);
+
+          this.messageError = 'Impossible de charger votre avis. Veuillez réessayer.';
+
+          this.isSuccess.set(false);
+          this.show.set(true);
+        },
+      });
+  }
+
+  protected onEditReview(): void {
+    if (this.editReviewUserMaterialForm.invalid || this.isSaving()) {
       this.editReviewUserMaterialForm.markAllAsTouched();
       return;
     }
+
+    this.isSaving.set(true);
 
     const formValue: ReviewEditUserMaterialForm = {
       ...this.editReviewUserMaterialForm.getRawValue(),
       isActive: true,
     };
 
-    this._reviewService.updateReviewUserMaterial(this.reviewId, formValue).subscribe({
-      next: () => {
-        this.editReviewUserMaterialForm.patchValue({
-          isActive: true,
-        });
+    this.reviewService
+      .updateReviewUserMaterial(this.reviewId, formValue)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.isSaving.set(false);
 
-        this.messageSuccess = 'La mise à jour a été effectuée avec succès.';
-        this.isSuccess.set(true);
-        this.show.set(true);
-        setTimeout(() => {
-          this.context.completeWith();
-        }, 1500);
-      },
-      error: (error) => {
-        console.error(error);
-        this.messageError = 'Erreur lors de la mise à jour !';
-        this.isSuccess.set(false);
-        this.show.set(true);
-      },
-    });
+          this.messageSuccess = 'Votre avis a été mis à jour avec succès.';
+
+          this.isSuccess.set(true);
+          this.show.set(true);
+
+          timer(1500)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => {
+              this.context.completeWith();
+            });
+        },
+
+        error: (error) => {
+          console.error('Erreur lors de la modification :', error);
+
+          this.isSaving.set(false);
+
+          this.messageError =
+            'Une erreur est survenue lors de la mise à jour de votre avis. Veuillez réessayer.';
+
+          this.isSuccess.set(false);
+          this.show.set(true);
+        },
+      });
   }
+  private changeTheme(): void {
+    this.isDarkMode.set(this.themeService.isDarkMode());
 
-  changeTheme() {
-    this.isDarkMode = this._themeService.isDarkMode(); // Get current theme
-    this._themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
+    this.themeService.darkMode$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((mode: boolean) => {
+        this.isDarkMode.set(mode);
+      });
   }
 }
