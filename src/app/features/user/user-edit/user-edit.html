@@ -1,6 +1,11 @@
-<div class="editUser-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
 
-  <form [formGroup]="editUserForm" (ngSubmit)="updateUser()" class="user-form">
+<div class="editUser-container">
+
+  <form
+    [formGroup]="editUserForm"
+    (ngSubmit)="updateUser()"
+    class="user-form"
+  >
 
     <div class="inputMatField">
       <tui-textfield>
@@ -18,7 +23,7 @@
 
     <div class="form-field form-field--street--email">
       <tui-textfield>
-        <label tuiLabel>Email</label>
+        <label tuiLabel>Adresse e-mail</label>
         <input tuiInput formControlName="email" />
       </tui-textfield>
     </div>
@@ -34,12 +39,11 @@
       <tui-textfield>
         <label tuiLabel>Date de naissance</label>
         <input tuiInputDate formControlName="birthdate" />
-        <tui-calendar *tuiDropdown></tui-calendar>
-
+        <tui-calendar *tuiDropdown />
       </tui-textfield>
     </div>
 
-    <!-- Street takes 2 columns -->
+    <!-- Rue -->
     <div class="form-field form-field--street--email">
       <tui-textfield>
         <label tuiLabel>Rue</label>
@@ -47,7 +51,7 @@
       </tui-textfield>
     </div>
 
-    <!-- City -->
+    <!-- Ville -->
     <div class="inputMatField">
       <tui-textfield>
         <label tuiLabel>Ville</label>
@@ -55,7 +59,7 @@
       </tui-textfield>
     </div>
 
-    <!-- ZipCode -->
+    <!-- Code postal -->
     <div class="inputMatField">
       <tui-textfield>
         <label tuiLabel>Code postal</label>
@@ -63,21 +67,27 @@
       </tui-textfield>
     </div>
 
-    <!-- Button cancel -->
+    <!-- Bouton Annuler -->
     <div class="btn-cancel">
-      <button tuiButton
-              type="submit"
-              appearance="primary"
-      >Annuler
+      <button
+        tuiButton
+        type="button"
+        appearance="secondary"
+        (click)="onCancel()"
+      >
+        Annuler
       </button>
     </div>
 
-    <!-- Button to register -->
+    <!-- Bouton Sauvegarder -->
     <div class="btn-register">
-      <button tuiButton
-              type="submit"
-              appearance="primary"
-      >Sauvegarder
+      <button
+        tuiButton
+        type="submit"
+        appearance="primary"
+        [disabled]="editUserForm.invalid || editUserForm.pristine"
+      >
+        Sauvegarder
       </button>
     </div>
 
@@ -85,16 +95,25 @@
 
 </div>
 
+<!-- Notification -->
 <ng-template
-  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: 'Modification du profil',
+    autoClose: 0,
+    closable: false,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <span tuiSubtitle>
+    {{ messageSuccess || messageError }}
+  </span>
+
   <button
     tuiButton
     type="button"
     (click)="show.set(false)"
   >
-    Close
+    Fermer
   </button>
 </ng-template>

@@ -1,28 +1,346 @@
-@light-background-color: #F1EFE8;
-@light-routerLinkActive: #993C1D !important;
+/* =========================================
+   PALETTE DE COULEURS
+========================================= */
 
-@dark-background-color: #1C1F17;
-@dark-routerLinkActive: #E8845A !important;
+@light-primary: #173B57;
+@light-blue: #3B82F6;
+@light-active: #2563EB;
+@light-background: #FFFFFF;
+@light-section: #F3F6F8;
+@light-surface: #E8EEF3;
+@light-text: #263746;
+@light-secondary: #64748B;
+@light-border: #D8E1E9;
 
-.light-mode {
-  background-color: @light-background-color;
+@dark-primary: #0B1F33;
+@dark-blue: #3B82F6;
+@dark-active: #60A5FA;
+@dark-background: #071522;
+@dark-section: #172A3D;
+@dark-surface: #20364D;
+@dark-text: #F1F5F9;
+@dark-secondary: #A8B7C9;
+@dark-border: #30465C;
 
-  tui-tabs {
-    a[tuiTab]{
-      color: @light-routerLinkActive;
-    }
+
+/* =========================================
+   STRUCTURE GÉNÉRALE
+========================================= */
+
+.profile-page {
+  min-height: 100%;
+  width: 100%;
+  padding: 32px;
+  box-sizing: border-box;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+
+  .profile-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
   }
-
 }
 
 
-.dark-mode {
-  background-color: @dark-background-color;
+/* =========================================
+   EN-TÊTE
+========================================= */
 
-  tui-tabs {
-    a[tuiTab]{
-      color: @dark-routerLinkActive;
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 28px;
+
+  .profile-header-icon {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+
+    tui-icon {
+      font-size: 26px;
     }
   }
 
+  .profile-header-content {
+    h1 {
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700;
+      line-height: 1.3;
+      margin: 0 0 6px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0;
+    }
+  }
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.profile-navigation {
+  border-radius: 12px;
+  border: 1px solid;
+  margin-bottom: 24px;
+  padding: 6px;
+  overflow: hidden;
+
+  tui-tabs {
+    display: flex;
+    width: 100%;
+
+    a[tuiTab] {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+
+      tui-icon {
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+    }
+  }
+}
+
+
+/* =========================================
+   CONTENU
+========================================= */
+
+.profile-content {
+  width: 100%;
+  min-width: 0;
+  border-radius: 14px;
+  border: 1px solid;
+  padding: 28px;
+  box-sizing: border-box;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+
+/* =========================================
+   THÈME CLAIR
+========================================= */
+
+.light-mode {
+  background-color: @light-background;
+  color: @light-text;
+
+  .profile-header {
+    .profile-header-icon {
+      background-color: @light-section;
+      color: @light-primary;
+    }
+
+    h1 {
+      color: @light-text;
+    }
+
+    p {
+      color: @light-secondary;
+    }
+  }
+
+  .profile-navigation {
+    background-color: @light-background;
+    border-color: @light-border;
+
+    tui-tabs {
+      a[tuiTab] {
+        color: @light-secondary;
+
+        &:hover {
+          color: @light-active;
+          background-color: @light-section;
+        }
+
+        &.active,
+        &[aria-selected="true"] {
+          color: @light-active;
+          background-color: @light-section;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .profile-content {
+    background-color: @light-background;
+    border-color: @light-border;
+  }
+}
+
+
+/* =========================================
+   THÈME SOMBRE
+========================================= */
+
+.dark-mode {
+  background-color: @dark-background;
+  color: @dark-text;
+
+  .profile-header {
+    .profile-header-icon {
+      background-color: @dark-section;
+      color: @dark-active;
+    }
+
+    h1 {
+      color: @dark-text;
+    }
+
+    p {
+      color: @dark-secondary;
+    }
+  }
+
+  .profile-navigation {
+    background-color: @dark-section;
+    border-color: @dark-border;
+
+    tui-tabs {
+      a[tuiTab] {
+        color: @dark-secondary;
+
+        &:hover {
+          color: @dark-active;
+          background-color: @dark-surface;
+        }
+
+        &.active,
+        &[aria-selected="true"] {
+          color: @dark-active;
+          background-color: @dark-surface;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .profile-content {
+    background-color: @dark-section;
+    border-color: @dark-border;
+  }
+}
+
+
+/* =========================================
+   RESPONSIVE : TABLETTES
+========================================= */
+
+@media (max-width: 900px) {
+  .profile-page {
+    padding: 24px 18px;
+  }
+
+  .profile-navigation {
+    tui-tabs {
+      a[tuiTab] {
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+    }
+  }
+
+  .profile-content {
+    padding: 22px;
+  }
+}
+
+
+/* =========================================
+   RESPONSIVE : MOBILES
+========================================= */
+
+@media (max-width: 600px) {
+  .profile-page {
+    padding: 18px 12px;
+  }
+
+  .profile-header {
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+
+    .profile-header-icon {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      border-radius: 11px;
+
+      tui-icon {
+        font-size: 22px;
+      }
+    }
+
+    .profile-header-content {
+      h1 {
+        font-size: 21px;
+      }
+
+      p {
+        font-size: 13px;
+      }
+    }
+  }
+
+  .profile-navigation {
+    padding: 4px;
+    margin-bottom: 16px;
+
+    tui-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+
+      a[tuiTab] {
+        justify-content: flex-start;
+        width: 100%;
+        min-height: 44px;
+        padding: 10px 12px;
+        box-sizing: border-box;
+        font-size: 13px;
+      }
+    }
+  }
+
+  .profile-content {
+    padding: 16px;
+    border-radius: 10px;
+  }
+}
+
+
+/* =========================================
+   ACCESSIBILITÉ
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-page,
+  .profile-content,
+  .profile-navigation a[tuiTab] {
+    transition: none;
+  }
 }

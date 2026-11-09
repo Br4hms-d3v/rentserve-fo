@@ -1,17 +1,13 @@
-@light-background-color: #F1EFE8;
-@light-label-input: #3B6D11 !important;
-@light-label: #5F5E5A !important;
-@light-btn-submit: #D9764A;
 
-@dark-background-color: #1C1F17;
-@dark-label-input: #8FC15C !important;
-@dark-label: #A6A599 !important;
-@dark-btn-submit: #E8845A;
+/* =========================================
+   STRUCTURE GÉNÉRALE
+========================================= */
 
 .editUser-container {
-  height: 80vh;
+  min-height: 80vh;
   padding: 20px;
   box-sizing: border-box;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .user-form {
@@ -23,7 +19,6 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px 40px;
-
 }
 
 .form-field--street--email {
@@ -31,49 +26,146 @@
 }
 
 
-.light-mode {
-  background-color: @light-background-color;
+/* =========================================
+   THÈME CLAIR : HÉRITÉ DU PARENT
+========================================= */
 
+:host-context(.light-mode) {
 
-  input[tuiInput]{
-    color: @light-label-input;
+  .editUser-container {
+    background-color: transparent;
+    color: #263746;
   }
 
-  label[tuiLabel]{
-    color: @light-label;
+  input[tuiInput],
+  input[tuiInputDate] {
+    color: #263746;
+    background-color: #E8EEF3;
   }
 
-  #switchToggle{
-    color:@light-label;
+  label[tuiLabel] {
+    color: #64748B;
   }
 
-  button[tuiButton]{
-    background-color: @light-btn-submit;
+  #switchToggle {
+    color: #64748B;
   }
 
+  tui-textfield {
+    --tui-background: #E8EEF3;
+    --tui-text-primary: #263746;
+    --tui-text-secondary: #64748B;
+    --tui-border-normal: #D8E1E9;
+  }
+
+  button[tuiButton] {
+    background-color: #173B57;
+    color: #FFFFFF;
+    border-color: #173B57;
+
+    &:hover {
+      background-color: #3B82F6;
+      border-color: #3B82F6;
+    }
+  }
+
+  .btn-cancel button[tuiButton] {
+    background-color: #E8EEF3;
+    color: #263746;
+    border-color: #D8E1E9;
+  }
 }
 
-.dark-mode {
-    background-color: @dark-background-color;
 
-  input[tuiInput]{
-    background-color: #2E331F;
+/* =========================================
+   THÈME SOMBRE : HÉRITÉ DU PARENT
+========================================= */
+
+:host-context(.dark-mode) {
+
+  .editUser-container {
+    background-color: transparent;
+    color: #F1F5F9;
   }
 
-  input[tuiInput]{
-    color: @dark-label-input;
+  input[tuiInput],
+  input[tuiInputDate] {
+    color: #F1F5F9;
+    background-color: #20364D;
   }
 
-  label[tuiLabel]{
-    color: @dark-label;
+  label[tuiLabel] {
+    color: #A8B7C9;
   }
 
-  #switchToggle{
-    color:@dark-label;
+  #switchToggle {
+    color: #A8B7C9;
   }
 
-  button[tuiButton]{
-    background-color: @dark-btn-submit;
+  tui-textfield {
+    --tui-background: #20364D;
+    --tui-text-primary: #F1F5F9;
+    --tui-text-secondary: #A8B7C9;
+    --tui-border-normal: #30465C;
   }
 
+  button[tuiButton] {
+    background-color: #3B82F6;
+    color: #FFFFFF;
+    border-color: #3B82F6;
+
+    &:hover {
+      background-color: #60A5FA;
+      border-color: #60A5FA;
+    }
+  }
+
+  .btn-cancel button[tuiButton] {
+    background-color: #20364D;
+    color: #F1F5F9;
+    border-color: #30465C;
+  }
+}
+
+
+/* =========================================
+   RESPONSIVE : TABLETTES
+========================================= */
+
+@media (max-width: 768px) {
+  .user-form {
+    width: 95%;
+    gap: 20px;
+  }
+}
+
+
+/* =========================================
+   RESPONSIVE : MOBILES
+========================================= */
+
+@media (max-width: 600px) {
+
+  .editUser-container {
+    padding: 15px;
+  }
+
+  .user-form {
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .form-field--street--email {
+    grid-column: auto;
+  }
+
+  .btn-cancel,
+  .btn-register {
+    width: 100%;
+
+    button[tuiButton] {
+      width: 100%;
+    }
+  }
 }

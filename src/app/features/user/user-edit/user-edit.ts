@@ -1,5 +1,4 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { NgClass } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   TuiButton,
@@ -15,12 +14,10 @@ import { AuthService } from '../../auth/service/auth-service';
 import { UserService } from '../service/user-service';
 import { UserModel } from '../model/user';
 import { UserForm } from '../model/userForm';
-import { ThemeService } from '../../../core/services/ThemeService';
 
 @Component({
   selector: 'app-user-edit',
   imports: [
-    NgClass,
     ReactiveFormsModule,
     TuiButton,
     TuiCalendar,
@@ -37,9 +34,7 @@ import { ThemeService } from '../../../core/services/ThemeService';
 export class UserEdit implements OnInit {
   private readonly _authService = inject(AuthService); // Get the id from user connected
   private readonly userService = inject(UserService); // Get the data and edit the user
-  private _themeService = inject(ThemeService); // Call the service to change color theme
 
-  isDarkMode = false; // Change theme from light to dark
   protected readonly show = signal(false); // Show notification
   protected readonly isSuccess = signal(false); // Change color Green for success or Red error
 
@@ -52,7 +47,6 @@ export class UserEdit implements OnInit {
   ngOnInit() {
     this.getIdUser();
     this.getUserDetail();
-    this.changeTheme();
   }
 
   protected editUserForm = new FormGroup({
@@ -118,8 +112,23 @@ export class UserEdit implements OnInit {
     });
   }
 
-  changeTheme() {
-    this.isDarkMode = this._themeService.isDarkMode(); // Get current theme
-    this._themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
+  onCancel(): void {
+    this.editUserForm.patchValue({
+      name: this.userModel.name,
+      firstName: this.userModel.firstName,
+      birthdate: this.userModel.birthdate,
+      pseudo: this.userModel.pseudo,
+      email: this.userModel.email,
+      street: this.userModel.street,
+      city: this.userModel.city,
+      zipCode: this.userModel.zipCode,
+    });
+
+    this.editUserForm.markAsPristine();
+    this.editUserForm.markAsUntouched();
+
+    this.messageSuccess = 'Les modifications ont été annulées.';
+    this.isSuccess.set(false);
+    this.show.set(true);
   }
 }
