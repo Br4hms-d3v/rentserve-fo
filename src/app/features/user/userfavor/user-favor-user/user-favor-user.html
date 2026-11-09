@@ -1,146 +1,415 @@
-<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="userFavor">
-  @if (userFavorList.length <= 0) {
-    <div class="userFavor">
-      <div>
-        <h1> Mes services </h1>
+
+<div
+  class="user-favor-page"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+  <div class="page-container">
+
+    <!-- En-tête -->
+    <header class="page-header">
+      <div class="header-content">
+        <div>
+          <span class="page-eyebrow">GESTION DE VOS PRESTATIONS</span>
+          <h1>Mes services</h1>
+          <p class="page-description">
+            Retrouvez et gérez facilement l'ensemble des services
+            que vous proposez.
+          </p>
+        </div>
+
+        <button
+          class="btn-createFavor"
+          tuiButton
+          type="button"
+          size="m"
+          [routerLink]="['/user-favor', 'new-favor']"
+        >
+          <tui-icon icon="@tui.plus" />
+          Demander un service
+        </button>
       </div>
 
-      <button
-        class="btn-createFavor"
-        tuiButton
-        size="s"
-        [routerLink]="['/user-favor','new-favor']"
-      >
-        Demander un service
-      </button>
-      <p id="text-add-favor">
+      <div class="header-divider"></div>
+    </header>
 
-      </p>
-    </div>
-  } @else {
-    <div>
-      <h1> Mes services </h1>
-    </div>
+    <!-- Aucun service -->
+    @if (userFavorList.length === 0) {
+      <section class="empty-state">
 
-    <button
-      class="btn-createFavor"
-      tuiButton
-      size="s"
-      [routerLink]="['/user-favor','new-favor']"
-    >
-      Demander un service
-    </button>
+        <div class="empty-icon">
+          <tui-icon icon="@tui.briefcase-business" />
+        </div>
 
-    <table tuiTable>
-      <thead>
-      <tr>
-        <th tuiTh id="pictureFavorTD">Image</th>
+        <h2>Aucun service enregistré</h2>
 
-        <th tuiTh id="nameFavorTD">
-          <div
-            class="name-header"
-            (click)="NameFavorSearch()"
-          >
-            @if (!showNameFavorSearch) {
-              <span>
-            Nom du service
+        <p>
+          Vous n'avez pas encore enregistré de service.
+          Faites votre première demande pour commencer.
+        </p>
+
+        <button
+          tuiButton
+          class="btn-createFavor"
+          type="button"
+          [routerLink]="['/user-favor', 'new-favor']"
+        >
+          <tui-icon icon="@tui.plus" />
+          Demander mon premier service
+        </button>
+
+      </section>
+    } @else {
+
+      <!-- Statistiques -->
+      <section class="summary-section">
+
+        <div class="summary-card">
+          <div class="summary-icon">
+            <tui-icon icon="@tui.briefcase-business" />
+          </div>
+
+          <div>
+            <span class="summary-label">Services enregistrés</span>
+            <strong>{{ userFavorList.length }}</strong>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-icon available-icon">
+            <tui-icon icon="@tui.check-circle" />
+          </div>
+
+          <div>
+            <span class="summary-label">Disponibles</span>
+            <strong>{{ getAvailableCount() }}</strong>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-icon unavailable-icon">
+            <tui-icon icon="@tui.clock" />
+          </div>
+
+          <div>
+            <span class="summary-label">Indisponibles</span>
+            <strong>
+              {{ userFavorList.length - getAvailableCount() }}
+            </strong>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Inventaire des services -->
+      <section class="favor-section">
+
+        <div class="section-header">
+          <div>
+            <h2>Mes services</h2>
+            <p>Consultez et gérez vos prestations.</p>
+          </div>
+
+          <!-- Recherche -->
+          <div class="search-container">
+
             <tui-icon
               icon="@tui.search"
-              class="search-icon"></tui-icon>
-          </span>
+              class="search-icon"
+            />
+
+            <input
+              type="text"
+              class="name-search"
+              placeholder="Rechercher un service..."
+              aria-label="Rechercher un service par son nom"
+              [(ngModel)]="nameFavorSearch"
+              (ngModelChange)="page = 0"
+            />
+
+            @if (nameFavorSearch) {
+              <button
+                type="button"
+                class="clear-search"
+                aria-label="Effacer la recherche"
+                (click)="nameFavorSearch = ''; page = 0"
+              >
+                <tui-icon icon="@tui.x" />
+              </button>
             }
 
-            @if (showNameFavorSearch) {
-              <input
-                type="text"
-                class="name-search"
-                placeholder="Rechercher..."
-                [(ngModel)]="nameFavorSearch"
-                (click)="$event.stopPropagation()"
-                (keydown)="$event.stopPropagation()"
-                autofocus
-              />
-            }
           </div>
-        </th>
+        </div>
 
-        <th tuiTh id="priceFavorTD">Tarif</th>
-        <th tuiTh id="availableFavorTD">Disponible</th>
-        <th tuiTh id="actionFavorTD">Action</th>
-      </tr>
-      </thead>
+        <!-- Tableau ordinateur et tablette -->
+        <div class="table-wrapper">
 
-      <tbody tuiTbody>
-        @for (userFavor of paginatedUserFavorList(); track $index) {
-          <tr>
-            <td tuiTd>
-              <img
-                id="pictureFavorIMG"
-                ngSrc="/userFavour/{{ userFavor.picture }}"
-                alt="{{ userFavor.picture }}"
-                width="100"
-                height="100"
-                priority
-              />
-            </td>
+          <table tuiTable class="favor-table">
 
-            <td tuiTd>
-              {{ userFavor.nameFavor.nameFavor }}
-            </td>
+            <thead>
+            <tr>
+              <th tuiTh class="picture-column">
+                Image
+              </th>
 
-            <td tuiTd>
-              {{ userFavor.priceHourFavor }} €
-            </td>
+              <th tuiTh>
+                Nom du service
+              </th>
 
-            <td tuiTd>
-              {{ userFavor.isAvailable }}
-            </td>
+              <th tuiTh class="price-column">
+                Tarif horaire
+              </th>
 
-            <td tuiTd>
-          <span tuiStatus>
-            <button
-              id="editUserFavor"
-              appearance="action"
-              iconStart="@tui.pencil"
-              size="xs"
-              tuiIconButton
-              type="button"
-              [routerLink]="['/user-favor','edit-my-favor', userFavor.id]"
-            >
-              Modifier
-            </button>
+              <th tuiTh class="availability-column">
+                Disponibilité
+              </th>
 
-            <button
-              id="deleteUserFavor"
-              appearance="action"
-              iconStart="@tui.trash"
-              size="xs"
-              tuiIconButton
-              type="button"
-              [routerLink]="['/user-favor','delete-my-favor', userFavor.id]"
-            >
-              Supprimer
-            </button>
+              <th tuiTh class="actions-column">
+                Actions
+              </th>
+            </tr>
+            </thead>
 
-            <button
-              id="seeUserFavor"
-              appearance="action"
-              iconStart="@tui.scan-eye"
-              size="xs"
-              tuiIconButton
-              type="button"
-              [routerLink]="['/user-favor','user-favor-detail', userFavor.id]"
-            >
-              Voir
-            </button>
-          </span>
-            </td>
-          </tr>
-        }
-      </tbody>
-      <tfoot>
-      <tr>
-        <td colspan="5">
+            <tbody tuiTbody>
+
+              @for (
+                userFavor of paginatedUserFavorList();
+                track userFavor.id
+                ) {
+                <tr>
+
+                  <!-- Image -->
+                  <td tuiTd>
+                    <img
+                      class="favor-image"
+                      [ngSrc]="'/userFavour/' + userFavor.picture"
+                      [alt]="userFavor.nameFavor.nameFavor"
+                      width="64"
+                      height="64"
+                    />
+                  </td>
+
+                  <!-- Nom -->
+                  <td tuiTd class="favor-name">
+                    {{ userFavor.nameFavor.nameFavor }}
+                  </td>
+
+                  <!-- Tarif -->
+                  <td tuiTd class="favor-price">
+                    {{ userFavor.priceHourFavor }} €
+                    <span>/ heure</span>
+                  </td>
+
+                  <!-- Disponibilité -->
+                  <td tuiTd>
+
+                    @if (userFavor.isAvailable) {
+                      <span class="availability-badge available">
+                        <span class="status-dot"></span>
+                        Disponible
+                      </span>
+                    } @else {
+                      <span class="availability-badge unavailable">
+                        <span class="status-dot"></span>
+                        Indisponible
+                      </span>
+                    }
+
+                  </td>
+
+                  <!-- Actions -->
+                  <td tuiTd>
+
+                    <div class="action-buttons">
+
+                      <!-- Consulter -->
+                      <button
+                        tuiIconButton
+                        type="button"
+                        appearance="action"
+                        size="s"
+                        iconStart="@tui.eye"
+                        class="action-button action-view"
+                        title="Consulter le service"
+                        aria-label="Consulter le service"
+                        [routerLink]="[
+                          '/user-favor',
+                          'user-favor-detail',
+                          userFavor.id
+                        ]"
+                      ></button>
+
+                      <!-- Modifier -->
+                      <button
+                        tuiIconButton
+                        type="button"
+                        appearance="action"
+                        size="s"
+                        iconStart="@tui.pencil"
+                        class="action-button action-edit"
+                        title="Modifier le service"
+                        aria-label="Modifier le service"
+                        [routerLink]="[
+                          '/user-favor',
+                          'edit-my-favor',
+                          userFavor.id
+                        ]"
+                      ></button>
+
+                      <!-- Supprimer -->
+                      <button
+                        tuiIconButton
+                        type="button"
+                        appearance="action"
+                        size="s"
+                        iconStart="@tui.trash-2"
+                        class="action-button action-delete"
+                        title="Supprimer le service"
+                        aria-label="Supprimer le service"
+                        [routerLink]="[
+                          '/user-favor',
+                          'delete-my-favor',
+                          userFavor.id
+                        ]"
+                      ></button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              } @empty {
+                <tr>
+                  <td tuiTd colspan="5" class="no-result">
+                    <tui-icon icon="@tui.search-x" />
+                    Aucun service ne correspond à votre recherche.
+                  </td>
+                </tr>
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+        <!-- Version mobile : cartes -->
+        <div class="mobile-favor-list">
+
+          @for (
+            userFavor of paginatedUserFavorList();
+            track userFavor.id
+            ) {
+            <article class="mobile-favor-card">
+
+              <div class="mobile-card-header">
+
+                <img
+                  class="mobile-favor-image"
+                  [ngSrc]="'/userFavour/' + userFavor.picture"
+                  [alt]="userFavor.nameFavor.nameFavor"
+                  width="72"
+                  height="72"
+                />
+
+                <div class="mobile-favor-info">
+
+                  <h3>
+                    {{ userFavor.nameFavor.nameFavor }}
+                  </h3>
+
+                  <span class="favor-price">
+                    {{ userFavor.priceHourFavor }} €
+                    <span>/ heure</span>
+                  </span>
+
+                </div>
+
+              </div>
+
+              <div class="mobile-card-details">
+
+                @if (userFavor.isAvailable) {
+                  <span class="availability-badge available">
+                    <span class="status-dot"></span>
+                    Disponible
+                  </span>
+                } @else {
+                  <span class="availability-badge unavailable">
+                    <span class="status-dot"></span>
+                    Indisponible
+                  </span>
+                }
+
+              </div>
+
+              <div class="mobile-card-actions">
+
+                <!-- Consulter -->
+                <button
+                  tuiButton
+                  type="button"
+                  size="s"
+                  appearance="secondary"
+                  [routerLink]="[
+                    '/user-favor',
+                    'user-favor-detail',
+                    userFavor.id
+                  ]"
+                >
+                  <tui-icon icon="@tui.eye" />
+                  Voir
+                </button>
+
+                <!-- Modifier -->
+                <button
+                  tuiButton
+                  type="button"
+                  size="s"
+                  appearance="secondary"
+                  [routerLink]="[
+                    '/user-favor',
+                    'edit-my-favor',
+                    userFavor.id
+                  ]"
+                >
+                  <tui-icon icon="@tui.pencil" />
+                  Modifier
+                </button>
+
+                <!-- Supprimer -->
+                <button
+                  tuiButton
+                  type="button"
+                  size="s"
+                  appearance="secondary"
+                  class="mobile-delete-button"
+                  [routerLink]="[
+                    '/user-favor',
+                    'delete-my-favor',
+                    userFavor.id
+                  ]"
+                >
+                  <tui-icon icon="@tui.trash-2" />
+                  Supprimer
+                </button>
+
+              </div>
+
+            </article>
+
+          } @empty {
+            <div class="mobile-no-result">
+              Aucun service ne correspond à votre recherche.
+            </div>
+          }
+
+        </div>
+
+        <!-- Pagination commune -->
+        <div class="favor-pagination">
+
           <tui-table-pagination
             id="pagination"
             [items]="sizeOptions"
@@ -148,9 +417,11 @@
             [(page)]="page"
             [(size)]="size"
           />
-        </td>
-      </tr>
-      </tfoot>
-    </table>
-  }
+
+        </div>
+
+      </section>
+    }
+
+  </div>
 </div>
