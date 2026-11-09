@@ -1,135 +1,526 @@
-@light-background-color: #F1EFE8;
-@light-title: #3B6D11 !important;
-@light-text: #5C8A3A !important;
-@light-label-input: #3B6D11 !important;
-@light-input: #5C8A3A !important;
-@light-icon-input: #3B6D11 !important;
+/* =========================================
+   PALETTE DE COULEURS
+========================================= */
 
-@dark-background-color: #1C1F17;
-@dark-title: #8FC15C;
-@dark-text: #A6A599 !important;
-@dark-label-input: #8FC15C !important;
-@dark-input: #8FC15C !important;
-@dark-icon-input: #7FB84D !important;
+// LIGHT
+@light-primary: #173B57;
+@light-secondary: #3B82F6;
+@light-active: #2563EB;
+@light-background: #FFFFFF;
+@light-card: #F3F6F8;
+@light-surface: #E8EEF3;
+@light-title: #263746;
+@light-text: #64748B;
+@light-border: #D8E1E9;
+
+// DARK
+@dark-primary: #0B1F33;
+@dark-secondary: #3B82F6;
+@dark-active: #60A5FA;
+@dark-background: #071522;
+@dark-card: #172A3D;
+@dark-surface: #20364D;
+@dark-title: #F1F5F9;
+@dark-text: #A8B7C9;
+@dark-border: #30465C;
+
+// DANGER
+@danger: #DC2626;
+@danger-hover: #B91C1C;
+
+
+/* =========================================
+   STRUCTURE GÉNÉRALE
+========================================= */
 
 .delete-user-container {
-  height: 70vh;
+  min-height: 80vh;
+  width: 100%;
+  padding: 40px 20px;
   box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  transition: background-color 0.25s ease;
 }
 
-h1 {
-  font-family: 'Libre Baskerville italic', serif;
-  text-align: center;
-  padding: 20px;
-}
 
-p {
-  margin: auto;
+/* =========================================
+   HEADER
+========================================= */
+
+.delete-header {
   width: 100%;
   max-width: 600px;
-  text-align: justify;
+  text-align: center;
+  margin-bottom: 25px;
+
+  .header-icon {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 15px;
+    border-radius: 14px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    tui-icon {
+      font-size: 28px;
+    }
+  }
+
+  h1 {
+    font-family: inherit;
+    font-size: 25px;
+    font-weight: 700;
+    margin: 0 0 15px;
+  }
+
+  .delete-description {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    font-size: 14px;
+    line-height: 1.7;
+    text-align: center;
+  }
 }
+
+
+/* =========================================
+   AVERTISSEMENT
+========================================= */
+
+.warning-info {
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+
+  tui-icon {
+    flex-shrink: 0;
+    font-size: 21px;
+    margin-top: 2px;
+  }
+
+  strong {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+}
+
+
+/* =========================================
+   DIVIDER
+========================================= */
+
+.delete-divider {
+  width: 100%;
+  max-width: 600px;
+  height: 1px;
+  margin-bottom: 25px;
+}
+
+
+/* =========================================
+   FORMULAIRE
+========================================= */
 
 .userDelete-form {
-  width: 80%;
-  max-width: 900px;
+  width: 100%;
+  max-width: 600px;
+
+  display: flex;
   flex-direction: column;
-  margin: 25px auto;
-  display: grid;
-  gap: 20px 40px;
-  grid-column: 1 / -1;
+  gap: 20px;
 }
 
+.form-field {
+  width: 100%;
+  min-width: 0;
+}
+
+.password-toggle {
+  min-width: 40px;
+  padding: 0;
+}
+
+
+/* =========================================
+   BOUTON SUPPRESSION
+========================================= */
+
 .btn-delete {
-  background-color: red;
+  width: 100%;
+  min-height: 46px;
+  border-radius: 9px;
+
+  background-color: @danger;
+  color: #FFFFFF;
+  border-color: @danger;
+
+  font-weight: 600;
+
+  tui-icon {
+    margin-right: 8px;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: @danger-hover;
+    border-color: @danger-hover;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+
+/* =========================================
+   DIALOG
+========================================= */
+
+.dialog-suppression {
+  padding: 10px 5px;
+
+  .dialog-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    tui-icon {
+      font-size: 25px;
+      color: @danger;
+    }
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin: 0 0 12px;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+  }
 }
 
 .dialog-footer {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 24px;
+  margin-top: 25px;
+
+  button {
+    min-height: 42px;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+
+  .btn-cancel {
+    background-color: @light-surface;
+    color: @light-title;
+    border-color: @light-border;
+  }
+
+  .btn-delete {
+    background-color: @danger;
+    color: #FFFFFF;
+    border-color: @danger;
+
+    &:hover {
+      background-color: @danger-hover;
+      border-color: @danger-hover;
+    }
+  }
 }
 
-// Dialog
-::ng-deep tui-dialog:has(.dialog-suppression) {
-  background-color: @light-background-color !important;
-  color: red;
-}
 
-/* change also the title of dialog*/
+/* =========================================
+   THÈME CLAIR
+========================================= */
 
-::ng-deep tui-dialog:has(.dialog-suppression) .t-title {
-  color: @light-background-color;
-}
+:host-context(.light-mode) {
 
-/* Button cancel */
-::ng-deep tui-dialog:has(.dialog-suppression) .btn-cancel {
-  background-color: orange !important;
-  color: white;
-}
-
-/* Button delete */
-::ng-deep tui-dialog:has(.dialog-suppression) .btn-delete {
-  background-color: red !important;
-  color: white;
-}
-
-
-// THEME
-
-.light-mode {
-  h1 {
+  .delete-user-container {
+    background-color: transparent;
     color: @light-title;
   }
 
-  p {
+  .delete-header {
+
+    .header-icon {
+      background-color: @light-card;
+      color: @light-primary;
+    }
+
+    h1 {
+      color: @light-title;
+    }
+
+    .delete-description {
+      color: @light-text;
+    }
+  }
+
+  .warning-info {
+    background-color: @light-card;
+    color: @light-title;
+
+    tui-icon {
+      color: @danger;
+    }
+
+    p {
+      color: @light-text;
+    }
+  }
+
+  .delete-divider {
+    background-color: @light-border;
+  }
+
+  // INPUTS TAIGA UI
+
+  tui-textfield {
+    --tui-background: @light-surface;
+    --tui-text-primary: @light-title;
+    --tui-text-secondary: @light-text;
+    --tui-border-normal: @light-border;
+  }
+
+  input[tuiInput] {
+    color: @light-title;
+    background-color: @light-surface;
+    caret-color: @light-active;
+  }
+
+  label[tuiLabel] {
     color: @light-text;
   }
 
-  input[tuiInput] {
-    color: @light-label-input;
-  }
-
-  label[tuiLabel] {
-    color: @light-label-input;
-  }
-
-  .form-field,
-  .form-field:focus-within,
-  .form-field:hover {
-    color: @light-icon-input;
+  .form-field {
+    color: @light-primary;
   }
 
   tui-icon {
-    color: @light-icon-input;
+    color: @light-active;
+  }
+
+  .password-toggle {
+    color: @light-active;
+  }
+
+  // DIALOG
+
+  .dialog-suppression {
+    color: @light-title;
+
+    p {
+      color: @light-text;
+    }
+  }
+
+  .dialog-footer {
+
+    .btn-cancel {
+      background-color: @light-surface;
+      color: @light-title;
+      border-color: @light-border;
+
+      &:hover {
+        background-color: darken(@light-surface, 5%);
+      }
+    }
   }
 }
 
-.dark-mode {
-  h1 {
+
+/* =========================================
+   THÈME SOMBRE
+========================================= */
+
+:host-context(.dark-mode) {
+
+  .delete-user-container {
+    background-color: transparent;
     color: @dark-title;
   }
 
-  p {
-    color: @dark-text;
+  .delete-header {
+
+    .header-icon {
+      background-color: @dark-surface;
+      color: @dark-active;
+    }
+
+    h1 {
+      color: @dark-title;
+    }
+
+    .delete-description {
+      color: @dark-text;
+    }
+  }
+
+  .warning-info {
+    background-color: @dark-card;
+    color: @dark-title;
+
+    tui-icon {
+      color: #F87171;
+    }
+
+    p {
+      color: @dark-text;
+    }
+  }
+
+  .delete-divider {
+    background-color: @dark-border;
+  }
+
+  // INPUTS TAIGA UI
+
+  tui-textfield {
+    --tui-background: @dark-surface;
+    --tui-text-primary: @dark-title;
+    --tui-text-secondary: @dark-text;
+    --tui-border-normal: @dark-border;
   }
 
   input[tuiInput] {
-    color: @dark-label-input;
+    color: @dark-title;
+    background-color: @dark-surface;
+    caret-color: @dark-active;
   }
 
   label[tuiLabel] {
-    color: @dark-label-input;
+    color: @dark-text;
   }
 
-  .form-field,
-  .form-field:focus-within,
-  .form-field:hover {
-    color: @dark-icon-input;
+  .form-field {
+    color: @dark-active;
   }
 
   tui-icon {
-    color: @dark-icon-input;
+    color: @dark-active;
   }
+
+  .password-toggle {
+    color: @dark-active;
+  }
+
+  // DIALOG
+
+  .dialog-suppression {
+    color: @dark-title;
+
+    p {
+      color: @dark-text;
+    }
+  }
+
+  .dialog-footer {
+
+    .btn-cancel {
+      background-color: @dark-surface;
+      color: @dark-title;
+      border-color: @dark-border;
+
+      &:hover {
+        background-color: lighten(@dark-surface, 5%);
+      }
+    }
+  }
+}
+
+
+/* =========================================
+   RESPONSIVE TABLETTE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .delete-user-container {
+    padding: 30px 16px;
+  }
+
+}
+
+
+/* =========================================
+   RESPONSIVE MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+
+  .delete-user-container {
+    min-height: 100%;
+    padding: 20px 12px;
+  }
+
+  .delete-header {
+
+    h1 {
+      font-size: 21px;
+    }
+
+    .delete-description {
+      font-size: 13px;
+      text-align: left;
+    }
+  }
+
+  .warning-info {
+    padding: 13px;
+  }
+
+  .userDelete-form {
+    gap: 17px;
+  }
+
+  .dialog-footer {
+    flex-direction: column-reverse;
+
+    button {
+      width: 100%;
+    }
+  }
+
+}
+
+@media (max-width: 350px) {
+
+  .delete-header h1 {
+    font-size: 19px;
+  }
+
 }

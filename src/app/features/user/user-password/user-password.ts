@@ -1,5 +1,4 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { NgClass } from '@angular/common';
 import { UserService } from '../service/user-service';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,7 +17,6 @@ import { ChangePasswordForm } from '../model/changePassword';
 @Component({
   selector: 'app-user-password',
   imports: [
-    NgClass,
     ReactiveFormsModule,
     TuiInputDirective,
     TuiLabel,
