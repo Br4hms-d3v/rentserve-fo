@@ -1,92 +1,152 @@
-<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="userMaterialReview">
-  <h1> Commmentaire</h1>
-  <table tuiTable class="review-table">
-    <thead>
-    <tr tuiThGroup>
-      <th tuiTh>Commentaires</th>
-      <th tuiTh>Note</th>
-      <th tuiTh>Pseudo</th>
-      <th tuiTh>Action</th>
-    </tr>
-    </thead>
-    <tbody tuiTbody>
-      @if (reviewUserMaterialModel.length == 0) {
-        <tr tuiThGroup>
-          <td tuiTd colspan="4">
-            Il n' y aucun commentaire
-          </td>
-        </tr>
-      } @else {
-        @for (review of reviewUserMaterialModel.slice(index * size, (index + 1) * size); track review.id) {
-          <tr tuiThGroup class="rawReview">
-            <td tuiTd>{{ review.comment }}</td>
-            <td tuiTd>
-              <tui-rating
-                class="rating"
-                [icon]="icon"
-                [max]="5"
-                [ngModel]="review.rating"
-                [readonly]="true"
-              />
-            </td>
-            <td tuiTd>{{ review.user.pseudo }}</td>
-            <td tuiTd>
-              @if (review.user.id == currentUserId) {
-                <button
-                  id="editReview"
-                  appearance="action"
-                  iconStart="@tui.pencil"
-                  size="xs"
-                  tuiIconButton
-                  type="button"
-                  tuiButton
-                  (click)="onEditReview(review.id)"
-                >
-                  Modifier
-                </button>
+<div
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+  class="userMaterialReview"
+>
+  <div class="review-container">
 
-                <button
-                  id="deleteReview"
-                  appearance="action"
-                  iconStart="@tui.trash"
-                  size="xs"
-                  tuiIconButton
-                  type="button"
-                  (click)="onDeleteReview(review.id)"
-                >
-                  Supprimer
-                </button>
-              }
-            </td>
-          </tr>
-        }
+    <!-- En-tête -->
+    <header class="review-header">
+      <div>
+        <h1>Commentaires</h1>
+        <p class="review-subtitle">
+          Consultez les avis et les retours des utilisateurs sur ce contenu.
+        </p>
+      </div>
+
+      @if (showCreateButton) {
+        <button
+          tuiButton
+          type="button"
+          appearance="primary"
+          iconStart="@tui.plus"
+          (click)="createReview()"
+        >
+          Ajouter un commentaire
+        </button>
       }
-    </tbody>
-    <tfoot>
-    <tr>
-      <td colspan="4">
-        <div class="table-footer">
+    </header>
+
+    <!-- Contenu -->
+    <section class="review-content">
+
+      @if (reviewUserMaterialModel.length === 0) {
+
+        <div class="empty-state">
+          <tui-icon
+            icon="@tui.message-square"
+            class="empty-icon"></tui-icon>
+
+          <h2>Aucun commentaire pour le moment</h2>
+
+          <p>
+            Soyez le premier à partager votre avis sur ce contenu.
+          </p>
+
+        </div>
+
+      } @else {
+
+        <!-- Tableau desktop / tablette -->
+        <div class="table-wrapper">
+          <table tuiTable class="review-table">
+
+            <thead>
+            <tr tuiThGroup>
+              <th tuiTh>Commentaire</th>
+              <th tuiTh>Note</th>
+              <th tuiTh>Utilisateur</th>
+              <th tuiTh class="action-column">Actions</th>
+            </tr>
+            </thead>
+
+            <tbody tuiTbody>
+              @for (review of reviewUserMaterialModel.slice(
+                index * size,
+                (index + 1) * size
+              );
+                track review.id) {
+                <tr class="review-row">
+
+                  <td tuiTd class="comment-cell">
+                    {{ review.comment }}
+                  </td>
+
+                  <td tuiTd class="rating-cell">
+                    <div class="rating-wrapper">
+                      <tui-rating
+                        class="rating"
+                        [icon]="icon"
+                        [max]="5"
+                        [ngModel]="review.rating"
+                        [readonly]="true"
+                      />
+                      <span class="rating-value">
+                        {{ review.rating }}/5
+                      </span>
+                    </div>
+                  </td>
+
+                  <td tuiTd class="user-cell">
+                    <span class="user-name">
+                      {{ review.user.pseudo }}
+                    </span>
+                  </td>
+
+                  <td tuiTd class="action-cell">
+                    @if (review.user.id === currentUserId) {
+
+                      <div class="action-buttons">
+
+                        <button
+                          tuiButton
+                          type="button"
+                          appearance="action"
+                          size="s"
+                          iconStart="@tui.pencil"
+                          (click)="onEditReview(review.id)"
+                        >
+                          Modifier
+                        </button>
+
+                        <button
+                          tuiButton
+                          type="button"
+                          appearance="action"
+                          size="s"
+                          iconStart="@tui.trash"
+                          (click)="onDeleteReview(review.id)"
+                        >
+                          Supprimer
+                        </button>
+
+                      </div>
+                    }
+                  </td>
+
+                </tr>
+              }
+            </tbody>
+
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <footer class="review-footer">
+
+          <span class="review-count">
+            {{ length }} commentaire(s)
+          </span>
+
           <tui-pagination
             [index]="index"
             [length]="Math.ceil(length / size)"
             (indexChange)="index = $event"
           />
 
-          @if (showCreateButton) {
-            <button
-              tuiButton
-              type="button"
-              appearance="primary"
-              iconStart="@tui.plus"
-              (click)="createReview()"
-            >
-              Écrire un commentaire
-            </button>
-          }
-        </div>
-      </td>
-    </tr>
-    </tfoot>
-  </table>
+        </footer>
 
+      }
+    </section>
+  </div>
 </div>

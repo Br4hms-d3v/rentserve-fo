@@ -1,30 +1,183 @@
-@light-background-color: #F1EFE8 !important;
-@light-label: #5F5E5A !important;
-@light-label-input: #3B6D11 !important;
-@light-btn-back: #D9764A;
-@light-btn-new: green;
+// ======================================================
+// PALETTE - LIGHT THEME
+// ======================================================
 
-@dark-background-color: #1C1F17;
-@dark-label: #A6A599 !important;
-@dark-label-input: #8FC15C !important;
+@light-background-color: #FFFFFF;
+@light-label: #263746;
+@light-label-input: #263746;
+@light-btn-back: #3B82F6;
+@light-btn-new: #173B57;
+
+@light-section: #F3F6F8;
+@light-surface: #E8EEF3;
+@light-muted: #64748B;
+@light-border: #D8E1E9;
+@light-active: #2563EB;
+
+
+// ======================================================
+// PALETTE - DARK THEME
+// ======================================================
+
+@dark-background-color: #071522;
+@dark-label: #F1F5F9;
+@dark-label-input: #F1F5F9;
+@dark-btn-new: #3B82F6;
+
+@dark-section: #172A3D;
+@dark-surface: #20364D;
+@dark-muted: #A8B7C9;
+@dark-border: #30465C;
+@dark-active: #60A5FA;
+
+
+// ======================================================
+// SHARED
+// ======================================================
+
+@success: #16A34A;
+@error: #DC2626;
+@rating-color: #F59E0B;
+
+
+// ======================================================
+// MAIN
+// ======================================================
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
 
 .userMaterialReview {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 14px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
   form {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
   }
+
+  // ====================================================
+  // HEADER
+  // ====================================================
+
+  .review-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    .review-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      font-size: 22px;
+    }
+
+    .review-intro {
+      flex: 1;
+      min-width: 0;
+
+      h3 {
+        margin: 0 0 6px;
+        font-size: 19px;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+
+      p {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+    }
+  }
+
+  // ====================================================
+  // SECTIONS
+  // ====================================================
+
+  .review-section,
+  .rating-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 94%;
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    transition: background-color 0.2s ease;
+  }
+
+  .field-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .required {
+    margin-left: 3px;
+    color: @error;
+  }
+
+  .field-hint {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .field-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .character-count {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  // ====================================================
+  // TEXTFIELD
+  // ====================================================
 
   tui-textfield {
     width: 100%;
   }
 
-  .rating-footer {
+  textarea[tuiTextarea] {
+    color: inherit;
+    font-size: 14px;
+    line-height: 1.6;
+    resize: vertical;
+  }
+
+  // ====================================================
+  // RATING
+  // ====================================================
+
+  .rating-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     gap: 16px;
-    width: 100%;
+
+    .field-hint {
+      margin: 6px 0 0;
+    }
   }
 
   .rating-container {
@@ -33,35 +186,265 @@
     gap: 12px;
   }
 
+  .rating-value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    min-width: 48px;
+    height: 36px;
+    padding: 0 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .rating {
+    align-self: flex-start;
+    color: @rating-color;
+    font-size: 28px;
+  }
+
+  // ====================================================
+  // VALIDATION
+  // ====================================================
+
+  .field-error {
+    margin: 0;
+    color: @error;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  // ====================================================
+  // ACTIONS
+  // ====================================================
+
+  .review-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+
+    button {
+      min-width: 220px;
+      border-radius: 9px;
+      font-weight: 600;
+      transition: background-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+
+      &:not(:disabled):hover {
+        transform: translateY(-1px);
+      }
+
+      &:focus-visible {
+        outline: 3px solid @light-active;
+        outline-offset: 3px;
+      }
+
+      &:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+    }
+  }
 }
 
-// THEME
-#btn-save {
-  background-color: @light-btn-new;
-  color: white;
-}
+
+// ======================================================
+// LIGHT THEME
+// ======================================================
 
 .light-mode {
   background-color: @light-background-color;
+  color: @light-label;
 
-  label[tuiLabel] {
-    color: @light-label;
+  .review-icon {
+    background-color: @light-section;
+    color: @light-btn-new;
   }
 
-  textarea {
-    color: @light-label-input;
+  .review-intro {
+    h3 {
+      color: @light-btn-new;
+    }
+
+    p {
+      color: @light-muted;
+    }
+  }
+
+  .review-section,
+  .rating-section {
+    background-color: @light-section;
+    border-color: @light-border;
+  }
+
+  .field-label {
+    color: @light-label
+  }
+
+  .field-hint,
+  .character-count {
+    color: @light-muted;
   }
 
   tui-textfield {
-    --tui-textfield-icon-color: #f44336;
+    --tui-textfield-icon-color: #2563EB !important;
   }
 
+  textarea[tuiTextarea] {
+    color: @light-label-input;
+  }
+
+  .rating-value {
+    background-color: @light-surface;
+    color: @light-btn-new;
+  }
+
+  .review-actions button,
+  #btn-save {
+    background-color: @light-btn-new;
+    color: #FFFFFF;
+
+    &:hover:not(:disabled) {
+      background-color: @light-active;
+    }
+  }
 }
+
+
+// ======================================================
+// DARK THEME
+// ======================================================
 
 .dark-mode {
   background-color: @dark-background-color;
+  color: @dark-label;
 
-  label {
+  .review-icon {
+    background-color: @dark-surface;
+    color: @dark-active;
+  }
+
+  .review-intro {
+    h3 {
+      color: @dark-label;
+    }
+
+    p {
+      color: @dark-muted;
+    }
+  }
+
+  .review-section,
+  .rating-section {
+    background-color: @dark-section;
+    border-color: @dark-border;
+  }
+
+  .field-label {
     color: @dark-label;
+  }
+
+  .field-hint,
+  .character-count {
+    color: @dark-muted;
+  }
+
+  tui-textfield {
+    --tui-textfield-icon-color: @dark-active;
+  }
+
+  textarea {
+    color: @dark-surface;
+  }
+
+  .rating-value {
+    background-color: @dark-surface;
+    color: @dark-active;
+  }
+
+  .review-actions button,
+  #btn-save {
+    background-color: @dark-btn-new;
+    color: #FFFFFF;
+
+    &:hover:not(:disabled) {
+      background-color: @dark-active;
+    }
+  }
+}
+
+
+// ======================================================
+// TABLET
+// ======================================================
+
+@media screen and (max-width: 768px) {
+  .userMaterialReview {
+    form {
+      gap: 18px;
+    }
+
+    .review-section,
+    .rating-section {
+      padding: 16px;
+    }
+  }
+}
+
+
+// ======================================================
+// MOBILE
+// ======================================================
+
+@media screen and (max-width: 480px) {
+  .userMaterialReview {
+    form {
+      gap: 16px;
+    }
+
+    .review-header {
+      gap: 10px;
+
+      .review-icon {
+        width: 40px;
+        height: 40px;
+      }
+
+      .review-intro {
+        h3 {
+          font-size: 16px;
+        }
+
+        p {
+          font-size: 12px;
+        }
+      }
+    }
+
+    .review-section,
+    .rating-section {
+      padding: 14px;
+      gap: 10px;
+    }
+
+    .rating-header {
+      align-items: flex-start;
+    }
+
+    .field-footer {
+      align-items: flex-start;
+    }
+
+    .review-actions {
+      width: 100%;
+
+      button {
+        width: 100%;
+        min-width: 0;
+      }
+    }
   }
 }
