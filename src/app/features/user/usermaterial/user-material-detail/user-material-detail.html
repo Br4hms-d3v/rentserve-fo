@@ -1,72 +1,177 @@
-<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="userMaterialDetail">
+<div
+  class="userMaterialDetail"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+
   @if (userMaterialDetail; as userMaterial) {
-    <h1>
-      {{ userMaterial.material.nameMaterial }}
-    </h1>
 
-    <div class="material-detail" >
+    <main class="page-container">
 
-      <!-- Detail about user material -->
-      <section class="material-info">
-        <div class="material-description">
-          <strong>Description</strong>
-          <p>
-            {{ userMaterial.descriptionMaterial }}
+      <!-- PAGE HEADER -->
+      <header class="page-header">
+        <div class="header-content">
+
+          <span class="page-subtitle">
+            Détail de votre matériel
+          </span>
+
+          <h1>{{ userMaterial.material.nameMaterial }}</h1>
+
+          <p class="header-description">
+            Retrouvez toutes les informations relatives à ce matériel.
           </p>
+
         </div>
+      </header>
 
-        <div class="material-property">
-          <strong>Prix</strong>
-          <p>
-            {{ userMaterial.priceHourMaterial }} € de l'heure
-          </p>
-        </div>
+      <!-- MAIN CONTENT -->
+      <div class="material-detail">
 
-        <div class="material-property">
-          <strong>Disponible</strong>
-          <p>
-            {{ userMaterial.isAvailable ? 'Oui' : 'Non' }}
-          </p>
-        </div>
+        <!-- MATERIAL INFORMATION -->
+        <section class="material-info">
 
-        <div class="material-property">
-          <strong>État</strong>
-          <p>
-            {{ userMaterial.state }}
-          </p>
-        </div>
-
-        <div class="material-property">
-          <strong>Propriétaire</strong>
-          <p>
-            {{ userMaterial.user.pseudo }}
-          </p>
-        </div>
-
-      </section>
-
-
-      <!-- Pictures -->
-      <section class="material-gallery">
-
-        @for (picture of userMaterial.pictures; track picture) {
-
-          <div class="picture-container">
-            <img
-              [src]="'./public/userMaterials/' + picture"
-              [alt]="userMaterial.material.nameMaterial"
-            />
+          <div class="section-heading">
+            <h2>Informations générales</h2>
+            <p>Les caractéristiques de ce matériel.</p>
           </div>
 
-        }
+          <!-- DESCRIPTION -->
+          <div class="info-item description-item">
+            <span class="info-label">Description</span>
 
-      </section>
+            <p class="info-value">
+              {{ userMaterial.descriptionMaterial }}
+            </p>
+          </div>
+
+          <!-- PRICE -->
+          <div class="info-item price-item">
+            <span class="info-label">Tarif horaire</span>
+
+            <div class="price-value">
+              <strong>{{ userMaterial.priceHourMaterial }}</strong>
+              <span>€/heure</span>
+            </div>
+          </div>
+
+          <!-- AVAILABILITY -->
+          <div class="info-item">
+            <span class="info-label">Disponibilité</span>
+
+            <span
+              class="availability-badge"
+              [class.available]="userMaterial.isAvailable"
+              [class.unavailable]="!userMaterial.isAvailable"
+            >
+              <span class="status-dot"></span>
+
+              {{ userMaterial.isAvailable ? 'Disponible' : 'Indisponible' }}
+            </span>
+          </div>
+
+          <!-- MATERIAL STATE -->
+          <div class="info-item">
+            <span class="info-label">État du matériel</span>
+
+            <span class="material-state">
+              {{ userMaterial.state }}
+            </span>
+          </div>
+
+          <!-- OWNER -->
+          <div class="info-item owner-item">
+            <span class="info-label">Propriétaire du matériel</span>
+
+            <div class="owner-content">
+
+              <div class="owner-avatar">
+                {{ userMaterial.user.pseudo.charAt(0).toUpperCase() }}
+              </div>
+
+              <div class="owner-details">
+                <strong>{{ userMaterial.user.pseudo }}</strong>
+                <span>Propriétaire</span>
+              </div>
+
+            </div>
+          </div>
+
+        </section>
+
+        <!-- PICTURE GALLERY -->
+        <section class="material-gallery">
+
+          <div class="section-heading">
+            <h2>Galerie photos</h2>
+
+            <p>
+              {{ userMaterial.pictures.length }}
+              {{ userMaterial.pictures.length > 1 ? 'photos' : 'photo' }}
+              associée{{ userMaterial.pictures.length > 1 ? 's' : '' }}
+              à ce matériel.
+            </p>
+          </div>
+
+          @if (userMaterial.pictures.length > 0) {
+
+            <div class="gallery-grid">
+
+              @for (picture of userMaterial.pictures; track picture) {
+
+                <div class="picture-container">
+
+                  <img
+                    [src]="'/userMaterials/' + picture"
+                    [alt]="'Photo du matériel ' + userMaterial.material.nameMaterial"
+                    loading="lazy"
+                  />
+
+                </div>
+
+              }
+
+            </div>
+
+          } @else {
+
+            <div class="empty-gallery">
+              <span class="empty-icon">▧</span>
+
+              <p>
+                Aucune photo n'est disponible pour ce matériel.
+              </p>
+            </div>
+
+          }
+
+        </section>
+
+      </div>
+
+    </main>
+
+  } @else {
+
+    <div class="empty-state">
+
+      <div class="empty-state-content">
+        <span class="empty-icon">ⓘ</span>
+
+        <h2>Aucun matériel trouvé</h2>
+
+        <p>
+          Les informations de ce matériel ne sont actuellement pas disponibles.
+        </p>
+      </div>
 
     </div>
 
-  } @else {
-      <h1>La liste est vide</h1>
   }
-</div>
 
-<app-review-user-material [showCreateButton]="false"/>
+  <!-- USER REVIEWS -->
+  <section class="review-section">
+    <app-review-user-material [showCreateButton]="false" />
+  </section>
+
+</div>
