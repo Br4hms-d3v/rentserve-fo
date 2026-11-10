@@ -3,7 +3,7 @@ import { ThemeService } from '../../../core/services/ThemeService';
 import { UserMaterialService } from '../service/user-material-service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TuiBreadcrumbs, TuiPagination } from '@taiga-ui/kit';
-import { TuiButton, TuiLink } from '@taiga-ui/core';
+import { TuiButton, TuiIcon, TuiLink } from '@taiga-ui/core';
 import { NgClass } from '@angular/common';
 import { TuiItem } from '@taiga-ui/cdk';
 import { UserMaterialModel } from '../model/userMaterial';
@@ -20,6 +20,7 @@ import { TuiCard } from '@taiga-ui/layout';
     RouterLink,
     TuiCard,
     TuiButton,
+    TuiIcon,
   ],
   templateUrl: './user-material-list.html',
   styleUrl: './user-material-list.less',
@@ -38,15 +39,15 @@ export class UserMaterialList implements OnInit {
   // Breadcrumbs
   protected links = [
     {
-      caption: "Page d\'accueil",
+      caption: 'Accueil',
       routerLink: '/dashboard',
     },
     {
-      caption: 'materiels',
+      caption: 'Matériels',
       routerLink: '/material/all-materials',
     },
     {
-      caption: 'list des materiels',
+      caption: 'Matériels disponibles',
     },
   ];
 
@@ -65,12 +66,14 @@ export class UserMaterialList implements OnInit {
     this._userMaterialService.getUserMaterialByMaterial(this.nameMaterial).subscribe({
       next: (userMaterialsList) => {
         this.userMaterialsByMaterial = userMaterialsList;
-        this.length = userMaterialsList.length;
-        this.length = Math.ceil(this.userMaterialsByMaterial.length / this.size);
+        this.userMaterialsByMaterial = userMaterialsList;
+        this.length = Math.ceil(userMaterialsList.length / this.size);
+        this.index = 0;
         this._cdr.detectChanges();
       },
-      error: (error) => {
-        this.messageError = 'la liste est vide';
+      error: () => {
+        this.messageError = 'Impossible de charger les matériels. Veuillez réessayer.';
+        this.userMaterialsByMaterial = [];
         this.length = 0;
       },
     });

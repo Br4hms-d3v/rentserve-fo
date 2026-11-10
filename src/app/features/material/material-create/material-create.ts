@@ -1,11 +1,13 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   TuiButton,
   TuiDropdown,
   TuiFilterByInputPipe,
+  TuiIcon,
   TuiInput,
   TuiNotification,
+  TuiTextfield,
 } from '@taiga-ui/core';
 import { MaterialService } from '../service/material-service';
 import { ThemeService } from '../../../core/services/ThemeService';
@@ -14,21 +16,23 @@ import { CategoryService } from '../../category/service/category-service';
 import { MaterialForm } from '../model/material-form';
 import { TuiBreadcrumbs, TuiDataListWrapper, TuiSwitch } from '@taiga-ui/kit';
 import { TuiItem } from '@taiga-ui/cdk';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-material-create',
   imports: [
-    TuiBreadcrumbs,
     RouterLink,
     ReactiveFormsModule,
-    TuiDropdown,
-    TuiFilterByInputPipe,
+    TuiBreadcrumbs,
+    TuiTextfield,
     TuiInput,
+    TuiDropdown,
     TuiDataListWrapper,
     TuiFilterByInputPipe,
     TuiItem,
     TuiSwitch,
     TuiButton,
+    TuiIcon,
     TuiNotification,
   ],
   templateUrl: './material-create.html',
@@ -38,6 +42,7 @@ export class MaterialCreate implements OnInit {
   private materialService = inject(MaterialService);
   private themeService = inject(ThemeService);
   private readonly _categoryService = inject(CategoryService);
+  private readonly destroyRef = inject(DestroyRef);
 
   isDarkMode = false; // Change theme from light to dark
   protected readonly show = signal(false); // Show notification
@@ -63,19 +68,38 @@ export class MaterialCreate implements OnInit {
     },
   ];
 
-  ngOnInit() {
-    this.getCategories();
-    this.isDarkMode = this.themeService.isDarkMode(); // Get current theme
-    this.themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
-  }
+  protected readonly newMaterialForm = new FormGroup({
+    category: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
 
-  protected newMaterialForm = new FormGroup({
-    category: new FormControl('', Validators.required),
-    nameMaterial: new FormControl('', Validators.required),
-    isAvailable: new FormControl<boolean>(false, Validators.required),
+    nameMaterial: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+
+    isAvailable: new FormControl(false, {
+      nonNullable: true,
+    }),
   });
 
-  protected getCategories() {
+  ngOnInit() {
+    this.getCategories();
+    this.changeTheme();
+  }
+
+  private changeTheme(): void {
+    this.isDarkMode = this.themeService.isDarkMode();
+
+    this.themeService.darkMode$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((mode: boolean) => {
+        this.isDarkMode = mode;
+      });
+  }
+
+  protected getCategories(): void {
     this._categoryService.getCategories().subscribe({
       next: (listCat) => {
         this.categoriesList = listCat
@@ -83,24 +107,47 @@ export class MaterialCreate implements OnInit {
           .sort((a, b) => a.localeCompare(b, 'fr'));
       },
 
-      error: (err) => {
-        if (this.categoriesList.length == 0) {
-          this.messageError = 'Aucune catégorie trouvée';
-        }
+      error: () => {
+        this.categoriesList = [];
+        this.messageError = 'Impossible de récupérer la liste des catégories.';
       },
     });
   }
 
-  onSubmitNewMaterial() {
-    this.materialService.createMaterial(<MaterialForm>this.newMaterialForm.value).subscribe({
+  protected onSubmitNewMaterial(): void {
+    if (this.newMaterialForm.invalid) {
+      this.newMaterialForm.markAllAsTouched();
+      return;
+    }
+
+    const materialData = this.newMaterialForm.getRawValue() as MaterialForm;
+
+    this.materialService.createMaterial(materialData).subscribe({
       next: () => {
-        this.messageSuccess = '';
-        this.messageError = 'hh';
         this.isSuccess.set(true);
+
+        this.messageSuccess = 'Le matériel a été enregistré avec succès.';
+
+        this.messageError = '';
+
         this.show.set(true);
+
+        this.newMaterialForm.reset({
+          category: '',
+          nameMaterial: '',
+          isAvailable: false,
+        });
       },
+
       error: (err) => {
-        this.messageError = err.error?.message ?? "Erreur lors de l'enregistrement du matériel";
+        this.isSuccess.set(false);
+
+        this.messageError =
+          err.error?.message ?? "Une erreur est survenue lors de l'enregistrement du matériel.";
+
+        this.messageSuccess = '';
+
+        this.show.set(true);
       },
     });
   }

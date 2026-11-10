@@ -1,91 +1,141 @@
-<div class="userMaterial-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
 
-  <!-- Breadcrumbs -->
-  <tui-breadcrumbs>
-    @for (link of links; track link) {
-      <a
-        *tuiItem
-        tuiLink
-        [routerLink]="link.routerLink"
-      >
-        {{ link.caption }}
-      </a>
-    }
-  </tui-breadcrumbs>
+<div
+  class="userMaterial-container"
+  [ngClass]="isDarkMode ? 'dark-mode' : 'light-mode'"
+>
+  <!-- En-tête -->
+  <header class="page-header">
 
-
-  <h1>Liste des matériels</h1>
-
-  <div class="container-search-filter">
-    <!-- Button sort on state -->
-
-    <span class="spacer"></span>
-
-    <!-- Button filter price -->
-    <span class="spacer"></span>
-
-    <!-- Button create new material -->
-
-  </div>
-
-  <!-- Cards -->
-  <div class="cards-container">
-    @for (userMaterial of paginatedUserMaterials(); track userMaterial.id) {
-
-      <div class="card" tuiCardMedium>
-
-        <!-- Image -->
-        <div class="image-container">
-          <img
-            [src]="'/userMaterials/' + userMaterial.picture"
-            [alt]="userMaterial.picture"
-            alt="Image"
-          />
-        </div>
-
-        <!-- Actions -->
-        <div class="actions">
-
-          <div class="priceHour">
-            {{ userMaterial.priceHourMaterial }} € / heure
-          </div>
-
-          <button
-            tuiButton
-            type="button"
-            appearance="primary"
-            size="xs"
-            class="details-button"
-            [routerLink]="['/user-material', 'detail', userMaterial.id]"
-          >
-            détail
-          </button>
-
-        </div>
-
-        <!-- button rental -->
-        <button
-          tuiButton
-          type="button"
-          appearance="primary"
-          size="s"
-          class="btn-rental"
+    <tui-breadcrumbs>
+      @for (link of links; track link.caption) {
+        <a
+          *tuiItem
+          tuiLink
+          [routerLink]="link.routerLink"
         >
-          Louer
-        </button>
+          {{ link.caption }}
+        </a>
+      }
+    </tui-breadcrumbs>
+
+    <div class="header-content">
+      <div>
+        <h1>Matériels disponibles</h1>
+        <p class="page-description">
+          Découvrez les matériels proposés à la location.
+        </p>
+      </div>
+
+      <div class="results-count">
+        {{ userMaterialsByMaterial.length }}
+        matériel(s)
+      </div>
+    </div>
+
+  </header>
+
+  <!-- Liste des matériels -->
+  <main class="materials-content">
+
+    @if (userMaterialsByMaterial.length > 0) {
+
+      <div class="cards-container">
+
+        @for (
+          userMaterial of paginatedUserMaterials();
+          track userMaterial.id
+          ) {
+
+          <article class="material-card">
+
+            <!-- Image -->
+            <div class="image-container">
+              <img
+                [src]="'/userMaterials/' + userMaterial.picture"
+                [alt]="'Photo du matériel ' + userMaterial.id"
+                loading="lazy"
+              />
+            </div>
+
+            <!-- Informations -->
+            <div class="card-content">
+
+              <div class="price-container">
+                <span class="price-label">
+                  Tarif de location
+                </span>
+
+                <div class="price">
+                  {{ userMaterial.priceHourMaterial }}
+                  <span>€ / heure</span>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="card-actions">
+
+                <button
+                  tuiButton
+                  type="button"
+                  appearance="secondary"
+                  size="m"
+                  class="details-button"
+                  [routerLink]="[
+                    '/user-material',
+                    'detail',
+                    userMaterial.id
+                  ]"
+                >
+                  <tui-icon icon="@tui.info"></tui-icon>
+                  Détails
+                </button>
+
+                <button
+                  tuiButton
+                  type="button"
+                  appearance="primary"
+                  size="m"
+                  class="rental-button"
+                >
+                  <tui-icon icon="@tui.calendar"></tui-icon>
+                  Louer
+                </button>
+
+              </div>
+
+            </div>
+
+          </article>
+
+        }
 
       </div>
+
+      <!-- Pagination -->
+      @if (length > 1) {
+        <div class="pagination-container">
+          <tui-pagination
+            [length]="length"
+            [(index)]="index"
+          ></tui-pagination>
+        </div>
+      }
+
+    } @else {
+
+      <div class="empty-state">
+        <tui-icon icon="@tui.package-open"></tui-icon>
+
+        <h2>Aucun matériel disponible</h2>
+
+        <p>
+          Aucun matériel n'est actuellement disponible
+          dans cette catégorie.
+        </p>
+      </div>
+
     }
-  </div>
+
+  </main>
+
 </div>
-
-<!-- Pagination -->
-<div class="pagination-container">
-  <tui-pagination
-    [length]="length"
-    [style.float]="'center'"
-    [(index)]="index"
-  ></tui-pagination>
-</div>
-
-
