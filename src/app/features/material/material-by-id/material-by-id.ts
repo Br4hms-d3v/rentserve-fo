@@ -2,58 +2,75 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  inject,
+  DestroyRef,
   Input,
   OnChanges,
   SimpleChanges,
+  inject,
+  DOCUMENT,
 } from '@angular/core';
+
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TuiIcon } from '@taiga-ui/core';
+import { ThemeService } from '../../../core/services/ThemeService';
 import { MaterialService } from '../service/material-service';
 import { MaterialDetailModel } from '../model/material-detail';
-import { TuiHeader } from '@taiga-ui/layout';
-import { TuiTitle } from '@taiga-ui/core';
-import { ThemeService } from '../../../core/services/ThemeService';
-import { NgClass } from '@angular/common';
+import { distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-material-by-id',
-  imports: [TuiHeader, TuiTitle, NgClass],
+  imports: [TuiIcon],
   templateUrl: './material-by-id.html',
   styleUrl: './material-by-id.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MaterialById implements OnChanges {
-  private themeService = inject(ThemeService);
+  private readonly themeService = inject(ThemeService);
+  private readonly materialService = inject(MaterialService);
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly document = inject(DOCUMENT);
 
-  // Get data id from MaterialList
   @Input() materialId!: number;
+
   material?: MaterialDetailModel;
-  isDarkMode = false; // Change theme from light to dark
 
-  private readonly _materialService = inject(MaterialService);
+  isDarkMode = this.themeService.isDarkMode();
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['materialId']) {
+  constructor() {
+    this.themeService.darkMode$
+      .pipe(distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
+      .subscribe((mode: boolean) => {
+        this.isDarkMode = mode;
+
+        // Synchronisation du thème global
+        const root = this.document.documentElement;
+
+        root.classList.toggle('dark-mode', mode);
+        root.classList.toggle('light-mode', !mode);
+
+        this.cdr.markForCheck();
+      });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['materialId'] && this.materialId) {
       this.getMaterialById();
     }
-    this.getChangeTheme();
   }
 
-  private getMaterialById() {
-    this._materialService.getMaterial(this.materialId).subscribe({
-      next: (data) => {
-        // console.log('material reçu :', data);
-        this.material = data;
-        this.cdr.detectChanges();
-      },
-      error: (error) => {
-        console.error('Erreur lors de la récupération du material :', error);
-      },
-    });
-  }
-
-  getChangeTheme() {
-    this.isDarkMode = this.themeService.isDarkMode(); // Get current theme
-    this.themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
+  private getMaterialById(): void {
+    this.materialService
+      .getMaterial(this.materialId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (data) => {
+          this.material = data;
+          this.cdr.markForCheck();
+        },
+        error: (error) => {
+          console.error('Erreur lors de la récupération du matériau :', error);
+        },
+      });
   }
 }

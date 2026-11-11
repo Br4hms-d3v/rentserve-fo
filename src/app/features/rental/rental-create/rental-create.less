@@ -1,382 +1,505 @@
-//@light-background-color: #F1EFE8 !important;
-//@light-breadcrumb: #5F5E5A !important;
-//@light-title: #3B6D11 !important;
-//@light-strong: #993C1D !important;
-//@light-text: #3D4A2A !important;
-//@light-border: #D9764A !important;
-//@light-btn-back: #D9764A !important;
-//@light-btn-new: green !important;
-//
-//@dark-background-color: #1C1F17 !important;
-//@dark-breadcrumb: #A6A599 !important;
-//@dark-title: #8FC15C !important;
-//@dark-strong: #E8845A !important;
-//@dark-text: #F1EFE8 !important;
-//@dark-border: #A6A599 !important;
-//
-//.rental-container {
-//  height: 90vh;
-//  width: 100%;
-//  margin-top: -20px;
-//
-//}
-//
-//h1 {
-//  text-align: center;
-//  padding-top: 25px;
-//  font-family: 'Libre Baskerville italic', serif;
-//}
-//
-//.rental-form {
-//  width: 700px;
-//  max-width: 100%;
-//  display: block;
-//  margin: 0 auto;
-//}
-//
-//.rental-grid {
-//  display: grid;
-//  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-//  gap: 32px;
-//}
-//
-//.rental-column {
-//  display: flex;
-//  flex-direction: column;
-//  min-width: 0;
-//
-//  h3 {
-//    margin: 0 0 24px;
-//    font-size: 16px;
-//    font-weight: 600;
-//  }
-//
-//  .form-field {
-//    width: 100%;
-//
-//    tui-textfield {
-//      width: 100%;
-//    }
-//  }
-//
-//  .field-separator {
-//    width: 100%;
-//    margin: 28px 0;
-//    border-top: 1px dashed var(--separator-color);
-//  }
-//}
-//
-//.rental-actions {
-//  display: flex;
-//  justify-content: space-between;
-//  align-items: center;
-//  gap: 16px;
-//  margin-top: 36px;
-//  padding-top: 24px;
-//  border-top: 1px solid var(--separator-color);
-//}
-//
-//
-//// THEME
-//
-//#btn-cancel {
-//  background-color: @light-btn-back;
-//  color: #fff;
-//  width: 250px;
-//}
-//
-//#btn-new {
-//  background-color: @light-btn-new;
-//  color: #FFFFFF;
-//  width: 250px;
-//}
-//
-//
-//.light-mode{
-//  background-color: @light-background-color;
-//
-//  h1{
-//    color: @light-title;
-//  }
-//
-//  label[tuiLabel] {
-//    color: @light-breadcrumb;
-//  }
-//
-//  input[tuiInputDate]{
-//    color: @light-title;
-//  }
-//
-//  input[tuiInputTime]{
-//    color: @light-title;
-//  }
-//  h3{
-//    color: @light-strong;
-//  }
-//}
-//
-//.dark-mode{
-//  background-color: @dark-background-color;
-//
-//  h1{
-//    color: @dark-title;
-//  }
-//
-//  label[tuiLabel] {
-//    color: @dark-breadcrumb;
-//  }
-//
-//  input[tuiInputDate]{
-//    color: @dark-title;
-//  }
-//
-//  input[tuiInputTime]{
-//    color: @dark-title;
-//  }
-//  h3{
-//    color: @dark-strong;
-//  }
-//}
-//
-///* Responsive */
-//@media (max-width: 600px) {
-//  .rental-container {
-//    margin: 12px auto;
-//    padding: 18px;
-//
-//    h1 {
-//      font-size: 22px;
-//    }
-//
-//    .rental-grid {
-//      grid-template-columns: 1fr;
-//      gap: 32px;
-//    }
-//
-//    .rental-actions {
-//      margin-top: 28px;
-//
-//      button {
-//        flex: 1;
-//      }
-//    }
-//  }
-//}
-//
-//
+/* =========================================
+   DESIGN TOKENS
+========================================= */
 
-// ===== Palette (ta palette, sans !important) =====
-@light-background-color: #F1EFE8;
-@light-breadcrumb: #5F5E5A;
-@light-title: #3B6D11;
-@light-strong: #993C1D;
-@light-text: #3D4A2A;
-@light-border: #D9764A;
-@light-btn-back: #D9764A;
-@light-btn-new: green;
+@light-primary: #173B57;
+@light-accent: #3B82F6;
+@light-active: #2563EB;
+@light-background: #F5F9FF;
+@light-card: #FFFFFF;
+@light-section: #F3F6F8;
+@light-surface: #E8EEF3;
+@light-text: #263746;
+@light-secondary: #64748B;
+@light-border: #D8E1E9;
 
-@dark-background-color: #1C1F17;
-@dark-breadcrumb: #A6A599;
-@dark-title: #8FC15C;
-@dark-strong: #E8845A;
-@dark-text: #F1EFE8;
-@dark-border: #A6A599;
+@dark-primary: #0B1F33;
+@dark-accent: #3B82F6;
+@dark-active: #60A5FA;
+@dark-background: #071522;
+@dark-card: #172A3D;
+@dark-section: #172A3D;
+@dark-surface: #20364D;
+@dark-text: #F1F5F9;
+@dark-secondary: #A8B7C9;
+@dark-border: #30465C;
 
-// Couleurs ajoutées pour les champs
-@light-field-bg: #FFFFFF;
-@light-field-border: #E3DFD2;
-@dark-field-bg: #262A1F;
-@dark-field-border: #3A3F2F;
-@danger: #E5484D;
+@danger: #DC2626;
 
-@radius: 16px;
+@radius: 14px;
+@radius-large: 18px;
 
-// ===== Structure =====
+@transition: 0.2s ease;
+
+
+/* =========================================
+   CONTAINER
+========================================= */
+
 .rental-container {
-  min-height: 90vh;
   width: 100%;
-  margin-top: -20px;
-  padding-bottom: 40px;
+  min-height: 90vh;
+  box-sizing: border-box;
+  padding: 32px 24px 48px;
+  transition: background-color @transition;
 }
 
-h1 {
-  text-align: center;
-  padding-top: 25px;
-  font-family: 'Libre Baskerville', serif;
+.rental-content {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.rental-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.header-icon {
+  width: 54px;
+  height: 54px;
+  min-width: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+
+  tui-icon {
+    font-size: 25px;
+  }
+}
+
+.header-text {
+  h1 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+  }
+
+  p {
+    margin: 6px 0 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+
+/* =========================================
+   FORM CARD
+========================================= */
 
 .rental-form {
-  width: 700px;
-  max-width: 100%;
-  display: block;
-  margin: 0 auto;
+  width: 100%;
 }
 
-.rental-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 32px;
+.rental-card {
+  width: 100%;
+  padding: 32px;
+  box-sizing: border-box;
+  border: 1px solid;
+  border-radius: @radius-large;
+  transition:
+    background-color @transition,
+    border-color @transition;
 }
 
-.rental-column {
+.rental-section {
+  width: 100%;
+}
+
+.section-heading {
   display: flex;
-  flex-direction: column;
-  min-width: 0;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 26px;
 
-  h3 {
-    margin: 0 0 24px;
-    font-size: 16px;
-    font-weight: 600;
+  h2 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 650;
   }
 
-  .field-separator {
-    width: 100%;
-    margin: 28px 0;
+  p {
+    margin: 5px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
   }
 }
 
-// ===== Champs date / heure =====
+.section-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+
+  tui-icon {
+    font-size: 20px;
+  }
+}
+
+.section-divider {
+  width: 100%;
+  height: 1px;
+  margin: 30px 0;
+}
+
+
+/* =========================================
+   FORM GRID
+========================================= */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
 .form-field {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  width: 100%;
+  min-width: 0;
+  gap: 9px;
 
   label {
-    font-size: 0.8rem;
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
   }
 
   input[type='date'],
   input[type='time'] {
     width: 100%;
+    min-width: 0;
+    height: 50px;
+    padding: 0 14px;
     box-sizing: border-box;
-    height: 3.6rem;
-    padding: 0 1.25rem;
-    font: inherit;
-    font-size: 1.05rem;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+
     border: 1px solid;
     border-radius: @radius;
+
     outline: none;
     cursor: pointer;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
-    &.ng-touched.ng-invalid {
-      border-color: @danger !important;
+    transition:
+      border-color @transition,
+      box-shadow @transition,
+      background-color @transition;
+
+    &:focus {
+      border-color: @light-accent;
+      box-shadow: 0 0 0 3px fade(@light-accent, 15%);
+    }
+
+    &.invalid {
+      border-color: @danger;
     }
 
     &::-webkit-calendar-picker-indicator {
       cursor: pointer;
-      padding: 4px;
-      border-radius: 6px;
-      opacity: 0.6;
-      transition: opacity 0.2s ease;
-
-      &:hover {
-        opacity: 1;
-      }
+      opacity: 0.7;
     }
   }
 }
 
-// ===== Boutons =====
+.field-error {
+  font-size: 12px;
+  color: @danger;
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
 .rental-actions {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  gap: 16px;
-  margin-top: 36px;
-  padding-top: 24px;
+  gap: 14px;
+  margin-top: 24px;
+
+  button {
+    min-width: 150px;
+    border-radius: @radius;
+    font-weight: 600;
+    transition:
+      background-color @transition,
+      transform @transition;
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
 }
 
-#btn-cancel {
-  background-color: @light-btn-back !important;
-  color: #fff !important;
-  width: 250px;
-  max-width: 100%;
-}
 
-#btn-new {
-  background-color: @light-btn-new !important;
-  color: #fff !important;
-  width: 250px;
-  max-width: 100%;
-}
+/* =========================================
+   LIGHT THEME
+========================================= */
 
-// ===== Thèmes =====
 .light-mode {
-  background-color: @light-background-color;
+  background: @light-background;
+  color: @light-text;
 
-  h1 { color: @light-title; }
-  h3 { color: @light-strong; }
+  .header-icon {
+    background: fade(@light-accent, 10%);
+    color: @light-active;
+  }
 
-  .field-separator { border-top: 1px dashed @light-field-border; }
-  .rental-actions { border-top: 1px solid @light-field-border; }
+  .header-text {
+    h1 { color: @light-primary; }
+    p { color: @light-secondary; }
+  }
+
+  .rental-card {
+    background: @light-card;
+    border-color: @light-border;
+  }
+
+  .section-heading {
+    h2 { color: @light-primary; }
+    p { color: @light-secondary; }
+  }
+
+  .section-icon {
+    background: @light-section;
+    color: @light-active;
+  }
+
+  .section-divider {
+    background: @light-border;
+  }
 
   .form-field {
-    label { color: @light-breadcrumb; }
+    label { color: @light-text; }
 
     input[type='date'],
     input[type='time'] {
-      color: @light-title;
-      background: @light-field-bg;
-      border-color: @light-field-border;
+      background: @light-surface;
+      border-color: @light-border;
+      color: @light-text;
       color-scheme: light;
 
-      &:focus {
-        border-color: @light-border;
-        box-shadow: 0 0 0 4px fade(@light-border, 20%);
+      &:hover {
+        border-color: @light-accent;
       }
+
+      &:focus {
+        border-color: @light-accent;
+        box-shadow: 0 0 0 3px fade(@light-accent, 15%);
+      }
+    }
+  }
+
+  #btn-cancel {
+    background: @light-section;
+    color: @light-primary;
+    border: 1px solid @light-border;
+  }
+
+  #btn-new {
+    background: @light-primary;
+    color: #FFFFFF;
+
+    &:hover {
+      background: lighten(@light-primary, 7%);
     }
   }
 }
 
+
+/* =========================================
+   DARK THEME
+========================================= */
+
 .dark-mode {
-  background-color: @dark-background-color;
+  background: @dark-background;
+  color: @dark-text;
 
-  h1 { color: @dark-title; }
-  h3 { color: @dark-strong; }
+  .header-icon {
+    background: fade(@dark-accent, 15%);
+    color: @dark-active;
+  }
 
-  .field-separator { border-top: 1px dashed @dark-field-border; }
-  .rental-actions { border-top: 1px solid @dark-field-border; }
+  .header-text {
+    h1 { color: @dark-text; }
+    p { color: @dark-secondary; }
+  }
+
+  .rental-card {
+    background: @dark-card;
+    border-color: @dark-border;
+  }
+
+  .section-heading {
+    h2 { color: @dark-text; }
+    p { color: @dark-secondary; }
+  }
+
+  .section-icon {
+    background: @dark-surface;
+    color: @dark-active;
+  }
+
+  .section-divider {
+    background: @dark-border;
+  }
 
   .form-field {
-    label { color: @dark-breadcrumb; }
+    label { color: @dark-text; }
 
     input[type='date'],
     input[type='time'] {
+      background: @dark-surface;
+      border-color: @dark-border;
       color: @dark-text;
-      background: @dark-field-bg;
-      border-color: @dark-field-border;
-      color-scheme: dark; // popup du calendrier en sombre
+      color-scheme: dark;
+
+      &:hover {
+        border-color: @dark-accent;
+      }
 
       &:focus {
-        border-color: @dark-border;
-        box-shadow: 0 0 0 4px fade(@dark-border, 20%);
+        border-color: @dark-active;
+        box-shadow: 0 0 0 3px fade(@dark-active, 15%);
       }
+    }
+  }
+
+  #btn-cancel {
+    background: @dark-surface;
+    color: @dark-text;
+    border: 1px solid @dark-border;
+  }
+
+  #btn-new {
+    background: @dark-accent;
+    color: #FFFFFF;
+
+    &:hover {
+      background: lighten(@dark-accent, 7%);
     }
   }
 }
 
-// ===== Responsive =====
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 768px) {
+  .rental-container {
+    padding: 28px 20px 40px;
+  }
+
+  .rental-card {
+    padding: 26px;
+  }
+
+  .form-grid {
+    gap: 18px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
 @media (max-width: 600px) {
   .rental-container {
-    margin: 12px auto;
-    padding: 18px;
+    min-height: 100vh;
+    padding: 22px 14px 32px;
+  }
 
-    h1 { font-size: 22px; }
+  .rental-header {
+    gap: 12px;
+    margin-bottom: 22px;
+  }
 
-    .rental-grid {
-      grid-template-columns: 1fr;
-      gap: 32px;
+  .header-icon {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    border-radius: 13px;
+  }
+
+  .header-text {
+    h1 {
+      font-size: 21px;
     }
 
-    .rental-actions {
-      margin-top: 28px;
-
-      button { flex: 1; }
+    p {
+      font-size: 12px;
     }
+  }
+
+  .rental-card {
+    padding: 22px 16px;
+    border-radius: 14px;
+  }
+
+  .section-heading {
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 16px;
+    }
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .section-divider {
+    margin: 26px 0;
+  }
+
+  .rental-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    margin-top: 20px;
+    gap: 10px;
+
+    button {
+      width: 100%;
+      min-width: 0;
+    }
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 360px) {
+  .rental-container {
+    padding: 18px 10px 28px;
+  }
+
+  .rental-card {
+    padding: 18px 12px;
+  }
+
+  .header-text h1 {
+    font-size: 19px;
   }
 }

@@ -1,13 +1,77 @@
-<main [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
-  <div>
-    <h1>{{ material?.nameCategory }}</h1>
+<main
+  class="material-page"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode">
+
+  <div class="material-container">
+
+    <header class="page-header">
+      <div class="header-icon">
+        <tui-icon icon="@tui.layers"></tui-icon>
+      </div>
+
+      <div class="header-content">
+        <span class="header-label">CATALOGUE</span>
+        <h1>Détails du matériau</h1>
+      </div>
+    </header>
+
+    @if (material; as item) {
+
+      <section class="material-card">
+
+        <div class="category-section">
+          <span class="section-label">CATÉGORIE</span>
+          <h2>{{ item.nameCategory }}</h2>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="material-section">
+
+          <div class="material-heading">
+
+            <div class="material-information">
+              <span class="section-label">MATÉRIAU</span>
+              <h3>{{ item.nameMaterial }}</h3>
+            </div>
+
+            <div class="material-icon">
+              <tui-icon icon="@tui.package"></tui-icon>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="availability-section">
+
+          <span class="section-label">DISPONIBILITÉ</span>
+
+          <div class="availability-content">
+            <span
+              class="availability-indicator"
+              [class.available]="item.isAvailable"
+              [class.unavailable]="!item.isAvailable">
+            </span>
+
+            <p>{{ item.isAvailable }}</p>
+          </div>
+
+        </div>
+
+      </section>
+
+    } @else {
+
+      <section class="material-card loading-card">
+        <div class="loading-indicator"></div>
+        <p>Chargement des informations du matériau...</p>
+      </section>
+
+    }
+
   </div>
-  <header tuiHeader="body-l">
-    <hgroup tuiTitle>
-      <h2>{{ material?.nameMaterial }}</h2>
-    </hgroup>
-  </header>
-  <section>
-    <p>{{ material?.isAvailable }}</p>
-  </section>
 </main>

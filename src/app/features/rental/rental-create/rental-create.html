@@ -1,87 +1,252 @@
-<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="rental-container">
-  <h1>Location du matériel</h1>
+<div
+  class="rental-container"
+  [class.dark-mode]="isDarkMode()"
+  [class.light-mode]="!isDarkMode()"
+>
+  <div class="rental-content">
 
-  <form [formGroup]="rentalCreateForm" (ngSubmit)="rentalCreate()" class="rental-form">
-    <div class="rental-grid">
-
-      <!-- Colonne gauche : dates -->
-      <div class="rental-column">
-        <h3>Dates</h3>
-
-        <div class="form-field">
-          <label for="dateStart">Date de début</label>
-          <input
-            id="dateStart"
-            type="date"
-            formControlName="dateStart"
-            [min]="min"
-            [max]="max"
-          />
-        </div>
-
-        <div class="field-separator"></div>
-
-        <div class="form-field">
-          <label for="dateEnd">Date de fin</label>
-          <input
-            id="dateEnd"
-            type="date"
-            formControlName="dateEnd"
-            [min]="rentalCreateForm.controls.dateStart.value || min"
-            [max]="max"
-          />
-        </div>
+    <!-- En-tête -->
+    <header class="rental-header">
+      <div class="header-icon">
+        <tui-icon icon="@tui.calendar-days"></tui-icon>
       </div>
 
-      <!-- Colonne droite : heures -->
-      <div class="rental-column">
-        <h3>Horaires</h3>
+      <div class="header-text">
+        <h1>Location du matériel</h1>
+        <p>Définissez les dates et les horaires de votre location.</p>
+      </div>
+    </header>
 
-        <div class="form-field">
-          <label for="startTime">Heure de début</label>
-          <input id="startTime" type="time" formControlName="startTime" />
-        </div>
+    <!-- Formulaire -->
+    <form
+      [formGroup]="rentalCreateForm"
+      (ngSubmit)="rentalCreate()"
+      class="rental-form"
+      novalidate
+    >
 
-        <div class="field-separator"></div>
+      <div class="rental-card">
 
-        <div class="form-field">
-          <label for="endTime">Heure de fin</label>
-          <input id="endTime" type="time" formControlName="endTime" />
-        </div>
+        <!-- Période de location -->
+        <section class="rental-section">
+
+          <div class="section-heading">
+            <div class="section-icon">
+              <tui-icon icon="@tui.calendar-range"></tui-icon>
+            </div>
+
+            <div>
+              <h2>Période de location</h2>
+              <p>Sélectionnez les dates souhaitées.</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+
+            <!-- Date de début -->
+            <div class="form-field">
+              <label for="dateStart">Date de début</label>
+
+              <input
+                id="dateStart"
+                type="date"
+                formControlName="dateStart"
+                [min]="min"
+                [max]="max"
+                [class.invalid]="
+                  rentalCreateForm.controls.dateStart.touched &&
+                  rentalCreateForm.controls.dateStart.invalid
+                "
+              />
+
+              @if (
+                rentalCreateForm.controls.dateStart.touched &&
+                rentalCreateForm.controls.dateStart.hasError('required')
+                ) {
+                <span class="field-error">
+                  Veuillez sélectionner une date de début.
+                </span>
+              }
+            </div>
+
+            <!-- Date de fin -->
+            <div class="form-field">
+              <label for="dateEnd">Date de fin</label>
+
+              <input
+                id="dateEnd"
+                type="date"
+                formControlName="dateEnd"
+                [min]="rentalCreateForm.controls.dateStart.value || min"
+                [max]="max"
+                [class.invalid]="
+                  rentalCreateForm.controls.dateEnd.touched &&
+                  rentalCreateForm.controls.dateEnd.invalid
+                "
+              />
+
+              @if (
+                rentalCreateForm.controls.dateEnd.touched &&
+                rentalCreateForm.controls.dateEnd.hasError('required')
+                ) {
+                <span class="field-error">
+                  Veuillez sélectionner une date de fin.
+                </span>
+              }
+            </div>
+
+          </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Horaires de location -->
+        <section class="rental-section">
+
+          <div class="section-heading">
+            <div class="section-icon">
+              <tui-icon icon="@tui.clock"></tui-icon>
+            </div>
+
+            <div>
+              <h2>Horaires de location</h2>
+              <p>Précisez les heures de début et de fin.</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+
+            <!-- Heure de début -->
+            <div class="form-field">
+              <label for="startTime">Heure de début</label>
+
+              <input
+                id="startTime"
+                type="time"
+                step="1800"
+                formControlName="startTime"
+                [class.invalid]="
+                  rentalCreateForm.controls.startTime.touched &&
+                  rentalCreateForm.controls.startTime.invalid
+                "
+              />
+
+              @if (
+                rentalCreateForm.controls.startTime.touched &&
+                rentalCreateForm.controls.startTime.hasError('required')
+                ) {
+                <span class="field-error">
+                  Veuillez sélectionner une heure de début.
+                </span>
+              }
+            </div>
+
+            <!-- Heure de fin -->
+            <div class="form-field">
+              <label for="endTime">Heure de fin</label>
+
+              <input
+                id="endTime"
+                type="time"
+                step="1800"
+                formControlName="endTime"
+                [class.invalid]="
+                  rentalCreateForm.controls.endTime.touched &&
+                  rentalCreateForm.controls.endTime.invalid
+                "
+              />
+
+              @if (
+                rentalCreateForm.controls.endTime.touched &&
+                rentalCreateForm.controls.endTime.hasError('required')
+                ) {
+                <span class="field-error">
+                  Veuillez sélectionner une heure de fin.
+                </span>
+              }
+            </div>
+
+          </div>
+
+          <!-- Validation globale de la période -->
+          @if (
+            rentalCreateForm.hasError('invalidRentalPeriod') &&
+            rentalCreateForm.touched
+            ) {
+            <div class="period-error">
+              <tui-icon icon="@tui.alert-circle"></tui-icon>
+
+              <span>
+                La date et l'heure de fin doivent être postérieures
+                à la date et à l'heure de début.
+              </span>
+            </div>
+          }
+
+        </section>
+
       </div>
 
-    </div>
+      <!-- Actions -->
+      <footer class="rental-actions">
 
-    <div class="rental-actions">
-      <button
-        id="btn-cancel"
-        tuiButton
-        appearance="secondary"
-        type="button"
-        size="l"
-        (click)="rentalCreateForm.reset()"
-      >
-        Annuler
-      </button>
+        <button
+          id="btn-cancel"
+          tuiButton
+          appearance="secondary"
+          type="button"
+          size="l"
+          [disabled]="isSubmitting()"
+          (click)="resetForm()"
+        >
+          <tui-icon icon="@tui.x"></tui-icon>
+          Annuler
+        </button>
 
-      <button id="btn-new" tuiButton appearance="primary" type="submit" size="l">
-        Louer
-      </button>
-    </div>
-  </form>
+        <button
+          id="btn-new"
+          tuiButton
+          appearance="primary"
+          type="submit"
+          size="l"
+          [disabled]="isSubmitting()"
+        >
+          <tui-icon
+            [icon]="isSubmitting() ? '@tui.loader-circle' : '@tui.check'"
+          ></tui-icon>
+
+          {{
+            isSubmitting()
+              ? 'Enregistrement...'
+              : 'Confirmer la location'
+          }}
+        </button>
+
+      </footer>
+
+    </form>
+  </div>
 </div>
 
-
+<!-- Notification -->
 <ng-template
-  [tuiNotificationOptions]="{label: 'Location', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: 'Location',
+    autoClose: 0,
+    closable: false,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <span tuiSubtitle>
+    {{ messageSuccess() || messageError() }}
+  </span>
+
   <button
     tuiButton
     type="button"
     (click)="show.set(false)"
   >
-    Close
+    Fermer
   </button>
 </ng-template>

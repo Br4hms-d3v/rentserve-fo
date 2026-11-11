@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { UserMaterialService } from '../service/user-material-service';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TuiBreadcrumbs, TuiPagination } from '@taiga-ui/kit';
 import { TuiButton, TuiIcon, TuiLink } from '@taiga-ui/core';
 import { NgClass } from '@angular/common';
@@ -29,6 +29,7 @@ export class UserMaterialList implements OnInit {
   private readonly _userMaterialService = inject(UserMaterialService); // call the service to display user material from name material
   private readonly _route = inject(ActivatedRoute); // Get the id of the material (by url)s
   private readonly _themeService = inject(ThemeService); // Call the service to change color
+  private readonly router = inject(Router);
   private readonly _cdr = inject(ChangeDetectorRef);
 
   isDarkMode = false; // Change theme from light to dark
@@ -82,6 +83,10 @@ export class UserMaterialList implements OnInit {
   protected paginatedUserMaterials(): UserMaterialModel[] {
     const start = this.index * this.size;
     return this.userMaterialsByMaterial.slice(start, start + this.size);
+  }
+
+  goToRental(materialId: number) {
+    this.router.navigate(['/rental', 'new-rental', materialId]);
   }
 
   changeTheme() {

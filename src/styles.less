@@ -1,105 +1,63 @@
-///* You can add global styles to this file, and also import other style files */
-//[tuiTheme="light-mode"] {
-//  tui-data-list-wrapper {
-//    background-color: #5F5E5A !important;
-//  }
-//
-//  tui-dropdown[data-appearance] {
-//    background-color: #F1EFE8 !important;
-//  }
-//
-//  tui-data-list {
-//    color: #F1EFE8 !important;
-//  }
-//
-//  button[tuiOption] {
-//    color: #F1EFE8 !important;
-//
-//    &:hover {
-//      background-color: #D3D1C7 !important;
-//      color: #3D4A2A !important;
-//    }
-//  }
-//
-//}
-//
-//[tuiTheme="light-mode"] {
-//  tui-data-list-wrapper {
-//    background-color: #171912;
-//  }
-//
-//  tui-dropdown[data-appearance] {
-//    background-color: #1C1F17 !important;
-//  }
-//
-//  button[tuiOption] {
-//    color: #F1EFE8 !important;
-//
-//    &:hover {
-//      background-color: #40261C !important;
-//      color: #F1EFE8 !important;
-//    }
-//  }
-//
-//}
-//
-//// Drawer //
-//
-//.drawer {
-//  width: 350px !important;
-//  background-color: #F1EFE8 !important;
-//  // ---- Link menu ----
-//  .drawer-links {
-//    display: flex;
-//    flex-direction: column;
-//    width: 350px;
-//  }
-//
-//  .link-drawer {
-//    width: 350px;
-//    padding: 12px 16px;
-//    box-sizing: border-box;
-//
-//    a {
-//      font-size: 1.5em;
-//      display: block;
-//      width: 100%;
-//      text-decoration: none;
-//      color: #3D4A2A;
-//      transition: background-color 0.2s ease, color 0.2s ease;
-//    }
-//
-//    &:hover {
-//      background-color: #EAF3DE;
-//      cursor: pointer;
-//    }
-//
-//    a:active,
-//    a.active {
-//      color: #993C1D;
-//    }
-//  }
-//
-//  // ---- Footer ----
-//  footer {
-//    width: 350px;
-//
-//    a {
-//      display: flex;
-//      align-items: center;
-//      justify-content: center;
-//      width: 350px;
-//      height: 44px;
-//      background-color: orange;
-//      color: white;
-//      text-decoration: none;
-//      box-sizing: border-box;
-//      cursor: pointer;
-//      transition: background-color 0.2s ease;
-//    }
-//
-//    a:hover {
-//      background-color: darken(orange, 8%);
-//    }
-//  }
-//}
+
+/* =========================================
+   THÈME CLAIR
+========================================= */
+
+:root,
+html.light-mode {
+
+  color-scheme: light;
+
+  --material-primary: #173B57;
+  --material-secondary: #3B82F6;
+
+  --material-background: #FFFFFF;
+  --material-surface: #F3F6F8;
+  --material-input: #E8EEF3;
+
+  --material-text: #263746;
+  --material-muted: #64748B;
+
+  --material-border: #D8E1E9;
+  --material-active: #2563EB;
+}
+
+/* =========================================
+   THÈME SOMBRE
+========================================= */
+
+html.dark-mode {
+
+  color-scheme: dark;
+
+  --material-primary: #0B1F33;
+  --material-secondary: #3B82F6;
+
+  --material-background: #071522;
+  --material-surface: #172A3D;
+  --material-input: #20364D;
+
+  --material-text: #F1F5F9;
+  --material-muted: #A8B7C9;
+
+  --material-border: #30465C;
+  --material-active: #60A5FA;
+}
+
+/* =========================================
+   TRANSITIONS GLOBALES
+========================================= */
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--material-background);
+  color: var(--material-text);
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}

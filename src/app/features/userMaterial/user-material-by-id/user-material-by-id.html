@@ -1,77 +1,289 @@
-<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="userMaterialDetail">
+
+<div
+  class="userMaterialDetail"
+  [class.dark-mode]="isDarkMode()"
+  [class.light-mode]="!isDarkMode()"
+>
 
   @if (userMaterialDetail; as userMaterial) {
-    <h1>
-      {{ userMaterial.material.nameMaterial }}
-    </h1>
 
-    <div class="material-detail">
+    <main class="material-page">
 
-      <!-- Detail about user material -->
-      <section class="material-info">
-        <div class="material-description">
-          <strong>Description</strong>
-          <p>
-            {{ userMaterial.descriptionMaterial }}
+      <!-- =====================================
+           HEADER
+      ====================================== -->
+
+      <header class="material-header">
+
+        <div class="material-heading">
+
+          <span class="material-eyebrow">
+            MATÉRIEL EN LOCATION
+          </span>
+
+          <h1>
+            {{ userMaterial.material.nameMaterial }}
+          </h1>
+
+          <p class="material-subtitle">
+            Découvrez les caractéristiques et les conditions
+            de location de ce matériel.
           </p>
+
         </div>
 
-        <div class="material-property">
-          <strong>Prix</strong>
-          <p>
-            {{ userMaterial.priceHourMaterial }} € de l'heure
-          </p>
+        <!-- Availability -->
+
+        <div
+          class="availability-badge"
+          [class.available]="userMaterial.isAvailable"
+          [class.unavailable]="!userMaterial.isAvailable"
+        >
+          <span class="status-dot"></span>
+
+          {{ userMaterial.isAvailable ? 'Disponible' : 'Indisponible' }}
+
         </div>
 
-        <div class="material-property">
-          <strong>Disponible</strong>
-          <p>
-            {{ userMaterial.isAvailable ? 'Oui' : 'Non' }}
-          </p>
-        </div>
-
-        <div class="material-property">
-          <strong>État</strong>
-          <p>
-            {{ userMaterial.state }}
-          </p>
-        </div>
-
-        <div class="material-property">
-          <strong>Propriétaire</strong>
-          <p>
-            {{ userMaterial.user.pseudo }}
-          </p>
-        </div>
-
-      </section>
+      </header>
 
 
-      <!-- Pictures -->
-      <section class="material-gallery">
+      <!-- =====================================
+           MAIN CONTENT
+      ====================================== -->
 
-        @for (picture of userMaterial.pictures; track picture) {
+      <div class="material-layout">
 
-          <div class="picture-container">
-            <img
-              [src]="'/userMaterials/' + picture"
-              [alt]="userMaterial.material.nameMaterial"
-            />
+        <!-- =====================================
+             MATERIAL INFORMATION
+        ====================================== -->
+
+        <section class="material-info card">
+
+          <div class="section-heading">
+
+            <div>
+
+              <span class="section-eyebrow">
+                INFORMATIONS
+              </span>
+
+              <h2>
+                À propos du matériel
+              </h2>
+
+            </div>
+
+            <span class="material-icon">
+              <i class="ti ti-package"></i>
+            </span>
+
           </div>
 
-        }
+
+          <!-- Description -->
+
+          <div class="material-description">
+
+            <h3>
+              Description
+            </h3>
+
+            <p>
+              {{ userMaterial.descriptionMaterial || 'Aucune description disponible.' }}
+            </p>
+
+          </div>
+
+          <div class="info-divider"></div>
+
+
+          <!-- Rental price -->
+
+          <div class="price-container">
+
+            <div>
+
+              <span class="info-label">
+                Tarif de location
+              </span>
+
+              <div class="price">
+
+                {{ userMaterial.priceHourMaterial }}
+
+                <span>
+                  €/heure
+                </span>
+
+              </div>
+
+            </div>
+
+            <span class="price-icon">
+              <i class="ti ti-clock"></i>
+            </span>
+
+          </div>
+
+          <div class="info-divider"></div>
+
+
+          <!-- Material properties -->
+
+          <div class="properties-grid">
+
+            <!-- State -->
+
+            <div class="property-item">
+
+              <span class="info-label">
+                État du matériel
+              </span>
+
+              <strong>
+                {{ userMaterial.state || 'Non renseigné' }}
+              </strong>
+
+            </div>
+
+
+            <!-- Owner -->
+
+            <div class="property-item">
+
+              <span class="info-label">
+                Propriétaire
+              </span>
+
+              <strong>
+                {{ userMaterial.user.pseudo }}
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =====================================
+             MATERIAL GALLERY
+        ====================================== -->
+
+        <section class="material-gallery-section card">
+
+          <div class="section-heading">
+
+            <div>
+
+              <span class="section-eyebrow">
+                PHOTOGRAPHIES
+              </span>
+
+              <h2>
+                Galerie du matériel
+              </h2>
+
+            </div>
+
+            <span class="photo-count">
+              {{ userMaterial.pictures.length }} photo(s)
+            </span>
+
+          </div>
+
+
+          <!-- Pictures -->
+
+          @if (userMaterial.pictures.length > 0) {
+
+            <div class="material-gallery">
+
+              @for (picture of userMaterial.pictures; track picture) {
+
+                <div class="picture-container">
+
+                  <img
+                    [src]="'/userMaterials/' + picture"
+                    [alt]="'Photo de ' + userMaterial.material.nameMaterial"
+                    loading="lazy"
+                  />
+
+                </div>
+
+              }
+
+            </div>
+
+          } @else {
+
+            <!-- Empty gallery -->
+
+            <div class="empty-gallery">
+
+              <i class="ti ti-photo-off"></i>
+
+              <h3>
+                Aucune photo disponible
+              </h3>
+
+              <p>
+                Aucune photographie n'a été ajoutée pour ce matériel.
+              </p>
+
+            </div>
+
+          }
+
+        </section>
+
+      </div>
+
+
+      <!-- =====================================
+           REVIEWS
+      ====================================== -->
+
+      <section class="material-extra-section">
+
+        <app-review-user-material />
 
       </section>
+
+
+      <!-- =====================================
+           RENTAL
+      ====================================== -->
+
+      <section class="material-extra-section">
+
+        <app-rental-create />
+
+      </section>
+
+    </main>
+
+  } @else {
+
+    <!-- =====================================
+         EMPTY STATE
+    ====================================== -->
+
+    <div class="empty-state">
+
+      <i class="ti ti-package-off"></i>
+
+      <h2>
+        Matériel introuvable
+      </h2>
+
+      <p>
+        Les informations de ce matériel ne sont pas disponibles.
+      </p>
 
     </div>
 
-  } @else {
-    <h1>La liste est vide</h1>
   }
+
 </div>
-
-<!-- review by user material ID -->
-<app-review-user-material />
-
-<!-- rent the user material -->
-<app-rental-create />
