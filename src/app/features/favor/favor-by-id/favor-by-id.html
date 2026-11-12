@@ -1,13 +1,71 @@
-<main [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
-  <div>
-    <h1>{{ favor?.nameCategory }}</h1>
+<main
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode">
+
+  <div class="page-container">
+
+    <header class="page-header">
+
+      <div class="breadcrumb">
+        <span>Faveurs</span>
+        <tui-icon icon="@tui.chevron-right"></tui-icon>
+        <span>Détails</span>
+      </div>
+
+      <h1>Détail de la faveur</h1>
+
+      <p class="page-description">
+        Consultez les informations détaillées de cette faveur.
+      </p>
+
+    </header>
+
+    @if (favor; as item) {
+
+      <section class="favor-card">
+
+        <div class="card-section">
+
+          <div class="section-heading">
+            <tui-icon icon="@tui.folder"></tui-icon>
+            <span>Catégorie</span>
+          </div>
+
+          <h2>{{ item.nameCategory }}</h2>
+
+        </div>
+
+        <div class="card-divider"></div>
+
+        <div class="card-section">
+
+          <div class="section-heading">
+            <tui-icon icon="@tui.file-text"></tui-icon>
+            <span>Informations générales</span>
+          </div>
+
+          <header tuiHeader="h4">
+            <hgroup tuiTitle>
+              {{ item.nameFavor }}
+            </hgroup>
+          </header>
+
+          <div class="availability">
+            <span class="status-indicator"></span>
+            <span>{{ item.isAvailable }}</span>
+          </div>
+
+        </div>
+
+      </section>
+
+    } @else {
+
+      <section class="favor-card loading-state">
+        <p>Chargement des informations...</p>
+      </section>
+
+    }
+
   </div>
-  <header tuiHeader="body-l">
-    <hgroup tuiTitle>
-      <h2>{{ favor?.nameFavor }}</h2>
-    </hgroup>
-  </header>
-  <section>
-    <p>{{ favor?.isAvailable }}</p>
-  </section>
 </main>
