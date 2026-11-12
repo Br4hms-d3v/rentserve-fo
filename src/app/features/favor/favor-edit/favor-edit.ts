@@ -10,9 +10,9 @@ import { TuiBreadcrumbs, TuiDataListWrapperComponent, TuiSwitch } from '@taiga-u
 import {
   TuiButton,
   TuiDropdown,
-  TuiFilterByInputPipe,
+  TuiFilterByInputPipe, TuiIcon,
   TuiInputDirective,
-  TuiLabel,
+  TuiLabel, TuiLink,
   TuiNotificationTemplate,
   TuiTextfieldComponent,
   TuiTextfieldOptionsDirective,
@@ -22,14 +22,12 @@ import { ThemeService } from '../../../core/services/ThemeService';
 import { CategoryService } from '../../category/service/category-service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FavorDetailModel } from '../model/favorlDetail';
-import { NgClass } from '@angular/common';
 import { FavorForm } from '../model/FavorForm';
 import { TuiItem } from '@taiga-ui/cdk';
 
 @Component({
   selector: 'app-favor-edit',
   imports: [
-    NgClass,
     FormsModule,
     RouterLink,
     ReactiveFormsModule,
@@ -45,6 +43,8 @@ import { TuiItem } from '@taiga-ui/cdk';
     TuiSwitch,
     TuiTextfieldComponent,
     TuiTextfieldOptionsDirective,
+    TuiLink,
+    TuiIcon,
   ],
   templateUrl: './favor-edit.html',
   styleUrl: './favor-edit.less',
@@ -90,9 +90,19 @@ export class FavorEdit implements OnInit {
   }
 
   protected editFavorForm = new FormGroup({
-    category: new FormControl('', Validators.required),
-    nameFavor: new FormControl('', Validators.required),
-    isAvailable: new FormControl<boolean>(false, Validators.required),
+    category: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+
+    nameFavor: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+
+    isAvailable: new FormControl(false, {
+      nonNullable: true,
+    }),
   });
 
   getRoute() {
@@ -101,7 +111,7 @@ export class FavorEdit implements OnInit {
     });
   }
 
-  getFavor() {
+  protected getFavor() {
     this.favorService.getFavor(this.favorId).subscribe({
       next: (result) => {
         this.favorModel = result;
@@ -135,38 +145,40 @@ export class FavorEdit implements OnInit {
     });
   }
 
-  onSubmitEditFavor() {
+  protected onSubmitEditFavor(): void {
     this.editFavorForm.markAllAsTouched();
-    if (this.editFavorForm.invalid) {
-      this.messageError = 'Il y a une erreur dans le formulaire';
-    }
-    this.favorService.editFavor(this.favorId, <FavorForm>this.editFavorForm.value).subscribe({
-      next: (data) => {
-        this.editFavorForm.patchValue(data);
-        this.messageSuccess = 'La mise à jour a été effectué avec sucès';
-        this.isSuccess.set(true);
-        this.show.set(true);
 
-        setTimeout(() => {
-          this._router.navigate(['favor', 'all-favour']);
-        }, 2000);
-      },
-      error: (err) => {
-        if (!typeof err.error) {
-          this.messageError = err.error.message;
+    if (this.editFavorForm.invalid) {
+      this.messageError = 'Veuillez vérifier les champs obligatoires du formulaire.';
+
+      this.isSuccess.set(false);
+      this.show.set(true);
+
+      return;
+    }
+
+    this.favorService
+      .editFavor(this.favorId, this.editFavorForm.getRawValue() as FavorForm)
+      .subscribe({
+        next: (data) => {
+          this.messageSuccess = 'Les modifications ont été enregistrées avec succès.';
+
+          this.isSuccess.set(true);
+          this.show.set(true);
+
+          setTimeout(() => {
+            this._router.navigate(['favor', 'all-favour']);
+          }, 2000);
+        },
+
+        error: (err) => {
+          this.messageError =
+            err.error?.message ?? 'Une erreur est survenue lors de la modification du service.';
+
           this.isSuccess.set(false);
           this.show.set(true);
-        } else if (err.error?.message) {
-          this.messageError = err.error.message;
-          this.isSuccess.set(false);
-          this.show.set(true);
-        } else {
-          this.messageError = "Erreur d'inscription";
-          this.isSuccess.set(false);
-          this.show.set(true);
-        }
-      },
-    });
+        },
+      });
   }
 
   changeTheme() {

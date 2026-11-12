@@ -1,93 +1,167 @@
-<div class="editCategoryFavor-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
-  <!-- Breadcrumbs -->
-  <tui-breadcrumbs>
+<div
+  class="editCategoryFavor-container"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+  <!-- Navigation -->
+  <tui-breadcrumbs class="page-breadcrumbs">
     @for (link of links; track link) {
-      <a
-        *tuiItem
-        tuiLink
-        [routerLink]="link.routerLink"
-      >
+      <a *tuiItem tuiLink [routerLink]="link.routerLink">
         {{ link.caption }}
       </a>
     }
   </tui-breadcrumbs>
 
+  <!-- Page heading -->
+  <header class="page-header">
+    <div>
+      <h1 class="titleEditFavor">{{ title }}</h1>
+      <p class="page-description">
+        Modifiez les informations et les paramètres
+        de visibilité de votre service.
+      </p>
+    </div>
+  </header>
 
-  <h1 class="titleEditFavor">
-    {{ title }}
-  </h1>
-
-  <!-- form to edit a new favor -->
-  <form [formGroup]="editFavorForm" (ngSubmit)="onSubmitEditFavor()" class="favor-form">
-
-    <!-- Category field with Taiga UI autocomplete -->
-    <tui-textfield tuiTextfieldSize="m" class="inputMatField">
-      <label tuiLabel>Nom de la catégorie:</label>
-      <input
-        #input
-        placeholder="Choisir une catégorie"
-        tuiInput
-        formControlName="category"
-      />
-
-      @if (categoriesList | tuiFilterByInput; as filtered) {
-        @if (input.value) {
-          <tui-data-list-wrapper
-            *tuiDropdown
-            [items]="filtered"
-            [emptyContent]="emptyCategory"
-          />
-        }
-      }
-      <ng-template #emptyCategory>
-        <div class="empty-list">
-          <p>Aucune catégorie trouvée</p>
-        </div>
-      </ng-template>
-    </tui-textfield>
-
-
-    <tui-textfield>
-      <label tuiLabel>Nom du service :</label>
-      <input
-        tuiInput
-        type="text"
-        formControlName="nameFavor"
-      />
-    </tui-textfield>
-
-
-    <!-- Toggle / Switch -->
-    <p id="switchToggle">Rendre publique</p>
-    <input
-      tuiSwitch
-      type="checkbox"
-      formControlName="isAvailable"
-    />
-    <br />
-
-    <button
-      tuiButton
-      type="submit"
-      appearance="primary"
-      size="m"
+  <!-- Main content -->
+  <main class="favor-content">
+    <form
+      [formGroup]="editFavorForm"
+      (ngSubmit)="onSubmitEditFavor()"
+      class="favor-form"
     >
-      Modifier
-    </button>
-  </form>
+      <section class="form-card">
 
+        <div class="card-header">
+          <div class="card-icon">
+            <tui-icon icon="@tui.layers"></tui-icon>
+          </div>
+
+          <div>
+            <h2>Informations du service</h2>
+            <p>Renseignez les informations de votre service.</p>
+          </div>
+        </div>
+
+        <div class="form-fields">
+
+          <!-- Category -->
+          <div class="form-field">
+            <tui-textfield
+              tuiTextfieldSize="l"
+              class="inputMatField"
+            >
+              <label tuiLabel>Catégorie</label>
+
+              <input
+                #input
+                tuiInput
+                placeholder="Sélectionner une catégorie"
+                formControlName="category"
+                autocomplete="off"
+              />
+
+              @if (categoriesList | tuiFilterByInput; as filtered) {
+                @if (input.value) {
+                  <tui-data-list-wrapper
+                    *tuiDropdown
+                    [items]="filtered"
+                    [emptyContent]="emptyCategory"
+                  />
+                }
+              }
+
+              <ng-template #emptyCategory>
+                <div class="empty-list">
+                  <p>Aucune catégorie trouvée.</p>
+                </div>
+              </ng-template>
+            </tui-textfield>
+          </div>
+
+          <!-- Service name -->
+          <div class="form-field">
+            <tui-textfield tuiTextfieldSize="l">
+              <label tuiLabel>Nom du service</label>
+
+              <input
+                tuiInput
+                type="text"
+                placeholder="Ex. : Développement web"
+                formControlName="nameFavor"
+              />
+            </tui-textfield>
+          </div>
+
+        </div>
+
+        <!-- Visibility -->
+        <div class="visibility-section">
+          <div class="visibility-info">
+            <h3>Visibilité du service</h3>
+            <p>
+              Activez cette option pour rendre votre service
+              accessible aux autres utilisateurs.
+            </p>
+          </div>
+
+          <input
+            tuiSwitch
+            type="checkbox"
+            formControlName="isAvailable"
+            aria-label="Rendre le service public"
+          />
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button
+            tuiButton
+            type="button"
+            appearance="secondary"
+            size="l"
+            [routerLink]="['/favor/all-favour']"
+          >
+            Annuler
+          </button>
+
+          <button
+            tuiButton
+            type="submit"
+            appearance="primary"
+            size="l"
+            [disabled]="editFavorForm.invalid"
+          >
+            <tui-icon icon="@tui.save"></tui-icon>
+            Enregistrer les modifications
+          </button>
+        </div>
+
+      </section>
+    </form>
+  </main>
 </div>
 
+<!-- Notifications -->
 <ng-template
-  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: isSuccess() ? 'Succès' : 'Erreur',
+    autoClose: 0,
+    closable: false,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <span tuiSubtitle>
+    {{ messageSuccess || messageError }}
+  </span>
+
   <button
     tuiButton
     type="button"
+    appearance="secondary"
     (click)="show.set(false)"
   >
-    Close
+    Fermer
   </button>
 </ng-template>
