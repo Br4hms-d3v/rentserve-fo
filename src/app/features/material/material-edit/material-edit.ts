@@ -8,7 +8,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import {
   TuiButton,
   TuiDropdown,
-  TuiFilterByInputPipe,
+  TuiFilterByInputPipe, TuiIcon,
   TuiInput,
   TuiNotification,
   TuiTextfield,
@@ -22,7 +22,6 @@ import { NgClass } from '@angular/common';
   selector: 'app-material-edit',
   imports: [
     TuiBreadcrumbs,
-    NgClass,
     RouterLink,
     ReactiveFormsModule,
     TuiTextfield,
@@ -34,6 +33,7 @@ import { NgClass } from '@angular/common';
     TuiSwitch,
     TuiButton,
     TuiNotification,
+    TuiIcon,
   ],
   templateUrl: './material-edit.html',
   styleUrl: './material-edit.less',
@@ -105,18 +105,25 @@ export class MaterialEdit implements OnInit {
     });
   }
 
-  onSubmitEditMaterial() {
+  protected onSubmitEditMaterial() {
     this.editMaterialForm.markAllAsTouched();
+
     if (this.editMaterialForm.invalid) {
-      this.messageError = 'Il y a une erreur dans le formulaire.';
+      this.messageError = 'Veuillez renseigner correctement tous les champs obligatoires.';
+
+      this.isSuccess.set(false);
+      this.show.set(true);
+      return;
     }
+
     this.materialService
-      .editMaterial(this.materialId, <MaterialForm>this.editMaterialForm.value)
+      .editMaterial(this.materialId, this.editMaterialForm.getRawValue() as MaterialForm)
       .subscribe({
         next: (data) => {
           this.editMaterialForm.patchValue(data);
-          // console.log(data);
-          this.messageSuccess = 'La mise à jour a été effectué avec succès.';
+
+          this.messageSuccess = 'Les modifications ont été enregistrées avec succès.';
+
           this.isSuccess.set(true);
           this.show.set(true);
 
@@ -125,19 +132,11 @@ export class MaterialEdit implements OnInit {
           }, 2000);
         },
         error: (err) => {
-          if (!typeof err.error) {
-            this.messageError = err.error.message;
-            this.isSuccess.set(false);
-            this.show.set(true);
-          } else if (err.error?.message) {
-            this.messageError = err.error.message;
-            this.isSuccess.set(false);
-            this.show.set(true);
-          } else {
-            this.messageError = "Erreur d'inscription";
-            this.isSuccess.set(false);
-            this.show.set(true);
-          }
+          this.messageError =
+            err.error?.message ?? 'Une erreur est survenue lors de la modification du matériel.';
+
+          this.isSuccess.set(false);
+          this.show.set(true);
         },
       });
   }

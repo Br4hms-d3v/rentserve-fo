@@ -1,114 +1,487 @@
-@light-background-color: #F1EFE8;
-@light-title: #3B6D11 !important;
-@light-breadcrumb: #5F5E5A !important;
-@light-label-input: #3B6D11 !important;
-@light-label: #5F5E5A !important;
-@light-btn-submit: #D9764A;
+/* LIGHT THEME */
 
-@dark-background-color: #1C1F17;
-@dark-title: #8FC15C;
-@dark-breadcrumb: #A6A599 !important;
-@dark-label-input: #8FC15C !important;
-@dark-label: #A6A599 !important;
-@dark-btn-submit: #E8845A;
+@light-primary: #173B57;
+@light-accent: #3B82F6;
+@light-active: #2563EB;
+@light-background: #FFFFFF;
+@light-surface: #F3F6F8;
+@light-input: #E8EEF3;
+@light-text: #263746;
+@light-secondary: #64748B;
+@light-border: #D8E1E9;
 
-.editCategory-container {
-  height: 80vh;
-  padding: 20px;
+
+/* DARK THEME */
+
+@dark-primary: #0B1F33;
+@dark-accent: #3B82F6;
+@dark-active: #60A5FA;
+@dark-background: #071522;
+@dark-surface: #172A3D;
+@dark-input: #20364D;
+@dark-text: #F1F5F9;
+@dark-secondary: #A8B7C9;
+@dark-border: #30465C;
+
+
+/* =========================================
+   PAGE CONTAINER
+========================================= */
+
+.edit-material-page {
+  min-height: 100%;
+  width: 100%;
+  padding: 32px 5%;
   box-sizing: border-box;
+  transition: background-color 0.25s ease,
+  color 0.25s ease;
 }
 
-.titleEditMaterial {
-  margin-top: 25px;
-  text-align: center;
+
+/* =========================================
+   BREADCRUMBS
+========================================= */
+
+.page-breadcrumbs {
+  margin-bottom: 30px;
+  font-size: 13px;
 }
 
-.material-form{
-  width: 80%;
-  max-width: 550px;
+
+/* =========================================
+   HEADER
+========================================= */
+
+.page-header {
+  max-width: 1000px;
+  margin: 0 auto 30px;
+}
+
+.header-content {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
+}
+
+.page-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: @light-accent;
+}
+
+.page-title {
+  font-size: clamp(25px, 3vw, 32px);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.page-description {
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.content-wrapper {
+  max-width: 1000px;
   margin: 0 auto;
 }
 
-input[tuiSwitch]{
-  &:checked{
-    --tui-background-accent-1: #22c55e;
-    --tui-background-accent-1-hover: #16a34a;
+
+/* =========================================
+   MATERIAL CARD
+========================================= */
+
+.material-card {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 30px;
+  box-sizing: border-box;
+  border: 1px solid;
+  border-radius: 14px;
+  transition: background-color 0.25s ease,
+  border-color 0.25s ease;
+}
+
+.card-heading {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 24px;
+
+  h2 {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0 0 5px;
   }
-  &:not(:checked) {
-    --tui-background-neutral-1: #ef4444;
-    --tui-background-neutral-1-hover: #dc2626;
+
+  p {
+    font-size: 13px;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+.card-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+}
+
+.card-divider {
+  height: 1px;
+  width: 100%;
+  margin-bottom: 26px;
+  background-color: @light-border;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.material-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.field-label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.required {
+  color: #EF4444;
+  margin-left: 3px;
+}
+
+.field-hint {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* =========================================
+   TAIGA INPUTS
+========================================= */
+
+tui-textfield {
+  width: 100%;
+}
+
+input[tuiInput] {
+  font-size: 14px;
+}
+
+.empty-list {
+  padding: 12px;
+  font-size: 13px;
+  text-align: center;
+}
+
+
+/* =========================================
+   AVAILABILITY
+========================================= */
+
+.availability-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 18px;
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.availability-content {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+}
+
+.availability-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 19px;
+}
+
+.availability-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.availability-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.availability-description {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* =========================================
+   ACTION BUTTONS
+========================================= */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding-top: 8px;
+
+  button {
+    min-height: 44px;
+    font-weight: 600;
   }
 }
 
 
-// THEME
+/* =========================================
+   LIGHT THEME
+========================================= */
 
 .light-mode {
-  background-color: @light-background-color;
+  background-color: @light-background;
+  color: @light-text;
 
-  tui-breadcrumbs {
-    a {
-      color: @light-breadcrumb;
-    }
+  .page-breadcrumbs a {
+    color: @light-secondary;
   }
 
-  .titleEditMaterial {
-    color: @light-title;
+  .page-title {
+    color: @light-primary;
   }
 
-  input[tuiInput]{
-    color: @light-label-input;
+  .page-description,
+  .card-heading p,
+  .field-hint {
+    color: @light-secondary;
   }
 
-  label[tuiLabel]{
-    color: @light-label;
+  .material-card {
+    background-color: @light-background;
+    border-color: @light-border;
+    box-shadow: 0 4px 18px rgba(23, 59, 87, 0.05);
   }
 
-  #switchToggle{
-    color:@light-label;
+  .card-icon,
+  .availability-icon {
+    background-color: @light-surface;
+    color: @light-active;
   }
 
-  button[tuiButton]{
-    background-color: @light-btn-submit;
+  .card-divider {
+    background-color: @light-border;
   }
 
+  .availability-box {
+    background-color: @light-surface;
+    border-color: @light-border;
+  }
+
+  .availability-description {
+    color: @light-secondary;
+  }
+
+  .field-label,
+  .availability-title {
+    color: @light-text;
+  }
+
+  tui-textfield {
+    --tui-background-base: @light-input;
+    --tui-text-primary: @light-text;
+  }
+
+  button[appearance="primary"] {
+    background-color: @light-primary;
+    color: #FFFFFF;
+  }
 }
 
 
+/* =========================================
+   DARK THEME
+========================================= */
+
 .dark-mode {
-  background-color: @dark-background-color;
+  background-color: @dark-background;
+  color: @dark-text;
 
-  tui-breadcrumbs {
-    a {
-      color: @dark-breadcrumb;
-    }
+  .page-breadcrumbs a {
+    color: @dark-secondary;
   }
 
-  .titleEditMaterial {
-    color: @dark-title;
+  .page-title {
+    color: @dark-text;
   }
 
-  input[tuiInput]{
-    background-color: #2E331F;
+  .page-description,
+  .card-heading p,
+  .field-hint {
+    color: @dark-secondary;
   }
 
-  input[tuiInput]{
-    color: @dark-label-input;
+  .material-card {
+    background-color: @dark-surface;
+    border-color: @dark-border;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
   }
 
-  label[tuiLabel]{
-    color: @dark-label;
+  .card-icon,
+  .availability-icon {
+    background-color: @dark-input;
+    color: @dark-active;
   }
 
-  #switchToggle{
-    color:@dark-label;
+  .card-divider {
+    background-color: @dark-border;
   }
 
-  button[tuiButton]{
-    background-color: @dark-btn-submit;
+  .availability-box {
+    background-color: @dark-input;
+    border-color: @dark-border;
   }
 
+  .availability-description {
+    color: @dark-secondary;
+  }
+
+  .field-label,
+  .availability-title {
+    color: @dark-text;
+  }
+
+  tui-textfield {
+    --tui-background-base: @dark-input;
+    --tui-text-primary: @dark-text;
+  }
+
+  button[appearance="primary"] {
+    background-color: @dark-accent;
+    color: #FFFFFF;
+  }
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+  .edit-material-page {
+    padding: 28px 4%;
+  }
+
+  .material-card {
+    max-width: 680px;
+    padding: 26px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+  .edit-material-page {
+    padding: 20px 15px;
+  }
+
+  .page-breadcrumbs {
+    margin-bottom: 22px;
+  }
+
+  .page-header {
+    margin-bottom: 22px;
+  }
+
+  .page-description {
+    font-size: 13px;
+  }
+
+  .material-card {
+    padding: 20px 16px;
+    border-radius: 12px;
+  }
+
+  .card-heading {
+    gap: 11px;
+  }
+
+  .card-heading h2 {
+    font-size: 15px;
+  }
+
+  .availability-box {
+    padding: 14px 12px;
+  }
+
+  .availability-description {
+    font-size: 11px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+    width: 100%;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 360px) {
+  .edit-material-page {
+    padding: 16px 10px;
+  }
+
+  .material-card {
+    padding: 16px 12px;
+  }
+
+  .availability-box {
+    gap: 8px;
+  }
+
+  .availability-icon {
+    width: 34px;
+    height: 34px;
+  }
 }

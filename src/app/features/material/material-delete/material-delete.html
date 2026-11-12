@@ -1,8 +1,12 @@
-<div class="delete-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
 
-  <!-- Breadcrumbs -->
-  <tui-breadcrumbs>
-    @for (link of links; track link) {
+<div
+  class="delete-container"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+  <!-- Navigation -->
+  <tui-breadcrumbs class="breadcrumbs">
+    @for (link of links; track link.caption) {
       <a
         *tuiItem
         tuiLink
@@ -10,47 +14,114 @@
       >
         {{ link.caption }}
       </a>
-    }git
+    }
   </tui-breadcrumbs>
 
-  <h1 class="titleDeleteMaterial">{{ title }}</h1>
+  <!-- Titre -->
+  <header class="page-header">
+    <h1 class="page-title">{{ title }}</h1>
+    <p class="page-description">
+      Gérez votre inventaire en toute simplicité.
+    </p>
+  </header>
 
-  <div class="div-delete">
-    <div>
-      <p>Êtes vous sûr de vouloir supprimer le matériel : </p>
-      <p id="nameMaterialSpan"><span>{{ nameMaterial }}</span></p>
-    </div>
+  <!-- Confirmation -->
+  <main class="delete-content">
+    <section class="delete-card">
 
+      <div class="warning-icon">
+        <tui-icon
+          icon="@tui.alert-triangle"
+          [style.font-size.rem]="1.7"
+        />
+      </div>
 
-    <button
-      tuiButton
-      id="cancelDelete"
-      type="button"
-      [routerLink]="['/material','all-materials']"
-    >Retour
-    </button>
+      <h2 class="card-title">
+        Confirmer la suppression
+      </h2>
 
-    <button
-      tuiButton
-      id="butonDelete"
-      type="button"
-      (click)="deleteMaterial()"
-    >Supprimer
-    </button>
+      <p class="card-description">
+        Êtes-vous sûr de vouloir supprimer définitivement
+        ce matériel de votre inventaire ?
+      </p>
 
-  </div>
+      <!-- Informations du matériel -->
+      <div class="material-information">
+
+        <span class="information-label">
+          MATÉRIEL CONCERNÉ
+        </span>
+
+        <span class="material-name">
+          {{ nameMaterial || 'Chargement...' }}
+        </span>
+
+      </div>
+
+      <!-- Message d'avertissement -->
+      <div class="warning-message">
+        <tui-icon
+          icon="@tui.info"
+        />
+
+        <p>
+          Cette action est irréversible.
+          Le matériel supprimé ne pourra plus être récupéré.
+        </p>
+      </div>
+
+      <!-- Actions -->
+      <div class="delete-actions">
+
+        <button
+          tuiButton
+          type="button"
+          appearance="secondary"
+          class="cancel-button"
+          [routerLink]="['/material', 'all-materials']"
+        >
+          <tui-icon icon="@tui.arrow-left" />
+          Retour
+        </button>
+
+        <button
+          tuiButton
+          type="button"
+          appearance="destructive"
+          class="delete-button"
+          [disabled]="!nameMaterial"
+          (click)="deleteMaterial()"
+        >
+          <tui-icon icon="@tui.trash-2" />
+          Supprimer
+        </button>
+
+      </div>
+
+    </section>
+  </main>
 </div>
 
+<!-- Notification -->
 <ng-template
-  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: isSuccess() ? 'Opération réussie' : 'Erreur',
+    autoClose: 0,
+    closable: false,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <span tuiSubtitle>
+    {{ messageSuccess || messageError }}
+  </span>
+
   <button
     tuiButton
     type="button"
+    appearance="flat"
     (click)="show.set(false)"
   >
-    Close
+    Fermer
   </button>
 </ng-template>

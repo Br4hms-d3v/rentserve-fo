@@ -1,107 +1,440 @@
-@light-background-color: #F1EFE8;
-@light-title: #3B6D11 !important;
-@light-breadcrumb: #5F5E5A !important;
-@light-paraph: #5F5E5A !important;
-@light-span: #3D4A2A !important;
-@light-btn-cancel: #D9764A;
-@light-btn-delete: red;
+// Thème clair
+@light-primary: #173B57;
+@light-blue: #3B82F6;
+@light-background: #FFFFFF;
+@light-section: #F3F6F8;
+@light-surface: #E8EEF3;
+@light-text: #263746;
+@light-secondary-text: #64748B;
+@light-border: #D8E1E9;
+@light-active: #2563EB;
 
-@dark-background-color: #1C1F17 !important;
-@dark-title: #8FC15C !important;
-@dark-breadcrumb: #A6A599 !important;
-@dark-paraph: #8FC15C !important;
-@dark-span: #A6A599 !important;
-@dark-btn-cancel: #E8845A;
-@dark-btn-delete: red;
+// Thème sombre
+@dark-primary: #0B1F33;
+@dark-blue: #3B82F6;
+@dark-background: #071522;
+@dark-section: #172A3D;
+@dark-surface: #20364D;
+@dark-text: #F1F5F9;
+@dark-secondary-text: #A8B7C9;
+@dark-border: #30465C;
+@dark-active: #60A5FA;
+
+// Couleurs fonctionnelles
+@danger: #B42318;
+@danger-hover: #912018;
+@warning: #D97706;
+
+
+/* =========================================
+   CONTENEUR PRINCIPAL
+========================================= */
 
 .delete-container {
-  height: 80vh;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.titleDeleteMaterial {
-  margin-top: 25px;
-  text-align: center;
-}
-
-.div-delete {
-  margin: 50px auto;
+  min-height: 100vh;
   width: 100%;
-  max-width: 550px;
+  padding: 32px 40px;
+  box-sizing: border-box;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+
+/* =========================================
+   BREADCRUMBS
+========================================= */
+
+.breadcrumbs {
+  font-size: 0.875rem;
+  margin-bottom: 35px;
+}
+
+
+/* =========================================
+   EN-TÊTE
+========================================= */
+
+.page-header {
+  text-align: center;
+  margin: 30px auto 40px;
+}
+
+.page-title {
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  font-weight: 700;
+  margin: 0 0 10px;
+  letter-spacing: -0.5px;
+}
+
+.page-description {
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+
+/* =========================================
+   CONTENU
+========================================= */
+
+.delete-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+
+/* =========================================
+   CARTE DE SUPPRESSION
+========================================= */
+
+.delete-card {
+  width: 100%;
+  max-width: 520px;
+  padding: 35px;
+  box-sizing: border-box;
+
+  border: 1px solid;
+  border-radius: 16px;
+
   display: flex;
   flex-direction: column;
-  gap: 16px;;
+  align-items: center;
+  gap: 18px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-#nameMaterialSpan {
-  margin: 25px 0 25px 0;
+
+/* =========================================
+   ICÔNE D'AVERTISSEMENT
+========================================= */
+
+.warning-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: @warning;
+  background-color: rgba(217, 119, 6, 0.10);
+}
+
+
+/* =========================================
+   TEXTES
+========================================= */
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
   text-align: center;
+  margin: 0;
+}
+
+.card-description {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  text-align: center;
+  margin: 0;
+  max-width: 400px;
 }
 
 
-// THEME
+/* =========================================
+   INFORMATIONS DU MATÉRIEL
+========================================= */
 
-.light-mode{
-  background-color: @light-background-color;
+.material-information {
+  width: 100%;
+  box-sizing: border-box;
 
-  tui-breadcrumbs {
-    color: @light-breadcrumb;
+  padding: 18px;
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.information-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+}
+
+.material-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================
+   MESSAGE D'AVERTISSEMENT
+========================================= */
+
+.warning-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  width: 100%;
+
+  p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  tui-icon {
+    flex-shrink: 0;
+  }
+}
+
+
+/* =========================================
+   BOUTONS
+========================================= */
+
+.delete-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+
+  width: 100%;
+  margin-top: 10px;
+}
+
+.cancel-button,
+.delete-button {
+  flex: 1;
+  min-height: 44px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.delete-button {
+  background-color: @danger !important;
+  color: #FFFFFF !important;
+
+  &:hover:not(:disabled) {
+    background-color: @danger-hover !important;
+  }
+}
+
+
+/* =========================================
+   THÈME CLAIR
+========================================= */
+
+.light-mode {
+  background-color: @light-background;
+  color: @light-text;
+
+  .page-title,
+  .card-title {
+    color: @light-primary;
+  }
+
+  .page-description,
+  .card-description {
+    color: @light-secondary-text;
+  }
+
+  .breadcrumbs {
+    color: @light-secondary-text;
+
     a {
-      color: @light-breadcrumb;
+      color: @light-secondary-text;
     }
   }
 
-  .titleDeleteMaterial {
-    color: @light-title;
+  .delete-card {
+    background-color: @light-background;
+    border-color: @light-border;
   }
 
-  p {
-    color: @light-paraph;
+  .material-information {
+    background-color: @light-section;
+    border: 1px solid @light-border;
   }
 
-  #nameMaterialSpan span {
-    color: @light-span;
+  .information-label {
+    color: @light-secondary-text;
   }
 
-  #cancelDelete {
-    background-color: @light-btn-cancel;
+  .material-name {
+    color: @light-primary;
   }
 
-  #butonDelete {
-    background-color: @light-btn-delete;
+  .warning-message {
+    color: @light-secondary-text;
+  }
+
+  .warning-icon {
+    background-color: #FFF4E5;
+  }
+
+  .cancel-button {
+    background-color: @light-surface !important;
+    color: @light-primary !important;
+  }
+}
+
+
+/* =========================================
+   THÈME SOMBRE
+========================================= */
+
+.dark-mode {
+  background-color: @dark-background;
+  color: @dark-text;
+
+  .page-title,
+  .card-title {
+    color: @dark-text;
+  }
+
+  .page-description,
+  .card-description {
+    color: @dark-secondary-text;
+  }
+
+  .breadcrumbs {
+    color: @dark-secondary-text;
+
+    a {
+      color: @dark-secondary-text;
+    }
+  }
+
+  .delete-card {
+    background-color: @dark-section;
+    border-color: @dark-border;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .material-information {
+    background-color: @dark-surface;
+    border: 1px solid @dark-border;
+  }
+
+  .information-label {
+    color: @dark-secondary-text;
+  }
+
+  .material-name {
+    color: @dark-text;
+  }
+
+  .warning-message {
+    color: @dark-secondary-text;
+  }
+
+  .warning-icon {
+    background-color: rgba(217, 119, 6, 0.15);
+  }
+
+  .cancel-button {
+    background-color: @dark-surface !important;
+    color: @dark-text !important;
+  }
+}
+
+
+/* =========================================
+   RESPONSIVE : TABLETTE
+========================================= */
+
+@media screen and (max-width: 768px) {
+
+  .delete-container {
+    padding: 24px;
+  }
+
+  .page-header {
+    margin: 25px auto 30px;
+  }
+
+  .delete-card {
+    max-width: 500px;
+    padding: 28px;
   }
 
 }
 
 
-.dark-mode{
-  background-color: @dark-background-color;
+/* =========================================
+   RESPONSIVE : MOBILE
+========================================= */
 
-  tui-breadcrumbs {
-    color: @dark-breadcrumb;
-    a {
-      color: @dark-breadcrumb;
-    }
+@media screen and (max-width: 480px) {
+
+  .delete-container {
+    padding: 18px 14px;
   }
 
-  .titleDeleteMaterial {
-    color: @dark-title;
+  .breadcrumbs {
+    margin-bottom: 25px;
+    font-size: 0.78rem;
   }
 
-  p {
-    color: @dark-paraph;
+  .page-header {
+    margin: 20px auto 25px;
   }
 
-  #nameMaterialSpan span {
-    color: @dark-span;
+  .page-title {
+    font-size: 1.5rem;
   }
 
-  #cancelDelete {
-    background-color: @dark-btn-cancel;
+  .page-description {
+    font-size: 0.85rem;
   }
 
-  #butonDelete {
-    background-color: @dark-btn-delete;
+  .delete-card {
+    padding: 22px 18px;
+    border-radius: 12px;
+    gap: 16px;
   }
+
+  .warning-icon {
+    width: 54px;
+    height: 54px;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .card-description {
+    font-size: 0.88rem;
+  }
+
+  .material-information {
+    padding: 15px;
+  }
+
+  .delete-actions {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .cancel-button,
+  .delete-button {
+    width: 100%;
+    min-height: 46px;
+  }
+
 }

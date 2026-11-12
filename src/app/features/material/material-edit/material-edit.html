@@ -1,6 +1,11 @@
-<div class="editCategory-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+
+<div
+  class="edit-material-page"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
   <!-- Breadcrumbs -->
-  <tui-breadcrumbs>
+  <tui-breadcrumbs class="page-breadcrumbs">
     @for (link of links; track link) {
       <a
         *tuiItem
@@ -12,82 +17,177 @@
     }
   </tui-breadcrumbs>
 
+  <!-- Page heading -->
+  <header class="page-header">
+    <div class="header-content">
+      <span class="page-eyebrow">GESTION DU STOCK</span>
 
-  <h1 class="titleEditMaterial">
-    {{ title }}
-  </h1>
+      <h1 class="page-title">{{ title }}</h1>
 
-  <!-- form to edit a new material -->
-  <form [formGroup]="editMaterialForm" (ngSubmit)="onSubmitEditMaterial()" class="material-form">
+      <p class="page-description">
+        Modifiez les informations de votre matériel et gérez
+        sa disponibilité.
+      </p>
+    </div>
+  </header>
 
-    <!-- Category field with Taiga UI autocomplete -->
-    <tui-textfield tuiTextfieldSize="m" class="inputMatField">
-      <label tuiLabel>Nom de la catégorie:</label>
-      <input
-        #input
-        placeholder="Choisir une catégorie"
-        tuiInput
-        formControlName="category"
-      />
+  <!-- Form card -->
+  <main class="content-wrapper">
 
-      @if (categoriesList | tuiFilterByInput; as filtered) {
-        @if (input.value) {
-          <tui-data-list-wrapper
-            *tuiDropdown
-            [items]="filtered"
-            [emptyContent]="emptyCategory"
-          />
-        }
-      }
-      <ng-template #emptyCategory>
-        <div class="empty-list">
-          <p>Aucune catégorie trouvée</p>
+    <section class="material-card">
+
+      <div class="card-heading">
+        <div class="card-icon">
+          <tui-icon icon="@tui.package" />
         </div>
-      </ng-template>
-    </tui-textfield>
 
+        <div>
+          <h2>Informations du matériel</h2>
+          <p>Renseignez les informations ci-dessous.</p>
+        </div>
+      </div>
 
-    <tui-textfield>
-      <label tuiLabel>Nom du matériel :</label>
-      <input
-        tuiInput
-        type="text"
-        formControlName="nameMaterial"
-      />
-    </tui-textfield>
+      <div class="card-divider"></div>
 
+      <form
+        [formGroup]="editMaterialForm"
+        (ngSubmit)="onSubmitEditMaterial()"
+        class="material-form"
+      >
 
-    <!-- Toggle / Switch -->
-    <p id="switchToggle">Rendre publique</p>
-    <input
-      tuiSwitch
-      type="checkbox"
-      formControlName="isAvailable"
-    />
-    <br />
+        <!-- Category -->
+        <div class="form-field">
+          <label class="field-label">
+            Catégorie
+            <span class="required">*</span>
+          </label>
 
-    <button
-      tuiButton
-      type="submit"
-      appearance="primary"
-      size="m"
-    >
-      Modifier
-    </button>
-  </form>
+          <tui-textfield tuiTextfieldSize="l">
+            <input
+              #input
+              tuiInput
+              placeholder="Sélectionnez une catégorie"
+              formControlName="category"
+            />
 
+            @if (categoriesList | tuiFilterByInput; as filtered) {
+              @if (input.value) {
+                <tui-data-list-wrapper
+                  *tuiDropdown
+                  [items]="filtered"
+                  [emptyContent]="emptyCategory"
+                />
+              }
+            }
+
+            <ng-template #emptyCategory>
+              <div class="empty-list">
+                Aucune catégorie trouvée.
+              </div>
+            </ng-template>
+          </tui-textfield>
+
+          <span class="field-hint">
+            Sélectionnez la catégorie à laquelle appartient ce matériel.
+          </span>
+        </div>
+
+        <!-- Material name -->
+        <div class="form-field">
+          <label class="field-label">
+            Nom du matériel
+            <span class="required">*</span>
+          </label>
+
+          <tui-textfield tuiTextfieldSize="l">
+            <input
+              tuiInput
+              type="text"
+              placeholder="Ex. : Ordinateur portable"
+              formControlName="nameMaterial"
+            />
+          </tui-textfield>
+
+          <span class="field-hint">
+            Indiquez un nom clair pour identifier le matériel.
+          </span>
+        </div>
+
+        <!-- Availability -->
+        <div class="availability-box">
+          <div class="availability-content">
+            <div class="availability-icon">
+              <tui-icon icon="@tui.globe" />
+            </div>
+
+            <div class="availability-text">
+              <span class="availability-title">
+                Matériel disponible
+              </span>
+
+              <span class="availability-description">
+                Autoriser la consultation de ce matériel par les utilisateurs.
+              </span>
+            </div>
+          </div>
+
+          <input
+            tuiSwitch
+            type="checkbox"
+            formControlName="isAvailable"
+          />
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+
+          <button
+            tuiButton
+            type="button"
+            appearance="secondary"
+            size="l"
+            [routerLink]="'/material/all-materials'"
+          >
+            Annuler
+          </button>
+
+          <button
+            tuiButton
+            type="submit"
+            appearance="primary"
+            size="l"
+          >
+            <tui-icon icon="@tui.check" />
+            Enregistrer les modifications
+          </button>
+
+        </div>
+
+      </form>
+    </section>
+  </main>
 </div>
 
+<!-- Notification -->
 <ng-template
-  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: isSuccess() ? 'Succès' : 'Erreur',
+    autoClose: 0,
+    closable: false,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <span tuiSubtitle>
+    {{ messageSuccess || messageError }}
+  </span>
+
   <button
     tuiButton
     type="button"
+    appearance="secondary"
     (click)="show.set(false)"
   >
-    Close
+    Fermer
   </button>
 </ng-template>
