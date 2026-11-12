@@ -1,10 +1,378 @@
-input[tuiSwitch]{
-  &:checked{
-    --tui-background-accent-1: #22c55e;
-    --tui-background-accent-1-hover: #16a34a;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.earn-container {
+  --primary: #173B57;
+  --secondary: #3B82F6;
+  --background: #FFFFFF;
+  --card-background: #F3F6F8;
+  --surface: #E8EEF3;
+  --text-primary: #263746;
+  --text-secondary: #64748B;
+  --border-color: #D8E1E9;
+  --active: #2563EB;
+
+  width: 100%;
+  min-height: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+
+  background: var(--background);
+  color: var(--text-primary);
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &.dark-mode {
+    --primary: #0B1F33;
+    --secondary: #3B82F6;
+    --background: #071522;
+    --card-background: #172A3D;
+    --surface: #20364D;
+    --text-primary: #F1F5F9;
+    --text-secondary: #A8B7C9;
+    --border-color: #30465C;
+    --active: #60A5FA;
   }
-  &:not(:checked) {
-    --tui-background-neutral-1: #ef4444;
-    --tui-background-neutral-1-hover: #dc2626;
+}
+
+// HEADER
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+
+  h1 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  p {
+    margin: 8px 0 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+}
+
+.month-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+// MAIN CARD
+
+.earn-card {
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 28px;
+
+  background: var(--background);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+
+  box-shadow: 0 4px 20px rgba(23, 59, 87, 0.05);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h2 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  p {
+    margin: 7px 0 0;
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+}
+
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+
+  background: var(--card-background);
+  border-radius: 12px;
+
+  color: var(--active);
+  font-size: 22px;
+}
+
+// CHART
+
+.chart-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0 20px;
+}
+
+tui-arc-chart {
+  position: relative;
+  max-width: 280px;
+  width: 100%;
+
+  .salary-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    text-align: center;
+
+    .chart-label {
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+
+    h3 {
+      margin: 0;
+      color: var(--text-primary);
+      font-size: 30px;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .percentage {
+      margin-top: 4px;
+      padding: 5px 12px;
+
+      background: rgba(59, 130, 246, 0.12);
+      border-radius: 20px;
+
+      color: var(--active);
+      font-size: 13px;
+      font-weight: 700;
+    }
+  }
+}
+
+// PROGRESS
+
+.progress-section {
+  margin: 12px 0 28px;
+}
+
+.progress-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+  span {
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+
+  strong {
+    color: var(--active);
+    font-size: 14px;
+  }
+}
+
+.progress-track {
+  width: 100%;
+  height: 9px;
+
+  overflow: hidden;
+  background: var(--surface);
+  border-radius: 20px;
+}
+
+.progress-value {
+  height: 100%;
+  min-width: 0;
+
+  background: var(--secondary);
+  border-radius: inherit;
+
+  transition: width 0.4s ease;
+}
+
+// STATISTICS
+
+.statistics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  min-width: 0;
+  padding: 18px;
+
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 10px;
+  font-size: 19px;
+
+  &.earned-icon {
+    background: rgba(59, 130, 246, 0.12);
+    color: var(--active);
+  }
+
+  &.remaining-icon {
+    background: rgba(22, 163, 74, 0.12);
+    color: #16A34A;
+  }
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+
+  span {
+    color: var(--text-secondary);
+    font-size: 12px;
+  }
+
+  strong {
+    color: var(--text-primary);
+    font-size: 19px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+}
+
+// FOOTER
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 22px;
+  padding-top: 18px;
+
+  border-top: 1px solid var(--border-color);
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+}
+
+// RESPONSIVE TABLET
+
+@media screen and (max-width: 768px) {
+  .earn-container {
+    padding: 18px;
+  }
+
+  .earn-card {
+    padding: 22px;
+  }
+
+  .page-header h1 {
+    font-size: 22px;
+  }
+}
+
+// RESPONSIVE MOBILE
+
+@media screen and (max-width: 480px) {
+  .earn-container {
+    padding: 12px;
+  }
+
+  .page-header {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    h1 {
+      font-size: 21px;
+    }
+  }
+
+  .earn-card {
+    padding: 18px 14px;
+    border-radius: 14px;
+  }
+
+  .card-header h2 {
+    font-size: 16px;
+  }
+
+  .chart-section {
+    padding: 24px 0 16px;
+  }
+
+  tui-arc-chart {
+    max-width: 240px;
+
+    .salary-info h3 {
+      font-size: 25px;
+    }
+  }
+
+  .statistics-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .stat-item {
+    padding: 14px;
+  }
+
+  .card-footer {
+    justify-content: flex-start;
   }
 }
