@@ -10,11 +10,8 @@ import {
   TuiLink,
   TuiOption,
   TuiTextfieldComponent,
-  TuiTitle,
 } from '@taiga-ui/core';
-import { TuiCardMedium } from '@taiga-ui/layout';
 import { TuiPopout } from '@taiga-ui/experimental';
-import { NgClass } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TuiItem } from '@taiga-ui/cdk';
 import { AuthService } from '../../auth/service/auth-service';
@@ -28,20 +25,17 @@ import { FavorModel } from '../model/favor';
     FavorById,
     TuiBreadcrumbs,
     TuiButton,
-    TuiCardMedium,
     TuiDataListComponent,
+    TuiDropdown,
     TuiInputDirective,
+    TuiItem,
     TuiLabel,
     TuiLink,
     TuiOption,
     TuiPagination,
     TuiPopout,
     TuiTextfieldComponent,
-    TuiTitle,
-    NgClass,
     RouterLink,
-    TuiItem,
-    TuiDropdown,
   ],
   templateUrl: './favor-list-by-category.html',
   styleUrl: './favor-list-by-category.less',
@@ -53,7 +47,7 @@ export class FavorListByCategory implements OnInit {
   private readonly _route = inject(ActivatedRoute); // Get the name of Category (by url)s
   private readonly _cdr = inject(ChangeDetectorRef); // Detect the change page
 
-  isDarkMode = false; // Change theme from light to dark
+  protected isDarkMode = signal(false); // Change theme from light to dark
   role: string | undefined; // Get a role for display authorization
   categorySelected!: string;
   favoursList: FavorModel[] = [];
@@ -112,6 +106,7 @@ export class FavorListByCategory implements OnInit {
   protected getFavourByNameOfCategory() {
     this._favorService.getListFavourByNameOfCategory(this.categorySelected).subscribe({
       next: (allFavourByNameCategory) => {
+        this.messageError = '';
         this.favoursList = allFavourByNameCategory.map((favor) => ({
           id: favor.id,
           nameFavor: favor.nameFavor,
@@ -122,16 +117,13 @@ export class FavorListByCategory implements OnInit {
       },
 
       error: (err) => {
-        if (this.favoursList.length == 0) {
-          this.messageError = 'La list des services est vide';
-        }
-
-        this.messageError = err?.error?.message ?? 'Erreur lors du chargement';
+        this.messageError = err?.error?.message ?? 'Erreur lors du chargement des services.';
+        this._cdr.detectChanges();
       },
     });
   }
 
-  applyFilterAndSort() {
+  protected applyFilterAndSort() {
     this.searchedFavor = this.favoursList.filter((favor) =>
       favor.nameFavor?.toLowerCase().includes(this.searchFavor),
     );
@@ -152,8 +144,8 @@ export class FavorListByCategory implements OnInit {
   }
 
   changeTheme() {
-    this.isDarkMode = this._themeService.isDarkMode(); // Get current theme
-    this._themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
+    this.isDarkMode.set(this._themeService.isDarkMode()); // Thème actuel
+    this._themeService.darkMode$.subscribe((mode: boolean) => this.isDarkMode.set(mode)); // Suit les changements
   }
 
   protected onSearch(event: Event) {

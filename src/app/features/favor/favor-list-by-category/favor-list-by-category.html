@@ -1,165 +1,145 @@
-<div class="cards-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+<div class="page" [class.dark-mode]="isDarkMode()" [class.light-mode]="!isDarkMode()">
+  <div class="page-inner">
+    <!-- Fil d'Ariane -->
+    <tui-breadcrumbs class="breadcrumbs">
+      @for (link of links; track link.caption) {
+        <a *tuiItem tuiLink [routerLink]="link.routerLink">
+          {{ link.caption }}
+        </a>
+      }
+    </tui-breadcrumbs>
 
-  <!-- Breadcrumbs -->
-  <tui-breadcrumbs>
-    @for (link of links; track link) {
-      <a
-        *tuiItem
-        tuiLink
-        [routerLink]="link.routerLink"
-      >
-        {{ link.caption }}
-      </a>
+    <header class="page-header">
+      <h1>Liste des services</h1>
+      @if (categorySelected) {
+        <p class="subtitle">Catégorie : {{ categorySelected }}</p>
+      }
+    </header>
+
+    <!-- Recherche, tri et création -->
+    <div class="toolbar">
+      <tui-textfield class="search" iconStart="@tui.search">
+        <label tuiLabel>Rechercher</label>
+        <input
+          tuiInput
+          placeholder="Nom du service"
+          (input)="onSearch($event)"
+        />
+      </tui-textfield>
+
+      <div class="toolbar-actions">
+        <button
+          tuiButton
+          class="btn-sort"
+          appearance="secondary"
+          type="button"
+          [iconStart]="sortDescending ? '@tui.arrow-up-z-a' : '@tui.arrow-down-a-z'"
+          (click)="onSort()"
+        >
+          Trier
+        </button>
+
+        <button
+          tuiButton
+          class="btn-create"
+          appearance="primary"
+          type="button"
+          iconStart="@tui.plus"
+          [routerLink]="['/favor', 'create', 'new-favor']"
+        >
+          Nouveau service
+        </button>
+      </div>
+    </div>
+
+    <!-- Message d'erreur -->
+    @if (messageError) {
+      <p class="message message-error" role="alert">{{ messageError }}</p>
     }
-  </tui-breadcrumbs>
 
+    <!-- Cartes -->
+    @if (paginatedFavor().length > 0) {
+      <div class="cards">
+        @for (favor of paginatedFavor(); track favor.id) {
+          <article class="card">
+            <h2 class="card-title" [title]="favor.nameFavor">
+              {{ favor.nameFavor }}
+            </h2>
 
-  <h1>Liste des services</h1>
+            <div class="card-actions">
+              <button
+                tuiButton
+                appearance="flat"
+                size="s"
+                type="button"
+                class="btn-show"
+                [routerLink]="['/user-favor', 'list', favor.nameFavor]"
+              >
+                Voir
+              </button>
 
-  <div class="container-search-filter">
-    <!-- Button search -->
-    <tui-textfield class="inputSearch" iconStart="@tui.search">
-      <label tuiLabel> Rechercher</label>
-      <input
-        tuiInput
-        placeholder="Entrez le service"
-        (input)="onSearch($event)"
-      />
-    </tui-textfield>
-
-    <span class="spacer"></span>
-
-    <!-- Button filter -->
-    <button
-      tuiButton
-      class="btn-filter"
-      appearance="secondary"
-      type="button"
-      [iconStart]="sortDescending ? '@tui.arrow-up-z-a' : '@tui.arrow-down-a-z'"
-      (click)="onSort()"
-    >
-      Trier
-    </button>
-
-    <span class="spacer"></span>
-
-    <!-- Button create new favor -->
-    <button
-      tuiButton
-      appearance="primary"
-      class="btn-create"
-      iconEnd="@tui.sparkles"
-      type="submit"
-      [routerLink]="['/favor','create', 'new-favor']"
-    >
-      Créer un nouveau service
-    </button>
-  </div>
-
-  <!-- Cards -->
-  <div class="cards">
-    @for (favor of paginatedFavor(); track favor.id) {
-      <div
-        tuiCardMedium
-        appearance="floating"
-        class="cards-favor-category"
-      >
-
-        <!-- Title -->
-        <h2 tuiTitle>
-          {{ favor.nameFavor }}
-        </h2>
-
-        <!-- Actions -->
-        <div class="card-actions">
-          @if (role == 'ADMIN' || role == 'MODERATOR') {
-            <!-- Menu -->
-            <button
-              tuiIconButton
-              appearance="flat"
-              type="button"
-              iconStart="@tui.ellipsis"
-              title="Actions"
-              aria-label="Actions"
-              [tuiDropdown]="sousMenuFavor"
-              [tuiDropdownOpen]="openDropdownFavorId === favor.id"
-              (click)="toggleDropdown(favor.id)"
-            >
-            </button>
-
-            <!-- Dropdown -->
-            <ng-template #sousMenuFavor let-close>
-              <tui-data-list>
-
+              @if (role === 'ADMIN' || role === 'MODERATOR') {
                 <button
-                  tuiOption
+                  tuiIconButton
+                  appearance="flat"
+                  size="s"
                   type="button"
-                  (click)="close(); openDetailPopout(favor.id)"
-                >
-                  Détail
-                </button>
+                  iconStart="@tui.ellipsis"
+                  title="Actions"
+                  aria-label="Actions pour {{ favor.nameFavor }}"
+                  [tuiDropdown]="sousMenuFavor"
+                  [tuiDropdownOpen]="openDropdownFavorId === favor.id"
+                  (click)="toggleDropdown(favor.id)"
+                ></button>
 
-                <button
-                  tuiOption
-                  type="button"
-                  [routerLink]="['/favor', favor.id, 'edit']"
-                  (click)="close()"
-                >
-                  Modifier
-                </button>
+                <ng-template #sousMenuFavor let-close>
+                  <tui-data-list>
+                    <button
+                      tuiOption
+                      type="button"
+                      (click)="close(); openDetailPopout(favor.id)"
+                    >
+                      Détails
+                    </button>
+                    <button
+                      tuiOption
+                      type="button"
+                      [routerLink]="['/favor', favor.id, 'edit']"
+                      (click)="close()"
+                    >
+                      Modifier
+                    </button>
+                    <button
+                      tuiOption
+                      type="button"
+                      [routerLink]="['/favor', favor.id, 'delete-favor']"
+                      (click)="close()"
+                    >
+                      Supprimer
+                    </button>
+                  </tui-data-list>
+                </ng-template>
+              }
+            </div>
+          </article>
+        }
+      </div>
+    } @else if (!messageError) {
+      <p class="message">Aucun service ne correspond à votre recherche.</p>
+    }
 
-                <button
-                  tuiOption
-                  type="button"
-                  (click)="close()"
-                  [routerLink]="['/favor', favor.id, 'delete-favor']"
-                >
-                  Supprimer
-                </button>
-
-              </tui-data-list>
-            </ng-template>
-          }
-
-          <!-- Generate space between buttons -->
-          <span class="spacer"></span>
-
-          <!-- Go to see all favour -->
-          <button
-            tuiButton
-            appearance="flat"
-            size="s"
-            type="button"
-            class="btn-show"
-            [routerLink]="['/user-favor','list', favor.nameFavor ]"
-          >
-            Voir
-          </button>
-
-        </div>
+    <!-- Pagination -->
+    @if (length > 1) {
+      <div class="pagination">
+        <tui-pagination [length]="length" [(index)]="index"></tui-pagination>
       </div>
     }
-  </div>
-
-  <!-- Pagination -->
-  <div class="pagination-container">
-    <tui-pagination
-      [length]="length"
-      [style.float]="'center'"
-      [(index)]="index"
-    ></tui-pagination>
   </div>
 </div>
 
 <ng-template
   let-observer
-  [tuiPopoutOptions]="{
-    pip: true,
-    features: {
-      height: 400,
-      width: 320
-    }
-  }"
+  [tuiPopoutOptions]="{ pip: true, features: { height: 400, width: 320 } }"
   [(tuiPopout)]="open"
 >
   @if (open()) {
