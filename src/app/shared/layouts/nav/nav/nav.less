@@ -1,43 +1,565 @@
-/* ======================================
-   PALETTE RENTSERVE ADMIN — THÈME CLAIR
-   ====================================== */
+///* ======================================
+//   PALETTE RENTSERVE ADMIN — THÈME CLAIR
+//   ====================================== */
+//
+//@nav-light-bg: #122B43;
+//@nav-light-text: #FFFFFF;
+//@nav-light-hover: #20364D;
+//@nav-light-active: #2563EB;
+//@nav-light-action: #2563EB;
+//@nav-light-action-hover: #1D4ED8;
+//@nav-light-surface: #FFFFFF;
+//@nav-light-page: #F3F6F8;
+//@nav-light-input: #E8EEF3;
+//@nav-light-muted: #64748B;
+//@nav-light-border: #D8E1E9;
+//
+///* ======================================
+//   PALETTE RENTSERVE ADMIN — THÈME SOMBRE
+//   ====================================== */
+//
+//@nav-dark-bg: #0B1F33;
+//@nav-dark-text: #F1F5F9;
+//@nav-dark-hover: #20364D;
+//@nav-dark-active: #3B82F6;
+//@nav-dark-action: #3B82F6;
+//@nav-dark-action-hover: #60A5FA;
+//@nav-dark-surface: #172A3D;
+//@nav-dark-page: #071522;
+//@nav-dark-input: #20364D;
+//@nav-dark-muted: #A8B7C9;
+//@nav-dark-border: #30465C;
+//
+///* Dimensions — inchangées */
+//@nav-logo-height: 38px;
+//@nav-height: 64px;
+//@nav-gap: 12px;
+//
+///* ======================================
+//   STRUCTURE GÉNÉRALE
+//   ====================================== */
+//
+//:host {
+//  display: block;
+//  width: 100%;
+//  min-width: 0;
+//}
+//
+//.toolbar {
+//  display: flex;
+//  flex-direction: row;
+//  align-items: center;
+//  justify-content: space-between;
+//
+//  width: 100%;
+//  min-width: 0;
+//  min-height: @nav-height;
+//  padding: 8px 20px;
+//  gap: @nav-gap;
+//
+//  box-sizing: border-box;
+//  flex-wrap: nowrap;
+//
+//  background: @nav-light-bg;
+//  color: @nav-light-text;
+//  border-bottom: 1px solid @nav-light-border;
+//  box-shadow: 0 3px 12px rgb(7 21 34 / 8%);
+//
+//  /* Logo */
+//  .logo-link {
+//    display: inline-flex;
+//    flex-direction: row;
+//    align-items: center;
+//    flex: 0 0 auto;
+//
+//    gap: 10px;
+//    min-width: 0;
+//    text-decoration: none;
+//    white-space: nowrap;
+//
+//    .logo {
+//      display: block;
+//      flex: 0 0 auto;
+//
+//      width: 85px;
+//      height: auto;
+//      max-width: none;
+//
+//      object-fit: contain;
+//    }
+//
+//    #logoText {
+//      display: inline-block;
+//      margin: 0;
+//
+//      font-size: 20px;
+//      font-weight: 700;
+//      line-height: 1.2;
+//      white-space: nowrap;
+//    }
+//  }
+//
+//  /* Espace flexible entre les groupes */
+//  .spacer {
+//    display: block;
+//    flex: 1 1 0;
+//    min-width: 12px;
+//  }
+//
+//  /* Liens de navigation */
+//  .nav-buttons,
+//  .action-buttons {
+//    display: flex;
+//    flex-direction: row;
+//    align-items: center;
+//
+//    flex: 0 0 auto;
+//    gap: @nav-gap;
+//    min-width: 0;
+//    white-space: nowrap;
+//  }
+//
+//  /* Dimensions des boutons Taiga UI */
+//  button[tuiButton] {
+//    display: inline-flex;
+//    flex: 0 0 auto;
+//    align-items: center;
+//    justify-content: center;
+//
+//    min-height: 42px;
+//    height: auto;
+//    max-width: 100%;
+//    padding: 8px 14px;
+//
+//    box-sizing: border-box;
+//    border-radius: 12px;
+//    white-space: nowrap;
+//  }
+//
+//  .btn-login,
+//  .btn-rentServeBasket {
+//    white-space: nowrap;
+//  }
+//
+//  .user-name {
+//    display: inline-block;
+//    max-width: 150px;
+//    overflow: hidden;
+//    text-overflow: ellipsis;
+//    white-space: nowrap;
+//  }
+//
+//  /* ======================================
+//     THÈME CLAIR
+//     ====================================== */
+//
+//  &.light-mode {
+//    background: @nav-light-bg;
+//    color: @nav-light-text;
+//    border-bottom-color: @nav-light-border;
+//    box-shadow: 0 3px 12px rgb(7 21 34 / 8%);
+//
+//    .logo-link,
+//    .logo-link #logoText {
+//      color: @nav-light-text;
+//    }
+//
+//    .btn-rentServeBasket {
+//      color: @nav-light-text;
+//      background: transparent;
+//      border: 1px solid transparent;
+//
+//      &:hover {
+//        color: #FFFFFF;
+//        background: @nav-light-hover;
+//      }
+//    }
+//
+//    .nav-buttons .nav-active {
+//      color: #FFFFFF;
+//      background: @nav-light-active;
+//      font-weight: 700;
+//    }
+//
+//    .btn-cart {
+//      color: @nav-light-text;
+//      background: @nav-light-hover;
+//      border: 1px solid fade(#FFFFFF, 12%);
+//
+//      &:hover {
+//        background: @nav-light-active;
+//      }
+//    }
+//
+//    .btn-login {
+//      color: #FFFFFF;
+//      background: @nav-light-action;
+//      border: 1px solid transparent;
+//
+//      &:hover {
+//        background: @nav-light-action-hover;
+//      }
+//    }
+//  }
+//
+//  /* ======================================
+//     THÈME SOMBRE
+//     ====================================== */
+//
+//  &.dark-mode {
+//    background: @nav-dark-bg;
+//    color: @nav-dark-text;
+//    border-bottom-color: @nav-dark-border;
+//    box-shadow: 0 3px 12px rgb(0 0 0 / 15%);
+//
+//    .logo-link,
+//    .logo-link #logoText {
+//      color: @nav-dark-text;
+//    }
+//
+//    .btn-rentServeBasket {
+//      color: @nav-dark-text;
+//      background: transparent;
+//      border: 1px solid transparent;
+//
+//      &:hover {
+//        color: #FFFFFF;
+//        background: @nav-dark-hover;
+//      }
+//    }
+//
+//    .nav-buttons .nav-active {
+//      color: #FFFFFF;
+//      background: @nav-dark-active;
+//      font-weight: 700;
+//    }
+//
+//    .btn-cart {
+//      color: @nav-dark-text;
+//      background: @nav-dark-surface;
+//      border: 1px solid @nav-dark-border;
+//
+//      &:hover {
+//        background: @nav-dark-hover;
+//      }
+//    }
+//
+//    .btn-login {
+//      color: #FFFFFF;
+//      background: @nav-dark-action;
+//      border: 1px solid transparent;
+//
+//      &:hover {
+//        background: @nav-dark-action-hover;
+//      }
+//    }
+//  }
+//}
+//
+///* ======================================
+//   MENU LATÉRAL
+//   ====================================== */
+//
+//.drawer {
+//  width: min(360px, 100%);
+//  max-width: 100%;
+//  height: 100%;
+//  padding: 20px;
+//
+//  box-sizing: border-box;
+//  overflow-y: auto;
+//
+//  background: @nav-light-surface;
+//  color: #263746;
+//  border-left: 1px solid @nav-light-border;
+//
+//  .drawer-header {
+//    margin-bottom: 24px;
+//  }
+//
+//  .drawer-links {
+//    display: flex;
+//    flex-direction: column;
+//    gap: 8px;
+//  }
+//
+//  .link-drawer {
+//    width: 100%;
+//    box-sizing: border-box;
+//
+//    a {
+//      display: flex;
+//      align-items: center;
+//
+//      min-height: 48px;
+//      padding: 10px 12px;
+//
+//      box-sizing: border-box;
+//      border-radius: 8px;
+//      color: inherit;
+//      text-decoration: none;
+//      overflow-wrap: anywhere;
+//
+//      transition:
+//        background-color 180ms ease,
+//        color 180ms ease;
+//
+//      &:hover {
+//        color: #263746;
+//        background: @nav-light-input;
+//      }
+//    }
+//
+//    a.nav-active {
+//      color: #FFFFFF;
+//      background: @nav-light-active;
+//      font-weight: 700;
+//    }
+//  }
+//
+//  .drawer-footer {
+//    margin-top: 32px;
+//
+//    .btn-logout {
+//      width: 100%;
+//      color: #FFFFFF;
+//      background: @nav-light-action;
+//      border: 1px solid transparent;
+//
+//      &:hover {
+//        background: @nav-light-action-hover;
+//      }
+//    }
+//  }
+//}
+//
+///* ======================================
+//   THÈME SOMBRE DU MENU LATÉRAL
+//   ====================================== */
+//
+//.toolbar.dark-mode ~ .drawer,
+//.drawer.dark-mode {
+//  background: @nav-dark-surface;
+//  color: @nav-dark-text;
+//  border-left-color: @nav-dark-border;
+//
+//  .link-drawer {
+//    a {
+//      color: @nav-dark-text;
+//
+//      &:hover {
+//        background: @nav-dark-input;
+//      }
+//    }
+//
+//    a.nav-active {
+//      color: #FFFFFF;
+//      background: @nav-dark-active;
+//    }
+//  }
+//
+//  .drawer-footer {
+//    .btn-logout {
+//      color: #FFFFFF;
+//      background: @nav-dark-action;
+//
+//      &:hover {
+//        background: @nav-dark-action-hover;
+//      }
+//    }
+//  }
+//}
+//
+///* ======================================
+//   TABLETTES
+//   ====================================== */
+//
+//@media (max-width: 768px) {
+//  .toolbar {
+//    gap: 8px;
+//    padding: 8px 12px;
+//
+//    .logo-link {
+//      gap: 7px;
+//
+//      .logo {
+//        width: 32px;
+//        height: 32px;
+//        max-width: 32px;
+//      }
+//
+//      #logoText {
+//        font-size: 17px;
+//      }
+//    }
+//
+//    .nav-buttons,
+//    .action-buttons {
+//      gap: 6px;
+//    }
+//
+//    button[tuiButton] {
+//      min-height: 38px;
+//      padding-inline: 9px;
+//      font-size: 13px;
+//    }
+//
+//    .spacer {
+//      min-width: 4px;
+//    }
+//
+//    .user-name {
+//      max-width: 90px;
+//    }
+//  }
+//}
+//
+///* ======================================
+//   TÉLÉPHONES
+//   ====================================== */
+//
+//@media (max-width: 480px) {
+//  .toolbar {
+//    min-height: 52px;
+//    padding: 8px;
+//    gap: 5px;
+//
+//    .logo-link {
+//      gap: 5px;
+//
+//      .logo {
+//        width: 27px;
+//        height: 27px;
+//        max-width: 27px;
+//      }
+//
+//      #logoText {
+//        font-size: 13px;
+//      }
+//    }
+//
+//    .nav-buttons,
+//    .action-buttons {
+//      gap: 4px;
+//    }
+//
+//    button[tuiButton] {
+//      min-height: 34px;
+//      padding-inline: 6px;
+//      font-size: 11px;
+//      border-radius: 9px;
+//    }
+//
+//    .spacer {
+//      min-width: 0;
+//    }
+//
+//    .user-name {
+//      max-width: 52px;
+//    }
+//  }
+//
+//  .drawer {
+//    padding: 16px;
+//
+//    .drawer-header {
+//      margin-bottom: 16px;
+//    }
+//
+//    .drawer-links {
+//      gap: 6px;
+//    }
+//  }
+//}
+//
+///* ======================================
+//   TRÈS PETITS TÉLÉPHONES
+//   ====================================== */
+//
+//@media (max-width: 360px) {
+//  .toolbar {
+//    gap: 3px;
+//    padding-inline: 5px;
+//
+//    .logo-link {
+//      gap: 4px;
+//
+//      .logo {
+//        width: 24px;
+//        height: 24px;
+//        max-width: 24px;
+//      }
+//
+//      #logoText {
+//        font-size: 12px;
+//      }
+//    }
+//
+//    .nav-buttons,
+//    .action-buttons {
+//      gap: 2px;
+//    }
+//
+//    button[tuiButton] {
+//      padding-inline: 4px;
+//      font-size: 10px;
+//    }
+//
+//    .user-name {
+//      max-width: 38px;
+//    }
+//  }
+//}
+//
+///* ======================================
+//   ACCESSIBILITÉ
+//   ====================================== */
+//
+//@media (prefers-reduced-motion: reduce) {
+//  .toolbar,
+//  .drawer .link-drawer a {
+//    transition: none;
+//  }
+//}
 
-@nav-light-bg: #122B43;
-@nav-light-text: #FFFFFF;
-@nav-light-hover: #20364D;
-@nav-light-active: #2563EB;
-@nav-light-action: #2563EB;
-@nav-light-action-hover: #1D4ED8;
-@nav-light-surface: #FFFFFF;
-@nav-light-page: #F3F6F8;
-@nav-light-input: #E8EEF3;
-@nav-light-muted: #64748B;
-@nav-light-border: #D8E1E9;
 
-/* ======================================
-   PALETTE RENTSERVE ADMIN — THÈME SOMBRE
-   ====================================== */
 
-@nav-dark-bg: #0B1F33;
-@nav-dark-text: #F1F5F9;
-@nav-dark-hover: #20364D;
-@nav-dark-active: #3B82F6;
-@nav-dark-action: #3B82F6;
-@nav-dark-action-hover: #60A5FA;
-@nav-dark-surface: #172A3D;
-@nav-dark-page: #071522;
-@nav-dark-input: #20364D;
-@nav-dark-muted: #A8B7C9;
-@nav-dark-border: #30465C;
+/* ==========================================
+   RENTSERVE — DESIGN SYSTEM
+   Angular 21 / Taiga UI / LESS
+   ========================================== */
 
-/* Dimensions — inchangées */
-@nav-logo-height: 38px;
-@nav-height: 64px;
-@nav-gap: 12px;
+/* THÈME CLAIR */
+@light-primary: #173B57;
+@light-secondary: #3B82F6;
+@light-active: #2563EB;
+@light-background: #FFFFFF;
+@light-surface: #F3F6F8;
+@light-input: #E8EEF3;
+@light-text: #263746;
+@light-muted: #64748B;
+@light-border: #D8E1E9;
 
-/* ======================================
-   STRUCTURE GÉNÉRALE
-   ====================================== */
+/* THÈME SOMBRE */
+@dark-primary: #0B1F33;
+@dark-secondary: #3B82F6;
+@dark-active: #60A5FA;
+@dark-background: #071522;
+@dark-surface: #172A3D;
+@dark-input: #20364D;
+@dark-text: #F1F5F9;
+@dark-muted: #A8B7C9;
+@dark-border: #30465C;
+
+/* DIMENSIONS */
+@nav-height: 68px;
+@nav-padding: 24px;
+@nav-gap: 10px;
+@nav-radius: 10px;
+
+/* ==========================================
+   STRUCTURE
+   ========================================== */
 
 :host {
   display: block;
@@ -47,106 +569,153 @@
 
 .toolbar {
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
 
   width: 100%;
-  min-width: 0;
   min-height: @nav-height;
-  padding: 8px 20px;
-  gap: @nav-gap;
+  padding: 8px @nav-padding;
+  gap: 24px;
 
   box-sizing: border-box;
-  flex-wrap: nowrap;
 
-  background: @nav-light-bg;
-  color: @nav-light-text;
-  border-bottom: 1px solid @nav-light-border;
-  box-shadow: 0 3px 12px rgb(7 21 34 / 8%);
+  border-bottom: 1px solid @light-border;
+  background: @light-background;
+  color: @light-text;
 
-  /* Logo */
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease;
+
+  /* LOGO */
+
   .logo-link {
     display: inline-flex;
-    flex-direction: row;
     align-items: center;
     flex: 0 0 auto;
-
     gap: 10px;
-    min-width: 0;
+
     text-decoration: none;
+    color: inherit;
     white-space: nowrap;
 
     .logo {
       display: block;
-      flex: 0 0 auto;
-
-      width: 85px;
-      height: auto;
-      max-width: none;
-
+      width: 42px;
+      height: 42px;
       object-fit: contain;
     }
 
-    #logoText {
-      display: inline-block;
-      margin: 0;
-
-      font-size: 20px;
-      font-weight: 700;
-      line-height: 1.2;
-      white-space: nowrap;
+    .logo-text {
+      font-size: 21px;
+      font-weight: 750;
+      letter-spacing: -0.6px;
+      color: @light-primary;
     }
   }
 
-  /* Espace flexible entre les groupes */
-  .spacer {
-    display: block;
-    flex: 1 1 0;
-    min-width: 12px;
-  }
+  /* NAVIGATION */
 
-  /* Liens de navigation */
-  .nav-buttons,
-  .action-buttons {
+  .nav-buttons {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    flex: 0 0 auto;
-    gap: @nav-gap;
-    min-width: 0;
-    white-space: nowrap;
-  }
-
-  /* Dimensions des boutons Taiga UI */
-  button[tuiButton] {
-    display: inline-flex;
-    flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-
-    min-height: 42px;
-    height: auto;
-    max-width: 100%;
-    padding: 8px 14px;
-
-    box-sizing: border-box;
-    border-radius: 12px;
-    white-space: nowrap;
+    flex: 1 1 auto;
+    gap: 8px;
+    min-width: 0;
   }
 
-  .btn-login,
-  .btn-rentServeBasket {
+  .action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 0 0 auto;
+    gap: 10px;
+  }
+
+  /* BOUTONS COMMUNS */
+
+  button[tuiButton],
+  a[tuiButton] {
+    min-height: 42px;
+    height: auto;
+    padding: 8px 14px;
+
+    border-radius: @nav-radius;
+    box-sizing: border-box;
+
+    font-size: 14px;
+    font-weight: 600;
     white-space: nowrap;
+
+    transition:
+      background-color 160ms ease,
+      color 160ms ease,
+      border-color 160ms ease;
+  }
+
+  /* LIENS DE NAVIGATION */
+
+  .nav-link {
+    color: @light-muted;
+    background: transparent;
+    border: 1px solid transparent;
+
+    &:hover {
+      color: @light-primary;
+      background: @light-surface;
+    }
+
+    &.nav-active {
+      color: @light-active;
+      background: fade(@light-secondary, 10%);
+      border-color: fade(@light-secondary, 12%);
+      font-weight: 700;
+    }
+  }
+
+  /* PANIER */
+
+  .btn-cart {
+    color: @light-primary;
+    background: @light-surface;
+    border: 1px solid @light-border;
+
+    &:hover {
+      color: @light-active;
+      background: @light-input;
+    }
+  }
+
+  /* COMPTE */
+
+  .btn-account {
+    color: @light-text;
+    background: transparent;
+    border: 1px solid transparent;
+
+    &:hover {
+      background: @light-surface;
+    }
   }
 
   .user-name {
     display: inline-block;
-    max-width: 150px;
+    max-width: 140px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+  }
+
+  /* CONNEXION */
+
+  .btn-login {
+    color: #FFFFFF;
+    background: @light-primary;
+    border: 1px solid transparent;
+
+    &:hover {
+      background: #122F47;
+    }
   }
 
   /* ======================================
@@ -154,51 +723,12 @@
      ====================================== */
 
   &.light-mode {
-    background: @nav-light-bg;
-    color: @nav-light-text;
-    border-bottom-color: @nav-light-border;
-    box-shadow: 0 3px 12px rgb(7 21 34 / 8%);
+    background: @light-background;
+    color: @light-text;
+    border-bottom-color: @light-border;
 
-    .logo-link,
-    .logo-link #logoText {
-      color: @nav-light-text;
-    }
-
-    .btn-rentServeBasket {
-      color: @nav-light-text;
-      background: transparent;
-      border: 1px solid transparent;
-
-      &:hover {
-        color: #FFFFFF;
-        background: @nav-light-hover;
-      }
-    }
-
-    .nav-buttons .nav-active {
-      color: #FFFFFF;
-      background: @nav-light-active;
-      font-weight: 700;
-    }
-
-    .btn-cart {
-      color: @nav-light-text;
-      background: @nav-light-hover;
-      border: 1px solid fade(#FFFFFF, 12%);
-
-      &:hover {
-        background: @nav-light-active;
-      }
-    }
-
-    .btn-login {
-      color: #FFFFFF;
-      background: @nav-light-action;
-      border: 1px solid transparent;
-
-      &:hover {
-        background: @nav-light-action-hover;
-      }
+    .logo-text {
+      color: @light-primary;
     }
   }
 
@@ -207,205 +737,282 @@
      ====================================== */
 
   &.dark-mode {
-    background: @nav-dark-bg;
-    color: @nav-dark-text;
-    border-bottom-color: @nav-dark-border;
-    box-shadow: 0 3px 12px rgb(0 0 0 / 15%);
+    background: @dark-primary;
+    color: @dark-text;
+    border-bottom-color: @dark-border;
 
-    .logo-link,
-    .logo-link #logoText {
-      color: @nav-dark-text;
+    .logo-text {
+      color: @dark-text;
     }
 
-    .btn-rentServeBasket {
-      color: @nav-dark-text;
-      background: transparent;
-      border: 1px solid transparent;
+    .nav-link {
+      color: @dark-muted;
 
       &:hover {
-        color: #FFFFFF;
-        background: @nav-dark-hover;
+        color: @dark-text;
+        background: @dark-surface;
+      }
+
+      &.nav-active {
+        color: @dark-active;
+        background: fade(@dark-active, 12%);
+        border-color: fade(@dark-active, 15%);
       }
     }
 
-    .nav-buttons .nav-active {
-      color: #FFFFFF;
-      background: @nav-dark-active;
-      font-weight: 700;
-    }
-
     .btn-cart {
-      color: @nav-dark-text;
-      background: @nav-dark-surface;
-      border: 1px solid @nav-dark-border;
+      color: @dark-text;
+      background: @dark-surface;
+      border-color: @dark-border;
 
       &:hover {
-        background: @nav-dark-hover;
+        color: @dark-active;
+        background: @dark-input;
+      }
+    }
+
+    .btn-account {
+      color: @dark-text;
+
+      &:hover {
+        background: @dark-surface;
       }
     }
 
     .btn-login {
       color: #FFFFFF;
-      background: @nav-dark-action;
-      border: 1px solid transparent;
+      background: @dark-secondary;
 
       &:hover {
-        background: @nav-dark-action-hover;
+        background: @dark-active;
+        color: @dark-primary;
       }
     }
   }
+
+  /* ACCESSIBILITÉ */
+
+  button:focus-visible,
+  a:focus-visible {
+    outline: 3px solid @light-secondary;
+    outline-offset: 3px;
+  }
 }
 
-/* ======================================
+/* ==========================================
    MENU LATÉRAL
-   ====================================== */
+   ========================================== */
 
 .drawer {
-  width: min(360px, 100%);
+  display: flex;
+  flex-direction: column;
+
+  width: min(380px, 100%);
   max-width: 100%;
   height: 100%;
-  padding: 20px;
+  padding: 24px;
 
   box-sizing: border-box;
   overflow-y: auto;
 
-  background: @nav-light-surface;
-  color: #263746;
-  border-left: 1px solid @nav-light-border;
+  background: @light-background;
+  color: @light-text;
+  border-left: 1px solid @light-border;
 
   .drawer-header {
-    margin-bottom: 24px;
+    margin-bottom: 28px;
   }
+
+  .drawer-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .drawer-welcome {
+    margin: 8px 0 0;
+    color: @light-muted;
+    font-size: 14px;
+  }
+
+  .btn-close {
+    flex: 0 0 auto;
+    color: @light-muted;
+    background: @light-surface;
+    border-radius: 10px;
+
+    &:hover {
+      color: @light-text;
+      background: @light-input;
+    }
+  }
+
+  /* LIENS */
 
   .drawer-links {
     display: flex;
     flex-direction: column;
     gap: 8px;
-  }
-
-  .link-drawer {
-    width: 100%;
-    box-sizing: border-box;
 
     a {
       display: flex;
       align-items: center;
+      gap: 13px;
 
-      min-height: 48px;
-      padding: 10px 12px;
+      width: 100%;
+      min-height: 50px;
+      padding: 12px 14px;
 
       box-sizing: border-box;
-      border-radius: 8px;
-      color: inherit;
+      border-radius: 10px;
+
+      color: @light-text;
       text-decoration: none;
-      overflow-wrap: anywhere;
+      font-size: 14px;
+      font-weight: 500;
 
       transition:
-        background-color 180ms ease,
-        color 180ms ease;
+        background-color 160ms ease,
+        color 160ms ease;
+
+      tui-icon {
+        color: @light-muted;
+        font-size: 19px;
+      }
 
       &:hover {
-        color: #263746;
-        background: @nav-light-input;
+        background: @light-surface;
+        color: @light-primary;
       }
-    }
 
-    a.nav-active {
-      color: #FFFFFF;
-      background: @nav-light-active;
-      font-weight: 700;
+      &.nav-active {
+        background: fade(@light-secondary, 10%);
+        color: @light-active;
+        font-weight: 700;
+
+        tui-icon {
+          color: @light-active;
+        }
+      }
     }
   }
 
+  /* DÉCONNEXION */
+
   .drawer-footer {
-    margin-top: 32px;
+    margin-top: auto;
+    padding-top: 24px;
 
     .btn-logout {
       width: 100%;
-      color: #FFFFFF;
-      background: @nav-light-action;
-      border: 1px solid transparent;
+      min-height: 46px;
+
+      color: @light-primary;
+      background: @light-surface;
+      border: 1px solid @light-border;
+      border-radius: 10px;
 
       &:hover {
-        background: @nav-light-action-hover;
+        color: #FFFFFF;
+        background: @light-primary;
       }
     }
   }
 }
 
-/* ======================================
-   THÈME SOMBRE DU MENU LATÉRAL
-   ====================================== */
+/* ==========================================
+   MENU LATÉRAL — THÈME SOMBRE
+   ========================================== */
 
 .toolbar.dark-mode ~ .drawer,
 .drawer.dark-mode {
-  background: @nav-dark-surface;
-  color: @nav-dark-text;
-  border-left-color: @nav-dark-border;
+  background: @dark-surface;
+  color: @dark-text;
+  border-color: @dark-border;
 
-  .link-drawer {
+  .drawer-welcome {
+    color: @dark-muted;
+  }
+
+  .btn-close {
+    color: @dark-muted;
+    background: @dark-input;
+
+    &:hover {
+      color: @dark-text;
+      background: #29435C;
+    }
+  }
+
+  .drawer-links {
     a {
-      color: @nav-dark-text;
+      color: @dark-text;
+
+      tui-icon {
+        color: @dark-muted;
+      }
 
       &:hover {
-        background: @nav-dark-input;
+        background: @dark-input;
       }
-    }
 
-    a.nav-active {
-      color: #FFFFFF;
-      background: @nav-dark-active;
+      &.nav-active {
+        color: @dark-active;
+        background: fade(@dark-active, 12%);
+
+        tui-icon {
+          color: @dark-active;
+        }
+      }
     }
   }
 
   .drawer-footer {
     .btn-logout {
-      color: #FFFFFF;
-      background: @nav-dark-action;
+      color: @dark-text;
+      background: @dark-input;
+      border-color: @dark-border;
 
       &:hover {
-        background: @nav-dark-action-hover;
+        color: @dark-primary;
+        background: @dark-active;
       }
     }
   }
 }
 
-/* ======================================
+/* ==========================================
    TABLETTES
-   ====================================== */
+   ========================================== */
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .toolbar {
-    gap: 8px;
-    padding: 8px 12px;
+    gap: 12px;
+    padding-inline: 16px;
 
     .logo-link {
       gap: 7px;
 
       .logo {
-        width: 32px;
-        height: 32px;
-        max-width: 32px;
+        width: 36px;
+        height: 36px;
       }
 
-      #logoText {
-        font-size: 17px;
+      .logo-text {
+        font-size: 19px;
       }
     }
 
     .nav-buttons,
     .action-buttons {
-      gap: 6px;
+      gap: 5px;
     }
 
-    button[tuiButton] {
-      min-height: 38px;
-      padding-inline: 9px;
+    button[tuiButton],
+    a[tuiButton] {
+      padding-inline: 10px;
       font-size: 13px;
-    }
-
-    .spacer {
-      min-width: 4px;
     }
 
     .user-name {
@@ -414,110 +1021,140 @@
   }
 }
 
-/* ======================================
-   TÉLÉPHONES
-   ====================================== */
+/* ==========================================
+   MOBILES
+   ========================================== */
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .toolbar {
-    min-height: 52px;
-    padding: 8px;
+    min-height: 60px;
+    padding: 8px 10px;
     gap: 5px;
 
     .logo-link {
       gap: 5px;
 
       .logo {
-        width: 27px;
-        height: 27px;
-        max-width: 27px;
+        width: 30px;
+        height: 30px;
       }
 
-      #logoText {
-        font-size: 13px;
+      .logo-text {
+        font-size: 16px;
       }
     }
 
     .nav-buttons,
     .action-buttons {
-      gap: 4px;
+      gap: 3px;
     }
 
-    button[tuiButton] {
-      min-height: 34px;
-      padding-inline: 6px;
-      font-size: 11px;
-      border-radius: 9px;
-    }
-
-    .spacer {
-      min-width: 0;
+    button[tuiButton],
+    a[tuiButton] {
+      min-height: 38px;
+      padding: 6px 8px;
+      font-size: 12px;
+      border-radius: 8px;
     }
 
     .user-name {
-      max-width: 52px;
+      max-width: 65px;
     }
   }
 
   .drawer {
-    padding: 16px;
-
-    .drawer-header {
-      margin-bottom: 16px;
-    }
-
-    .drawer-links {
-      gap: 6px;
-    }
+    padding: 18px;
   }
 }
 
-/* ======================================
-   TRÈS PETITS TÉLÉPHONES
-   ====================================== */
 
-@media (max-width: 360px) {
+/* ==========================================
+   SMARTPHONES — ÉCRANS DE 380 PX MAXIMUM
+   ========================================== */
+
+@media screen and (max-width: 380px) {
+
   .toolbar {
-    gap: 3px;
-    padding-inline: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 4px;
+    padding: 8px 6px;
+
+    /* LOGO */
 
     .logo-link {
       gap: 4px;
+      flex-shrink: 0;
 
       .logo {
-        width: 24px;
-        height: 24px;
-        max-width: 24px;
+        width: 26px;
+        height: 26px;
       }
 
-      #logoText {
-        font-size: 12px;
+      .logo-text {
+        font-size: 14px;
       }
     }
+
+    /* NAVIGATION ET ACTIONS */
 
     .nav-buttons,
     .action-buttons {
-      gap: 2px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      flex-shrink: 0;
     }
 
-    button[tuiButton] {
-      padding-inline: 4px;
-      font-size: 10px;
+    /* BOUTONS ICONES UNIQUEMENT */
+
+    .nav-link,
+    .btn-cart,
+    .btn-account {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 36px;
+      min-width: 36px;
+      height: 36px;
+      min-height: 36px;
+
+      padding: 0 !important;
+
+      border-radius: 9px;
+      flex-shrink: 0;
+
+      /* Masquer uniquement les textes */
+      .button-label {
+        display: none !important;
+      }
+
+      /* Conserver les icônes Taiga UI */
+      tui-icon {
+        display: inline-flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        font-size: 18px;
+      }
     }
 
-    .user-name {
-      max-width: 38px;
+    /* Masquer la flèche du compte */
+
+    .btn-account {
+      [iconEnd] {
+        display: none;
+      }
     }
-  }
-}
 
-/* ======================================
-   ACCESSIBILITÉ
-   ====================================== */
+    /* CONNEXION */
 
-@media (prefers-reduced-motion: reduce) {
-  .toolbar,
-  .drawer .link-drawer a {
-    transition: none;
+    .btn-login {
+      min-height: 36px;
+      padding: 0 8px;
+      font-size: 11px;
+    }
   }
 }

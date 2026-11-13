@@ -11,7 +11,7 @@ import { NgClass } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { TuiButton, TuiPopup, TuiTitle } from '@taiga-ui/core';
+import { TuiButton, TuiClose, TuiIcon, TuiPopup, TuiTitle } from '@taiga-ui/core';
 import { TuiDrawer } from '@taiga-ui/kit';
 import { TuiHeader } from '@taiga-ui/layout';
 
@@ -30,6 +30,8 @@ import { AuthService } from '../../../../features/auth/service/auth-service';
     TuiPopup,
     TuiHeader,
     TuiTitle,
+    TuiClose,
+    TuiIcon,
   ],
   templateUrl: './nav.html',
   styleUrl: './nav.less',
