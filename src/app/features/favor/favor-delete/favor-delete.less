@@ -1,107 +1,398 @@
-@light-background-color: #F1EFE8;
-@light-title: #3B6D11 !important;
-@light-breadcrumb: #5F5E5A !important;
-@light-paraph: #5F5E5A !important;
-@light-span: #3D4A2A !important;
-@light-btn-cancel: #D9764A;
-@light-btn-delete: red;
+/* =========================================
+   COLOR PALETTE
+========================================= */
 
-@dark-background-color: #1C1F17 !important;
-@dark-title: #8FC15C !important;
-@dark-breadcrumb: #A6A599 !important;
-@dark-paraph: #8FC15C !important;
-@dark-span: #A6A599 !important;
-@dark-btn-cancel: #E8845A;
-@dark-btn-delete: red;
+/* Light theme */
+@light-primary: #173B57;
+@light-blue: #3B82F6;
+@light-background: #FFFFFF;
+@light-section: #F3F6F8;
+@light-surface: #E8EEF3;
+@light-text: #263746;
+@light-text-secondary: #64748B;
+@light-border: #D8E1E9;
+@light-active: #2563EB;
+
+/* Dark theme */
+@dark-primary: #0B1F33;
+@dark-blue: #3B82F6;
+@dark-background: #071522;
+@dark-section: #172A3D;
+@dark-surface: #20364D;
+@dark-text: #F1F5F9;
+@dark-text-secondary: #A8B7C9;
+@dark-border: #30465C;
+@dark-active: #60A5FA;
+
+/* Semantic colors */
+@danger: #DC2626;
+@danger-hover: #B91C1C;
+@white: #FFFFFF;
+
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
 
 .delete-container {
-  height: 80vh;
-  padding: 20px;
+  min-height: 100vh;
+  width: 100%;
+  padding: 24px 5%;
   box-sizing: border-box;
+  transition: background-color 0.25s ease,
+  color 0.25s ease;
+}
+
+/* =========================================
+   BREADCRUMBS
+========================================= */
+
+.breadcrumbs {
+  margin-bottom: 35px;
+  font-size: 14px;
+}
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.page-header {
+  text-align: center;
+  margin: 35px auto 45px;
 }
 
 .titleDeleteFavor {
-  margin-top: 25px;
-  text-align: center;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 700;
+  margin: 0 0 12px;
+  letter-spacing: -0.5px;
 }
 
-.div-delete {
-  margin: 50px auto;
+.page-description {
+  font-size: 15px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.delete-content {
   width: 100%;
-  max-width: 550px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-bottom: 40px;
+}
+
+.delete-card {
+  width: 100%;
+  max-width: 700px;
+  padding: 40px;
+  border: 1px solid;
+  border-radius: 16px;
+  box-sizing: border-box;
+  text-align: center;
+  transition: background-color 0.25s ease,
+  border-color 0.25s ease,
+  box-shadow 0.25s ease;
+}
+
+/* =========================================
+   WARNING ICON
+========================================= */
+
+.warning-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+
+  tui-icon {
+    font-size: 28px;
+  }
+}
+
+/* =========================================
+   TEXT
+========================================= */
+
+.delete-card h2 {
+  font-size: 21px;
+  font-weight: 700;
+  margin: 0 0 15px;
+}
+
+.delete-description {
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0 auto 28px;
+  max-width: 420px;
+}
+
+.service-information {
   display: flex;
   flex-direction: column;
-  gap: 16px;;
+  align-items: flex-start;
+  text-align: left;
+  gap: 10px;
+  padding: 18px 20px;
+  border: 1px solid;
+  border-radius: 10px;
+  margin-bottom: 30px;
 }
 
-#nameFavorSpan {
-  margin: 25px 0 25px 0;
-  text-align: center;
+.service-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
 }
 
+.service-name {
+  font-size: 16px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
 
-// THEME
+/* =========================================
+   BUTTONS
+========================================= */
 
-.light-mode{
-  background-color: @light-background-color;
+.delete-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+}
 
-  tui-breadcrumbs {
-    color: @light-breadcrumb;
+.delete-actions button {
+  min-height: 46px;
+  flex: 1;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.2s ease,
+  transform 0.2s ease;
+}
+
+.cancel-button {
+  border: 1px solid;
+}
+
+.delete-button {
+  background-color: @danger !important;
+  color: @white !important;
+}
+
+.delete-button:hover {
+  background-color: @danger-hover !important;
+}
+
+.delete-actions button:active {
+  transform: scale(0.98);
+}
+
+/* =========================================
+   LIGHT THEME
+========================================= */
+
+.light-mode {
+  background-color: @light-background;
+  color: @light-text;
+
+  .breadcrumbs {
+    color: @light-text-secondary;
+
     a {
-      color: @light-breadcrumb;
+      color: @light-text-secondary;
     }
   }
 
   .titleDeleteFavor {
-    color: @light-title;
+    color: @light-primary;
   }
 
-  p {
-    color: @light-paraph;
+  .page-description,
+  .delete-description {
+    color: @light-text-secondary;
   }
 
-  #nameFavorSpan span {
-    color: @light-span;
+  .delete-card {
+    background-color: @light-background;
+    border-color: @light-border;
+    box-shadow: 0 8px 30px rgba(23, 59, 87, 0.06);
   }
 
-  #cancelDelete {
-    background-color: @light-btn-cancel;
+  .warning-icon {
+    background-color: #FEF2F2;
+    color: @danger;
   }
 
-  #butonDelete {
-    background-color: @light-btn-delete;
+  .service-information {
+    background-color: @light-section;
+    border-color: @light-border;
   }
 
+  .service-label {
+    color: @light-text-secondary;
+  }
+
+  .service-name {
+    color: @light-primary;
+  }
+
+  .cancel-button {
+    background-color: @light-surface !important;
+    color: @light-primary !important;
+    border-color: @light-border !important;
+  }
+
+  .cancel-button:hover {
+    background-color: @light-border !important;
+  }
 }
 
+/* =========================================
+   DARK THEME
+========================================= */
 
-.dark-mode{
-  background-color: @dark-background-color;
+.dark-mode {
+  background-color: @dark-background;
+  color: @dark-text;
 
-  tui-breadcrumbs {
-    color: @dark-breadcrumb;
+  .breadcrumbs {
+    color: @dark-text-secondary;
+
     a {
-      color: @dark-breadcrumb;
+      color: @dark-text-secondary;
     }
   }
 
   .titleDeleteFavor {
-    color: @dark-title;
+    color: @dark-text;
   }
 
-  p {
-    color: @dark-paraph;
+  .page-description,
+  .delete-description {
+    color: @dark-text-secondary;
   }
 
-  #nameFavorSpan span {
-    color: @dark-span;
+  .delete-card {
+    background-color: @dark-section;
+    border-color: @dark-border;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
   }
 
-  #cancelDelete {
-    background-color: @dark-btn-cancel;
+  .warning-icon {
+    background-color: rgba(220, 38, 38, 0.15);
+    color: #F87171;
   }
 
-  #butonDelete {
-    background-color: @dark-btn-delete;
+  .service-information {
+    background-color: @dark-surface;
+    border-color: @dark-border;
+  }
+
+  .service-label {
+    color: @dark-text-secondary;
+  }
+
+  .service-name {
+    color: @dark-text;
+  }
+
+  .cancel-button {
+    background-color: @dark-surface !important;
+    color: @dark-text !important;
+    border-color: @dark-border !important;
+  }
+
+  .cancel-button:hover {
+    background-color: @dark-border !important;
+  }
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 768px) {
+  .delete-container {
+    padding: 20px 4%;
+  }
+
+  .page-header {
+    margin: 25px auto 35px;
+  }
+
+  .delete-card {
+    padding: 32px 24px;
+  }
+
+  .delete-actions {
+    flex-direction: column-reverse;
+  }
+
+  .delete-actions button {
+    width: 100%;
+    flex: none;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+  .delete-container {
+    padding: 16px;
+  }
+
+  .breadcrumbs {
+    margin-bottom: 25px;
+    font-size: 12px;
+  }
+
+  .page-header {
+    margin: 20px auto 28px;
+    text-align: left;
+  }
+
+  .titleDeleteFavor {
+    font-size: 24px;
+  }
+
+  .page-description {
+    font-size: 14px;
+  }
+
+  .delete-card {
+    padding: 28px 20px;
+    border-radius: 12px;
+  }
+
+  .warning-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .delete-card h2 {
+    font-size: 19px;
+  }
+
+  .delete-description {
+    font-size: 14px;
+  }
+
+  .service-information {
+    padding: 16px;
+  }
+
+  .service-name {
+    font-size: 15px;
   }
 }
