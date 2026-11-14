@@ -1,91 +1,213 @@
-<div class="userFavor-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
 
-  <!-- Breadcrumbs -->
-  <tui-breadcrumbs>
-    @for (link of links; track link) {
-      <a
-        *tuiItem
-        tuiLink
-        [routerLink]="link.routerLink"
-      >
-        {{ link.caption }}
-      </a>
-    }
-  </tui-breadcrumbs>
+<div
+  class="userFavor-container"
+  [class.dark-mode]="isDarkMode()"
+  [class.light-mode]="!isDarkMode()"
+>
+  <!-- En-tête -->
+  <header class="page-header">
+
+    <!-- Fil d'Ariane -->
+    <tui-breadcrumbs>
+      @for (link of links; track link.caption) {
+        <a
+          *tuiItem
+          tuiLink
+          [routerLink]="link.routerLink"
+        >
+          {{ link.caption }}
+        </a>
+      }
+    </tui-breadcrumbs>
+
+    <!-- Titre et nombre de résultats -->
+    <div class="header-content">
+
+      <div>
+        <h1>Liste des services</h1>
+
+        <p class="page-description">
+          Découvrez les services proposés par nos prestataires
+          et trouvez celui qui répond à vos besoins.
+        </p>
+      </div>
+
+      <div class="results-count">
+        {{ searchedUserFavour.length }}
+        {{
+          searchedUserFavour.length > 1
+            ? 'services disponibles'
+            : 'service disponible'
+        }}
+      </div>
+
+    </div>
+
+  </header>
 
 
-  <h1>Liste des matériels</h1>
-
+  <!-- Actions et filtres -->
   <div class="container-search-filter">
-    <!-- Button sort on state -->
 
-    <span class="spacer"></span>
+    <!-- Filtre par prix -->
+    <button
+      tuiButton
+      type="button"
+      appearance="secondary"
+      size="m"
+      class="btn-filter"
+      (click)="onSort()"
+    >
+      <tui-icon
+        [icon]="sortDescending ? '@tui.arrow-down-wide-narrow' : '@tui.arrow-up-narrow-wide'"
+      ></tui-icon>
 
-    <!-- Button filter price -->
-    <span class="spacer"></span>
-
-    <!-- Button create new favor -->
+      {{
+        sortDescending
+          ? 'Prix décroissant'
+          : 'Prix croissant'
+      }}
+    </button>
 
   </div>
 
-  <!-- Cards -->
-  <div class="cards-container">
-    @for (userFavor of paginatedUserFavour(); track userFavor.id) {
 
-      <div class="card" tuiCardMedium>
+  <!-- Message d'erreur -->
+  @if (messageError) {
+    <div class="error-state" role="alert">
+      {{ messageError }}
+    </div>
+  }
 
-        <!-- Image -->
-        <div class="image-container">
-          <img
-            [src]="'/userFavour/' + userFavor.picture"
-            [alt]="userFavor.picture"
-            alt="Image"
-          />
-        </div>
 
-        <!-- Actions -->
-        <div class="actions">
+  <!-- Liste des services -->
+  @if (!messageError && searchedUserFavour.length > 0) {
 
-          <div class="priceHour">
-            {{ userFavor.priceHourFavor }} € / heure
-          </div>
+    <main class="services-content">
 
-          <button
-            tuiButton
-            type="button"
-            appearance="primary"
-            size="xs"
-            class="details-button"
-            [routerLink]="['/user-favor', 'detail', userFavor.id]"
-          >
-            détail
-          </button>
+      <!-- Grille des cartes -->
+      <div class="cards-container">
 
-        </div>
+        @for (
+          userFavor of paginatedUserFavour();
+          track userFavor.id
+          ) {
 
-        <!-- button rental -->
-        <button
-          tuiButton
-          type="button"
-          appearance="primary"
-          size="s"
-          class="btn-rental"
-        >
-          Louer
-        </button>
+          <article class="service-card">
+
+            <!-- Image -->
+            <div class="image-container">
+
+              <img
+                [src]="'/userFavour/' + userFavor.picture"
+                [alt]="'Photo du service ' + userFavor.id"
+                loading="lazy"
+              />
+
+              <div class="image-overlay">
+                <span class="service-label">
+                  Service
+                </span>
+              </div>
+
+            </div>
+
+
+            <!-- Informations -->
+            <div class="card-content">
+
+              <!-- Prix -->
+              <div class="price-container">
+
+                <span class="price-label">
+                  Tarif de prestation
+                </span>
+
+                <div class="price">
+                  {{ userFavor.priceHourFavor | number:'1.2-2' }}
+                  <span>€ / heure</span>
+                </div>
+
+              </div>
+
+
+              <!-- Actions -->
+              <div class="card-actions">
+
+                <button
+                  tuiButton
+                  type="button"
+                  appearance="secondary"
+                  size="m"
+                  class="details-button"
+                  [routerLink]="[
+                    '/user-favor',
+                    'detail',
+                    userFavor.id
+                  ]"
+                >
+                  <tui-icon icon="@tui.info"></tui-icon>
+                  Détails
+                </button>
+
+                <button
+                  tuiButton
+                  type="button"
+                  appearance="primary"
+                  size="m"
+                  class="rental-button"
+                >
+                  <tui-icon icon="@tui.calendar"></tui-icon>
+                  Demander
+                </button>
+
+              </div>
+
+            </div>
+
+          </article>
+
+        }
 
       </div>
-    }
-  </div>
+
+
+      <!-- Pagination -->
+      @if (length > 1) {
+
+        <div class="pagination-container">
+
+          <tui-pagination
+            [length]="length"
+            [(index)]="index"
+            aria-label="Pagination des services"
+          ></tui-pagination>
+
+        </div>
+
+      }
+
+    </main>
+
+  }
+
+
+  <!-- État vide -->
+  @if (!messageError && searchedUserFavour.length === 0) {
+
+    <div class="empty-state">
+
+      <tui-icon icon="@tui.package-open"></tui-icon>
+
+      <h2>Aucun service disponible</h2>
+
+      <p>
+        Aucun service n'est actuellement disponible
+        dans cette catégorie.
+      </p>
+
+    </div>
+
+  }
+
 </div>
-
-<!-- Pagination -->
-<div class="pagination-container">
-  <tui-pagination
-    [length]="length"
-    [style.float]="'center'"
-    [(index)]="index"
-  ></tui-pagination>
-</div>
-
-
