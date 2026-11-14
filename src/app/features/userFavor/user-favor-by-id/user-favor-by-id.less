@@ -1,205 +1,616 @@
-@light-background-color: #F1EFE8;
-@light-breadcrumb: #5F5E5A !important;
-@light-title: #3B6D11 !important;
-@light-strong: #993C1D !important;
-@light-text: #3D4A2A;
-@light-border: #D9764A;
+/* ==========================================
+   LIGHT THEME
+========================================== */
 
-@dark-background-color: #1C1F17;
-@dark-breadcrumb: #A6A599 !important;
-@dark-title: #8FC15C;
-@dark-strong: #E8845A !important;
-@dark-text: #F1EFE8;
-@dark-border: #A6A599;
+.light-mode {
+  --background: #FFFFFF;
+  --primary: #173B57;
+  --secondary: #3B82F6;
+  --surface: #F3F6F8;
+  --surface-secondary: #E8EEF3;
 
-.userFavorDetail {
-  height: 90vh;
-  padding-bottom: 25px;
+  --text-primary: #263746;
+  --text-secondary: #64748B;
+
+  --border: #D8E1E9;
+  --active: #2563EB;
+
+  --success-bg: #DCFCE7;
+  --success-text: #166534;
+
+  --danger-bg: #FEE2E2;
+  --danger-text: #991B1B;
 }
 
-h1 {
-  margin-top: 0;
-  padding-top: 25px;
-  font-family: 'Libre Baskerville italic', serif;
+
+/* ==========================================
+   DARK THEME
+========================================== */
+
+.dark-mode {
+  --background: #071522;
+  --primary: #0B1F33;
+  --secondary: #3B82F6;
+  --surface: #172A3D;
+  --surface-secondary: #20364D;
+
+  --text-primary: #F1F5F9;
+  --text-secondary: #A8B7C9;
+
+  --border: #30465C;
+  --active: #60A5FA;
+
+  --success-bg: #123D32;
+  --success-text: #86EFAC;
+
+  --danger-bg: #48252D;
+  --danger-text: #FCA5A5;
+}
+
+
+/* ==========================================
+   GLOBAL PAGE
+========================================== */
+
+.user-favor-page {
+  min-height: 100vh;
+  padding: 35px 5%;
+  box-sizing: border-box;
+
+  background-color: var(--background);
+  color: var(--text-primary);
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.page-header {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto 40px;
+}
+
+.page-header-content {
   text-align: center;
 }
 
+.page-eyebrow,
+.section-eyebrow {
+  display: block;
+
+  color: var(--active);
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+
+  margin-bottom: 10px;
+}
+
+.page-header h1 {
+  margin: 0;
+
+  color: var(--primary);
+
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 700;
+  line-height: 1.3;
+
+  overflow-wrap: anywhere;
+}
+
+.dark-mode .page-header h1 {
+  color: var(--text-primary);
+}
+
+.page-subtitle {
+  margin: 12px 0 0;
+
+  color: var(--text-secondary);
+
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+
+/* ==========================================
+   MAIN LAYOUT
+========================================== */
+
 .favor-detail {
-  width: 95%;
-  max-width: 1600px;
-  margin: 40px auto;
-  padding: 25px;
+  width: 100%;
+  max-width: 1500px;
+
+  margin: 0 auto;
+
   display: grid;
-  // left -  right
-  grid-template-columns: 400px 1fr;
-  gap: 50px;
-  box-sizing: border-box;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.5fr);
+
+  gap: 30px;
+
+  align-items: start;
 }
 
 
-// ========================================
-// INFORMATION'S
-// ========================================
-.favor-info {
-  padding: 20px;
-  box-sizing: border-box;
-  min-height: 500px;
+/* ==========================================
+   SECTION HEADINGS
+========================================== */
+
+.section-heading {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 30px;
+}
+
+.section-heading h2 {
+  margin: 0;
+
+  color: var(--text-primary);
+
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.4;
 }
 
 
-.favor-description,
-.favor-property {
-  strong {
-    display: block;
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 5px;
-  }
+/* ==========================================
+   INFORMATION CARD
+========================================== */
 
-  p {
-    margin: 0 0 18px 0;
-    font-size: 16px;
-  }
-}
+.favor-info {
+  padding: 30px;
 
+  background-color: var(--surface);
 
-// ========================================
-// PICTURES
-// ========================================
-.favor-gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 25px;
-  align-content: center;
-}
+  border: 1px solid var(--border);
+  border-radius: 16px;
 
-
-.picture-container {
-  width: 225px;
-  height: 225px;
-  border: 2px solid #111;
   box-sizing: border-box;
+}
+
+
+/* ==========================================
+   INFORMATION ITEMS
+========================================== */
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 16px;
+
+  padding: 20px 0;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.info-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.info-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
+  background-color: var(--surface-secondary);
+
+  border-radius: 12px;
+
+  color: var(--active);
+
+  font-size: 17px;
+}
+
+.info-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.info-label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: var(--text-secondary);
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.info-content p {
+  margin: 0;
+
+  color: var(--text-primary);
+
+  font-size: 15px;
+  line-height: 1.7;
+
+  overflow-wrap: anywhere;
+}
+
+.description-item {
+  align-items: flex-start;
+}
+
+.description-item .info-content p {
+  white-space: pre-line;
+}
+
+
+/* ==========================================
+   PRICE
+========================================== */
+
+.price-value {
+  color: var(--active) !important;
+
+  font-size: 23px !important;
+  font-weight: 700;
+}
+
+.price-value span {
+  color: var(--text-secondary);
+
+  font-size: 13px;
+  font-weight: 400;
+}
+
+
+/* ==========================================
+   AVAILABILITY
+========================================== */
+
+.availability-badge {
+  width: fit-content;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 7px 12px;
+
+  border-radius: 30px;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.availability-badge.available {
+  background-color: var(--success-bg);
+  color: var(--success-text);
+}
+
+.availability-badge.unavailable {
+  background-color: var(--danger-bg);
+  color: var(--danger-text);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background-color: currentColor;
+}
+
+
+/* ==========================================
+   OWNER
+========================================== */
+
+.owner-name {
+  font-weight: 600;
+}
+
+
+/* ==========================================
+   GALLERY
+========================================== */
+
+.favor-gallery {
+  min-width: 0;
+
+  padding: 30px;
+
+  background-color: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: 16px;
+
+  box-sizing: border-box;
+}
+
+.gallery-heading {
+  margin-bottom: 25px;
+}
+
+.picture-count {
+  flex-shrink: 0;
+
+  padding: 7px 12px;
+
+  border-radius: 20px;
+
+  background-color: var(--surface-secondary);
+
+  color: var(--text-secondary);
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* ==========================================
+   GALLERY GRID
+========================================== */
+
+.gallery-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+.picture-container {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 4 / 3;
+
   overflow: hidden;
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
+  background-color: var(--surface-secondary);
+
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  transition: transform 0.25s ease;
 }
 
-// THEME
+.picture-container img {
+  display: block;
 
-.light-mode {
-  background-color: @light-background-color;
+  width: 100%;
+  height: 100%;
 
-  tui-breadcrumbs {
-    color: @light-breadcrumb;
+  object-fit: cover;
 
-    a {
-      color: @light-breadcrumb;
-    }
-  }
+  transition: transform 0.35s ease;
+}
 
-  h1 {
-    color: @light-title;
-  }
-
-  .favor-info {
-    border-right: 4px solid @light-border;
-  }
-
-  .favor-property strong,
-  .favor-description strong {
-    color: @light-strong;
-  }
-
-  .favor-property p,
-  .favor-description p {
-    color: @light-text;
-  }
+.picture-container:hover img {
+  transform: scale(1.04);
 }
 
 
-.dark-mode {
-  background-color: @dark-background-color;
+/* ==========================================
+   EMPTY GALLERY
+========================================== */
 
-  tui-breadcrumbs {
-    color: @dark-breadcrumb;
+.empty-gallery {
+  min-height: 220px;
 
-    a {
-      color: @dark-breadcrumb;
-    }
-  }
+  display: flex;
+  flex-direction: column;
 
-  h1 {
-    color: @dark-title;
-  }
+  align-items: center;
+  justify-content: center;
 
-  .favor-info {
-    border-right: 4px solid @dark-border;
-  }
+  gap: 15px;
 
-  .favor-property strong,
-  .favor-description strong {
-    color: @dark-strong;
-  }
+  padding: 25px;
 
-  .favor-property p,
-  .favor-description p {
-    color: @dark-text;
-  }
+  background-color: var(--surface-secondary);
+
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+
+  text-align: center;
 }
 
-// ========================================
-// RESPONSIVE
-// ========================================
+.empty-gallery i {
+  color: var(--text-secondary);
+  font-size: 35px;
+}
 
-@media (max-width: 900px) {
+.empty-gallery p {
+  margin: 0;
+
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.empty-state {
+  min-height: 65vh;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  text-align: center;
+}
+
+.empty-state-icon {
+  width: 75px;
+  height: 75px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 20px;
+
+  border-radius: 20px;
+
+  background-color: var(--surface);
+
+  color: var(--active);
+
+  font-size: 28px;
+}
+
+.empty-state h2 {
+  margin: 0 0 10px;
+
+  color: var(--text-primary);
+  font-size: 23px;
+}
+
+.empty-state p {
+  margin: 0;
+
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 1024px) {
+
+  .user-favor-page {
+    padding: 30px 3%;
+  }
 
   .favor-detail {
     grid-template-columns: 1fr;
+    gap: 25px;
+  }
 
-    gap: 40px;
-
+  .favor-info,
+  .favor-gallery {
     padding: 25px;
   }
 
-  .favor-info {
-    min-height: auto;
-  }
-
-  .favor-gallery {
-    grid-template-columns: repeat(2, 1fr);
+  .gallery-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 
+/* ==========================================
+   MOBILE
+========================================== */
+
 @media (max-width: 600px) {
 
-  .favor-detail {
-    width: 95%;
-
-    padding: 15px;
-
-    border-width: 3px;
+  .user-favor-page {
+    padding: 25px 15px;
   }
 
+  .page-header {
+    margin-bottom: 25px;
+  }
+
+  .page-header h1 {
+    font-size: 25px;
+  }
+
+  .page-subtitle {
+    font-size: 13px;
+  }
+
+  .favor-detail {
+    gap: 18px;
+  }
+
+  .favor-info,
   .favor-gallery {
-    grid-template-columns: 1fr;
+    padding: 20px 16px;
+    border-radius: 12px;
+  }
+
+  .section-heading {
+    margin-bottom: 20px;
+  }
+
+  .section-heading h2 {
+    font-size: 18px;
+  }
+
+  .info-item {
+    gap: 12px;
+    padding: 16px 0;
+  }
+
+  .info-icon {
+    width: 36px;
+    height: 36px;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+  }
+
+  .info-content p {
+    font-size: 14px;
+  }
+
+  .price-value {
+    font-size: 20px !important;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
   }
 
   .picture-container {
-    height: 180px;
+    aspect-ratio: 1 / 1;
   }
+
+  .picture-count {
+    font-size: 11px;
+    padding: 6px 9px;
+  }
+}
+
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width: 360px) {
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
 }

@@ -1,67 +1,165 @@
-<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="userFavorDetail">
 
+<div
+  class="user-favor-page"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
   @if (userFavorDetail; as userFavor) {
-    <h1>
-      {{ userFavor.favor.nameFavor }}
-    </h1>
 
-    <div class="favor-detail">
+    <header class="page-header">
+      <div class="page-header-content">
+        <span class="page-eyebrow">DÉTAIL DE LA PRESTATION</span>
 
-      <!-- Detail about user favor -->
+        <h1>{{ userFavor.favor.nameFavor }}</h1>
+
+        <p class="page-subtitle">
+          Découvrez les informations et les disponibilités de cette prestation.
+        </p>
+      </div>
+    </header>
+
+    <main class="favor-detail">
+
+      <!-- INFORMATIONS DE LA PRESTATION -->
       <section class="favor-info">
-        <div class="favor-description">
-          <strong>Description</strong>
-          <p>
-            {{ userFavor.descriptionFavor }}
-          </p>
+
+        <div class="section-heading">
+          <div>
+            <span class="section-eyebrow">INFORMATIONS</span>
+            <h2>À propos de cette prestation</h2>
+          </div>
         </div>
 
-        <div class="favor-property">
-          <strong>Prix</strong>
-          <p>
-            {{ userFavor.priceHourFavor }} € de l'heure
-          </p>
+        <!-- DESCRIPTION -->
+        <div class="info-item description-item">
+          <div class="info-icon">
+            <i class="fa-solid fa-align-left"></i>
+          </div>
+
+          <div class="info-content">
+            <span class="info-label">Description</span>
+
+            <p>
+              {{ userFavor.descriptionFavor || 'Aucune description disponible.' }}
+            </p>
+          </div>
         </div>
 
-        <div class="favor-property">
-          <strong>Disponible</strong>
-          <p>
-            {{ userFavor.isAvailable ? 'Oui' : 'Non' }}
-          </p>
+        <!-- TARIF -->
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fa-solid fa-euro-sign"></i>
+          </div>
+
+          <div class="info-content">
+            <span class="info-label">Tarif horaire</span>
+
+            <p class="price-value">
+              {{ userFavor.priceHourFavor }} €
+              <span>/ heure</span>
+            </p>
+          </div>
         </div>
 
-        <div class="favor-property">
+        <!-- DISPONIBILITÉ -->
+        <div class="info-item">
+          <div class="info-icon">
+            <i class="fa-solid fa-calendar-check"></i>
+          </div>
+
+          <div class="info-content">
+            <span class="info-label">Disponibilité</span>
+
+            <span
+              class="availability-badge"
+              [class.available]="userFavor.isAvailable"
+              [class.unavailable]="!userFavor.isAvailable"
+            >
+              <span class="status-dot"></span>
+
+              {{ userFavor.isAvailable ? 'Disponible' : 'Indisponible' }}
+            </span>
+          </div>
         </div>
 
-        <div class="favor-property">
-          <strong>Propriétaire</strong>
-          <p>
-            {{ userFavor.user.pseudo }}
-          </p>
+        <!-- PROPRIÉTAIRE -->
+        <div class="info-item owner-item">
+          <div class="info-icon">
+            <i class="fa-solid fa-user"></i>
+          </div>
+
+          <div class="info-content">
+            <span class="info-label">Proposé par</span>
+
+            <p class="owner-name">
+              {{ userFavor.user.pseudo }}
+            </p>
+          </div>
         </div>
 
       </section>
 
 
-      <!-- Pictures -->
+      <!-- GALERIE PHOTOS -->
       <section class="favor-gallery">
 
-        @for (picture of userFavor.pictures; track picture) {
+        <div class="section-heading gallery-heading">
+          <div>
+            <span class="section-eyebrow">GALERIE</span>
+            <h2>Photos de la prestation</h2>
+          </div>
 
-          <div class="picture-container">
-            <img
-              [src]="'/userFavour/' + picture"
-              [alt]="userFavor.favor.nameFavor"
-            />
+          <span class="picture-count">
+            {{ userFavor.pictures?.length || 0 }}
+            photo(s)
+          </span>
+        </div>
+
+        @if (userFavor.pictures?.length) {
+
+          <div class="gallery-grid">
+
+            @for (picture of userFavor.pictures; track picture) {
+
+              <div class="picture-container">
+                <img
+                  [src]="'/userFavour/' + picture"
+                  [alt]="'Photo de ' + userFavor.favor.nameFavor"
+                  loading="lazy"
+                />
+              </div>
+
+            }
+
+          </div>
+
+        } @else {
+
+          <div class="empty-gallery">
+            <i class="fa-regular fa-image"></i>
+
+            <p>Aucune photo disponible pour cette prestation.</p>
           </div>
 
         }
 
       </section>
 
-    </div>
+    </main>
 
   } @else {
-    <h1>La liste est vide</h1>
+
+    <main class="empty-state">
+      <div class="empty-state-icon">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+
+      <h2>Aucune prestation trouvée</h2>
+
+      <p>
+        Les informations de cette prestation ne sont pas disponibles.
+      </p>
+    </main>
+
   }
 </div>

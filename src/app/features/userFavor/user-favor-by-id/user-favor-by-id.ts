@@ -1,13 +1,13 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { UserFavorService } from '../service/user-favor-service';
 import { UserFavorDetailModel } from '../model/user-favor-detail';
-import { NgClass } from '@angular/common';
+import { ReviewUserMaterial } from '../../review/review-user-material/review-user-material';
 
 @Component({
   selector: 'app-user-favor-by-id',
-  imports: [NgClass],
+  imports: [ReviewUserMaterial],
   templateUrl: './user-favor-by-id.html',
   styleUrl: './user-favor-by-id.less',
 })
@@ -22,9 +22,9 @@ export class UserFavorById {
   userFavorId!: number;
 
   ngOnInit(): void {
+    this.changeTheme();
     this.userFavorId = Number(this._route.snapshot.paramMap.get('id'));
     this.userFavorById();
-    this.changeTheme();
   }
 
   protected userFavorById() {
