@@ -3,11 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { UserFavorService } from '../service/user-favor-service';
 import { UserFavorDetailModel } from '../model/user-favor-detail';
-import { ReviewUserMaterial } from '../../review/review-user-material/review-user-material';
 
 @Component({
   selector: 'app-user-favor-by-id',
-  imports: [ReviewUserMaterial],
+  imports: [],
   templateUrl: './user-favor-by-id.html',
   styleUrl: './user-favor-by-id.less',
 })

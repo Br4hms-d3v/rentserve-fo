@@ -110,12 +110,12 @@
           </div>
 
           <span class="picture-count">
-            {{ userFavor.pictures?.length || 0 }}
+            {{ userFavor.pictures.length }}
             photo(s)
           </span>
         </div>
 
-        @if (userFavor.pictures?.length) {
+        @if (userFavor.pictures.length > 0) {
 
           <div class="gallery-grid">
 
