@@ -1,19 +1,71 @@
-<div class="payment-page"> <div class="success-card">
 
-  <div class="success-icon"> <span>✓</span> </div>
+<div
+  class="payment-page"
+  [class.light-mode]="!isDarkMode"
+  [class.dark-mode]="isDarkMode"
+>
+  <main class="success-card">
 
-  <span class="success-badge">PAIEMENT CONFIRMÉ</span>
+    <div class="success-icon">
+      <tui-icon icon="@tui.check"></tui-icon>
+    </div>
 
-  <h1>Félicitations !</h1>
+    <span class="success-badge">
+      PAIEMENT CONFIRMÉ
+    </span>
 
-  <h2>Votre facture est payée !</h2>
+    <h1>Félicitations !</h1>
 
-  <p class="description"> Votre paiement a été effectué avec succès. Vous pouvez télécharger votre facture ou retourner à la page précédente. </p>
+    <h2>Votre paiement a bien été effectué.</h2>
 
-  <div class="button-group"> <button tuiButton type="button" class="download-button" (click)="downloadBill()" > <span class="button-icon">↓</span> Télécharger la facture </button>
+    <p class="description">
+      Votre transaction a été traitée avec succès.
+      Vous pouvez dès maintenant télécharger votre facture
+      ou retourner à votre tableau de bord.
+    </p>
 
-    <button tuiButton type="button" class="back-button" (click)="onBack()" > <span class="button-icon">←</span> Retour </button> </div>
+    <div class="payment-status">
+      <div class="status-information">
+        <span class="status-label">Statut de la transaction</span>
+        <span class="status-value">Paiement validé</span>
+      </div>
 
-  <p class="footer-text"> Merci d'avoir choisi RentServe ! </p>
+      <span class="status-indicator">
+        <span class="status-dot"></span>
+        Réussi
+      </span>
+    </div>
 
-</div> </div>
+    <div class="button-group">
+
+      <button
+        tuiButton
+        type="button"
+        class="download-button"
+        [disabled]="loading || !billId"
+        (click)="downloadBill()"
+      >
+        <tui-icon
+          [icon]="loading ? '@tui.loader-circle' : '@tui.download'"></tui-icon>
+        {{ loading ? 'Téléchargement...' : 'Télécharger ma facture' }}
+      </button>
+
+      <button
+        tuiButton
+        type="button"
+        class="back-button"
+        (click)="onBack()"
+      >
+        <tui-icon icon="@tui.arrow-left"></tui-icon>
+        Retour au tableau de bord
+      </button>
+
+    </div>
+
+    <div class="success-footer">
+      <span>Merci de votre confiance.</span>
+      <span class="footer-brand">L'équipe RentServe</span>
+    </div>
+
+  </main>
+</div>
