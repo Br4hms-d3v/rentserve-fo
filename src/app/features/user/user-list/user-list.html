@@ -1,68 +1,138 @@
-<div class="user-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+<div
+  class="user-container"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+  <!-- Header -->
+  <div class="page-header">
+    <div class="page-heading">
+      <h2>Gestion des utilisateurs</h2>
+      <p>Consultez et gérez les rôles des utilisateurs.</p>
+    </div>
+  </div>
+
+  <!-- Filters -->
 
   <div class="filter-container">
 
+    <!-- Filtre par rôle -->
     <tui-textfield tuiChevron>
-      <label tuiLabel>Rôle</label>
-      <input tuiSelect [ngModel]="role" (ngModelChange)="onChangeRole($event)" />
-      <tui-data-list-wrapper *tuiDropdown [items]="roles" />
+      <label tuiLabel>Filtrer par rôle</label>
+
+      <input
+        tuiSelect
+        [ngModel]="role"
+        (ngModelChange)="onChangeRole($event)"
+        [value]="role"
+      />
+
+      <tui-data-list-wrapper
+        *tuiDropdown
+        [items]="roles"
+      />
     </tui-textfield>
 
-    <tui-textfield class="custom-icon-textfield" iconStart="@tui.user-round">
-      <label tuiLabel>Filtre</label>
+    <!-- Recherche utilisateur -->
+    <tui-textfield
+      class="search-field"
+      iconStart="@tui.search"
+    >
+      <label tuiLabel>Rechercher un utilisateur</label>
+
       <input
         tuiInput
-        placeholder="Nom de l'utilisateur"
+        type="text"
+        placeholder="Saisir un nom..."
         [ngModel]="searchName"
         (ngModelChange)="onSearchName($event)"
       />
     </tui-textfield>
 
-    <button tuiButton type="button" class="sort-btn" (click)="sortByName()">
-      Trier par nom {{ sortAscending ? '↑' : '↓' }}
+    <!-- Tri -->
+    <button
+      tuiButton
+      type="button"
+      class="sort-btn"
+      (click)="sortByName()"
+    >
+      <tui-icon
+        [icon]="sortAscending ? '@tui.arrow-up' : '@tui.arrow-down'"></tui-icon>
+      Trier par nom
     </button>
 
   </div>
 
+
+  <!-- Table -->
   <div class="table-container">
     <table tuiTable class="users-table">
+
       <thead>
       <tr tuiThGroup>
         <th>Nom</th>
         <th>Prénom</th>
         <th>Rôle</th>
-        <th>Action</th>
+        <th class="action-column">Actions</th>
       </tr>
       </thead>
 
       <tbody tuiTbody>
         @for (user of paginationUSerRole(); track user.id) {
           <tr tuiTr>
-            <td tuiTd>{{ user.name }}</td>
-            <td tuiTd>{{ user.firstName }}</td>
-            <td tuiTd>
-              <span class="role-badge">{{ user.role }}</span>
+            <td tuiTd class="user-name">
+              {{ user.name }}
             </td>
-            <td>
-                <tui-icon
-                  icon="@tui.user-pen"
-                  (click)="openRoleModal($event, user)"
-                />
+
+            <td tuiTd>
+              {{ user.firstName }}
+            </td>
+
+            <td tuiTd>
+              <span
+                class="role-badge"
+                [class.admin]="user.role === 'ADMIN'"
+                [class.moderator]="user.role === 'MODERATOR'"
+                [class.member]="user.role === 'MEMBER'"
+              >
+                {{ user.role }}
+              </span>
+            </td>
+
+            <td tuiTd class="action-column">
+              <button
+                tuiButton
+                type="button"
+                appearance="flat"
+                class="action-btn"
+                aria-label="Modifier le rôle de l'utilisateur"
+                (click)="openRoleModal($event, user)"
+              >
+                <tui-icon icon="@tui.user-pen" />
+              </button>
             </td>
           </tr>
         } @empty {
           <tr tuiTr>
-            <td tuiTd colspan="3" class="empty-message">
-              Aucun utilisateur trouvé.
+            <td
+              tuiTd
+              colspan="4"
+              class="empty-message"
+            >
+              Aucun utilisateur ne correspond à votre recherche.
             </td>
           </tr>
         }
       </tbody>
+
     </table>
   </div>
 
+  <!-- Footer -->
   <div class="table-footer">
-    <span>{{ filteredUsersRole.length }} utilisateur(s)</span>
+    <span class="users-count">
+      <strong>{{ filteredUsersRole.length }}</strong>
+      utilisateur(s)
+    </span>
 
     @if (length > 0) {
       <tui-pagination
