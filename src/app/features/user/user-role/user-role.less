@@ -1,0 +1,310 @@
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.user-role {
+  --primary: #173B57;
+  --primary-hover: #214D6D;
+  --accent: #3B82F6;
+  --background: #FFFFFF;
+  --surface: #F3F6F8;
+  --surface-secondary: #E8EEF3;
+  --text-primary: #263746;
+  --text-secondary: #64748B;
+  --border: #D8E1E9;
+  --active: #2563EB;
+
+  box-sizing: border-box;
+  width: 100%;
+  padding: 28px;
+  color: var(--text-primary);
+  background: var(--background);
+  border-radius: 16px;
+
+  &.dark-mode {
+    --primary: #0B1F33;
+    --primary-hover: #142F49;
+    --accent: #3B82F6;
+    --background: #071522;
+    --surface: #172A3D;
+    --surface-secondary: #20364D;
+    --text-primary: #F1F5F9;
+    --text-secondary: #A8B7C9;
+    --border: #30465C;
+    --active: #60A5FA;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    color: #FFFFFF;
+    background: var(--primary);
+    border-radius: 12px;
+
+    tui-icon {
+      font-size: 23px;
+    }
+  }
+
+  &__heading {
+    min-width: 0;
+
+    h2 {
+      margin: 0;
+      color: var(--text-primary);
+      font-size: 20px;
+      font-weight: 650;
+      line-height: 1.4;
+    }
+
+    p {
+      margin: 4px 0 0;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  &__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    color: var(--active);
+    background: var(--surface-secondary);
+    border-radius: 50%;
+
+    tui-icon {
+      font-size: 21px;
+    }
+  }
+
+  &__user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  &__user-name {
+    overflow-wrap: anywhere;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  &__user-label {
+    color: var(--text-secondary);
+    font-size: 12px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  &__label {
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  &__select {
+    width: 100%;
+    --tui-background-base: var(--surface-secondary);
+  }
+
+  &__field-error {
+    color: #DC2626;
+    font-size: 12px;
+  }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px;
+    color: #DC2626;
+    background: rgba(220, 38, 38, 0.08);
+    border: 1px solid rgba(220, 38, 38, 0.2);
+    border-radius: 8px;
+    font-size: 13px;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
+
+  &__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 44px;
+    padding-inline: 20px;
+    color: #FFFFFF;
+    background: var(--primary);
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    transition:
+      background 180ms ease,
+      transform 180ms ease,
+      opacity 180ms ease;
+
+    &:hover:not(:disabled) {
+      background: var(--primary-hover);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    tui-icon {
+      font-size: 17px;
+    }
+  }
+
+  &__notification {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+
+  &__select {
+    width: 100%;
+
+    --tui-background-base: var(--surface-secondary);
+    --tui-text-primary: var(--text-primary);
+    --tui-text-secondary: var(--text-secondary);
+    --tui-border-normal: var(--border);
+    --tui-text-action: var(--active);
+
+    input[tuiSelect] {
+      color: var(--text-primary);
+      caret-color: var(--active);
+
+      &::placeholder {
+        color: var(--text-secondary);
+        opacity: 1;
+      }
+
+      &:focus {
+        color: var(--text-primary);
+      }
+    }
+  }
+
+}
+
+/* Responsive : tablette */
+
+@media (max-width: 768px) {
+  .user-role {
+    padding: 22px;
+
+    &__heading h2 {
+      font-size: 18px;
+    }
+  }
+}
+
+/* Responsive : mobile */
+
+@media (max-width: 480px) {
+  .user-role {
+    padding: 16px;
+    border-radius: 12px;
+
+    &__header {
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    &__icon {
+      width: 40px;
+      height: 40px;
+    }
+
+    &__heading {
+      h2 {
+        font-size: 17px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+    }
+
+    &__user {
+      padding: 12px;
+      margin-bottom: 20px;
+    }
+
+    &__actions {
+      width: 100%;
+    }
+
+    &__submit {
+      width: 100%;
+      padding-inline: 12px;
+      font-size: 12px;
+    }
+
+    &__notification {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+}
+
+/* Respect des préférences de réduction des animations */
+
+@media (prefers-reduced-motion: reduce) {
+  .user-role__submit {
+    transition: none;
+  }
+}
