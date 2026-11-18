@@ -1,118 +1,600 @@
-@light-background-color: #F1EFE8;
-@light-title: #3B6D11 !important;
-@light-breadcrumb: #5F5E5A !important;
-@light-label-input: #3B6D11 !important;
-@light-label: #5F5E5A !important;
-@light-btn-cancel: #D9764A;
-@light-btn-delete: green;
+/* ==========================================
+   VARIABLES - LIGHT THEME
+========================================== */
 
-@dark-background-color: #1C1F17;
-@dark-title: #8FC15C;
-@dark-breadcrumb: #A6A599 !important;
-@dark-label-input: #8FC15C !important;
-@dark-label: #A6A599 !important;
+@light-primary: #173B57;
+@light-secondary: #3B82F6;
+@light-background: #FFFFFF;
+@light-section: #F3F6F8;
+@light-surface: #E8EEF3;
+@light-text: #263746;
+@light-text-secondary: #64748B;
+@light-border: #D8E1E9;
+@light-active: #2563EB;
+
+
+/* ==========================================
+   VARIABLES - DARK THEME
+========================================== */
+
+@dark-primary: #0B1F33;
+@dark-secondary: #3B82F6;
+@dark-background: #071522;
+@dark-section: #172A3D;
+@dark-surface: #20364D;
+@dark-text: #F1F5F9;
+@dark-text-secondary: #A8B7C9;
+@dark-border: #30465C;
+@dark-active: #60A5FA;
+
+
+/* ==========================================
+   CONTAINER
+========================================== */
 
 .editUserMaterial-container {
-  height: 80vh;
-  padding: 20px;
+  min-height: 100vh;
+  width: 100%;
+  padding: 45px 30px;
   box-sizing: border-box;
+  transition: background-color 0.25s ease;
+
+  --page-background: @light-section;
+  --card-background: @light-background;
+  --surface-background: @light-surface;
+  --primary-color: @light-primary;
+  --secondary-color: @light-secondary;
+  --text-color: @light-text;
+  --text-secondary: @light-text-secondary;
+  --border-color: @light-border;
+  --active-color: @light-active;
+}
+
+
+/* ==========================================
+   MAIN CONTENT
+========================================== */
+
+.editUserMaterial-content {
+  max-width: 850px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.header-icon {
+  width: 54px;
+  height: 54px;
+  min-width: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--primary-color);
+  color: #FFFFFF;
+
+  border-radius: 14px;
+
+  tui-icon {
+    font-size: 25px;
+  }
+}
+
+.header-text {
+  flex: 1;
+  min-width: 0;
 }
 
 .titleEditUserMaterial {
-  margin-top: 25px;
-  text-align: center;
+  color: var(--text-color);
+  font-size: 27px;
+  font-weight: 700;
+  margin: 0 0 7px;
 }
+
+.page-description {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+
+/* ==========================================
+   FORM CARD
+========================================== */
+
+.form-card {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 30px;
+
+  box-shadow: 0 4px 20px rgba(23, 59, 87, 0.04);
+  transition: background-color 0.25s ease;
+}
+
+.card-header {
+  padding-bottom: 22px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid var(--border-color);
+
+  h2 {
+    color: var(--text-color);
+    font-size: 18px;
+    font-weight: 650;
+    margin: 0 0 7px;
+  }
+
+  p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+
+/* ==========================================
+   FORM GRID
+========================================== */
 
 .userMaterial-form {
-  width: 750px;
-  margin: auto;
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 25px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
 }
 
-.inputNameMaterial {
-  width: 400px;
+.form-field {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.inputNameMaterial,
+.inputState,
+.inputPrice {
+  width: 100%;
 }
 
 .textDescription {
   grid-column: 1 / -1;
 }
 
-.inputState {
-  width: 300px;
+
+/* ==========================================
+   LABELS
+========================================== */
+
+.field-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-color);
 }
 
+.field-hint {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.field-error {
+  font-size: 12px;
+  color: #DC2626;
+}
+
+
+/* ==========================================
+   TAIGA UI INPUTS
+========================================== */
+
+.userMaterial-form {
+
+  tui-textfield {
+    width: 100%;
+  }
+
+  input[tuiInput],
+  textarea[tuiTextarea] {
+    color: var(--text-color);
+  }
+
+  textarea[tuiTextarea] {
+    min-height: 125px;
+    resize: vertical;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.8;
+  }
+}
+
+
+/* ==========================================
+   AVAILABILITY
+========================================== */
+
+.availability-section {
+  grid-column: 1 / -1;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+
+  padding: 18px;
+  border-radius: 12px;
+
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+}
+
+.availability-info {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+}
+
+.availability-icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--active-color);
+  background: rgba(59, 130, 246, 0.10);
+
+  border-radius: 10px;
+
+  tui-icon {
+    font-size: 20px;
+  }
+}
+
+.availability-info > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.availability-title {
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.availability-description {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.availability-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.availability-status {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+
+  &.available {
+    color: #16A34A;
+  }
+}
+
+
+/* ==========================================
+   SWITCH
+========================================== */
+
 input[tuiSwitch] {
+
   &:checked {
-    --tui-background-accent-1: #22c55e;
-    --tui-background-accent-1-hover: #16a34a;
+    --tui-background-accent-1: @light-secondary;
+    --tui-background-accent-1-hover: @light-active;
   }
 
   &:not(:checked) {
-    --tui-background-neutral-1: #ef4444;
-    --tui-background-neutral-1-hover: #dc2626;
+    --tui-background-neutral-1: #94A3B8;
+    --tui-background-neutral-1-hover: #64748B;
   }
 }
 
-.buttons {
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.form-actions {
+  grid-column: 1 / -1;
+
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  gap: 25px;
-  margin-top: 40px;
+  gap: 14px;
+
+  margin-top: 10px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-color);
+
+  button {
+    min-width: 150px;
+    border-radius: 9px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
 
   #btn-cancel {
-    background-color: @light-btn-cancel;
-    width: 200px;
+    background: var(--surface-background);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+  }
+
+  #btn-cancel:hover {
+    border-color: var(--secondary-color);
   }
 
   #btn-edit {
-    background-color: @light-btn-delete;
-    width: 200px;
+    background: var(--primary-color);
+    color: #FFFFFF;
+  }
+
+  #btn-edit:hover {
+    background: var(--secondary-color);
   }
 }
 
-// THEME
+
+/* ==========================================
+   EMPTY LIST
+========================================== */
+
+.empty-list {
+  padding: 15px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  text-align: center;
+}
+
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.page-footer {
+  margin: 20px 0 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+
+/* ==========================================
+   LIGHT MODE
+========================================== */
 
 .light-mode {
-  background-color: @light-background-color;
+  background: @light-section;
 
-  .titleEditUserMaterial{
-    color: @light-title;
-  }
-
-  input[tuiInput] {
-    color: @light-label-input;
-  }
-
-  label[tuiLabel] {
-    color: @light-label;
-  }
-
-  .textDescription textarea {
-    color: @light-label-input;
-  }
-
+  --page-background: @light-section;
+  --card-background: @light-background;
+  --surface-background: @light-surface;
+  --primary-color: @light-primary;
+  --secondary-color: @light-secondary;
+  --text-color: @light-text;
+  --text-secondary: @light-text-secondary;
+  --border-color: @light-border;
+  --active-color: @light-active;
 }
 
+
+/* ==========================================
+   DARK MODE
+========================================== */
+
 .dark-mode {
-  background-color: @dark-background-color;
+  background: @dark-background;
 
-  .titleEditUserMaterial{
-    color: @dark-title;
+  --page-background: @dark-background;
+  --card-background: @dark-section;
+  --surface-background: @dark-surface;
+  --primary-color: @dark-primary;
+  --secondary-color: @dark-secondary;
+  --text-color: @dark-text;
+  --text-secondary: @dark-text-secondary;
+  --border-color: @dark-border;
+  --active-color: @dark-active;
+
+  input[tuiSwitch] {
+    &:checked {
+      --tui-background-accent-1: @dark-secondary;
+      --tui-background-accent-1-hover: @dark-active;
+    }
+  }
+}
+
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media screen and (max-width: 768px) {
+
+  .editUserMaterial-container {
+    padding: 30px 20px;
   }
 
-  input[tuiInput] {
-    color: @dark-label-input;
+  .editUserMaterial-content {
+    max-width: 100%;
   }
 
-  label[tuiLabel] {
-    color: @dark-label;
+  .form-card {
+    padding: 24px;
   }
 
-  .textDescription textarea {
-    color: @dark-label-input;
+  .userMaterial-form {
+    gap: 20px;
   }
 
+  .titleEditUserMaterial {
+    font-size: 23px;
+  }
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media screen and (max-width: 550px) {
+
+  .editUserMaterial-container {
+    padding: 22px 14px;
+    min-height: 100vh;
+  }
+
+  .page-header {
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  .header-icon {
+    width: 45px;
+    height: 45px;
+    min-width: 45px;
+
+    tui-icon {
+      font-size: 21px;
+    }
+  }
+
+  .titleEditUserMaterial {
+    font-size: 20px;
+  }
+
+  .page-description {
+    font-size: 12px;
+  }
+
+  .form-card {
+    padding: 19px 15px;
+    border-radius: 14px;
+  }
+
+  .card-header {
+    padding-bottom: 17px;
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 16px;
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
+
+  .userMaterial-form {
+    grid-template-columns: 1fr;
+    gap: 19px;
+  }
+
+  .inputNameMaterial,
+  .inputState,
+  .inputPrice,
+  .textDescription,
+  .availability-section,
+  .form-actions {
+    grid-column: 1;
+  }
+
+  .availability-section {
+    padding: 14px 12px;
+    align-items: flex-start;
+  }
+
+  .availability-info {
+    gap: 9px;
+  }
+
+  .availability-icon {
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+  }
+
+  .availability-description {
+    max-width: 190px;
+    line-height: 1.4;
+  }
+
+  .availability-control {
+    flex-direction: column-reverse;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .availability-status {
+    font-size: 10px;
+    text-align: center;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 10px;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .page-footer {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+}
+
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media screen and (max-width: 360px) {
+
+  .editUserMaterial-container {
+    padding: 18px 10px;
+  }
+
+  .form-card {
+    padding: 16px 12px;
+  }
+
+  .availability-section {
+    flex-wrap: wrap;
+  }
+
+  .availability-description {
+    max-width: 155px;
+  }
 }
