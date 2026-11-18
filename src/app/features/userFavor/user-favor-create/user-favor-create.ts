@@ -12,9 +12,8 @@ import { TuiChevron, TuiComboBoxDirective, TuiDataListWrapperComponent, TuiFile,
   TuiFilesComponent, TuiInputFiles, TuiInputFilesDirective, TuiInputNumberDirective, TuiSwitch,
   TuiTextareaComponent, TuiTextareaDirective
 } from '@taiga-ui/kit';
-import { maxLength } from '@angular/forms/signals';
 import { TuiValidationError } from '@taiga-ui/cdk';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { TuiButton,
   TuiDropdown, TuiErrorComponent, TuiErrorDirective, TuiFilterByInputPipe, TuiLabel, TuiNotificationTemplate,
   TuiTextfieldComponent
@@ -36,7 +35,6 @@ import { TuiButton,
     TuiFileRejectedPipe,
     TuiFilesComponent,
     TuiFilterByInputPipe,
-    TuiInputFiles,
     TuiInputFilesDirective,
     TuiInputNumberDirective,
     TuiLabel,
@@ -45,9 +43,9 @@ import { TuiButton,
     TuiTextareaComponent,
     TuiTextareaDirective,
     TuiTextfieldComponent,
-    NgClass,
     TuiDropdown,
     RouterLink,
+    TuiInputFiles,
   ],
   templateUrl: './user-favor-create.html',
   styleUrl: './user-favor-create.less',

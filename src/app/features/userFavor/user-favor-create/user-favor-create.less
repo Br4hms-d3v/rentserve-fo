@@ -1,125 +1,676 @@
-@light-background-color: #F1EFE8;
-@light-title: #3B6D11 !important;
-@light-breadcrumb: #5F5E5A !important;
-@light-label-input: #3B6D11 !important;
-@light-label: #5F5E5A !important;
-@light-btn-back: #D9764A;
-@light-btn-new: green;
-@light-btn-cancel: red;
+/* =========================================
+   VARIABLES - THÈME CLAIR
+========================================= */
 
-@dark-background-color: #1C1F17;
-@dark-title: #8FC15C;
-@dark-breadcrumb: #A6A599 !important;
-@dark-label-input: #8FC15C !important;
-@dark-label: #A6A599 !important;
+@light-primary: #173B57;
+@light-secondary: #3B82F6;
+@light-background: #FFFFFF;
+@light-section: #F3F6F8;
+@light-surface: #E8EEF3;
+@light-text: #263746;
+@light-muted: #64748B;
+@light-border: #D8E1E9;
+@light-active: #2563EB;
 
+
+/* =========================================
+   VARIABLES - THÈME SOMBRE
+========================================= */
+
+@dark-primary: #0B1F33;
+@dark-secondary: #3B82F6;
+@dark-background: #071522;
+@dark-section: #172A3D;
+@dark-surface: #20364D;
+@dark-text: #F1F5F9;
+@dark-muted: #A8B7C9;
+@dark-border: #30465C;
+@dark-active: #60A5FA;
+
+
+/* =========================================
+   CONFIGURATION GÉNÉRALE
+========================================= */
 
 .createUserFavor-container {
-  height: 100vh;
-  padding: 20px;
+  min-height: 100vh;
+  width: 100%;
+  padding: 40px 24px 60px;
   box-sizing: border-box;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.page-header {
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto 30px;
+}
+
+.header-content {
+  text-align: left;
+}
+
+.page-eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
 }
 
 .titleEditUserFavor {
-  margin-top: 25px;
-  text-align: center;
+  margin: 0;
+  font-size: clamp(25px, 4vw, 34px);
+  font-weight: 700;
+  line-height: 1.3;
 }
 
+.page-description {
+  margin: 10px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* =========================================
+   FORMULAIRE
+========================================= */
+
 .userFavor-form {
-  width: 950px;
-  margin: auto;
+  width: 100%;
+  max-width: 850px;
+
+  margin: 0 auto;
+  padding: 30px;
+
   display: flex;
   flex-direction: column;
   gap: 25px;
+
+  border: 1px solid;
+  border-radius: 16px;
+
   box-sizing: border-box;
+
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
 }
+
+
+/* =========================================
+   SECTIONS
+========================================= */
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.section-header {
+  padding-bottom: 16px;
+  border-bottom: 1px solid;
+
+  h2 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 650;
+  }
+
+  p {
+    margin: 6px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+}
+
+
+/* =========================================
+   CHAMPS
+========================================= */
+
+.inputNameFavor,
+.textDescription,
+.inputPrice {
+  width: 100%;
+  min-width: 0;
+}
+
+.textDescription {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-hint {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.empty-list {
+  padding: 12px;
+  text-align: center;
+
+  p {
+    margin: 0;
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================
+   OPTIONS
+========================================= */
 
 .favor-options {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1.2fr);
+  align-items: start;
+  gap: 25px;
+}
+
+.inputAvailability {
+  min-height: 56px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 12px 15px;
+
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.availability-content {
   width: 100%;
 
-  display: grid;
-  grid-template-columns: 1fr 0.6fr 0.8fr;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
 }
+
+.availability-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.availability-title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.availability-description {
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+
+/* =========================================
+   SWITCH
+========================================= */
 
 input[tuiSwitch] {
-  &:checked {
-    --tui-background-accent-1: #22c55e;
-    --tui-background-accent-1-hover: #16a34a;
-  }
+  flex-shrink: 0;
 
-  &:not(:checked) {
-    --tui-background-neutral-1: #ef4444;
-    --tui-background-neutral-1-hover: #dc2626;
+  &:checked {
+    --tui-background-accent-1: #2563EB;
+    --tui-background-accent-1-hover: #173B57;
   }
 }
 
-.favor-buttons{
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  justify-content: center;
+
+/* =========================================
+   IMAGES
+========================================= */
+
+.inputImage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+/* =========================================
+   BOUTONS
+========================================= */
+
+.favor-buttons {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 30px;
+  gap: 15px;
 
-  margin-top: 10px;
+  margin-top: 8px;
+  padding-top: 24px;
+  border-top: 1px solid;
 
-  #btn-back {
-    background-color: @light-btn-back;
-    width: 250px;
+  button {
+    min-width: 120px;
+    border-radius: 9px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+}
+
+.primary-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+#btn-back {
+  background: transparent;
+  border: 1px solid;
+}
+
+#btn-cancel {
+  background: transparent;
+  border: 1px solid;
+}
+
+#btn-new {
+  border: 1px solid transparent;
+}
+
+
+/* =========================================
+   NOTIFICATIONS
+========================================= */
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+
+/* =========================================
+   THÈME CLAIR
+========================================= */
+
+.light-mode {
+  background-color: @light-background;
+  color: @light-text;
+
+  .page-eyebrow {
+    color: @light-secondary;
   }
 
+  .titleEditUserFavor {
+    color: @light-primary;
+  }
+
+  .page-description,
+  .section-header p,
+  .field-hint,
+  .availability-description {
+    color: @light-muted;
+  }
+
+  .userFavor-form {
+    background-color: @light-background;
+    border-color: @light-border;
+  }
+
+  .section-header,
+  .favor-buttons {
+    border-color: @light-border;
+  }
+
+  .section-header h2,
+  .availability-title {
+    color: @light-text;
+  }
+
+  .inputAvailability {
+    background-color: @light-section;
+    border-color: @light-border;
+  }
+
+  .inputPrice,
+  .inputNameFavor,
+  .textDescription {
+    color: @light-text;
+  }
+
+  #btn-back,
   #btn-cancel {
-    background-color: @light-btn-cancel;
-    width: 250px;
+    color: @light-primary;
+    border-color: @light-border;
+
+    &:hover {
+      background-color: @light-section;
+    }
   }
 
   #btn-new {
-    background-color: @light-btn-new;
-    width: 250px;
-  }
-}
+    background-color: @light-primary;
+    color: #FFFFFF;
 
-
-// THEME
-
-.light-mode {
-  background-color: @light-background-color;
-
-  .titleEditUserFavor {
-    color: @light-title;
+    &:hover {
+      background-color: @light-secondary;
+    }
   }
 
-  input[tuiInput] {
-    color: @light-label-input;
+  .empty-list {
+    color: @light-muted;
+  }
+
+  input[tuiInput],
+  textarea[tuiTextarea] {
+    color: @light-text;
   }
 
   label[tuiLabel] {
-    color: @light-label;
+    color: @light-muted;
   }
 
-  .textDescription textarea {
-    color: @light-label-input;
+  input[tuiSwitch] {
+    &:checked {
+      --tui-background-accent-1: @light-active;
+    }
   }
-
 }
+
+
+/* =========================================
+   THÈME SOMBRE
+========================================= */
 
 .dark-mode {
-  background-color: @dark-background-color;
+  background-color: @dark-background;
+  color: @dark-text;
 
-  .titleEditUserFavor {
-    color: @dark-title;
+  .page-eyebrow {
+    color: @dark-active;
   }
 
-  input[tuiInput] {
-    color: @dark-label-input;
+  .titleEditUserFavor {
+    color: @dark-text;
+  }
+
+  .page-description,
+  .section-header p,
+  .field-hint,
+  .availability-description {
+    color: @dark-muted;
+  }
+
+  .userFavor-form {
+    background-color: @dark-background;
+    border-color: @dark-border;
+  }
+
+  .section-header,
+  .favor-buttons {
+    border-color: @dark-border;
+  }
+
+  .section-header h2,
+  .availability-title {
+    color: @dark-text;
+  }
+
+  .inputAvailability {
+    background-color: @dark-section;
+    border-color: @dark-border;
+  }
+
+  .inputPrice,
+  .inputNameFavor,
+  .textDescription {
+    color: @dark-text;
+  }
+
+  #btn-back,
+  #btn-cancel {
+    color: @dark-text;
+    border-color: @dark-border;
+
+    &:hover {
+      background-color: @dark-section;
+    }
+  }
+
+  #btn-new {
+    background-color: @dark-secondary;
+    color: #FFFFFF;
+
+    &:hover {
+      background-color: #2563EB;
+    }
+  }
+
+  .empty-list {
+    color: @dark-muted;
+  }
+
+  input[tuiInput],
+  textarea[tuiTextarea] {
+    color: @dark-text;
   }
 
   label[tuiLabel] {
-    color: @dark-label;
+    color: @dark-muted;
   }
 
-  .textDescription textarea {
-    color: @dark-label-input;
+  input[tuiSwitch] {
+    &:checked {
+      --tui-background-accent-1: @dark-active;
+    }
+  }
+}
+
+
+/* =========================================
+   TABLETTES
+========================================= */
+
+@media screen and (max-width: 768px) {
+
+  .createUserFavor-container {
+    padding: 30px 18px 40px;
+  }
+
+  .userFavor-form {
+    padding: 24px;
+    gap: 22px;
+  }
+
+  .page-header {
+    margin-bottom: 24px;
+  }
+
+  .favor-options {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+
+}
+
+
+/* =========================================
+   MOBILES
+========================================= */
+
+@media screen and (max-width: 480px) {
+
+  .createUserFavor-container {
+    padding: 22px 12px 30px;
+  }
+
+  .page-header {
+    margin-bottom: 20px;
+  }
+
+  .titleEditUserFavor {
+    font-size: 25px;
+  }
+
+  .page-description {
+    font-size: 13px;
+  }
+
+  .userFavor-form {
+    padding: 18px 14px;
+    gap: 22px;
+    border-radius: 12px;
+  }
+
+  .section-header h2 {
+    font-size: 16px;
+  }
+
+  .favor-options {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .favor-buttons {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 12px;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .primary-actions {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    gap: 10px;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  #btn-back {
+    width: 100%;
+  }
+
+  .notification-content {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+
+
+/* =========================================
+   UPLOAD IMAGES - STYLE COMMUN
+========================================= */
+
+.inputImage {
+  width: 100%;
+
+  tui-files {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  tui-file {
+    display: block;
+    width: 100%;
+  }
+}
+
+
+/* =========================================
+   THÈME CLAIR
+========================================= */
+
+.light-mode {
+
+  .inputImage {
+
+    [tuiInputFiles] {
+      color: #263746;
+    }
+
+    tui-file {
+      color: #263746;
+      --tui-text-primary: #263746;
+      --tui-text-secondary: #64748B;
+    }
+
+    tui-files {
+      color: #263746;
+    }
+
+    tui-error {
+      color: #DC2626;
+    }
+
+    /* Noms des fichiers et informations */
+    tui-file * {
+      color: #263746;
+    }
+
+    /* Icônes */
+    tui-file svg {
+      color: #2563EB;
+    }
+  }
+}
+
+
+/* =========================================
+   THÈME SOMBRE
+========================================= */
+
+.dark-mode {
+
+  .inputImage {
+
+    [tuiInputFiles] {
+      color: #F1F5F9;
+    }
+
+    tui-file {
+      color: #F1F5F9;
+      --tui-text-primary: #F1F5F9;
+      --tui-text-secondary: #A8B7C9;
+    }
+
+    tui-files {
+      color: #F1F5F9;
+    }
+
+    tui-error {
+      color: #FCA5A5;
+    }
+
+    /* Noms des fichiers et informations */
+    tui-file * {
+      color: #F1F5F9;
+    }
+
+    /* Icônes */
+    tui-file svg {
+      color: #60A5FA;
+    }
   }
 }
