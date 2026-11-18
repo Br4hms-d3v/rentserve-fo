@@ -1,60 +1,299 @@
-<div class="userMaterialReturn" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+<div
+  class="userMaterialReturn"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+  <div class="page-container">
 
-  <h1>Retour du matériel</h1>
+    <!-- EN-TÊTE -->
+    <header class="page-header">
 
-  <form [formGroup]="returnUserMaterialForm" (ngSubmit)="returnUserMaterial()">
-    <div class="form-row">
-      <div class="inputAvailability">
-        <label>
-          <input tuiSwitch type="checkbox" formControlName="isAvailable" />
-          Disponible
-        </label>
+      <div class="header-content">
+
+        <div class="header-icon">
+          <tui-icon icon="@tui.drill"></tui-icon>
+        </div>
+
+        <div class="header-text">
+          <h1>Retour du matériel</h1>
+
+          <p>
+            Renseignez les informations relatives au retour
+            du matériel mis à votre disposition.
+          </p>
+        </div>
+
       </div>
 
-      <tui-textfield tuiChevron>
-        <label tuiLabel>État du matériel</label>
-        <input
-          tuiSelect
-          formControlName="state"
-          placeholder="Choisir un état"
-        />
-        <tui-data-list-wrapper *tuiDropdown new [items]="states" />
-      </tui-textfield>
-    </div>
+    </header>
 
-    <div class="form-actions">
-      <button
-        id="btn-return"
-        tuiButton
-        type="submit"
+
+    <!-- VÉRIFICATIONS AVANT VALIDATION -->
+    <section class="verification-section">
+
+      <div class="verification-header">
+
+        <div class="verification-icon">
+          <tui-icon icon="@tui.check"></tui-icon>
+        </div>
+
+        <div class="verification-title">
+
+          <h2>Vérifications avant validation</h2>
+
+          <p>
+            Avant d'enregistrer le retour, veuillez vous assurer
+            que les points suivants ont été vérifiés.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="verification-list">
+
+        <!-- MATÉRIEL COMPLET -->
+        <div class="verification-item">
+
+          <div class="verification-item-icon">
+            <tui-icon icon="@tui.box"></tui-icon>
+          </div>
+
+          <div class="verification-item-content">
+
+            <strong>Matériel complet</strong>
+
+            <p>
+              Vérifiez que tous les éléments et accessoires
+              fournis avec le matériel sont présents.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- ÉTAT DU MATÉRIEL -->
+        <div class="verification-item">
+
+          <div class="verification-item-icon">
+            <tui-icon icon="@tui.shield-check"></tui-icon>
+          </div>
+
+          <div class="verification-item-content">
+
+            <strong>État du matériel</strong>
+
+            <p>
+              Assurez-vous que le matériel ne présente
+              aucun dommage ni signe de détérioration.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- DOCUMENTS COMPLETS -->
+        <div class="verification-item">
+
+          <div class="verification-item-icon">
+            <tui-icon icon="@tui.file-text"></tui-icon>
+          </div>
+
+          <div class="verification-item-content">
+
+            <strong>Documents complets</strong>
+
+            <p>
+              Vérifiez que tous les documents nécessaires
+              sont présents et correctement renseignés.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- INFORMATION -->
+      <div class="verification-footer">
+
+        <tui-icon icon="@tui.info"></tui-icon>
+
+        <p>
+          En cas d'anomalie, veuillez la signaler avant
+          de valider le retour du matériel.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- FORMULAIRE -->
+    <section class="return-card">
+
+      <div class="card-header">
+
+        <div>
+
+          <h2>Informations du retour</h2>
+
+          <p>
+            Complétez les informations ci-dessous pour
+            finaliser le retour du matériel.
+          </p>
+
+        </div>
+
+        <div class="required-indicator">
+          <span>*</span> Champs obligatoires
+        </div>
+
+      </div>
+
+
+      <form
+        [formGroup]="returnUserMaterialForm"
+        (ngSubmit)="returnUserMaterial()"
       >
-        Enregistrer
-      </button>
 
-      <button
-        id="btn-back"
-        tuiButton
-        type="button"
-        (click)="onBack()"
-      >
-        Annuler
-      </button>
-    </div>
-  </form>
+        <div class="form-row">
+
+          <!-- DISPONIBILITÉ -->
+          <div class="inputAvailability">
+
+            <label tuiLabel for="material-availability">
+              Disponibilité du matériel
+              <span class="required-star">*</span>
+            </label>
+
+            <div class="switch-container">
+
+              <input
+                id="material-availability"
+                tuiSwitch
+                type="checkbox"
+                formControlName="isAvailable"
+              />
+
+              <span class="availability-text">
+                {{
+                  returnUserMaterialForm.controls.isAvailable.value
+                    ? 'Disponible'
+                    : 'Indisponible'
+                }}
+              </span>
+
+            </div>
+
+            <small>
+              Indiquez si le matériel peut être réutilisé.
+            </small>
+
+          </div>
 
 
+          <!-- ÉTAT DU MATÉRIEL -->
+          <div class="inputState">
+
+            <label tuiLabel class="field-label">
+              État du matériel
+              <span class="required-star">*</span>
+            </label>
+
+            <tui-textfield tuiChevron>
+
+              <input
+                tuiSelect
+                formControlName="state"
+                placeholder="Sélectionner un état"
+              />
+
+              <tui-data-list-wrapper
+                *tuiDropdown
+                new
+                [items]="states"
+              />
+
+            </tui-textfield>
+
+            @if (returnUserMaterialForm.controls.state.invalid &&
+            returnUserMaterialForm.controls.state.touched) {
+              <small class="error-message">
+                Veuillez sélectionner un état du matériel.
+              </small>
+            }
+
+          </div>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+        <div class="form-actions">
+
+          <button
+            id="btn-back"
+            tuiButton
+            type="button"
+            appearance="outline"
+            (click)="onBack()"
+          >
+
+            <tui-icon icon="@tui.chevron-left"></tui-icon>
+
+            Annuler
+
+          </button>
+
+
+          <button
+            id="btn-return"
+            tuiButton
+            type="submit"
+          >
+
+            <tui-icon icon="@tui.check"></tui-icon>
+
+            Enregistrer le retour
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </section>
+
+  </div>
 </div>
 
+
+<!-- NOTIFICATION -->
 <ng-template
-  [tuiNotificationOptions]="{label: 'confirmation du retour', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: 'Retour du matériel',
+    autoClose: 0,
+    closable: false,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+
+  <span tuiSubtitle>
+    {{ messageSuccess || messageError }}
+  </span>
+
   <button
     tuiButton
     type="button"
     (click)="show.set(false)"
   >
-    Close
+    Fermer
   </button>
+
 </ng-template>

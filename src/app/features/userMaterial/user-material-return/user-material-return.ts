@@ -1,7 +1,7 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { NgClass } from '@angular/common';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import {
   TuiButton,
+  TuiIcon,
   TuiInput,
   TuiLabel,
   TuiNotificationTemplate,
@@ -19,11 +19,12 @@ import { UserMaterialService } from '../service/user-material-service';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserMaterialReturnForm } from '../model/user-material-return-form';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-user-material-return',
   imports: [
-    NgClass,
+    TuiIcon,
     TuiLabel,
     TuiTextfield,
     TuiButton,
@@ -43,6 +44,7 @@ export class UserMaterialReturn implements OnInit {
   private _themeService = inject(ThemeService); // Call the service to change color theme
   private readonly _router = inject(Router); // Tool to navigate
   private readonly _route = inject(ActivatedRoute); // Get the id of the material (by url)s
+  private readonly destroyRef = inject(DestroyRef);
 
   isDarkMode = false; // Change theme from light to dark
   userMaterialId!: number;
@@ -53,68 +55,91 @@ export class UserMaterialReturn implements OnInit {
 
   protected readonly states = Object.values(State);
 
-  ngOnInit() {
-    this.getRoute();
-    this.changeTheme();
-  }
-
-  getRoute() {
-    this._route.params.subscribe((params) => {
-      this.userMaterialId = params['id'];
-    });
-  }
-
-  protected returnUserMaterialForm = new FormGroup({
+  protected readonly returnUserMaterialForm = new FormGroup({
     isAvailable: new FormControl(true, {
       nonNullable: true,
       validators: [Validators.required],
     }),
+
     state: new FormControl('', {
       validators: [Validators.required],
     }),
   });
 
-  protected returnUserMaterial() {
+  ngOnInit() {
+    this.getRoute();
+    this.changeTheme();
+  }
+
+  private getRoute(): void {
+    this._route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
+      this.userMaterialId = Number(params['id']);
+    });
+  }
+
+  protected returnUserMaterial(): void {
+    // Vérification du formulaire
     if (this.returnUserMaterialForm.invalid) {
       this.returnUserMaterialForm.markAllAsTouched();
-      this.messageError = 'Formulaire vide';
+      this.messageError = 'Veuillez renseigner tous les champs obligatoires.';
+      this.messageSuccess = '';
       this.isSuccess.set(false);
       this.show.set(true);
       return;
     }
 
+    // Vérification de l'identifiant
+    if (!Number.isInteger(this.userMaterialId) || this.userMaterialId <= 0) {
+      this.messageError = "Impossible d'identifier le matériel concerné.";
+      this.messageSuccess = '';
+      this.isSuccess.set(false);
+      this.show.set(true);
+      return;
+    }
+
+    const formValue = this.returnUserMaterialForm.value as UserMaterialReturnForm;
+
     this.userMaterialService
-      .returnUserMaterial(
-        this.userMaterialId,
-        <UserMaterialReturnForm>this.returnUserMaterialForm.value,
-      )
+      .returnUserMaterial(this.userMaterialId, formValue)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (result) => {
           this.returnUserMaterialForm.patchValue(result);
-          this.messageSuccess = 'Le matériel est denouveau disponible';
+          this.messageSuccess = 'Le retour du matériel a bien été enregistré.';
           this.messageError = '';
-          this.show.set(true);
           this.isSuccess.set(true);
+          this.show.set(true);
+
           setTimeout(() => {
             this._router.navigate(['/user-material', 'my-user-material']);
           }, 2000);
         },
-        error: (error) => {
+
+        error: () => {
           this.messageSuccess = '';
-          this.messageError = 'La mise à jour a échoué';
-          this.show.set(true);
+          this.messageError =
+            'Une erreur est survenue lors de la mise à jour du matériel. Veuillez réessayer.';
           this.isSuccess.set(false);
+          this.show.set(true);
         },
       });
   }
 
-  onBack() {
-    this.returnUserMaterialForm.reset();
+  protected onBack(): void {
+    this.returnUserMaterialForm.reset({
+      isAvailable: true,
+      state: '',
+    });
     this._router.navigate(['/user-material', 'my-user-material']);
   }
 
-  changeTheme() {
-    this.isDarkMode = this._themeService.isDarkMode(); // Get current theme
-    this._themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
+  private changeTheme(): void {
+    this.isDarkMode = this._themeService.isDarkMode();
+
+    this._themeService.darkMode$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((mode: boolean) => {
+        this.isDarkMode = mode;
+      });
   }
 }
