@@ -1,0 +1,170 @@
+<div class="footer-container"
+     [ngClass]="{
+       'dark-mode': isDarkMode,
+       'light-mode': !isDarkMode
+     }">
+
+  <!-- Contenu principal -->
+  <div class="footer-main">
+
+    <!-- Identité de l'application -->
+    <section class="footer-brand">
+
+      <a
+        class="footer-logo"
+        [routerLink]="['dashboard']"
+        aria-label="Accueil">
+
+        <img
+          src="/logo/logoSmall.jpg"
+          alt=""
+          class="logo"
+        />
+        <span class="footer-logo-text">RentServe</span>
+
+      </a>
+
+      <p class="footer-description">
+        Une plateforme pensée pour simplifier votre quotidien,
+        grâce à une expérience intuitive, performante et sécurisée.
+      </p>
+
+    </section>
+
+    <!-- Navigation -->
+    <nav
+      class="footer-section"
+      aria-label="Navigation secondaire">
+
+      <h2 class="footer-heading">Navigation</h2>
+
+      <ul class="footer-links">
+        <li><a [routerLink]="['dashboard']">Accueil</a></li>
+        <li><a routerLink="/about">À propos</a></li>
+        <li><a routerLink="/contact">Nous contacter</a></li>
+        <li><a routerLink="/help">Centre d'aide</a></li>
+      </ul>
+
+    </nav>
+
+    <!-- Informations légales -->
+    <nav
+      class="footer-section"
+      aria-label="Informations légales">
+
+      <h2 class="footer-heading">Informations légales</h2>
+
+      <ul class="footer-links">
+        <li><a routerLink="/legal-notice">Mentions légales</a></li>
+        <li>
+          <a routerLink="/privacy-policy">
+            Politique de confidentialité
+          </a>
+        </li>
+        <li>
+          <a routerLink="/cookie-policy">
+            Gestion des cookies
+          </a>
+        </li>
+        <li>
+          <a routerLink="/terms">
+            Conditions générales
+          </a>
+        </li>
+      </ul>
+
+    </nav>
+
+    <!-- Coordonnées -->
+    <section class="footer-section footer-company">
+
+      <h2 class="footer-heading">Coordonnées</h2>
+
+      <ul class="footer-company-list">
+
+        <li>
+          <span class="footer-company-label">Entreprise</span>
+          <span class="footer-company-value">
+              {{ companyName }}
+            </span>
+        </li>
+
+<!--        <li>-->
+<!--          <span class="footer-company-label">Adresse</span>-->
+<!--          <span class="footer-company-value">-->
+<!--              {{ companyAddress }}-->
+<!--            </span>-->
+<!--        </li>-->
+
+        <li>
+          <span class="footer-company-label">E-mail</span>
+          <a [href]="'mailto:' + companyEmail">
+            {{ companyEmail }}
+          </a>
+        </li>
+
+        <li>
+          <span class="footer-company-label">Téléphone</span>
+          <a [href]="'tel:' + companyPhone">
+            {{ companyPhone }}
+          </a>
+        </li>
+
+        <li>
+          <span class="footer-company-label">N° d'entreprise (BCE)</span>
+          <span class="footer-company-value">
+              {{ companyNumber }}
+            </span>
+        </li>
+
+        <li>
+          <span class="footer-company-label">N° TVA</span>
+          <span class="footer-company-value">
+              {{ vatNumber }}
+            </span>
+        </li>
+
+      </ul>
+
+    </section>
+
+  </div>
+
+  <!-- Séparateur -->
+  <div class="footer-divider"></div>
+
+  <!-- Pied de page secondaire -->
+  <div class="footer-bottom">
+
+    <p class="footer-copyright">
+      © {{ currentYear }} {{ companyName }}.
+      Tous droits réservés.
+    </p>
+
+    <nav
+      class="footer-bottom-links"
+      aria-label="Liens complémentaires">
+
+      <a routerLink="/accessibility">Accessibilité</a>
+      <a routerLink="/contact">Contact</a>
+
+    </nav>
+
+    <button
+      type="button"
+      class="footer-back-to-top"
+      (click)="scrollToTop()"
+      aria-label="Revenir en haut de la page">
+
+        <span class="footer-back-to-top-icon" aria-hidden="true">
+          ↑
+        </span>
+
+      <span>Retour en haut</span>
+
+    </button>
+
+  </div>
+
+</div>
+
