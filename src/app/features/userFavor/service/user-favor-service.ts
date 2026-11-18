@@ -57,7 +57,7 @@ export class UserFavorService {
 
   deleteUserFavor(id: number) {
     const headers = this.getAuthHeader();
-    return this._http.delete(this.apiUrl + id + '/delete', { headers });
+    return this._http.delete(this.apiUrl + id + '/delete', { headers, responseType: 'text' });
   }
 
   editUserFavor(id: number, form: UserFavorEditForm) {

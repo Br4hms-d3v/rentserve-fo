@@ -1,30 +1,112 @@
-<div class="deleteUserFavor-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
 
-  <h1>Suppression de votre service</h1>
+<div
+  class="delete-user-favor"
+  [class.dark-mode]="isDarkMode()"
+  [class.light-mode]="!isDarkMode()"
+>
+  <div class="delete-card">
 
-  <div>
-    <p> Avant de supprimer définitivement votre service, veuillez vous assurer que vous avez bien réglé le prestataire ou que celui-ci n’a pas encore commencé le service.<br />
-      Une fois la suppression confirmée, le service sera définitivement retiré de votre espace RentServe et ne sera plus visible ni disponible sur la plateforme.<br /><br />
-      Merci d’avoir fait confiance à RentServe !<br />
-      Votre confiance contribue à permettre à d’autres utilisateurs de découvrir notre plateforme et de nous faire confiance à leur tour. </p>
-  </div>
+    <!-- Header -->
+    <div class="delete-header">
 
-  <div class="buttons">
-    <button tuiButton id="btn-back" (click)="goBack()"> Retour</button>
-    <button tuiButton id="btn-delete" (click)="onDelete()">Supprimer</button>
+      <div class="delete-icon">
+        <tui-icon icon="@tui.trash-2"></tui-icon>
+      </div>
+
+      <h1>Supprimer votre service</h1>
+
+      <p class="subtitle">
+        Vous êtes sur le point de supprimer définitivement votre service.
+      </p>
+
+    </div>
+
+    <!-- Information -->
+    <div class="warning-section">
+
+      <div class="warning-title">
+        <tui-icon icon="@tui.info"></tui-icon>
+        <h2>Avant de continuer</h2>
+      </div>
+
+      <p>
+        Avant de supprimer votre service, veuillez vous assurer
+        que le prestataire a bien été rémunéré ou que la prestation
+        n'a pas encore commencé.
+      </p>
+
+      <p>
+        Une fois la suppression confirmée, votre service sera
+        définitivement retiré de votre espace RentServe.
+        Il ne sera alors plus visible ni accessible sur la plateforme.
+      </p>
+
+    </div>
+
+    <!-- Confirmation -->
+    <div class="confirmation-message">
+
+      <tui-icon icon="@tui.shield-check"></tui-icon>
+
+      <span>
+        Cette opération est irréversible. Veuillez vérifier
+        votre décision avant de continuer.
+      </span>
+
+    </div>
+
+    <!-- Actions -->
+    <div class="buttons">
+
+      <button
+        tuiButton
+        appearance="outline"
+        type="button"
+        class="btn-back"
+        (click)="goBack()"
+      >
+        <tui-icon icon="@tui.arrow-left"></tui-icon>
+        Retour
+      </button>
+
+      <button
+        tuiButton
+        appearance="primary"
+        type="button"
+        class="btn-delete"
+        [disabled]="isDeleting()"
+        (click)="onDelete()"
+      >
+        <tui-icon icon="@tui.trash-2"></tui-icon>
+
+        {{
+          isDeleting()
+            ? 'Suppression en cours...'
+            : 'Supprimer définitivement'
+        }}
+      </button>
+
+    </div>
+
+    <!-- Footer -->
+    <p class="footer-message">
+      Merci de faire confiance à RentServe.
+    </p>
+
   </div>
 </div>
 
+<!-- Notification -->
 <ng-template
-  [tuiNotificationOptions]="{label: 'Suppression', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: 'Suppression du service',
+    autoClose: 5000,
+    closable: true,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
-  <button
-    tuiButton
-    type="button"
-    (click)="show.set(false)"
-  >
-    Close
-  </button>
+  <span tuiSubtitle>
+    {{ messageSuccess || messageError }}
+  </span>
 </ng-template>
