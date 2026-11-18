@@ -1,118 +1,715 @@
-@light-background-color: #F1EFE8;
-@light-title: #3B6D11 !important;
-@light-breadcrumb: #5F5E5A !important;
-@light-label-input: #3B6D11 !important;
-@light-label: #5F5E5A !important;
-@light-btn-cancel: #D9764A;
-@light-btn-delete: green;
+/* ==========================================
+   VARIABLES - LIGHT THEME
+========================================== */
 
-@dark-background-color: #1C1F17;
-@dark-title: #8FC15C;
-@dark-breadcrumb: #A6A599 !important;
-@dark-label-input: #8FC15C !important;
-@dark-label: #A6A599 !important;
+@light-primary: #173B57;
+@light-secondary: #3B82F6;
+@light-active: #2563EB;
+
+@light-background: #FFFFFF;
+@light-section: #F3F6F8;
+@light-surface: #E8EEF3;
+
+@light-title: #263746;
+@light-text: #263746;
+@light-text-secondary: #64748B;
+
+@light-border: #D8E1E9;
+
+
+/* ==========================================
+   VARIABLES - DARK THEME
+========================================== */
+
+@dark-primary: #0B1F33;
+@dark-secondary: #3B82F6;
+@dark-active: #60A5FA;
+
+@dark-background: #071522;
+@dark-section: #172A3D;
+@dark-surface: #20364D;
+
+@dark-title: #F1F5F9;
+@dark-text: #F1F5F9;
+@dark-text-secondary: #A8B7C9;
+
+@dark-border: #30465C;
+
+
+/* ==========================================
+   COMMON VARIABLES
+========================================== */
+
+@success: #16A34A;
+@danger: #DC2626;
+
+@radius-card: 16px;
+@radius-input: 10px;
+
+
+/* ==========================================
+   MAIN CONTAINER
+========================================== */
 
 .editUserFavor-container {
-  height: 80vh;
-  padding: 20px;
+
+  min-height: 100vh;
+  width: 100%;
+
+  padding: 40px 24px;
+
   box-sizing: border-box;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+
 }
 
-.titleEditUserFavor {
-  margin-top: 25px;
-  text-align: center;
+.editUserFavor-content {
+
+  width: 100%;
+  max-width: 850px;
+
+  margin: 0 auto;
+
 }
+
+
+/* ==========================================
+   PAGE HEADER
+========================================== */
+
+.page-header {
+
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  margin-bottom: 35px;
+
+}
+
+.header-icon {
+
+  width: 54px;
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  flex-shrink: 0;
+
+  font-size: 25px;
+
+}
+
+.header-text {
+
+  h1 {
+
+    font-size: 27px;
+    font-weight: 700;
+
+    margin: 0 0 7px;
+
+    letter-spacing: -0.5px;
+
+  }
+
+  p {
+
+    margin: 0;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+  }
+
+}
+
+
+/* ==========================================
+   FORM
+========================================== */
 
 .userFavor-form {
-  width: 750px;
-  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 22px;
+
+  width: 100%;
+
+}
+
+
+/* ==========================================
+   FORM SECTIONS
+========================================== */
+
+.form-section {
+
+  padding: 28px;
+
+  border: 1px solid;
+  border-radius: @radius-card;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 24px;
+
+}
+
+.section-header {
+
+  h2 {
+
+    font-size: 18px;
+    font-weight: 650;
+
+    margin: 0 0 7px;
+
+  }
+
+  p {
+
+    font-size: 13px;
+
+    margin: 0;
+
+  }
+
+}
+
+
+/* ==========================================
+   FORM FIELDS
+========================================== */
+
+.form-field {
+
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 9px;
+
+}
+
+.field-label {
+
+  font-size: 14px;
+  font-weight: 600;
+
+}
+
+.required {
+
+  color: @danger;
+
+  margin-left: 3px;
+
+}
+
+.field-hint {
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+}
+
+.empty-list {
+
+  padding: 12px;
+
+  text-align: center;
+
+}
+
+
+/* ==========================================
+   TAIGA UI INPUTS
+========================================== */
+
+.editUserFavor-container {
+
+  tui-textfield {
+
+    width: 100%;
+
+  }
+
+  input[tuiInput],
+  textarea[tuiTextarea] {
+
+    font-size: 14px;
+
+  }
+
+  textarea[tuiTextarea] {
+
+    min-height: 115px;
+
+    resize: vertical;
+
+  }
+
+}
+
+
+/* ==========================================
+   PRICING AND AVAILABILITY
+========================================== */
+
+.pricing-availability {
+
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 25px;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 20px;
+
+  align-items: stretch;
+
 }
 
-.inputNameFavor {
-  width: 400px;
+.availability-card {
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 18px;
+
+  border: 1px solid;
+
+  border-radius: @radius-input;
+
+  min-width: 0;
+
 }
 
-.textDescription {
-  grid-column: 1 / -1;
+.availability-text {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+
 }
 
-.inputState {
-  width: 300px;
+.availability-switch {
+
+  flex-shrink: 0;
+
 }
+
+
+/* ==========================================
+   SWITCH
+========================================== */
 
 input[tuiSwitch] {
+
   &:checked {
-    --tui-background-accent-1: #22c55e;
-    --tui-background-accent-1-hover: #16a34a;
+
+    --tui-background-accent-1: @success;
+    --tui-background-accent-1-hover: #15803D;
+
   }
 
   &:not(:checked) {
-    --tui-background-neutral-1: #ef4444;
-    --tui-background-neutral-1-hover: #dc2626;
+
+    --tui-background-neutral-1: #94A3B8;
+    --tui-background-neutral-1-hover: #64748B;
+
   }
+
 }
 
-.buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 25px;
-  margin-top: 40px;
 
-  #btn-cancel {
-    background-color: @light-btn-cancel;
-    width: 200px;
+/* ==========================================
+   ACTION BUTTONS
+========================================== */
+
+.form-actions {
+
+  display: flex;
+
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 8px;
+
+  button {
+
+    min-width: 170px;
+
+    height: 44px;
+
+    border-radius: 9px;
+
+    font-weight: 600;
+
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+
   }
 
   #btn-edit {
-    background-color: @light-btn-delete;
-    width: 200px;
+
+    min-width: 230px;
+
   }
+
 }
 
-// THEME
+.required-hint {
+
+  font-size: 12px;
+
+  margin: 0;
+
+}
+
+
+/* ==========================================
+   LIGHT THEME
+========================================== */
 
 .light-mode {
-  background-color: @light-background-color;
 
-  .titleEditUserFavor{
+  background-color: @light-background;
+
+  color: @light-text;
+
+  .header-icon {
+
+    background: @light-section;
+
+    color: @light-primary;
+
+  }
+
+  .header-text h1 {
+
     color: @light-title;
+
   }
 
-  input[tuiInput] {
-    color: @light-label-input;
+  .header-text p,
+  .section-header p,
+  .field-hint,
+  .required-hint {
+
+    color: @light-text-secondary;
+
   }
 
-  label[tuiLabel] {
-    color: @light-label;
+  .form-section {
+
+    background-color: @light-section;
+
+    border-color: @light-border;
+
   }
 
-  .textDescription textarea {
-    color: @light-label-input;
+  .section-header h2,
+  .field-label {
+
+    color: @light-title;
+
+  }
+
+  .availability-card {
+
+    background-color: @light-background;
+
+    border-color: @light-border;
+
+  }
+
+  tui-textfield {
+
+    --tui-background-base: @light-background;
+    --tui-text-primary: @light-title;
+
+  }
+
+  input[tuiInput],
+  textarea[tuiTextarea] {
+
+    color: @light-title;
+
+  }
+
+  #btn-cancel {
+
+    background-color: @light-surface;
+
+    color: @light-primary;
+
+  }
+
+  #btn-edit {
+
+    background-color: @light-primary;
+
+    color: #FFFFFF;
+
+  }
+
+  #btn-edit:hover {
+
+    background-color: @light-active;
+
   }
 
 }
 
+
+/* ==========================================
+   DARK THEME
+========================================== */
+
 .dark-mode {
-  background-color: @dark-background-color;
 
-  .titleEditUserFavor{
+  background-color: @dark-background;
+
+  color: @dark-text;
+
+  .header-icon {
+
+    background: @dark-section;
+
+    color: @dark-active;
+
+  }
+
+  .header-text h1 {
+
     color: @dark-title;
+
   }
 
-  input[tuiInput] {
-    color: @dark-label-input;
+  .header-text p,
+  .section-header p,
+  .field-hint,
+  .required-hint {
+
+    color: @dark-text-secondary;
+
   }
 
-  label[tuiLabel] {
-    color: @dark-label;
+  .form-section {
+
+    background-color: @dark-section;
+
+    border-color: @dark-border;
+
   }
 
-  .textDescription textarea {
-    color: @dark-label-input;
+  .section-header h2,
+  .field-label {
+
+    color: @dark-title;
+
+  }
+
+  .availability-card {
+
+    background-color: @dark-surface;
+
+    border-color: @dark-border;
+
+  }
+
+  tui-textfield {
+
+    --tui-background-base: @dark-surface;
+    --tui-text-primary: @dark-title;
+
+  }
+
+  input[tuiInput],
+  textarea[tuiTextarea] {
+
+    color: @dark-title;
+
+  }
+
+  #btn-cancel {
+
+    background-color: @dark-surface;
+
+    color: @dark-title;
+
+  }
+
+  #btn-edit {
+
+    background-color: @dark-secondary;
+
+    color: #FFFFFF;
+
+  }
+
+  #btn-edit:hover {
+
+    background-color: @dark-active;
+
+    color: @dark-background;
+
+  }
+
+}
+
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 991px) {
+
+  .editUserFavor-container {
+
+    padding: 32px 20px;
+
+  }
+
+  .editUserFavor-content {
+
+    max-width: 700px;
+
+  }
+
+  .form-section {
+
+    padding: 23px;
+
+  }
+
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 575px) {
+
+  .editUserFavor-container {
+
+    padding: 22px 14px;
+
+    min-height: 100vh;
+
+  }
+
+  .page-header {
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-bottom: 25px;
+
+  }
+
+  .header-icon {
+
+    width: 44px;
+    height: 44px;
+
+    border-radius: 11px;
+
+  }
+
+  .header-text {
+
+    h1 {
+
+      font-size: 21px;
+
+    }
+
+    p {
+
+      font-size: 12px;
+
+    }
+
+  }
+
+  .userFavor-form {
+
+    gap: 15px;
+
+  }
+
+  .form-section {
+
+    padding: 19px 15px;
+
+    gap: 20px;
+
+    border-radius: 12px;
+
+  }
+
+  .section-header h2 {
+
+    font-size: 16px;
+
+  }
+
+  .pricing-availability {
+
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+
+  }
+
+  .availability-card {
+
+    padding: 15px;
+
+  }
+
+  .form-actions {
+
+    flex-direction: column-reverse;
+
+    width: 100%;
+
+    gap: 10px;
+
+    button,
+    #btn-edit {
+
+      width: 100%;
+      min-width: 0;
+
+    }
+
   }
 
 }

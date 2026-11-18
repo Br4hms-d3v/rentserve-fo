@@ -1,111 +1,227 @@
-<div class="editUserFavor-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
 
-  <h1 class="titleEditUserFavor">
-    {{ title }}
-  </h1>
+<div
+  class="editUserFavor-container"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
 
-  <form [formGroup]="editUserFavorForm" (ngSubmit)="updateUserFavor()" class="userFavor-form">
+  <div class="editUserFavor-content">
 
-    <div class="inputNameFavor">
-      <tui-textfield>
-        <label tuiLabel>Nom du matériel</label>
+    <!-- HEADER -->
+    <header class="page-header">
+      <div class="header-icon">
+        <tui-icon icon="@tui.package"></tui-icon>
+      </div>
 
-        <input
-          #input
-          formControlName="favorName"
-          placeholder="Nom du matériel"
-          tuiInput
-          (focus)="onFavorNameFocus()"
-        />
+      <div class="header-text">
+        <h1 class="titleEditUserFavor">
+          Modifier mon service
+        </h1>
 
-        @if (input.value) {
-          <tui-data-list-wrapper
-            *tuiDropdown
-            [items]="filteredFavour()"
-            [emptyContent]="emptyFavor"
-          />
-        }
+        <p>
+          Mettez à jour les informations de votre matériel
+          et ses conditions de mise à disposition.
+        </p>
+      </div>
+    </header>
 
-        <ng-template #emptyFavor>
-          <div class="empty-list">
-            <p>Aucun matériel trouvé</p>
+    <form
+      [formGroup]="editUserFavorForm"
+      (ngSubmit)="updateUserFavor()"
+      class="userFavor-form"
+    >
+
+      <!-- INFORMATIONS GENERALES -->
+      <section class="form-section">
+
+        <div class="section-header">
+          <div>
+            <h2>Informations générales</h2>
+            <p>Les informations relatives à votre matériel.</p>
           </div>
-        </ng-template>
-      </tui-textfield>
-    </div>
+        </div>
 
-    <div class="inputAvailability">
-      <input
-        tuiSwitch
-        type="checkbox"
-        formControlName="isAvailable"
-      />
-    </div>
+        <!-- NOM -->
+        <div class="form-field inputNameFavor">
 
-    <div class="textDescription">
-      <tui-textfield>
-        <label tuiLabel>Description</label>
-        <textarea
-          placeholder="Écrivez votre description"
-          tuiTextarea
-          formControlName="descriptionFavor"
-          [limit]="100"
-          [max]="6"
-          [min]="3"
-        ></textarea>
-      </tui-textfield>
-    </div>
+          <label class="field-label">
+            Nom du matériel
+            <span class="required">*</span>
+          </label>
 
-    <div class="inputPrice">
-      <tui-textfield [style.width.rem]="12">
-        <input
-          postfix=" €"
-          tuiFluidTypography
-          tuiInputNumber
-          formControlName="priceHourFavor"
-          [min]="1.0"
-        />
-      </tui-textfield>
-    </div>
+          <tui-textfield>
+            <input
+              #input
+              formControlName="favorName"
+              placeholder="Ex. : Perceuse électrique"
+              tuiInput
+              (focus)="onFavorNameFocus()"
+            />
 
-    <div class="inputState">
-    </div>
+            @if (input.value) {
+              <tui-data-list-wrapper
+                *tuiDropdown
+                [items]="filteredFavour()"
+                [emptyContent]="emptyFavor"
+              />
+            }
 
-    <div class="buttons">
-      <button
-        id="btn-cancel"
-        tuiButton
-        type="button"
-        size="m"
-        [routerLink]="['/user-favor', 'my-user-favor']"
-      >
-        Annuler
-      </button>
-      <button
-        id="btn-edit"
-        tuiButton
-        type="submit"
-        appearance="primary"
-        size="m"
-      >
-        Modifier
-      </button>
-    </div>
+            <ng-template #emptyFavor>
+              <div class="empty-list">
+                <p>Aucun matériel trouvé.</p>
+              </div>
+            </ng-template>
 
-  </form>
+          </tui-textfield>
+
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="form-field textDescription">
+
+          <label class="field-label">
+            Description
+            <span class="required">*</span>
+          </label>
+
+          <tui-textfield>
+
+            <textarea
+              tuiTextarea
+              formControlName="descriptionFavor"
+              placeholder="Décrivez votre matériel et ses caractéristiques..."
+              [limit]="100"
+              [max]="6"
+              [min]="3"
+            ></textarea>
+
+          </tui-textfield>
+
+          <span class="field-hint">
+            Une description claire permettra aux utilisateurs
+            de mieux comprendre votre offre.
+          </span>
+
+        </div>
+
+      </section>
+
+      <!-- TARIFICATION ET DISPONIBILITE -->
+      <section class="form-section">
+
+        <div class="section-header">
+          <div>
+            <h2>Tarification et disponibilité</h2>
+            <p>Définissez le prix et le statut de votre matériel.</p>
+          </div>
+        </div>
+
+        <div class="pricing-availability">
+
+          <!-- PRIX -->
+          <div class="form-field inputPrice">
+
+            <label class="field-label">
+              Prix par heure
+              <span class="required">*</span>
+            </label>
+
+            <tui-textfield>
+
+              <input
+                postfix="€/heure"
+                tuiFluidTypography
+                tuiInputNumber
+                formControlName="priceHourFavor"
+                [min]="5"
+              />
+
+            </tui-textfield>
+
+            <span class="field-hint">
+              Tarif de mise à disposition par heure.
+            </span>
+
+          </div>
+
+          <!-- DISPONIBILITE -->
+          <div class="availability-card">
+
+            <div class="availability-text">
+              <span class="field-label">
+                Disponibilité du matériel
+              </span>
+
+              <span class="field-hint">
+                Autoriser les utilisateurs à réserver ce matériel.
+              </span>
+            </div>
+
+            <div class="availability-switch">
+
+              <input
+                tuiSwitch
+                type="checkbox"
+                formControlName="isAvailable"
+              />
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ACTIONS -->
+      <div class="form-actions">
+
+        <button
+          id="btn-cancel"
+          tuiButton
+          type="button"
+          size="m"
+          appearance="secondary"
+          [routerLink]="['/user-favor', 'my-user-favor']"
+        >
+          Annuler
+        </button>
+
+        <button
+          id="btn-edit"
+          tuiButton
+          type="submit"
+          appearance="primary"
+          size="m"
+        >
+          <tui-icon icon="@tui.save"></tui-icon>
+          Enregistrer les modifications
+        </button>
+
+      </div>
+
+      <p class="required-hint">
+        <span class="required">*</span>
+        Champs obligatoires
+      </p>
+
+    </form>
+
+  </div>
 
 </div>
 
+<!-- NOTIFICATION -->
 <ng-template
-  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: isSuccess() ? 'Modification réussie' : 'Une erreur est survenue',
+    autoClose: 5000,
+    closable: true,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
-  <button
-    tuiButton
-    type="button"
-    (click)="show.set(false)"
-  >
-    Close
-  </button>
+  <span tuiSubtitle>
+    {{ messageSuccess || messageError }}
+  </span>
 </ng-template>
