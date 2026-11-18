@@ -1,147 +1,320 @@
-<div class="createUserMaterial-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
 
-  <h1 class="titleEditUserMaterial">
-    {{ title }}
-  </h1>
+<div
+  class="createUserMaterial-container"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+  <div class="page-content">
 
-  <form [formGroup]="createUserMaterialForm" (ngSubmit)="createUserMaterial()" class="userMaterial-form">
+    <!-- En-tête -->
+    <header class="page-header">
+      <div class="header-content">
+        <div class="header-icon">
+          <tui-icon icon="@tui.package-plus"></tui-icon>
+        </div>
 
-    <div class="inputNameMaterial">
-      <tui-textfield tuiChevron [stringify]="stringify">
-        <label tuiLabel>Nom du matériel</label>
-        <input tuiComboBox formControlName="material" placeholder="Choisir un matériel" />
+        <div>
+          <h1 class="page-title">{{ title }}</h1>
+          <p class="page-description">
+            Ajoutez un équipement à votre inventaire et définissez
+            ses caractéristiques.
+          </p>
+        </div>
+      </div>
+    </header>
 
-        <tui-data-list-wrapper
-          *tuiDropdown
-          new
-          [items]="materialsList | tuiFilterByInput"
-          [emptyContent]="emptyMaterial"
-        />
+    <!-- Formulaire -->
+    <form
+      [formGroup]="createUserMaterialForm"
+      (ngSubmit)="createUserMaterial()"
+      class="userMaterial-form"
+    >
 
-        <ng-template #emptyMaterial>
-          <div class="empty-list">
-            <p>Aucun matériel trouvé</p>
+      <!-- SECTION 1 : Informations générales -->
+      <section class="form-section">
+
+        <div class="section-header">
+          <div class="section-number">01</div>
+
+          <div>
+            <h2>Informations générales</h2>
+            <p>Identifiez le matériel que vous souhaitez ajouter.</p>
           </div>
-        </ng-template>
-      </tui-textfield>
-    </div>
+        </div>
 
-    <div class="textDescription">
-      <tui-textfield>
-        <label tuiLabel>Description</label>
-        <textarea
-          placeholder="Écrivez votre description"
-          tuiTextarea
-          formControlName="descriptionMaterial"
-          [limit]="150"
-          [max]="6"
-          [min]="3"
-        ></textarea>
-      </tui-textfield>
-    </div>
+        <div class="section-content">
 
-    <div class="material-options">
-      <div class="inputState">
-        <tui-textfield tuiChevron>
-          <label tuiLabel>État du matériel</label>
-          <input tuiSelect formControlName="state" placeholder="Choisir un état" />
-          <tui-data-list-wrapper *tuiDropdown new [items]="states" />
-        </tui-textfield>
-      </div>
+          <!-- Nom du matériel -->
+          <div class="form-field">
+            <tui-textfield tuiChevron [stringify]="stringify">
+              <label tuiLabel>Nom du matériel *</label>
 
-      <div class="inputPrice">
-        <tui-textfield [style.width.rem]="12">
-          <label tuiLabel>Prix par heure</label>
-          <input
-            postfix=" €"
-            tuiInputNumber
-            formControlName="priceHourMaterial"
-            [min]="1"
-          />
-        </tui-textfield>
-      </div>
+              <input
+                tuiComboBox
+                formControlName="material"
+                placeholder="Rechercher ou sélectionner un matériel"
+              />
 
-      <div class="inputAvailability">
-        <label>
-          <input tuiSwitch type="checkbox" formControlName="isAvailable" />
-          Disponible
-        </label>
-      </div>
-    </div>
-    <div class="inputImage">
-      <label tuiInputFiles>
-        <input
-          #validator="tuiInputFilesValidator"
-          accept="image/*"
-          tuiInputFiles
-          formControlName="pictures"
-          [multiple]="true"
-          (reject)="onReject($event)"
-        />
-      </label>
+              <tui-data-list-wrapper
+                *tuiDropdown
+                new
+                [items]="materialsList | tuiFilterByInput"
+                [emptyContent]="emptyMaterial"
+              />
 
-      <tui-files class="tui-space_top-1">
-        @for (file of accepted$ | async; track file) {
-          <tui-file [file]="file" (remove)="onRemove(file)" />
-        }
+              <ng-template #emptyMaterial>
+                <div class="empty-list">
+                  <p>Aucun matériel trouvé.</p>
+                </div>
+              </ng-template>
+            </tui-textfield>
 
-        @for (file of rejected; track file) {
-          <tui-file
-            state="error"
-            [file]="(file | tuiFileRejected: validator | async) || file"
-            (remove)="onRemove(file)"
-          />
-        }
-      </tui-files>
+            <tui-error
+              formControlName="material"
+              [order]="['required']"></tui-error>
+          </div>
 
-      <tui-error
-        formControlName="pictures"
-        [order]="['maxLength']">
-      </tui-error>
-    </div>
+          <!-- Description -->
+          <div class="form-field">
+            <tui-textfield>
+              <label tuiLabel>Description *</label>
 
-  <div class="material-buttons">
-    <button
-      [routerLink]="['/user-material','my-user-material']"
-      id="btn-back"
-      tuiButton
-      size="m"
-    >
-      Retour
-    </button>
+              <textarea
+                tuiTextarea
+                formControlName="descriptionMaterial"
+                placeholder="Décrivez votre matériel, ses caractéristiques ou ses conditions d'utilisation..."
+                [limit]="150"
+                [max]="6"
+                [min]="3"
+              ></textarea>
+            </tui-textfield>
 
-    <button
-      (click)="onBack()"
-      type="button"
-      id="btn-cancel"
-      tuiButton
-      size="m"
-    >
-      Annuler
-    </button>
+            <p class="field-hint">
+              Ajoutez une description claire pour aider les utilisateurs
+              à mieux comprendre votre matériel.
+            </p>
 
-    <button
-      type="submit"
-      id="btn-new"
-      tuiButton
-      size="m"
-    >
-      Créer
-    </button>
+            <tui-error
+              formControlName="descriptionMaterial"
+              [order]="['required']"></tui-error>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 2 : Caractéristiques -->
+      <section class="form-section">
+
+        <div class="section-header">
+          <div class="section-number">02</div>
+
+          <div>
+            <h2>Caractéristiques du matériel</h2>
+            <p>Définissez son état, son tarif et sa disponibilité.</p>
+          </div>
+        </div>
+
+        <div class="section-content">
+
+          <div class="material-options">
+
+            <!-- État -->
+            <div class="form-field">
+              <tui-textfield tuiChevron>
+                <label tuiLabel>État du matériel *</label>
+
+                <input
+                  tuiSelect
+                  formControlName="state"
+                  placeholder="Sélectionner un état"
+                />
+
+                <tui-data-list-wrapper
+                  *tuiDropdown
+                  new
+                  [items]="states"
+                />
+              </tui-textfield>
+
+              <tui-error
+                formControlName="state"
+                [order]="['required']"></tui-error>
+            </div>
+
+            <!-- Prix -->
+            <div class="form-field">
+              <tui-textfield>
+                <label tuiLabel>Prix par heure *</label>
+
+                <input
+                  tuiInputNumber
+                  formControlName="priceHourMaterial"
+                  postfix=" €"
+                  [min]="1"
+                />
+              </tui-textfield>
+
+              <p class="field-hint">
+                Tarif horaire de location.
+              </p>
+            </div>
+
+            <!-- Disponibilité -->
+            <div class="availability-card">
+              <div class="availability-info">
+                <span class="availability-title">
+                  Disponibilité
+                </span>
+
+                <span class="availability-description">
+                  Autoriser la location
+                </span>
+              </div>
+
+              <label class="availability-switch">
+                <input
+                  tuiSwitch
+                  type="checkbox"
+                  formControlName="isAvailable"
+                />
+                <span>
+                  {{ createUserMaterialForm.controls.isAvailable.value
+                  ? 'Disponible'
+                  : 'Indisponible' }}
+                </span>
+              </label>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3 : Photos -->
+      <section class="form-section">
+
+        <div class="section-header">
+          <div class="section-number">03</div>
+
+          <div>
+            <h2>Photos du matériel</h2>
+            <p>Ajoutez des images pour présenter votre équipement.</p>
+          </div>
+        </div>
+
+        <div class="section-content">
+
+          <div class="upload-container">
+            <div class="upload-description">
+              <div class="upload-icon">
+                <tui-icon icon="@tui.image-plus"></tui-icon>
+              </div>
+
+              <div>
+                <h3>Ajouter des photos</h3>
+                <p>
+                  Sélectionnez jusqu'à 6 images au format accepté
+                  par votre navigateur.
+                </p>
+              </div>
+            </div>
+
+            <label tuiInputFiles>
+              <input
+                #validator="tuiInputFilesValidator"
+                accept="image/*"
+                tuiInputFiles
+                formControlName="pictures"
+                [multiple]="true"
+                (reject)="onReject($event)"
+              />
+            </label>
+
+            <tui-files class="tui-space_top-2">
+
+              @for (file of accepted$ | async; track file) {
+                <tui-file
+                  [file]="file"
+                  (remove)="onRemove(file)"
+                />
+              }
+
+              @for (file of rejected; track file) {
+                <tui-file
+                  state="error"
+                  [file]="(file | tuiFileRejected: validator | async) || file"
+                  (remove)="onRemove(file)"
+                />
+              }
+
+            </tui-files>
+
+            <tui-error
+              formControlName="pictures"
+              [order]="['maxLength']"></tui-error>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Actions -->
+      <footer class="form-footer">
+
+        <div class="footer-information">
+          <span>* Champs obligatoires</span>
+        </div>
+
+        <div class="material-buttons">
+
+          <button
+            [routerLink]="['/user-material', 'my-user-material']"
+            type="button"
+            tuiButton
+            appearance="outline"
+            size="l"
+          >
+            <tui-icon icon="@tui.arrow-left"></tui-icon>
+            Retour
+          </button>
+
+          <button
+            (click)="onBack()"
+            type="button"
+            tuiButton
+            appearance="secondary"
+            size="l"
+          >
+            <tui-icon icon="@tui.rotate-ccw"></tui-icon>
+            Réinitialiser
+          </button>
+
+          <button
+            type="submit"
+            tuiButton
+            appearance="primary"
+            size="l"
+          >
+            <tui-icon icon="@tui.plus"></tui-icon>
+            Ajouter le matériel
+          </button>
+
+        </div>
+      </footer>
+
+    </form>
   </div>
-  </form>
-
 </div>
+
+<!-- Notification -->
 <ng-template
-  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: isSuccess() ? 'Succès' : 'Erreur',
+    autoClose: 5000,
+    closable: true,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
-  <button
-    tuiButton
-    type="button"
-    (click)="show.set(false)"
-  >
-    Close
-  </button>
+  <span tuiSubtitle>
+    {{ messageSuccess || messageError }}
+  </span>
 </ng-template>
