@@ -1,8 +1,9 @@
-<div class="footer-container"
-     [ngClass]="{
-       'dark-mode': isDarkMode,
-       'light-mode': !isDarkMode
-     }">
+<div
+  class="footer-container"
+  [ngClass]="{
+    'dark-mode': isDarkMode,
+    'light-mode': !isDarkMode
+  }">
 
   <!-- Contenu principal -->
   <div class="footer-main">
@@ -20,6 +21,7 @@
           alt=""
           class="logo"
         />
+
         <span class="footer-logo-text">RentServe</span>
 
       </a>
@@ -56,16 +58,19 @@
 
       <ul class="footer-links">
         <li><a routerLink="/legal-notice">Mentions légales</a></li>
+
         <li>
           <a routerLink="/privacy-policy">
             Politique de confidentialité
           </a>
         </li>
+
         <li>
           <a routerLink="/cookie-policy">
             Gestion des cookies
           </a>
         </li>
+
         <li>
           <a routerLink="/terms">
             Conditions générales
@@ -85,16 +90,9 @@
         <li>
           <span class="footer-company-label">Entreprise</span>
           <span class="footer-company-value">
-              {{ companyName }}
-            </span>
+            {{ companyName }}
+          </span>
         </li>
-
-<!--        <li>-->
-<!--          <span class="footer-company-label">Adresse</span>-->
-<!--          <span class="footer-company-value">-->
-<!--              {{ companyAddress }}-->
-<!--            </span>-->
-<!--        </li>-->
 
         <li>
           <span class="footer-company-label">E-mail</span>
@@ -111,20 +109,82 @@
         </li>
 
         <li>
-          <span class="footer-company-label">N° d'entreprise (BCE)</span>
+          <span class="footer-company-label">
+            N° d'entreprise (BCE)
+          </span>
           <span class="footer-company-value">
-              {{ companyNumber }}
-            </span>
+            {{ companyNumber }}
+          </span>
         </li>
 
         <li>
           <span class="footer-company-label">N° TVA</span>
           <span class="footer-company-value">
-              {{ vatNumber }}
-            </span>
+            {{ vatNumber }}
+          </span>
         </li>
 
       </ul>
+
+    </section>
+
+    <!-- Réseaux sociaux -->
+    <section
+      class="footer-section footer-social"
+      aria-label="Réseaux sociaux">
+
+      <h2 class="footer-heading">Suivez-nous</h2>
+
+      <div class="footer-social-list">
+
+        <!-- Facebook -->
+        <a
+          href="https://www.facebook.com/VOTRE_PAGE"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Facebook">
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true">
+            <path
+              d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.3-1.5 1.6-1.5h1.7V3.7c-.3 0-1.4-.1-2.6-.1-2.6 0-4.4 1.6-4.4 4.5v1.8H7v3.1h2.8v8h3.7Z"
+              fill="currentColor" />
+          </svg>
+        </a>
+
+        <!-- Instagram -->
+        <a
+          href="https://www.instagram.com/VOTRE_PAGE"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram">
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true">
+            <rect
+              x="3"
+              y="3"
+              width="18"
+              height="18"
+              rx="5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2" />
+            <circle
+              cx="12"
+              cy="12"
+              r="4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2" />
+            <circle
+              cx="17.5"
+              cy="6.5"
+              r="1.2"
+              fill="currentColor" />
+          </svg>
+        </a>
+      </div>
 
     </section>
 
@@ -150,15 +210,18 @@
 
     </nav>
 
+    <!-- Retour en haut -->
     <button
       type="button"
       class="footer-back-to-top"
       (click)="scrollToTop()"
       aria-label="Revenir en haut de la page">
 
-        <span class="footer-back-to-top-icon" aria-hidden="true">
-          ↑
-        </span>
+      <span
+        class="footer-back-to-top-icon"
+        aria-hidden="true">
+        ↑
+      </span>
 
       <span>Retour en haut</span>
 
@@ -167,4 +230,3 @@
   </div>
 
 </div>
-
