@@ -1,8 +1,7 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
-import { NgClass, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TuiStatus } from '@taiga-ui/kit';
+import { FormsModule } from '@angular/forms';
 import {
   TuiTableDirective,
   TuiTablePagination,
@@ -19,12 +18,9 @@ import { UserFavorModel } from '../../../userFavor/model/userFavor';
 @Component({
   selector: 'app-user-favor-user',
   imports: [
-    NgClass,
     TuiButton,
     NgOptimizedImage,
-    ReactiveFormsModule,
     TuiIcon,
-    TuiStatus,
     TuiTableDirective,
     TuiTablePagination,
     TuiTableTbody,
@@ -37,76 +33,98 @@ import { UserFavorModel } from '../../../userFavor/model/userFavor';
   styleUrl: './user-favor-user.less',
 })
 export class UserFavorUser implements OnInit {
-  private readonly _authService = inject(AuthService); // Get the id from user connected
-  private readonly _userFavorService = inject(UserFavorService); // Get all favour from user ID
-  private _themeService = inject(ThemeService); // Call the service to change color theme
+  private readonly _authService = inject(AuthService);
+  private readonly _userFavorService = inject(UserFavorService);
+  private readonly _themeService = inject(ThemeService);
   private readonly _cdr = inject(ChangeDetectorRef);
 
-  isDarkMode = false; // Change theme from light to dark
+  isDarkMode = false;
   protected userID!: number;
   userFavorList: UserFavorModel[] = [];
-
-  // Search
-  protected showNameFavorSearch = false;
+  protected messageSuccess = '';
+  protected messageError = '';
   protected nameFavorSearch = '';
-  // Pagination
+
   protected page = 0;
   protected size = 5;
   protected total = 0;
   protected sizeOptions = [5, 25, 50];
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getUserID();
     this.changeTheme();
   }
 
-  protected getUserID() {
-    this._authService.currentUser$.subscribe((user) => {
-      if (user) {
-        this.userID = user.id;
-        this.getUserFavorById();
-      }
+  protected getUserID(): void {
+    this._authService.currentUser$.subscribe({
+      next: (user) => {
+        if (user) {
+          this.userID = user.id;
+          this.getUserFavorById();
+        }
+      },
     });
   }
 
-  protected getUserFavorById() {
+  protected getUserFavorById(): void {
     this._userFavorService.getUserFavorByUser(this.userID).subscribe({
       next: (userFavour) => {
         this.userFavorList = userFavour;
+
         this.total = userFavour.length;
+        this.page = 0;
+
         this._cdr.detectChanges();
-        // console.log(this.userFavorList);
       },
+
       error: (err) => {
-        console.log(err.error.message);
+        console.error(
+          'Erreur lors de la récupération des services :',
+          err.error?.message ?? err.message,
+        );
+
+        this.messageError = 'Impossible de récupérer vos services.';
       },
     });
   }
 
   protected paginatedUserFavorList(): UserFavorModel[] {
-    const search = this.nameFavorSearch.trim().toLowerCase();
+    const search = this.nameFavorSearch.trim().toLocaleLowerCase('fr');
 
+    // Filtrage des services par nom.
     const filteredFavour = this.userFavorList.filter((userFavor) =>
-      userFavor.nameFavor.nameFavor.toLowerCase().includes(search),
+      userFavor.nameFavor.nameFavor.toLocaleLowerCase('fr').includes(search),
     );
 
+    // Mise à jour du nombre de résultats.
     this.total = filteredFavour.length;
+
+    // Vérification de la page actuelle.
+    const maxPage = Math.max(0, Math.ceil(this.total / this.size) - 1);
+
+    if (this.page > maxPage) {
+      this.page = maxPage;
+    }
+
+    // Pagination.
     const start = this.page * this.size;
+
     return filteredFavour.slice(start, start + this.size);
   }
 
-  protected NameFavorSearch() {
-    this.showNameFavorSearch = !this.showNameFavorSearch;
-
-    if (!this.showNameFavorSearch) {
-      this.nameFavorSearch = '';
-    }
-
-    this.page = 0;
+  protected getAvailableCount(): number {
+    return this.userFavorList.filter((userFavor) => userFavor.isAvailable === true).length;
   }
 
-  changeTheme() {
-    this.isDarkMode = this._themeService.isDarkMode(); // Get current theme
-    this._themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
+  protected changeTheme(): void {
+    this.isDarkMode = this._themeService.isDarkMode();
+
+    this._themeService.darkMode$.subscribe({
+      next: (mode: boolean) => {
+        this.isDarkMode = mode;
+
+        this._cdr.markForCheck();
+      },
+    });
   }
 }

@@ -1,119 +1,215 @@
-<div class="editUserMaterial-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+<div
+  class="editUserMaterial-container"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+  <div class="editUserMaterial-content">
 
-  <h1 class="titleEditUserMaterial">
-    {{ title }}
-  </h1>
+    <!-- HEADER -->
+    <header class="page-header">
+      <div class="header-icon">
+        <tui-icon icon="@tui.pencil"></tui-icon>
+      </div>
 
-  <form [formGroup]="editUserMaterialForm" (ngSubmit)="updateUserMaterial()" class="userMaterial-form">
+      <div class="header-text">
+        <h1 class="titleEditUserMaterial">
+          {{ title }}
+        </h1>
+        <p class="page-description">
+          Modifiez les informations et les paramètres de votre matériel.
+        </p>
+      </div>
+    </header>
 
-    <div class="inputNameMaterial">
-      <tui-textfield>
-        <label tuiLabel>Nom du matériel</label>
+    <!-- FORM CARD -->
+    <section class="form-card">
 
-        <input
-          #input
-          formControlName="materialName"
-          placeholder="Nom du matériel"
-          tuiInput
-          (focus)="onMaterialNameFocus()"
-        />
+      <div class="card-header">
+        <div>
+          <h2>Informations du matériel</h2>
+          <p>Les champs marqués comme obligatoires doivent être renseignés.</p>
+        </div>
+      </div>
 
-        @if (input.value) {
-          <tui-data-list-wrapper
-            *tuiDropdown
-            [items]="filteredMaterials()"
-            [emptyContent]="emptyMaterial"
-          />
-        }
+      <form
+        [formGroup]="editUserMaterialForm"
+        (ngSubmit)="updateUserMaterial()"
+        class="userMaterial-form"
+      >
 
-        <ng-template #emptyMaterial>
-          <div class="empty-list">
-            <p>Aucun matériel trouvé</p>
+        <!-- NOM DU MATÉRIEL -->
+        <div class="form-field inputNameMaterial">
+          <label class="field-label">Nom du matériel</label>
+
+          <tui-textfield>
+            <input
+              #input
+              formControlName="materialName"
+              placeholder="Ex. : Perceuse électrique"
+              tuiInput
+              (focus)="onMaterialNameFocus()"
+            />
+
+            @if (input.value) {
+              <tui-data-list-wrapper
+                *tuiDropdown
+                [items]="filteredMaterials()"
+                [emptyContent]="emptyMaterial"
+              />
+            }
+          </tui-textfield>
+
+          <ng-template #emptyMaterial>
+            <div class="empty-list">
+              Aucun matériel trouvé.
+            </div>
+          </ng-template>
+
+          @if (editUserMaterialForm.controls.materialName.touched &&
+          editUserMaterialForm.controls.materialName.invalid) {
+            <span class="field-error">
+              Veuillez renseigner le nom du matériel.
+            </span>
+          }
+        </div>
+
+        <!-- ÉTAT DU MATÉRIEL -->
+        <div class="form-field inputState">
+          <label class="field-label">État du matériel</label>
+
+          <tui-textfield>
+            <input
+              formControlName="state"
+              placeholder="Ex. : Bon état"
+              tuiInput
+            />
+          </tui-textfield>
+        </div>
+
+        <!-- PRIX -->
+        <div class="form-field inputPrice">
+          <label class="field-label">Prix de location par heure</label>
+
+          <tui-textfield>
+            <input
+              postfix=" €"
+              tuiFluidTypography
+              tuiInputNumber
+              formControlName="priceHourMaterial"
+              [min]="1"
+            />
+          </tui-textfield>
+
+          <span class="field-hint">
+            Indiquez le prix de location pour une heure.
+          </span>
+        </div>
+
+        <!-- DISPONIBILITÉ -->
+        <div class="availability-section">
+          <div class="availability-info">
+            <div class="availability-icon">
+              <tui-icon icon="@tui.calendar-check"></tui-icon>
+            </div>
+
+            <div>
+              <span class="availability-title">
+                Disponibilité du matériel
+              </span>
+              <span class="availability-description">
+                Autoriser ou non la location de ce matériel.
+              </span>
+            </div>
           </div>
-        </ng-template>
-      </tui-textfield>
-    </div>
 
-    <div class="inputAvailability">
-      <input
-        tuiSwitch
-        type="checkbox"
-        formControlName="isAvailable"
-      />
-    </div>
+          <div class="availability-control">
+            <span
+              class="availability-status"
+              [class.available]="editUserMaterialForm.controls.isAvailable.value"
+            >
+              {{
+                editUserMaterialForm.controls.isAvailable.value
+                  ? 'Disponible'
+                  : 'Indisponible'
+              }}
+            </span>
 
-    <div class="textDescription">
-      <tui-textfield>
-        <label tuiLabel>Description</label>
-        <textarea
-          placeholder="Écrivez votre description"
-          tuiTextarea
-          formControlName="descriptionMaterial"
-          [limit]="100"
-          [max]="6"
-          [min]="3"
-        ></textarea>
-      </tui-textfield>
-    </div>
+            <input
+              tuiSwitch
+              type="checkbox"
+              formControlName="isAvailable"
+            />
+          </div>
+        </div>
 
-    <div class="inputPrice">
-      <tui-textfield [style.width.rem]="12">
-        <input
-          postfix=" €"
-          tuiFluidTypography
-          tuiInputNumber
-          formControlName="priceHourMaterial"
-          [min]="1.0"
-        />
-      </tui-textfield>
-    </div>
+        <!-- DESCRIPTION -->
+        <div class="form-field textDescription">
+          <label class="field-label">Description</label>
 
-    <div class="inputState">
-      <tui-textfield>
-        <label tuiLabel>État du matériel</label>
-        <input
-          formControlName="state"
-          placeholder="État du matériel"
-          tuiInput
-        />
-      </tui-textfield>
-    </div>
+          <tui-textfield>
+            <textarea
+              placeholder="Décrivez votre matériel, ses caractéristiques et ses conditions d'utilisation..."
+              tuiTextarea
+              formControlName="descriptionMaterial"
+              [limit]="100"
+              [max]="6"
+              [min]="3"
+            ></textarea>
+          </tui-textfield>
 
-    <div class="buttons">
-      <button
-        id="btn-cancel"
-        tuiButton
-        type="button"
-        size="m"
-        [routerLink]="['/user-material', 'my-user-material']"
-      >
-        Annuler
-      </button>
-      <button
-        id="btn-edit"
-        tuiButton
-        type="submit"
-        appearance="primary"
-        size="m"
-      >
-        Modifier
-      </button>
-    </div>
+          <span class="field-hint">
+            Ajoutez une description claire pour informer les futurs locataires.
+          </span>
+        </div>
 
-  </form>
+        <!-- ACTIONS -->
+        <div class="form-actions">
 
+          <button
+            id="btn-cancel"
+            tuiButton
+            type="button"
+            size="l"
+            appearance="secondary"
+            [routerLink]="['/user-material', 'my-user-material']"
+          >
+            Annuler
+          </button>
+
+          <button
+            id="btn-edit"
+            tuiButton
+            type="submit"
+            appearance="primary"
+            size="l"
+          >
+            <tui-icon icon="@tui.check"></tui-icon>
+            Enregistrer les modifications
+          </button>
+
+        </div>
+
+      </form>
+    </section>
+
+    <p class="page-footer">
+      Vérifiez les informations avant d'enregistrer vos modifications.
+    </p>
+
+  </div>
 </div>
 
+<!-- NOTIFICATION -->
 <ng-template
-  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: isSuccess() ? 'Modification réussie' : 'Attention',
+    autoClose: 5000,
+    closable: true,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
-  <button
-    tuiButton
-    type="button"
-    (click)="show.set(false)"
-  >
-    Close
-  </button>
+  <span tuiSubtitle>
+    {{ messageSuccess || messageError }}
+  </span>
 </ng-template>

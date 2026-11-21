@@ -1,63 +1,148 @@
-<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="userFavorDetail">
+<div
+  class="userFavorDetail"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
   @if (userFavorDetail; as userFavor) {
-    <h1>
-      {{ userFavor.favor.nameFavor }}
-    </h1>
 
-    <div class="favor-detail" >
+    <main class="page-container">
 
-      <!-- Detail about user favor -->
-      <section class="favor-info">
-        <div class="favor-description">
-          <strong>Description</strong>
-          <p>
-            {{ userFavor.descriptionFavor }}
+      <!-- PAGE HEADER -->
+      <header class="page-header">
+        <div class="header-content">
+          <span class="page-subtitle">Détail de votre service</span>
+
+          <h1>{{ userFavor.favor.nameFavor }}</h1>
+
+          <p class="header-description">
+            Retrouvez toutes les informations relatives à ce service.
           </p>
         </div>
+      </header>
 
-        <div class="favor-property">
-          <strong>Prix</strong>
-          <p>
-            {{ userFavor.priceHourFavor }} € de l'heure
-          </p>
-        </div>
+      <!-- MAIN CONTENT -->
+      <div class="favor-detail">
 
-        <div class="favor-property">
-          <strong>Disponible</strong>
-          <p>
-            {{ userFavor.isAvailable ? 'Oui' : 'Non' }}
-          </p>
-        </div>
+        <!-- SERVICE INFORMATION -->
+        <section class="favor-info">
 
-        <div class="favor-property">
-          <strong>Propriétaire</strong>
-          <p>
-            {{ userFavor.user.pseudo }}
-          </p>
-        </div>
-
-      </section>
-
-
-      <!-- Pictures -->
-      <section class="favor-gallery">
-
-        @for (picture of userFavor.pictures; track picture) {
-
-          <div class="picture-container">
-            <img
-              [src]="'/userFavour/' + picture"
-              [alt]="userFavor.favor.nameFavor"
-            />
+          <div class="section-heading">
+            <h2>Informations générales</h2>
+            <p>Les caractéristiques de ce service.</p>
           </div>
 
-        }
+          <!-- DESCRIPTION -->
+          <div class="info-item description-item">
+            <span class="info-label">Description</span>
 
-      </section>
+            <p class="info-value">
+              {{ userFavor.descriptionFavor }}
+            </p>
+          </div>
 
-    </div>
+          <!-- PRICE -->
+          <div class="info-item price-item">
+            <span class="info-label">Tarif horaire</span>
+
+            <div class="price-value">
+              <strong>{{ userFavor.priceHourFavor }}</strong>
+              <span>€/heure</span>
+            </div>
+          </div>
+
+          <!-- AVAILABILITY -->
+          <div class="info-item">
+            <span class="info-label">Disponibilité</span>
+
+            <span
+              class="availability-badge"
+              [class.available]="userFavor.isAvailable"
+              [class.unavailable]="!userFavor.isAvailable"
+            >
+              <span class="status-dot"></span>
+
+              {{ userFavor.isAvailable ? 'Disponible' : 'Indisponible' }}
+            </span>
+          </div>
+
+          <!-- OWNER -->
+          <div class="info-item owner-item">
+            <span class="info-label">Propriétaire du service</span>
+
+            <div class="owner-content">
+              <div class="owner-avatar">
+                {{ userFavor.user.pseudo.charAt(0).toUpperCase() }}
+              </div>
+
+              <div class="owner-details">
+                <strong>{{ userFavor.user.pseudo }}</strong>
+                <span>Propriétaire</span>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- PICTURE GALLERY -->
+        <section class="favor-gallery">
+
+          <div class="section-heading">
+            <h2>Galerie photos</h2>
+
+            <p>
+              {{ userFavor.pictures.length }}
+              {{ userFavor.pictures.length > 1 ? 'photos' : 'photo' }}
+              associée{{ userFavor.pictures.length > 1 ? 's' : '' }}
+              à ce service.
+            </p>
+          </div>
+
+          @if (userFavor.pictures.length > 0) {
+
+            <div class="gallery-grid">
+
+              @for (picture of userFavor.pictures; track picture) {
+
+                <div class="picture-container">
+                  <img
+                    [src]="'/userFavour/' + picture"
+                    [alt]="'Photo du service ' + userFavor.favor.nameFavor"
+                    loading="lazy"
+                  />
+                </div>
+
+              }
+
+            </div>
+
+          } @else {
+
+            <div class="empty-gallery">
+              <span class="empty-icon">▧</span>
+              <p>Aucune photo n'est disponible pour ce service.</p>
+            </div>
+
+          }
+
+        </section>
+
+      </div>
+
+    </main>
 
   } @else {
-    <h1>La liste est vide</h1>
+
+    <div class="empty-state">
+      <div class="empty-state-content">
+        <span class="empty-icon">ⓘ</span>
+
+        <h2>Aucun service trouvé</h2>
+
+        <p>
+          Les informations de ce service ne sont actuellement pas disponibles.
+        </p>
+      </div>
+    </div>
+
   }
 </div>

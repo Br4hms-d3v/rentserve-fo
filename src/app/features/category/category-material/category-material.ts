@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { TuiButton, TuiDialog, TuiInput, TuiTextfield } from '@taiga-ui/core';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiPagination } from '@taiga-ui/kit';
@@ -8,6 +8,7 @@ import { ThemeService } from '../../../core/services/ThemeService';
 import { CategoryModel } from '../model/Category';
 import { RouterLink } from '@angular/router';
 import { CategoryDelete } from '../category-delete/category-delete';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-category-material',
@@ -25,6 +26,8 @@ import { CategoryDelete } from '../category-delete/category-delete';
   styleUrl: './category-material.less',
 })
 export class CategoryMaterial implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
+
   isDarkMode = false; // Get a false for change theme
   role: string | undefined; // Get the role to display some infos
   protected messageError = '';
@@ -43,19 +46,23 @@ export class CategoryMaterial implements OnInit {
     private readonly _authService: AuthService,
     private readonly _categoryService: CategoryService,
     private themeService: ThemeService,
-    private readonly _cdr :ChangeDetectorRef
+    private readonly _cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
     this.loadCategories();
 
-    this._authService.currentUser$.subscribe((user) => {
+    this._authService.currentUser$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((user) => {
       if (user) {
         this.role = user.role;
       }
     });
 
-    this.themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
+    this.themeService.darkMode$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((mode: boolean) => {
+        this.isDarkMode = mode;
+      });
   }
 
   protected loadCategories() {

@@ -1,171 +1,406 @@
-<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="userMaterial">
-  @if (userMaterialList.length <= 0) {
-    <div class="userMaterial">
-      <div>
-        <h1> Mon matériels </h1>
+<div
+  class="user-material-page"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+  <div class="page-container">
+
+    <!-- En-tête -->
+    <header class="page-header">
+      <div class="header-content">
+        <div>
+          <span class="page-eyebrow">GESTION DE VOTRE ÉQUIPEMENT</span>
+          <h1>Mon matériel</h1>
+          <p class="page-description">
+            Retrouvez et gérez facilement l'ensemble de vos matériels.
+          </p>
+        </div>
+
+        <button
+          class="btn-createMaterial"
+          tuiButton
+          type="button"
+          size="m"
+          [routerLink]="['/user-material', 'new-material']"
+        >
+          <tui-icon icon="@tui.plus" />
+          Ajouter un matériel
+        </button>
       </div>
 
-      <button
-        class="btn-createMaterial"
-        tuiButton
-        size="s"
-        [routerLink]="['/user-material','new-material']"
-      >
-        Ajouter mon matériel
-      </button>
-      <p id="text-add-material">
+      <div class="header-divider"></div>
+    </header>
 
-      </p>
-    </div>
-  } @else {
+    <!-- Liste vide -->
+    @if (userMaterialList.length === 0) {
+      <section class="empty-state">
+        <div class="empty-icon">
+          <tui-icon icon="@tui.package-open" />
+        </div>
 
-    <div>
-      <h1> Mon matériels </h1>
-    </div>
+        <h2>Aucun matériel enregistré</h2>
 
-    <button
-      class="btn-createMaterial"
-      tuiButton
-      size="s"
-      [routerLink]="['/user-material','new-material']"
-    >
-      Ajouter mon matériel
-    </button>
+        <p>
+          Vous n'avez pas encore ajouté de matériel.
+          Commencez dès maintenant à constituer votre inventaire.
+        </p>
 
-    <table tuiTable>
-      <thead>
-      <tr>
-        <th tuiTh id="pictureMaterialTD">Image</th>
+        <button
+          tuiButton
+          class="btn-createMaterial"
+          type="button"
+          [routerLink]="['/user-material', 'new-material']"
+        >
+          <tui-icon icon="@tui.plus" />
+          Ajouter mon premier matériel
+        </button>
+      </section>
+    } @else {
 
-        <th tuiTh id="nameMaterialTD">
-          <div
-            class="name-header"
-            (click)="NameMaterialSearch()"
-          >
-            @if (!showNameMaterialSearch) {
-              <span>
-            Nom du matériel
-            <tui-icon
-              icon="@tui.search"
-              class="search-icon"></tui-icon>
-          </span>
-            }
+      <!-- Statistiques -->
+      <section class="summary-section">
+        <div class="summary-card">
+          <div class="summary-icon">
+            <tui-icon icon="@tui.package" />
+          </div>
+          <div>
+            <span class="summary-label">Matériels enregistrés</span>
+            <strong>{{ userMaterialList.length }}</strong>
+          </div>
+        </div>
 
-            @if (showNameMaterialSearch) {
-              <input
-                type="text"
-                class="name-search"
-                placeholder="Rechercher..."
-                [(ngModel)]="nameMaterialSearch"
-                (click)="$event.stopPropagation()"
-                (keydown)="$event.stopPropagation()"
-                autofocus
-              />
+        <div class="summary-card">
+          <div class="summary-icon available-icon">
+            <tui-icon icon="@tui.check-circle" />
+          </div>
+          <div>
+            <span class="summary-label">Disponibles</span>
+            <strong>{{ getAvailableCount() }}</strong>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-icon unavailable-icon">
+            <tui-icon icon="@tui.clock" />
+          </div>
+          <div>
+            <span class="summary-label">Indisponibles</span>
+            <strong>{{ userMaterialList.length - getAvailableCount() }}</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- Liste des matériels -->
+      <section class="material-section">
+
+        <div class="section-header">
+          <div>
+            <h2>Mon inventaire</h2>
+            <p>Consultez et gérez vos équipements.</p>
+          </div>
+
+          <div class="search-container">
+            <tui-icon icon="@tui.search" class="search-icon" />
+
+            <input
+              type="text"
+              class="name-search"
+              placeholder="Rechercher un matériel..."
+              [(ngModel)]="nameMaterialSearch"
+              (ngModelChange)="page = 0"
+              aria-label="Rechercher un matériel par son nom"
+            />
+
+            @if (nameMaterialSearch) {
+              <button
+                type="button"
+                class="clear-search"
+                (click)="nameMaterialSearch = ''; page = 0"
+                aria-label="Effacer la recherche"
+              >
+                <tui-icon icon="@tui.x" />
+              </button>
             }
           </div>
-        </th>
+        </div>
 
-        <th tuiTh id="priceMaterialTD">Tarif</th>
-        <th tuiTh id="availableMaterialTD">Disponible</th>
-        <th tuiTh id="actionMaterialTD">Action</th>
-      </tr>
-      </thead>
+        <!-- Version ordinateur et tablette -->
+        <div class="table-wrapper">
+          <table tuiTable class="material-table">
 
-      <tbody tuiTbody>
-        @for (userMaterial of paginatedUserMaterialList(); track $index) {
-          <tr>
-            <td tuiTd>
-              <img
-                id="pictureMaterialIMG"
-                ngSrc="/userMaterials/{{ userMaterial.picture }}"
-                alt="{{ userMaterial.picture }}"
-                width="100"
-                height="100"
-                priority
-              />
-            </td>
+            <thead>
+            <tr>
+              <th tuiTh class="picture-column">Image</th>
+              <th tuiTh>Nom du matériel</th>
+              <th tuiTh class="price-column">Tarif horaire</th>
+              <th tuiTh class="availability-column">Disponibilité</th>
+              <th tuiTh class="actions-column">Actions</th>
+            </tr>
+            </thead>
 
-            <td tuiTd>
-              {{ userMaterial.nameMaterial.nameMaterial }}
-            </td>
+            <tbody tuiTbody>
+              @for (userMaterial of paginatedUserMaterialList();
+                track userMaterial.id) {
+                <tr>
+                  <td tuiTd>
+                    <img
+                      class="material-image"
+                      [ngSrc]="'/userMaterials/' + userMaterial.picture"
+                      [alt]="userMaterial.nameMaterial.nameMaterial"
+                      width="64"
+                      height="64"
+                    />
+                  </td>
 
-            <td tuiTd>
-              {{ userMaterial.priceHourMaterial }} €
-            </td>
+                  <td tuiTd class="material-name">
+                    {{ userMaterial.nameMaterial.nameMaterial }}
+                  </td>
 
-            <td tuiTd>
-              {{ userMaterial.isAvailable }}
-            </td>
+                  <td tuiTd class="material-price">
+                    {{ userMaterial.priceHourMaterial }} €
+                    <span>/ heure</span>
+                  </td>
 
-            <td tuiTd>
-          <span tuiStatus>
-            <button
-              id="editUserMaterial"
-              appearance="action"
-              iconStart="@tui.pencil"
-              size="xs"
-              tuiIconButton
-              type="button"
-              [routerLink]="['/user-material','edit-my-material', userMaterial.id]"
-            >
-              Modifier
-            </button>
+                  <td tuiTd>
+                    @if (userMaterial.isAvailable) {
+                      <span class="availability-badge available">
+                        <span class="status-dot"></span>
+                        Disponible
+                      </span>
+                    } @else {
+                      <span class="availability-badge unavailable">
+                        <span class="status-dot"></span>
+                        Indisponible
+                      </span>
+                    }
+                  </td>
 
-            <button
-              id="deleteUserMaterial"
-              appearance="action"
-              iconStart="@tui.trash"
-              size="xs"
-              tuiIconButton
-              type="button"
-              [routerLink]="['/user-material','delete-my-material', userMaterial.id]"
-            >
-              Supprimer
-            </button>
+                  <td tuiTd>
+                    <div class="action-buttons">
 
-            <button
-              id="seeUserMaterial"
-              appearance="action"
-              iconStart="@tui.scan-eye"
-              size="xs"
-              tuiIconButton
-              type="button"
-              [routerLink]="['/user-material','user-material-detail', userMaterial.id]"
-            >
-              Voir
-            </button>
+                      <button
+                        tuiIconButton
+                        type="button"
+                        appearance="action"
+                        size="s"
+                        iconStart="@tui.eye"
+                        class="action-button action-view"
+                        title="Consulter le matériel"
+                        aria-label="Consulter le matériel"
+                        [routerLink]="[
+                          '/user-material',
+                          'user-material-detail',
+                          userMaterial.id
+                        ]"
+                      ></button>
 
-          @if(userMaterial.isAvailable == false){
-            <button
-              id="returnUserMaterial"
-              appearance="action"
-              iconStart="@tui.undo-2"
-              size="xs"
-              tuiIconButton
-              type="button"
-              [routerLink]="['/user-material','return', userMaterial.id]">
-              retour
-            </button>
-            }
-          </span>
-            </td>
-          </tr>
-        }
-      </tbody>
-      <tfoot>
-      <tr>
-        <td colspan="5">
+                      <button
+                        tuiIconButton
+                        type="button"
+                        appearance="action"
+                        size="s"
+                        iconStart="@tui.pencil"
+                        class="action-button action-edit"
+                        title="Modifier le matériel"
+                        aria-label="Modifier le matériel"
+                        [routerLink]="[
+                          '/user-material',
+                          'edit-my-material',
+                          userMaterial.id
+                        ]"
+                      ></button>
+
+                      <button
+                        tuiIconButton
+                        type="button"
+                        appearance="action"
+                        size="s"
+                        iconStart="@tui.trash-2"
+                        class="action-button action-delete"
+                        title="Supprimer le matériel"
+                        aria-label="Supprimer le matériel"
+                        [routerLink]="[
+                          '/user-material',
+                          'delete-my-material',
+                          userMaterial.id
+                        ]"
+                      ></button>
+
+                      @if (!userMaterial.isAvailable) {
+                        <button
+                          tuiIconButton
+                          type="button"
+                          appearance="action"
+                          size="s"
+                          iconStart="@tui.undo-2"
+                          class="action-button action-return"
+                          title="Retourner le matériel"
+                          aria-label="Retourner le matériel"
+                          [routerLink]="[
+                            '/user-material',
+                            'return',
+                            userMaterial.id
+                          ]"
+                        ></button>
+                      }
+
+                    </div>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td tuiTd colspan="5" class="no-result">
+                    <tui-icon icon="@tui.search-x" />
+                    Aucun matériel ne correspond à votre recherche.
+                  </td>
+                </tr>
+              }
+            </tbody>
+
+            <tfoot>
+            <tr>
+              <td colspan="5">
+                <tui-table-pagination
+                  id="pagination"
+                  [items]="sizeOptions"
+                  [total]="total"
+                  [(page)]="page"
+                  [(size)]="size"
+                />
+              </td>
+            </tr>
+            </tfoot>
+
+          </table>
+        </div>
+
+        <!-- Version mobile : cartes -->
+        <div class="mobile-material-list">
+
+          @for (userMaterial of paginatedUserMaterialList();
+            track userMaterial.id) {
+            <article class="mobile-material-card">
+
+              <div class="mobile-card-header">
+                <img
+                  class="mobile-material-image"
+                  [ngSrc]="'/userMaterials/' + userMaterial.picture"
+                  [alt]="userMaterial.nameMaterial.nameMaterial"
+                  width="72"
+                  height="72"
+                />
+
+                <div class="mobile-material-info">
+                  <h3>{{ userMaterial.nameMaterial.nameMaterial }}</h3>
+
+                  <span class="material-price">
+                    {{ userMaterial.priceHourMaterial }} €
+                    <span>/ heure</span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="mobile-card-details">
+                @if (userMaterial.isAvailable) {
+                  <span class="availability-badge available">
+                    <span class="status-dot"></span>
+                    Disponible
+                  </span>
+                } @else {
+                  <span class="availability-badge unavailable">
+                    <span class="status-dot"></span>
+                    Indisponible
+                  </span>
+                }
+              </div>
+
+              <div class="mobile-card-actions">
+
+                <button
+                  tuiButton
+                  type="button"
+                  size="s"
+                  appearance="secondary"
+                  [routerLink]="[
+                    '/user-material',
+                    'user-material-detail',
+                    userMaterial.id
+                  ]"
+                >
+                  <tui-icon icon="@tui.eye" />
+                  Voir
+                </button>
+
+                <button
+                  tuiButton
+                  type="button"
+                  size="s"
+                  appearance="secondary"
+                  [routerLink]="[
+                    '/user-material',
+                    'edit-my-material',
+                    userMaterial.id
+                  ]"
+                >
+                  <tui-icon icon="@tui.pencil" />
+                  Modifier
+                </button>
+
+                @if (!userMaterial.isAvailable) {
+                  <button
+                    tuiButton
+                    type="button"
+                    size="s"
+                    appearance="secondary"
+                    [routerLink]="[
+                      '/user-material',
+                      'return',
+                      userMaterial.id
+                    ]"
+                  >
+                    <tui-icon icon="@tui.undo-2" />
+                    Retour
+                  </button>
+                }
+
+                <button
+                  tuiButton
+                  type="button"
+                  size="s"
+                  appearance="secondary"
+                  class="mobile-delete-button"
+                  [routerLink]="[
+                    '/user-material',
+                    'delete-my-material',
+                    userMaterial.id
+                  ]"
+                >
+                  <tui-icon icon="@tui.trash-2" />
+                  Supprimer
+                </button>
+
+              </div>
+            </article>
+          } @empty {
+            <div class="mobile-no-result">
+              Aucun matériel ne correspond à votre recherche.
+            </div>
+          }
+
+        </div>
+
+        <!-- Pagination mobile -->
+        <div class="mobile-pagination">
           <tui-table-pagination
-            id="pagination"
             [items]="sizeOptions"
             [total]="total"
             [(page)]="page"
             [(size)]="size"
           />
-        </td>
-      </tr>
-      </tfoot>
-    </table>
-  }
+        </div>
 
+      </section>
+    }
+
+  </div>
 </div>

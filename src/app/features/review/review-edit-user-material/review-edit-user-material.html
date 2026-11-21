@@ -1,28 +1,96 @@
-<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="userMaterialReview">
 
-  <form [formGroup]="editReviewUserMaterialForm" (ngSubmit)="onEditReview()" ]>
+<div
+  class="userMaterialReview"
+  [class.dark-mode]="isDarkMode()"
+  [class.light-mode]="!isDarkMode()"
+>
+  <div class="review-header">
+    <div class="review-header__icon">
+      <tui-icon icon="@tui.message-square-text" />
+    </div>
 
-    <tui-textfield iconStart="@tui.pencil">
-      <label tuiLabel>Commentaire</label>
-      <textarea
-        tuiTextarea
-        formControlName="comment"
-        placeholder="Écrivez votre commentaire"
-        [limit]="100"
-        [max]="6"
-        [min]="3"
-      ></textarea>
-    </tui-textfield>
+    <div class="review-header__content">
+      <h2>Modifier votre avis</h2>
+      <p>
+        Partagez votre expérience et ajustez votre note.
+      </p>
+    </div>
+  </div>
 
-    <div class="rating-footer">
-      <div class="rating-container">
-        <label tuiLabel>Note</label>
+  <form
+    [formGroup]="editReviewUserMaterialForm"
+    (ngSubmit)="onEditReview()"
+    novalidate
+  >
+    <section class="review-content">
+
+      <div class="form-field">
+        <label tuiLabel class="field-label" for="review-comment">
+          Votre commentaire
+          <span class="required-indicator">*</span>
+        </label>
+
+        <tui-textfield iconStart="@tui.pencil">
+          <textarea
+            id="review-comment"
+            tuiTextarea
+            formControlName="comment"
+            placeholder="Décrivez votre expérience..."
+            [limit]="100"
+            [max]="6"
+            [min]="3"
+          ></textarea>
+        </tui-textfield>
+
+        @if (
+          editReviewUserMaterialForm.controls.comment.touched &&
+          editReviewUserMaterialForm.controls.comment.invalid
+          ) {
+          <p class="field-error">
+            Veuillez saisir un commentaire.
+          </p>
+        }
+
+        <span class="field-hint">
+          Votre commentaire doit être clair et constructif.
+        </span>
+      </div>
+
+      <div class="rating-section">
+        <div class="rating-section__content">
+          <label class="field-label">
+            Votre évaluation
+            <span class="required-indicator">*</span>
+          </label>
+
+          <p class="rating-description">
+            Sélectionnez une note de 1 à 5 étoiles.
+          </p>
+        </div>
+
         <tui-rating
           class="rating"
           [max]="5"
           formControlName="rating"
+          [readOnly]="false"
         />
+
+        @if (
+          editReviewUserMaterialForm.controls.rating.touched &&
+          editReviewUserMaterialForm.controls.rating.invalid
+          ) {
+          <p class="field-error">
+            Veuillez sélectionner une note.
+          </p>
+        }
       </div>
+
+    </section>
+
+    <div class="review-footer">
+      <span class="required-hint">
+        * Champs obligatoires
+      </span>
 
       <button
         id="btn-save"
@@ -31,25 +99,36 @@
         appearance="primary"
         size="m"
         iconStart="@tui.save"
+        [disabled]="isSaving() || editReviewUserMaterialForm.invalid"
       >
-        Enregistrer le commentaire
+        {{ isSaving() ? 'Enregistrement...' : 'Enregistrer les modifications' }}
       </button>
     </div>
-
-
   </form>
 </div>
 
 <ng-template
-  [tuiNotificationOptions]="{label: 'Commentaire', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: isSuccess() ? 'Modification réussie' : 'Une erreur est survenue',
+    autoClose: 0,
+    closable: false,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
-  <button
-    tuiButton
-    type="button"
-    (click)="show.set(false)"
-  >
-    Close
-  </button>
+  <div class="notification-content">
+    <span tuiSubtitle>
+      {{ messageSuccess || messageError }}
+    </span>
+
+    <button
+      tuiButton
+      type="button"
+      appearance="secondary"
+      size="s"
+      (click)="show.set(false)"
+    >
+      Fermer
+    </button>
+  </div>
 </ng-template>

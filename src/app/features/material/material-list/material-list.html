@@ -1,8 +1,12 @@
-<div class="cards-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
 
-  <!-- Breadcrumbs -->
+<div
+  class="dashboard"
+  [class.dark-mode]="isDarkMode()"
+  [class.light-mode]="!isDarkMode()"
+>
+  <!-- Fil d'Ariane -->
   <tui-breadcrumbs>
-    @for (link of links; track link) {
+    @for (link of links; track link.routerLink) {
       <a
         *tuiItem
         tuiLink
@@ -13,163 +17,214 @@
     }
   </tui-breadcrumbs>
 
+  <!-- En-tête de la page -->
+  <header class="page-header">
+    <h1>Liste des matériels</h1>
 
-  <h1>Liste des matériels</h1>
+    <p class="page-description">
+      Consultez et gérez les catégories de matériels disponibles.
+    </p>
+  </header>
 
+  <!-- Recherche et actions -->
   <div class="container-search-filter">
-    <!-- Button search -->
-    <tui-textfield class="inputSearch" iconEnd="@tui.search">
-      <label tuiLabel>Rechercher</label>
+    <tui-textfield
+      class="inputSearch"
+      iconEnd="@tui.search"
+    >
+      <label tuiLabel>Rechercher un matériel</label>
+
       <input
         tuiInput
-        placeholder="Entrez un matériel"
+        type="search"
+        placeholder="Ex. : Ordinateur, écran..."
+        [value]="searchMaterial"
         (input)="onSearch($event)"
+        aria-label="Rechercher un matériel"
       />
     </tui-textfield>
 
-    <span class="spacer"></span>
-
-    <!-- Button filter -->
     <button
       tuiButton
       class="btn-filter"
       appearance="secondary"
       type="button"
-      [iconStart]="sortDescending ? '@tui.arrow-up-z-a' : '@tui.arrow-down-a-z'"
+      [iconStart]="
+        sortDescending
+          ? '@tui.arrow-up-z-a'
+          : '@tui.arrow-down-a-z'
+      "
       (click)="onSort()"
+      [attr.aria-label]="
+        sortDescending
+          ? 'Trier par nom croissant'
+          : 'Trier par nom décroissant'
+      "
     >
-      Trier
+      Trier par nom
     </button>
 
-    <span class="spacer"></span>
-
-    <!-- Button create new material -->
     <button
       tuiButton
       appearance="primary"
       class="btn-create"
       iconStart="@tui.hammer"
-      type="submit"
-      [routerLink]="['/material', 'create','new-material']"
+      type="button"
+      [routerLink]="['/material', 'create', 'new-material']"
     >
-      Créer un nouveau matériel
+      Créer un matériel
     </button>
   </div>
 
-  <!-- Cards -->
-  <div class="cards">
-    @for (material of paginatedMaterials; track material.id) {
-      <div
-        tuiCardMedium
-        appearance="floating"
-        class="cards-material-category"
-      >
+  <!-- Message d'erreur -->
+  @if (messageError) {
+    <div class="error-state" role="alert">
+      {{ messageError }}
+    </div>
+  }
 
-        <!-- Title -->
-        <h2 tuiTitle>
-          {{ material.nameMaterial }}
-        </h2>
-
-        <!-- Actions -->
-
-        <div class="card-actions">
-          @if (role == 'ADMIN' || role == 'MODERATOR') {
-            <!-- Menu -->
-            <button
-              tuiIconButton
-              appearance="flat"
-              type="button"
-              iconStart="@tui.ellipsis"
-              title="Actions"
-              aria-label="Actions"
-              [tuiDropdown]="sousMenuMaterial"
-              [tuiDropdownOpen]="openMaterialId === material.id"
-            >
-            </button>
-
-            <!-- Dropdown -->
-            <ng-template
-              #sousMenuMaterial
-              let-close
-            >
-
-              <tui-data-list>
-                <!-- Detail about the material -->
-                <button
-                  tuiOption
-                  type="button"
-                  (click)="openDetailPopout(material.id)"
-                >
-                  Détail
-                </button>
-
-                <!-- Edit the material -->
-                <button
-                  tuiOption
-                  type="button"
-                  [routerLink]="['/material',material.id,'edit']"
-                  (click)="close()"
-                >
-                  Modifier
-                </button>
-                <!-- Delete material -->
-                <button
-                  tuiOption
-                  type="button"
-                  [routerLink]="['/material',material.id,'delete-material']"
-                >
-                  Supprimer
-                </button>
-              </tui-data-list>
-            </ng-template>
-          }
-
-          <!-- Generate space between buttons -->
-          <span class="spacer"></span>
-
-          <!-- Go to se all materials -->
-          <button
-            tuiButton
-            appearance="flat"
-            size="s"
-            type="button"
-            class="btn-show"
-            [routerLink]="['/user-material' , 'list', material.nameMaterial]"
-          >
-            Voir
-          </button>
-
-        </div>
+  <!-- Liste vide -->
+  @if (!messageError && searchedMaterial.length === 0) {
+    <div class="empty-state" role="status">
+      <div class="empty-state-icon">
+        <tui-icon icon="@tui.search"></tui-icon>
       </div>
-    }
-  </div>
+
+      <h2>Aucun matériel trouvé</h2>
+
+      <p>
+        @if (searchMaterial) {
+          Aucun matériel ne correspond à votre recherche.
+            Essayez avec un autre terme ou créer un <a [routerLink]="['/material', 'create', 'new-material']">ici</a>.
+        } @else {
+          Aucun matériel n'est disponible pour le moment.
+        }
+      </p>
+    </div>
+  }
+
+  <!-- Liste des matériels -->
+  @if (searchedMaterial.length > 0) {
+    <section class="materials-section">
+      <div class="results-header">
+        <span class="results-count">
+          {{ searchedMaterial.length }}
+          {{ searchedMaterial.length > 1 ? 'matériels' : 'matériel' }}
+        </span>
+      </div>
+
+      <div class="cards">
+        @for (material of paginatedMaterials; track material.id) {
+          <article
+            tuiCardMedium
+            appearance="floating"
+            class="cards-material-category"
+          >
+            <!-- Nom du matériel -->
+            <h2 tuiTitle>
+              {{ material.nameMaterial }}
+            </h2>
+
+            <!-- Actions -->
+            <div class="card-actions">
+              @if (role === 'ADMIN' || role === 'MODERATOR') {
+                <button
+                  tuiIconButton
+                  appearance="flat"
+                  type="button"
+                  iconStart="@tui.ellipsis"
+                  title="Actions du matériel"
+                  aria-label="Ouvrir les actions du matériel"
+                  [tuiDropdown]="sousMenuMaterial"
+                  [tuiDropdownOpen]="openMaterialId === material.id"
+                  (click)="toggleDropdown(material.id)"
+                ></button>
+
+                <ng-template #sousMenuMaterial let-close>
+                  <tui-data-list>
+                    <button
+                      tuiOption
+                      type="button"
+                      (click)="close(); openDetailPopout(material.id)"
+                    >
+                      Consulter les détails
+                    </button>
+
+                    <button
+                      tuiOption
+                      type="button"
+                      [routerLink]="['/material', material.id, 'edit']"
+                      (click)="close()"
+                    >
+                      Modifier
+                    </button>
+
+                    <button
+                      tuiOption
+                      type="button"
+                      [routerLink]="[
+                        '/material',
+                        material.id,
+                        'delete-material'
+                      ]"
+                      (click)="close()"
+                    >
+                      Supprimer
+                    </button>
+                  </tui-data-list>
+                </ng-template>
+              }
+
+              <button
+                tuiButton
+                appearance="flat"
+                size="s"
+                type="button"
+                class="btn-show"
+                [routerLink]="[
+                  '/user-material',
+                  'list',
+                  material.nameMaterial
+                ]"
+                [attr.aria-label]="'Voir les matériels : ' + material.nameMaterial"
+              >
+                Voir
+              </button>
+            </div>
+          </article>
+        }
+      </div>
+    </section>
+  }
 
   <!-- Pagination -->
-  <div class="pagination-container">
-    <tui-pagination
-      [length]="length"
-      [style.float]="'center'"
-      [(index)]="index"
-    ></tui-pagination>
-  </div>
-
+  @if (length > 1) {
+    <div class="pagination-container">
+      <tui-pagination
+        [length]="length"
+        [(index)]="index"
+        aria-label="Pagination des matériels"
+      ></tui-pagination>
+    </div>
+  }
 </div>
 
-
+<!-- Fenêtre de détails -->
 <ng-template
   let-observer
   [tuiPopoutOptions]="{
-      pip: true,
-      features: {
-        height: 400,
-        width: 320
-      }
-    }"
+    pip: true,
+    features: {
+      height: 400,
+      width: 360
+    }
+  }"
   [(tuiPopout)]="open"
 >
-  <app-material-by-id
-    [materialId]="openMaterialId!"
-    (close)="observer.complete()"
-  ></app-material-by-id>
+  @if (openMaterialId !== null) {
+    <app-material-by-id
+      [materialId]="openMaterialId"
+      (close)="closeDetailPopOut(observer)"
+    ></app-material-by-id>
+  }
 </ng-template>
-

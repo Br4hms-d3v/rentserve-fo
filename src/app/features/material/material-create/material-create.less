@@ -1,114 +1,440 @@
-@light-background-color: #F1EFE8;
-@light-title: #3B6D11 !important;
-@light-breadcrumb: #5F5E5A !important;
-@light-label-input: #3B6D11 !important;
-@light-label: #5F5E5A !important;
-@light-btn-submit: #D9764A;
 
-@dark-background-color: #1C1F17;
-@dark-title: #8FC15C;
-@dark-breadcrumb: #A6A599 !important;
-@dark-label-input: #8FC15C !important;
-@dark-label: #A6A599 !important;
-@dark-btn-submit: #E8845A;
+:host {
+  display: block;
+  min-height: 100%;
+  width: 100%;
+}
 
+// ==========================================
+// THÈME CLAIR
+// ==========================================
 
-.newCategory-container {
-  height: 80vh;
-  padding: 20px;
+.material-page {
+  --primary: #173B57;
+  --primary-hover: #214F70;
+  --accent: #3B82F6;
+  --active: #2563EB;
+
+  --background: #FFFFFF;
+  --card-background: #F3F6F8;
+  --surface: #E8EEF3;
+
+  --text-primary: #263746;
+  --text-secondary: #64748B;
+
+  --border: #D8E1E9;
+  --input-background: #FFFFFF;
+
+  --error: #DC2626;
+  --success: #16A34A;
+
+  min-height: 100vh;
   box-sizing: border-box;
+  padding: 32px;
+  background: var(--background);
+  color: var(--text-primary);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
-.titleCreateMaterial {
-  margin-top: 25px;
-  text-align: center;
+// ==========================================
+// THÈME SOMBRE
+// ==========================================
+
+.material-page.dark-mode {
+  --primary: #0B1F33;
+  --primary-hover: #173B57;
+  --accent: #3B82F6;
+  --active: #60A5FA;
+
+  --background: #071522;
+  --card-background: #172A3D;
+  --surface: #20364D;
+
+  --text-primary: #F1F5F9;
+  --text-secondary: #A8B7C9;
+
+  --border: #30465C;
+  --input-background: #20364D;
+
+  --error: #F87171;
+  --success: #4ADE80;
 }
 
-.material-form{
-  width: 80%;
-  max-width: 550px;
+// ==========================================
+// EN-TÊTE
+// ==========================================
+
+.page-header {
+  max-width: 1100px;
+  margin: 0 auto 32px;
+
+  tui-breadcrumbs {
+    display: block;
+    margin-bottom: 28px;
+
+    a {
+      color: var(--text-secondary);
+      font-size: 13px;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--active);
+      }
+    }
+  }
+}
+
+.page-heading {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.heading-content {
+  max-width: 650px;
+}
+
+.page-title {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+}
+
+.page-description {
+  margin: 10px 0 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+// ==========================================
+// CONTENU
+// ==========================================
+
+.page-content {
+  width: 100%;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
-input[tuiSwitch]{
-  &:checked{
-    --tui-background-accent-1: #22c55e;
-    --tui-background-accent-1-hover: #16a34a;
+.material-form {
+  width: 100%;
+}
+
+.form-card {
+  overflow: hidden;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(23, 59, 87, 0.04);
+}
+
+// ==========================================
+// EN-TÊTE DE LA CARTE
+// ==========================================
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 24px;
+  background: var(--card-background);
+  border-bottom: 1px solid var(--border);
+
+  h2 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 17px;
+    font-weight: 650;
   }
-  &:not(:checked) {
-    --tui-background-neutral-1: #ef4444;
-    --tui-background-neutral-1-hover: #dc2626;
+
+  p {
+    margin: 5px 0 0;
+    color: var(--text-secondary);
+    font-size: 13px;
   }
 }
 
-// THEME
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 
-[tuiTheme="light-mode"]  {
-  background-color: @light-background-color;
+  width: 42px;
+  height: 42px;
 
-  tui-breadcrumbs {
-    a {
-      color: @light-breadcrumb;
-    }
+  border-radius: 10px;
+  background: var(--primary);
+  color: #FFFFFF;
+
+  tui-icon {
+    font-size: 21px;
   }
-
-  .titleCreateMaterial {
-    color: @light-title;
-  }
-
-  input[tuiInput]{
-  color: @light-label-input;
-  }
-
-  label[tuiLabel]{
-    color: @light-label;
-  }
-
-  #switchToggle{
-    color:@light-label;
-  }
-
-  button[tuiButton]{
-    background-color: @light-btn-submit;
-  }
-
 }
 
+// ==========================================
+// CORPS DU FORMULAIRE
+// ==========================================
 
-[tuiTheme="dark-mode"]  {
-  background-color: @dark-background-color;
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 28px 24px;
+}
 
-  tui-breadcrumbs {
-    a {
-      color: @dark-breadcrumb;
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+
+  label[tuiLabel] {
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  tui-textfield {
+    width: 100%;
+    --tui-background-neutral-1: var(--input-background);
+    --tui-text-primary: var(--text-primary);
+  }
+
+  input[tuiInput] {
+    color: var(--text-primary);
+  }
+
+  input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.8;
+  }
+}
+
+.required {
+  color: var(--error);
+}
+
+.field-error {
+  color: var(--error);
+  font-size: 12px;
+}
+
+.empty-list {
+  padding: 12px;
+  color: var(--text-secondary);
+  text-align: center;
+  font-size: 13px;
+}
+
+// ==========================================
+// VISIBILITÉ
+// ==========================================
+
+.visibility-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 18px;
+  background: var(--card-background);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.visibility-content {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.visibility-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--active);
+
+  tui-icon {
+    font-size: 19px;
+  }
+}
+
+.visibility-text {
+  label {
+    display: block;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  p {
+    margin: 5px 0 0;
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+
+// ==========================================
+// SWITCH
+// ==========================================
+
+input[tuiSwitch] {
+  flex-shrink: 0;
+
+  &:checked {
+    --tui-background-accent-1: var(--active);
+    --tui-background-accent-1-hover: var(--accent);
+  }
+}
+
+// ==========================================
+// PIED DE CARTE / BOUTONS
+// ==========================================
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  padding: 20px 24px;
+  background: var(--card-background);
+  border-top: 1px solid var(--border);
+
+  button[tuiButton] {
+    font-weight: 600;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+
+    &:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+
+    &[appearance="primary"] {
+      --tui-background-accent-1: var(--primary);
+      --tui-background-accent-1-hover: var(--primary-hover);
+      color: #FFFFFF;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// ==========================================
+// RESPONSIVE : TABLETTE
+// ==========================================
+
+@media screen and (max-width: 768px) {
+  .material-page {
+    padding: 24px 18px;
+  }
+
+  .page-header {
+    margin-bottom: 24px;
+
+    tui-breadcrumbs {
+      margin-bottom: 22px;
     }
   }
 
-  .titleCreateMaterial {
-    color: @dark-title;
+  .card-header {
+    padding: 20px;
   }
 
-  input[tuiInput]{
-    background-color: #2E331F;
+  .card-body {
+    padding: 24px 20px;
   }
 
-  input[tuiInput]{
-    color: @dark-label-input;
+  .card-footer {
+    padding: 18px 20px;
+  }
+}
+
+// ==========================================
+// RESPONSIVE : MOBILE
+// ==========================================
+
+@media screen and (max-width: 480px) {
+  .material-page {
+    padding: 18px 12px;
   }
 
-  label[tuiLabel]{
-    color: @dark-label;
+  .page-header {
+    margin-bottom: 20px;
   }
 
-  #switchToggle{
-    color:@dark-label;
+  .page-title {
+    font-size: 24px;
   }
 
-  button[tuiButton]{
-    background-color: @dark-btn-submit;
+  .page-description {
+    font-size: 13px;
   }
 
+  .card-header {
+    align-items: flex-start;
+    padding: 18px 14px;
+    gap: 11px;
+
+    h2 {
+      font-size: 15px;
+    }
+
+    p {
+      font-size: 12px;
+      line-height: 1.5;
+    }
+  }
+
+  .card-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .card-body {
+    gap: 21px;
+    padding: 20px 14px;
+  }
+
+  .visibility-section {
+    padding: 14px 12px;
+    gap: 10px;
+  }
+
+  .visibility-text {
+    p {
+      font-size: 11px;
+    }
+  }
+
+  .card-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    padding: 16px 14px;
+
+    button[tuiButton] {
+      width: 100%;
+    }
+  }
 }

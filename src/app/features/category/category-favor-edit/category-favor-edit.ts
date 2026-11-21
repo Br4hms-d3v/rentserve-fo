@@ -17,11 +17,11 @@ import {
 } from '@taiga-ui/core';
 import { TuiItem } from '@taiga-ui/cdk';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { NgClass } from '@angular/common';
 import { CategoryService } from '../service/category-service';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { CategoryDetailModel } from '../model/categoryDetail';
 import { CategoryForm } from '../model/category-form';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-category-favor-edit',
@@ -76,7 +76,10 @@ export class CategoryFavorEdit implements OnInit {
   }
 
   protected editCategoryFavorForm = new FormGroup({
-    nameCategory: new FormControl('', Validators.required),
+    nameCategory: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.maxLength(100)],
+    }),
   });
 
   getRoute() {
@@ -86,45 +89,65 @@ export class CategoryFavorEdit implements OnInit {
     });
   }
 
-  getCategory() {
+  protected getCategory() {
     this._categoryService.getCategory(this.categoryId).subscribe({
       next: (categoryName) => {
         this.categoryModel = categoryName;
+
         this.editCategoryFavorForm.get('nameCategory')?.patchValue(this.categoryModel.nameCategory);
+      },
+      error: () => {
+        this.messageError = 'Impossible de récupérer les informations de la catégorie.';
+
+        this.messageSuccess = '';
+        this.isSuccess.set(false);
+        this.show.set(true);
       },
     });
   }
 
-  onSubmitEditCategoryFavor() {
-    this._categoryService
-      .editCategory(this.categoryId, <CategoryForm>this.editCategoryFavorForm.value)
-      .subscribe({
-        next: (nameCategoryData) => {
-          this.editCategoryFavorForm.patchValue(nameCategoryData);
-          this.messageSuccess = 'La mise à jour a été effectué avec succès.';
-          this.isSuccess.set(true);
-          this.show.set(true);
+  protected onSubmitEditCategoryFavor() {
+    this.editCategoryFavorForm.markAllAsTouched();
 
-          setTimeout(() => {
-            this._router.navigate(['/dashboard']);
-          }, 2000);
-        },
-        error: (error) => {
-          if (!typeof error.error) {
-            this.messageError = error.error.message;
-            this.isSuccess.set(false);
-            this.show.set(true);
-          } else if (error.error?.message) {
-            this.messageError = error.error.message;
-            this.isSuccess.set(false);
-            this.show.set(true);
-          } else {
-            this.messageError = 'Erreur lors de la mise à jour de la catégorie';
-            this.isSuccess.set(false);
-            this.show.set(true);
-          }
-        },
-      });
+    if (this.editCategoryFavorForm.invalid) {
+      this.messageError = 'Veuillez renseigner le nom de la catégorie.';
+
+      this.messageSuccess = '';
+      this.isSuccess.set(false);
+      this.show.set(true);
+
+      return;
+    }
+
+    const categoryData: CategoryForm = {
+      nameCategory: this.editCategoryFavorForm.controls.nameCategory.value.trim(),
+    };
+
+    this._categoryService.editCategory(this.categoryId, categoryData).subscribe({
+      next: (nameCategoryData) => {
+        this.editCategoryFavorForm.patchValue(nameCategoryData);
+
+        this.messageSuccess = 'La catégorie a été modifiée avec succès.';
+
+        this.messageError = '';
+        this.isSuccess.set(true);
+        this.show.set(true);
+
+        setTimeout(() => {
+          this._router.navigate(['/dashboard']);
+        }, 2000);
+      },
+
+      error: (error: { error?: { message?: string } }) => {
+        this.messageError =
+          error.error?.message ??
+          'Une erreur est survenue lors de la modification de la catégorie.';
+
+        this.messageSuccess = '';
+        this.isSuccess.set(false);
+        this.show.set(true);
+      },
+    });
   }
 
   changeTheme() {

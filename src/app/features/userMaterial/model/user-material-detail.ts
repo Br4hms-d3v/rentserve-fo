@@ -7,7 +7,7 @@ export interface UserMaterialDetailModel {
   descriptionMaterial: string;
   priceHourMaterial: number;
   isAvailable: boolean;
-  pictures: string;
+  pictures: string[];
   user: UserPseudoModel;
   material: MaterialModel;
   state: State;

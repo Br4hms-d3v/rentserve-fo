@@ -1,23 +1,85 @@
-@border-dark: #2a2a2a;
-@border-light: #3D4A2A;
-@row-height: 3rem; // = the height of the row
-
 :host {
   display: block;
   width: 100%;
+  min-width: 0;
 }
 
+// ==========================================
+// THEME COLORS
+// ==========================================
+
+@light-primary: #173B57;
+@light-blue: #3B82F6;
+@light-background: #FFFFFF;
+@light-surface: #F3F6F8;
+@light-input: #E8EEF3;
+@light-text: #263746;
+@light-muted: #64748B;
+@light-border: #D8E1E9;
+@light-active: #2563EB;
+
+@dark-primary: #0B1F33;
+@dark-blue: #3B82F6;
+@dark-background: #071522;
+@dark-surface: #172A3D;
+@dark-input: #20364D;
+@dark-text: #F1F5F9;
+@dark-muted: #A8B7C9;
+@dark-border: #30465C;
+@dark-active: #60A5FA;
+
+// ==========================================
+// CONTAINER
+// ==========================================
+
 .user-container {
+  width: 100%;
+  min-width: 0;
   padding: 24px;
-  border-radius: 20px;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  transition: background 0.2s ease, color 0.2s ease;
 }
+
+// ==========================================
+// HEADER
+// ==========================================
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-heading {
+  h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+  }
+
+  p {
+    margin: 6px 0 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+// ==========================================
+// FILTERS
+// ==========================================
 
 .filter-container {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  gap: 16px;
+  grid-template-columns: minmax(150px, 0.8fr)
+                         minmax(220px, 2fr)
+                         minmax(120px, auto);
+  gap: 14px;
   align-items: center;
+  margin-bottom: 20px;
 
   tui-textfield,
   .sort-btn {
@@ -25,54 +87,109 @@
     min-width: 0;
     box-sizing: border-box;
   }
-  padding-bottom: 15px;
 }
 
-// ---------- table ----------
+.sort-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  border-radius: 9px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+// ==========================================
+// TABLE
+// ==========================================
+
 .table-container {
   width: 100%;
   overflow-x: auto;
+  border: 1px solid;
   border-radius: 12px;
-  border: 1px solid transparent;
 }
 
 .users-table {
   width: 100%;
+  min-width: 520px;
   border-collapse: collapse;
   background: transparent;
 
   th,
   td {
-    height: @row-height;
-    padding: 0 16px;
+    height: 56px;
+    padding: 0 18px;
     text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
     background: transparent;
   }
 
   th {
+    height: 48px;
+    font-size: 12px;
     font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  td {
+    font-size: 14px;
+  }
+
+  tbody tr {
+    transition: background 0.15s ease;
   }
 
   tbody tr:last-child td {
     border-bottom: none;
   }
-
-  tr[tuiTr]:hover {
-    cursor: pointer;
-  }
 }
 
-.role-badge {
-  display: inline;
+.user-name {
+  font-weight: 600;
+}
+
+.action-column {
+  width: 90px;
+  text-align: center !important;
+}
+
+.action-btn {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
   padding: 0;
-  background: none;
-  font-size: inherit;
-  font-weight: 400;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+// ==========================================
+// ROLE BADGES
+// ==========================================
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 11px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
 }
 
 .empty-message {
+  height: 100px !important;
   text-align: center !important;
+  font-size: 14px !important;
 }
+
+// ==========================================
+// FOOTER
+// ==========================================
 
 .table-footer {
   display: flex;
@@ -80,90 +197,292 @@
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  margin-top: 18px;
-  font-size: 14px;
+  margin-top: 20px;
 }
 
-// THEME
-.light-mode {
-  background: #fff;
-  color: #222;
-  border: 1px solid @border-light;
+.users-count {
+  font-size: 13px;
+}
 
-  .field { color: @border-light; }
+// ==========================================
+// LIGHT THEME
+// ==========================================
+
+.light-mode {
+  background: @light-background;
+  color: @light-text;
+  border-color: @light-border;
+
+  .page-heading {
+    h2 { color: @light-text; }
+    p { color: @light-muted; }
+  }
 
   .sort-btn {
-    background: #E8845A;
-    color: #fff;
-    &:hover { background: #d9744a; }
+    background: @light-primary;
+    color: #FFFFFF;
+
+    &:hover {
+      background: #214D6D;
+    }
   }
 
-  .custom-icon-textfield,
-  .custom-icon-textfield:focus-within,
-  .custom-icon-textfield:hover {
-    color: #E8845A !important;
+  .table-container {
+    border-color: @light-border;
+    background: @light-background;
   }
-
-  label{
-    color: #3B6D11;
-  }
-
-  input{
-    color: @border-light;
-  }
-
-  .table-container { border-color: @border-light; }
 
   .users-table {
-    th,
-    td { border-bottom: 1px solid @border-light; }
-    th { color: @border-light; }
-    tbody tr:hover { background: #fff0e9; }
+    th {
+      color: @light-muted;
+      background: @light-surface;
+      border-bottom: 1px solid @light-border;
+    }
+
+    td {
+      color: @light-text;
+      border-bottom: 1px solid @light-border;
+    }
+
+    tbody tr:hover {
+      background: @light-surface;
+    }
   }
 
-  .empty-message { color: #777; }
+  .role-badge {
+    &.admin {
+      color: @light-primary;
+      background: #DCEAF5;
+    }
+
+    &.moderator {
+      color: #1D4ED8;
+      background: #DBEAFE;
+    }
+
+    &.member {
+      color: #475569;
+      background: #E8EEF3;
+    }
+  }
+
+  .action-btn {
+    color: @light-active;
+
+    &:hover {
+      background: #E8F0FE;
+    }
+  }
+
+  .users-count {
+    color: @light-muted;
+
+    strong { color: @light-text; }
+  }
+
+  .empty-message {
+    color: @light-muted !important;
+  }
 }
+
+// ==========================================
+// DARK THEME
+// ==========================================
 
 .dark-mode {
-  background: #000;
-  color: #fff;
-  border: 1px solid @border-dark;
+  background: @dark-background;
+  color: @dark-text;
+  border-color: @dark-border;
 
-  .field { color: #d0d0d0; }
+  .page-heading {
+    h2 { color: @dark-text; }
+    p { color: @dark-muted; }
+  }
 
   .sort-btn {
-    background: #262626;
-    color: #fff;
-    &:hover { background: #333; }
+    background: @dark-primary;
+    color: @dark-text;
+
+    &:hover {
+      background: #153653;
+    }
   }
 
-  .table-container { border-color: @border-dark; }
+  .table-container {
+    border-color: @dark-border;
+    background: @dark-background;
+  }
 
   .users-table {
-    th,
-    td {
-      color: #fff;
-      border-bottom: 1px solid @border-dark;
+    th {
+      color: @dark-muted;
+      background: @dark-surface;
+      border-bottom: 1px solid @dark-border;
     }
-    th { border-top: 1px solid @border-dark; }
-    tbody tr:hover { background: #141414; }
+
+    td {
+      color: @dark-text;
+      border-bottom: 1px solid @dark-border;
+    }
+
+    tbody tr:hover {
+      background: @dark-surface;
+    }
   }
 
-  .empty-message { color: #bbb; }
+  .role-badge {
+    &.admin {
+      color: #BFDBFE;
+      background: #1E3A5F;
+    }
+
+    &.moderator {
+      color: #93C5FD;
+      background: #1E3A5F;
+    }
+
+    &.member {
+      color: #CBD5E1;
+      background: #30465C;
+    }
+  }
+
+  .action-btn {
+    color: @dark-active;
+
+    &:hover {
+      background: @dark-input;
+    }
+  }
+
+  .users-count {
+    color: @dark-muted;
+
+    strong { color: @dark-text; }
+  }
+
+  .empty-message {
+    color: @dark-muted !important;
+  }
 }
 
+// ==========================================
+// RESPONSIVE
+// ==========================================
 
-// ---------- Mobile ----------
-@media (max-width: 600px) {
-  .user-container { padding: 12px; }
+@media (max-width: 768px) {
+  .user-container {
+    padding: 18px;
+  }
 
-  .toolbar {
-    flex-direction: column;
-    align-items: stretch;
+  .filter-container {
+    grid-template-columns: 1fr 1fr;
+
+    .search-field {
+      grid-column: 1 / -1;
+      grid-row: 1;
+    }
+  }
+
+  .page-heading h2 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-container {
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .page-header {
+    margin-bottom: 18px;
+  }
+
+  .filter-container {
+    grid-template-columns: 1fr;
+
+    .search-field {
+      grid-column: auto;
+      grid-row: auto;
+    }
+  }
+
+  .table-container {
+    border-radius: 9px;
+  }
+
+  .users-table {
+    min-width: 480px;
+
+    th,
+    td {
+      padding: 0 12px;
+    }
   }
 
   .table-footer {
-    align-items: flex-start;
     flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+
+/* ==========================================
+   INPUTS AND LABELS - LIGHT THEME
+========================================== */
+
+.light-mode {
+
+  tui-textfield {
+    color: #263746 !important;
+  }
+
+  tui-textfield label[tuiLabel] {
+    color: #64748B !important;
+  }
+
+  tui-textfield input {
+    color: #263746 !important;
+    caret-color: #2563EB;
+  }
+
+  tui-textfield input::placeholder {
+    color: #64748B !important;
+    opacity: 0.8;
+  }
+
+  tui-textfield:focus-within {
+    color: #2563EB !important;
+  }
+}
+
+/* ==========================================
+   INPUTS AND LABELS - DARK THEME
+========================================== */
+
+.dark-mode {
+
+  tui-textfield {
+    color: #F1F5F9 !important;
+  }
+
+  tui-textfield label[tuiLabel] {
+    color: #A8B7C9 !important;
+  }
+
+  tui-textfield input {
+    color: #F1F5F9 !important;
+    caret-color: #60A5FA;
+  }
+
+  tui-textfield input::placeholder {
+    color: #A8B7C9 !important;
+    opacity: 0.8;
+  }
+
+  tui-textfield:focus-within {
+    color: #60A5FA !important;
   }
 }

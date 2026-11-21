@@ -1,6 +1,10 @@
-<!-- header tag with color change -->
-<header class="header-toolbar" [class.dark-mode]="isDarkMode" [class.light-mode]="!isDarkMode">
-  <!-- Change language text -->
+
+<header
+  class="header-toolbar"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+  <!-- Sélection de la langue -->
   <div class="lang-selector">
     <button
       tuiIconButton
@@ -9,11 +13,13 @@
       size="s"
       iconStart="@tui.globe"
       class="icon-btn"
+      aria-label="Choisir la langue"
+      title="Choisir la langue"
       [tuiDropdown]="languageMenu"
       [(tuiDropdownOpen)]="dropdownOpen"
     ></button>
 
-    <span class="lang-text">
+    <span class="lang-text" aria-live="polite">
       {{
         selectedLanguage === 'fr'
           ? 'BE - Français'
@@ -26,32 +32,66 @@
     </span>
   </div>
 
-  <!-- Dropdown menu for language -->
+  <!-- Menu déroulant des langues -->
   <ng-template #languageMenu>
     <tui-data-list>
-      <button tuiOption (click)="selectLanguage('fr')">
-        <img src="/languages/belgium.png" alt="Belgium" class="flag-icon" />
+      <button
+        tuiOption
+        type="button"
+        (click)="selectLanguage('fr')"
+      >
+        <img
+          src="/languages/belgium.png"
+          alt=""
+          class="flag-icon"
+        />
         <span>BE - Français</span>
       </button>
-      <button tuiOption (click)="selectLanguage('nl')">
-        <img src="languages/netherlands.png" alt="Netherlands" class="flag-icon" />
+
+      <button
+        tuiOption
+        type="button"
+        (click)="selectLanguage('nl')"
+      >
+        <img
+          src="/languages/netherlands.png"
+          alt=""
+          class="flag-icon"
+        />
         <span>NL - Nederlands</span>
       </button>
-      <button tuiOption (click)="selectLanguage('de')">
-        <img src="languages/german-flag.png" alt="German" class="flag-icon" />
+
+      <button
+        tuiOption
+        type="button"
+        (click)="selectLanguage('de')"
+      >
+        <img
+          src="/languages/german-flag.png"
+          alt=""
+          class="flag-icon"
+        />
         <span>DE - Deutsch</span>
       </button>
-      <button tuiOption (click)="selectLanguage('en')">
-        <img src="languages/uk-flag.png" alt="United Kingdom" class="flag-icon" />
+
+      <button
+        tuiOption
+        type="button"
+        (click)="selectLanguage('en')"
+      >
+        <img
+          src="/languages/uk-flag.png"
+          alt=""
+          class="flag-icon"
+        />
         <span>EN - English</span>
       </button>
     </tui-data-list>
   </ng-template>
 
-  <!-- Space between buttons -->
-  <span class="spacer"></span>
+  <span class="spacer" aria-hidden="true"></span>
 
-  <!-- Button for changing color theme -->
+  <!-- Changement de thème -->
   <div class="theme-selector">
     <button
       tuiIconButton
@@ -60,8 +100,21 @@
       size="s"
       [iconStart]="isDarkMode ? '@tui.moon' : '@tui.sun'"
       class="icon-btn"
+      [attr.aria-label]="
+        isDarkMode
+          ? 'Activer le thème clair'
+          : 'Activer le thème sombre'
+      "
+      [attr.title]="
+        isDarkMode
+          ? 'Activer le thème clair'
+          : 'Activer le thème sombre'
+      "
       (click)="toggleTheme()"
     ></button>
-    <span>Thème</span>
+
+    <span class="theme-text">
+      {{ isDarkMode ? 'Thème sombre' : 'Thème clair' }}
+    </span>
   </div>
 </header>

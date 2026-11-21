@@ -5,20 +5,23 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class ThemeService {
-  private darkMode = new BehaviorSubject<boolean>(false);
-  public darkMode$ = this.darkMode.asObservable();
+  private readonly darkMode = new BehaviorSubject<boolean>(false);
 
-  /**
-   * Switch dark mode on or off
-   */
-  toggleTheme() {
-    this.darkMode.next(!this.darkMode.value);
+  readonly darkMode$ = this.darkMode.asObservable();
+
+  toggleTheme(): void {
+    this.setDarkMode(!this.darkMode.value);
   }
-  /**
-   * Check if dark mode is active
-   * @returns true if dark mode, false if light mode
-   */
-  isDarkMode() {
+
+  isDarkMode(): boolean {
     return this.darkMode.value;
+  }
+
+  private setDarkMode(enabled: boolean): void {
+    this.darkMode.next(enabled);
+
+    if (typeof document !== 'undefined') {
+      document.documentElement.setAttribute('data-theme', enabled ? 'dark' : 'light');
+    }
   }
 }

@@ -26,16 +26,17 @@ export class CategoryDelete {
   protected onConfirm() {
     this._categoryService.deleteCategory(this.id).subscribe({
       next: () => {
-        this.confirmed.emit();
-        this.messageError = "La suppression s'est déroulée avec succès";
-        this.show.set(true);
+        this.messageSuccess = 'La catégorie a été supprimée avec succès.';
+        this.messageError = '';
         this.isSuccess.set(true);
-      },
-      error: (err) => {
-        this.messageError = 'impossible de suppprimer cette categorie';
         this.show.set(true);
+        this.confirmed.emit();
+      },
+      error: () => {
+        this.messageError = 'Impossible de supprimer cette catégorie. Veuillez réessayer.';
+        this.messageSuccess = '';
         this.isSuccess.set(false);
-        console.log(err);
+        this.show.set(true);
       },
     });
   }

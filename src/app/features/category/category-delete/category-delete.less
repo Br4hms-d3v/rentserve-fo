@@ -1,1 +1,293 @@
+/* =========================================
+   Palette de couleurs
+   ========================================= */
 
+@light-primary: #173B57;
+@light-link: #3B82F6;
+@light-active: #2563EB;
+@light-background: #FFFFFF;
+@light-section: #F3F6F8;
+@light-surface: #E8EEF3;
+@light-text: #263746;
+@light-text-secondary: #64748B;
+@light-border: #D8E1E9;
+
+@dark-primary: #0B1F33;
+@dark-link: #3B82F6;
+@dark-active: #60A5FA;
+@dark-background: #071522;
+@dark-section: #172A3D;
+@dark-surface: #20364D;
+@dark-text: #F1F5F9;
+@dark-text-secondary: #A8B7C9;
+@dark-border: #30465C;
+
+/* Couleur destructive */
+@light-danger: #B42318;
+@light-danger-hover: #912018;
+@light-danger-background: #FEF3F2;
+
+@dark-danger: #F97066;
+@dark-danger-hover: #FDA29B;
+@dark-danger-background: #3B2027;
+
+
+/* =========================================
+   Conteneur de suppression
+   ========================================= */
+
+.category-delete {
+  --delete-primary: @light-primary;
+  --delete-background: @light-background;
+  --delete-section: @light-section;
+  --delete-surface: @light-surface;
+  --delete-text: @light-text;
+  --delete-text-secondary: @light-text-secondary;
+  --delete-border: @light-border;
+  --delete-danger: @light-danger;
+  --delete-danger-hover: @light-danger-hover;
+  --delete-danger-background: @light-danger-background;
+
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 28px;
+  box-sizing: border-box;
+
+  color: var(--delete-text);
+  background-color: var(--delete-background);
+  border: 1px solid var(--delete-border);
+  border-radius: 16px;
+
+  box-shadow: 0 8px 24px rgb(23 59 87 / 8%);
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &,
+  * {
+    box-sizing: border-box;
+  }
+
+  /* En-tête */
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  /* Icône d'avertissement */
+  &__icon {
+    display: flex;
+    flex: 0 0 44px;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+
+    color: var(--delete-danger);
+    background-color: var(--delete-danger-background);
+    border-radius: 12px;
+  }
+
+  /* Titre */
+  &__title {
+    margin: 0;
+    color: var(--delete-text);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  /* Message de confirmation */
+  &__message {
+    margin: 8px 0 0;
+    color: var(--delete-text-secondary);
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+  }
+
+  /* Zone d'actions */
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    padding-top: 20px;
+    margin-top: 24px;
+
+    border-top: 1px solid var(--delete-border);
+  }
+
+  /* Bouton Annuler */
+  &__cancel {
+    min-height: 44px;
+    color: var(--delete-text);
+    background-color: var(--delete-surface);
+    border: 1px solid var(--delete-border);
+    border-radius: 9px;
+    font-weight: 600;
+
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  &__cancel:hover {
+    background-color: var(--delete-section);
+    border-color: var(--delete-text-secondary);
+  }
+
+  /* Bouton Supprimer */
+  &__confirm {
+    min-height: 44px;
+    color: #FFFFFF;
+    background-color: var(--delete-danger);
+    border: 1px solid transparent;
+    border-radius: 9px;
+    font-weight: 600;
+
+    transition:
+      background-color 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  &__confirm:hover:not(:disabled) {
+    background-color: var(--delete-danger-hover);
+  }
+
+  &__confirm:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  /* Focus clavier */
+  button:focus-visible {
+    outline: 3px solid var(--delete-primary);
+    outline-offset: 3px;
+  }
+
+  /* Notification */
+  &__notification {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}
+
+
+/* =========================================
+   Thème clair
+   ========================================= */
+
+.light-mode .category-delete {
+  --delete-primary: @light-primary;
+  --delete-background: @light-background;
+  --delete-section: @light-section;
+  --delete-surface: @light-surface;
+  --delete-text: @light-text;
+  --delete-text-secondary: @light-text-secondary;
+  --delete-border: @light-border;
+  --delete-danger: @light-danger;
+  --delete-danger-hover: @light-danger-hover;
+  --delete-danger-background: @light-danger-background;
+}
+
+
+/* =========================================
+   Thème sombre
+   ========================================= */
+
+.dark-mode .category-delete {
+  --delete-primary: @dark-active;
+  --delete-background: @dark-background;
+  --delete-section: @dark-section;
+  --delete-surface: @dark-surface;
+  --delete-text: @dark-text;
+  --delete-text-secondary: @dark-text-secondary;
+  --delete-border: @dark-border;
+  --delete-danger: @dark-danger;
+  --delete-danger-hover: @dark-danger-hover;
+  --delete-danger-background: @dark-danger-background;
+
+  box-shadow: 0 8px 24px rgb(0 0 0 / 15%);
+}
+
+
+/* =========================================
+   Responsive : tablette
+   ========================================= */
+
+@media (max-width: 768px) {
+  .category-delete {
+    max-width: 100%;
+    padding: 24px;
+    border-radius: 14px;
+  }
+}
+
+
+/* =========================================
+   Responsive : mobile
+   ========================================= */
+
+@media (max-width: 480px) {
+  .category-delete {
+    padding: 20px 16px;
+    border-radius: 12px;
+
+    &__header {
+      gap: 12px;
+    }
+
+    &__icon {
+      flex-basis: 40px;
+      width: 40px;
+      height: 40px;
+    }
+
+    &__title {
+      font-size: 1.125rem;
+    }
+
+    &__message {
+      font-size: 0.875rem;
+    }
+
+    &__actions {
+      flex-direction: column-reverse;
+      align-items: stretch;
+      gap: 10px;
+      margin-top: 20px;
+      padding-top: 18px;
+    }
+
+    &__cancel,
+    &__confirm {
+      width: 100%;
+      max-width: none;
+    }
+  }
+}
+
+
+/* =========================================
+   Réduction des animations
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .category-delete,
+  .category-delete__cancel,
+  .category-delete__confirm {
+    transition: none;
+  }
+}

@@ -1,15 +1,21 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ThemeService } from '../../../../core/services/ThemeService';
 import { UserFavorService } from '../../../userFavor/service/user-favor-service';
 import { UserFavorDetailModel } from '../../../userFavor/model/user-favor-detail';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-user-favor-detail',
-  imports: [NgClass],
+  imports: [],
   templateUrl: './user-favor-detail.html',
   styleUrl: './user-favor-detail.less',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserFavorDetail implements OnInit {
   private readonly _userFavorService = inject(UserFavorService); // Get detail about user favor from owner

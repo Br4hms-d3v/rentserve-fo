@@ -6,11 +6,9 @@ import { UserRoleForm } from '../model/userRoleForm';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   TuiButton,
-  TuiDataList,
   TuiDialogContext,
-  TuiDropdown,
+  TuiDropdown, TuiIcon,
   TuiNotificationTemplate,
-  TuiOption,
   TuiTextfield,
 } from '@taiga-ui/core';
 import { Role } from '../enum/role';
@@ -28,6 +26,7 @@ import { Router } from '@angular/router';
     TuiDataListWrapper,
     TuiButton,
     TuiNotificationTemplate,
+    TuiIcon,
   ],
   templateUrl: './user-role.html',
   styleUrl: './user-role.less',
@@ -47,7 +46,7 @@ export class UserRole {
   protected messageError = '';
   protected messageSuccess = '';
 
-  protected readonly roles = Object.values(Role);
+  protected readonly roles = [Role.MEMBER, Role.MODERATOR];
 
   protected editUserRoleForm = new FormGroup({
     role: new FormControl('', {
@@ -56,7 +55,7 @@ export class UserRole {
     }),
   });
 
-  protected updateUSerRole(): void {
+  protected updateUserRole(): void {
     if (this.editUserRoleForm.invalid) {
       this.editUserRoleForm.markAllAsTouched();
       this.messageError = 'Veuillez sélectionner un rôle.';
@@ -64,28 +63,30 @@ export class UserRole {
     }
 
     this.messageError = '';
+    this.messageSuccess = '';
 
-    this._userService
-      .updateUserRole(this.user.id, <UserRoleForm>this.editUserRoleForm.value)
-      .subscribe({
-        next: (userRole) => {
-          // console.log(userRole);
-          this.messageSuccess = this.user.name + ' est devenu modérateur';
-          this.messageError = '';
-          this.isSuccess.set(true);
-          this.show.set(true);
-          setTimeout(() => {
-            this.context.completeWith?.(true);
-          }, 2000);
+    const formValue = this.editUserRoleForm.getRawValue();
 
-          // Tu peux fermer la modal ici après le succès.
-        },
-        error: () => {
-          this.messageError = 'Une erreur est survenue lors de la mise à jour du rôle.';
-          this.messageSuccess = '';
-          this.isSuccess.set(false);
-          this.show.set(true);
-        },
-      });
+    this._userService.updateUserRole(this.user.id, formValue as UserRoleForm).subscribe({
+      next: () => {
+        this.messageSuccess = `Le rôle de ${this.user.name} a été mis à jour avec succès.`;
+
+        this.messageError = '';
+        this.isSuccess.set(true);
+        this.show.set(true);
+
+        setTimeout(() => {
+          this.context.completeWith?.(true);
+        }, 2000);
+      },
+
+      error: () => {
+        this.messageError = 'Impossible de mettre à jour le rôle. Veuillez réessayer.';
+
+        this.messageSuccess = '';
+        this.isSuccess.set(false);
+        this.show.set(true);
+      },
+    });
   }
 }

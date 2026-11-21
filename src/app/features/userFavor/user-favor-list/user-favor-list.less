@@ -1,147 +1,654 @@
-@light-background-color: #F1EFE8;
-@light-breadcrumb: #5F5E5A !important;
-@light-title: #3B6D11 !important;
-@light-text: #3D4A2A !important;
-@light-background-card: #D3D1C7;
-@light-btn-rental: #D9764A;
-@light-btn-detail: #3D4A2A;
 
-@dark-background-color: #1C1F17;
-@dark-breadcrumb: #A6A599 !important;
-@dark-title: #8FC15C;
-@dark-text: #F1EFE8;
-@dark-background-card: #262A1D;
-@dark-btn-detail: #33421F;
+/* =========================================
+   PALETTE DE COULEURS
+========================================= */
+
+/* Light */
+@light-primary: #173B57;
+@light-blue: #3B82F6;
+@light-active: #2563EB;
+@light-background: #FFFFFF;
+@light-section: #F3F6F8;
+@light-surface: #E8EEF3;
+@light-text: #263746;
+@light-secondary: #64748B;
+@light-border: #D8E1E9;
+
+/* Dark */
+@dark-primary: #0B1F33;
+@dark-blue: #3B82F6;
+@dark-active: #60A5FA;
+@dark-background: #071522;
+@dark-section: #172A3D;
+@dark-surface: #20364D;
+@dark-text: #F1F5F9;
+@dark-secondary: #A8B7C9;
+@dark-border: #30465C;
+
+
+/* =========================================
+   STRUCTURE GÉNÉRALE
+========================================= */
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
 
 .userFavor-container {
-  height: 100%;
-  min-height: 100vh;
   width: 100%;
+  min-height: 100vh;
+  padding: 32px 40px;
   box-sizing: border-box;
-  padding: 20px 40px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.page-header {
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-top: 28px;
 }
 
 h1 {
-  text-align: center;
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.page-description {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.results-count {
+  padding: 9px 15px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+
+/* Breadcrumbs */
+
+tui-breadcrumbs {
+  display: block;
+  font-size: 13px;
+}
+
+
+/* =========================================
+   ACTIONS ET FILTRES
+========================================= */
+
+.container-search-filter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+.btn-filter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+/* =========================================
+   GRILLE DES CARTES
+========================================= */
+
+.services-content {
+  width: 100%;
 }
 
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(6, 2fr);
-  column-gap: 25px;
-  row-gap: 30px;
+  grid-template-columns:
+    repeat(auto-fill, minmax(230px, 1fr));
+  gap: 24px;
   width: 100%;
 }
 
-/* Card */
-.card {
-  width: 100%;
-  box-sizing: border-box;
-  min-height: 330px;
+
+/* =========================================
+   CARTE SERVICE
+========================================= */
+
+.service-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid;
+  border-radius: 12px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
 }
 
-/* Image */
+
+/* =========================================
+   IMAGE
+========================================= */
+
 .image-container {
+  position: relative;
   width: 100%;
-  height: 180px;
+  height: 185px;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
   img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.04);
   }
 }
 
-/* Price and details */
-.actions {
-  width: 100%;
+.image-overlay {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+
+.service-label {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 11px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  background-color: rgba(255, 255, 255, 0.94);
+  color: @light-primary;
+}
+
+
+/* =========================================
+   CONTENU DE LA CARTE
+========================================= */
+
+.card-content {
   display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 18px;
+  gap: 20px;
+}
+
+.price-container {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.price-label {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.price {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+
+  span {
+    font-size: 13px;
+    font-weight: 500;
+  }
+}
+
+
+/* =========================================
+   BOUTONS
+========================================= */
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: auto;
+
+  button {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+  }
+}
+
+.details-button,
+.rental-button {
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   ÉTAT VIDE
+========================================= */
+
+.empty-state {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 15px;
-  margin-top: 15px;
+  text-align: center;
+  padding: 30px;
+  border: 1px dashed;
+  border-radius: 12px;
+
+  tui-icon {
+    font-size: 42px;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-size: 20px;
+    margin: 0 0 8px;
+  }
+
+  p {
+    font-size: 14px;
+    max-width: 400px;
+    line-height: 1.6;
+  }
 }
 
 
-/* Bouton Detail */
-.details-button {
-  width: 90px;
-  margin-top: 20px;
+/* =========================================
+   MESSAGE D'ERREUR
+========================================= */
+
+.error-state {
+  width: 100%;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+  border: 1px solid;
+  border-radius: 8px;
+  font-size: 14px;
 }
 
-.btn-rental {
-  width: 150px;
-  background-color: @light-btn-rental;
-}
 
-/* Pagination */
+/* =========================================
+   PAGINATION
+========================================= */
+
 .pagination-container {
   display: flex;
   justify-content: center;
+  margin: 36px 0 20px;
 }
 
-// THEME
+
+/* =========================================
+   THÈME CLAIR
+========================================= */
 
 .light-mode {
-  background-color: @light-background-color;
+  background-color: @light-background;
+  color: @light-text;
 
-  tui-breadcrumbs {
-    color: @light-breadcrumb;
+  .page-description {
+    color: @light-secondary;
+  }
 
-    a {
-      color: @light-breadcrumb;
-    }
+  .results-count {
+    background-color: @light-section;
+    color: @light-primary;
+  }
+
+  tui-breadcrumbs,
+  tui-breadcrumbs a {
+    color: @light-secondary;
   }
 
   h1 {
-    color: @light-title;
+    color: @light-primary;
   }
 
-  .card {
-    background-color: @light-background-card;
+  .service-card {
+    background-color: @light-background;
+    border-color: @light-border;
+
+    &:hover {
+      border-color: @light-blue;
+    }
   }
 
-  .priceHour {
-    color: @light-text;
+  .image-container {
+    background-color: @light-section;
+  }
+
+  .price-label {
+    color: @light-secondary;
+  }
+
+  .price {
+    color: @light-primary;
+  }
+
+  .price span {
+    color: @light-secondary;
   }
 
   .details-button {
-    background-color: @light-btn-detail
+    background-color: @light-surface;
+    color: @light-primary;
   }
-}
 
-.dark-mode {
-  background-color: @dark-background-color;
+  .rental-button {
+    background-color: @light-primary;
+    color: #FFFFFF;
+  }
 
-  tui-breadcrumbs {
-    color: @dark-breadcrumb;
+  .btn-filter {
+    background-color: @light-section;
+    color: @light-primary;
+    border: 1px solid @light-border;
 
-    a {
-      color: @dark-breadcrumb;
+    &:hover {
+      background-color: @light-surface;
     }
   }
 
+  .empty-state {
+    border-color: @light-border;
+    background-color: @light-section;
+    color: @light-text;
+
+    tui-icon {
+      color: @light-active;
+    }
+
+    p {
+      color: @light-secondary;
+    }
+  }
+
+  .error-state {
+    color: #9F2929;
+    background-color: #FEF2F2;
+    border-color: #FECACA;
+  }
+}
+
+
+/* =========================================
+   THÈME SOMBRE
+========================================= */
+
+.dark-mode {
+  background-color: @dark-background;
+  color: @dark-text;
+
+  .page-description {
+    color: @dark-secondary;
+  }
+
+  .results-count {
+    background-color: @dark-section;
+    color: @dark-active;
+  }
+
+  tui-breadcrumbs,
+  tui-breadcrumbs a {
+    color: @dark-secondary;
+  }
+
   h1 {
-    color: @dark-title;
-  }
-
-  .card {
-    background-color: @dark-background-card;
-  }
-
-  .priceHour {
     color: @dark-text;
   }
 
-  .details-button {
-    background-color: @dark-btn-detail;
+  .service-card {
+    background-color: @dark-section;
+    border-color: @dark-border;
+
+    &:hover {
+      border-color: @dark-blue;
+    }
   }
+
+  .image-container {
+    background-color: @dark-surface;
+  }
+
+  .price-label {
+    color: @dark-secondary;
+  }
+
+  .price {
+    color: @dark-active;
+  }
+
+  .price span {
+    color: @dark-secondary;
+  }
+
+  .details-button {
+    background-color: @dark-surface;
+    color: @dark-text;
+  }
+
+  .rental-button {
+    background-color: @dark-blue;
+    color: #FFFFFF;
+  }
+
+  .btn-filter {
+    background-color: @dark-surface;
+    color: @dark-text;
+    border: 1px solid @dark-border;
+
+    &:hover {
+      background-color: #29445E;
+    }
+  }
+
+  .empty-state {
+    border-color: @dark-border;
+    background-color: @dark-section;
+    color: @dark-text;
+
+    tui-icon {
+      color: @dark-active;
+    }
+
+    p {
+      color: @dark-secondary;
+    }
+  }
+
+  .error-state {
+    color: #FCA5A5;
+    background-color: #3B1D2A;
+    border-color: #713344;
+  }
+}
+
+
+/* =========================================
+   ACCESSIBILITÉ
+========================================= */
+
+.btn-filter:focus-visible,
+.card-actions button:focus-visible {
+  outline: 3px solid @light-blue;
+  outline-offset: 3px;
+}
+
+.dark-mode {
+  .btn-filter:focus-visible,
+  .card-actions button:focus-visible {
+    outline-color: @dark-active;
+  }
+}
+
+
+/* =========================================
+   RESPONSIVE : TABLETTES
+========================================= */
+
+@media (max-width: 1024px) {
+
+  .userFavor-container {
+    padding: 28px 24px;
+  }
+
+  .cards-container {
+    grid-template-columns:
+      repeat(auto-fill, minmax(210px, 1fr));
+    gap: 18px;
+  }
+
+}
+
+
+/* =========================================
+   RESPONSIVE : MOBILES
+========================================= */
+
+@media (max-width: 600px) {
+
+  .userFavor-container {
+    padding: 20px 16px;
+  }
+
+  .header-content {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 20px;
+  }
+
+  h1 {
+    font-size: 23px;
+  }
+
+  .container-search-filter {
+    margin-bottom: 22px;
+  }
+
+  .btn-filter {
+    width: 100%;
+  }
+
+  .cards-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .image-container {
+    height: 130px;
+  }
+
+  .card-content {
+    padding: 12px;
+    gap: 14px;
+  }
+
+  .price {
+    font-size: 18px;
+  }
+
+  .price span {
+    font-size: 11px;
+  }
+
+  .card-actions {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+      flex: none;
+    }
+  }
+
+  .pagination-container {
+    margin-top: 24px;
+    overflow-x: auto;
+  }
+
+}
+
+
+/* =========================================
+   PETITS TÉLÉPHONES
+========================================= */
+
+@media (max-width: 360px) {
+
+  .cards-container {
+    grid-template-columns: 1fr;
+  }
+
+  .image-container {
+    height: 190px;
+  }
+
+  .card-actions {
+    flex-direction: row;
+  }
+
+}
+
+
+/* =========================================
+   MOUVEMENTS RÉDUITS
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .userFavor-container,
+  .service-card,
+  .image-container img,
+  .btn-filter {
+    transition: none;
+  }
+
 }

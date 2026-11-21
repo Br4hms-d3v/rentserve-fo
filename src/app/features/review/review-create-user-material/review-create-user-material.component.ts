@@ -1,37 +1,37 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import {
   TuiButton,
   TuiDialogContext,
+  TuiIcon,
   TuiLabel,
   TuiNotificationTemplate,
   TuiTextfield,
 } from '@taiga-ui/core';
-import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
-import { NgClass } from '@angular/common';
 import { ReviewService } from '../service/review-service';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { TuiRating, TuiTextarea } from '@taiga-ui/kit';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-review-create-user-marterial',
   imports: [
-    NgClass,
+    ReactiveFormsModule,
     TuiTextfield,
     TuiRating,
-    FormsModule,
-    ReactiveFormsModule,
     TuiTextarea,
     TuiButton,
     TuiLabel,
     TuiNotificationTemplate,
+    TuiIcon,
   ],
   templateUrl: './review-create-user-material.component.html',
   styleUrl: './review-create-user-material.component.less',
@@ -40,9 +40,9 @@ import { Router } from '@angular/router';
 export class ReviewCreateUserMaterial implements OnInit {
   private readonly context =
     inject<TuiDialogContext<void, { userMaterialId: number }>>(POLYMORPHEUS_CONTEXT);
-  private readonly _reviewService = inject(ReviewService); // Call the service to display comments
+  private readonly reviewService = inject(ReviewService); // Call the service to display comments
   private _themeService = inject(ThemeService); // Call the service to change color theme
-  private readonly _router = inject(Router); // Tool to navigate
+  private readonly destroyRef = inject(DestroyRef);
 
   protected userMaterialId: number = this.context.data.userMaterialId;
   isDarkMode = false; // Change theme from light to dark
@@ -50,61 +50,80 @@ export class ReviewCreateUserMaterial implements OnInit {
   protected readonly isSuccess = signal(false); // Change color Green for success or Red error
   protected messageError = '';
   protected messageSuccess = '';
+  protected isSubmitting = false;
 
-  ngOnInit() {
-    this.changeTheme();
-  }
-
-  protected createReviewUserMaterialForm = new FormGroup({
+  protected readonly createReviewUserMaterialForm = new FormGroup({
     userMaterialID: new FormControl<number>(Number(this.userMaterialId), {
       nonNullable: true,
     }),
+
     comment: new FormControl('', {
       nonNullable: true,
-      validators: Validators.required,
+      validators: [Validators.required, Validators.maxLength(500)],
     }),
+
     rating: new FormControl<number>(0, {
       nonNullable: true,
       validators: [Validators.required, Validators.min(1), Validators.max(5)],
     }),
+
     isActive: new FormControl(true, {
       nonNullable: true,
     }),
   });
 
-  submitReview() {
-    if (this.createReviewUserMaterialForm.invalid) {
-      this.createReviewUserMaterialForm.markAsTouched();
-      this.show.set(true);
-      this.isSuccess.set(false);
-      this.messageError = 'Le formulaire est vide';
-      this.messageSuccess = '';
+  ngOnInit() {
+    this.changeTheme();
+  }
+
+  protected submitReview(): void {
+    if (this.isSubmitting) {
       return;
     }
 
-    this._reviewService
+    if (this.createReviewUserMaterialForm.invalid) {
+      this.createReviewUserMaterialForm.markAllAsTouched();
+
+      this.isSuccess.set(false);
+      this.show.set(false);
+      this.messageError = 'Veuillez compléter le formulaire et attribuer une note.';
+      this.messageSuccess = '';
+      this.show.set(true);
+      return;
+    }
+
+    this.isSubmitting = true;
+
+    this.reviewService
       .createNewReviewUserMaterial(this.createReviewUserMaterialForm.getRawValue())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (newReview) => {
-          // console.log(newReview);
-          this.messageSuccess = 'Votre commentaire est enregistré';
+        next: () => {
+          this.isSubmitting = false;
+          this.messageSuccess = 'Votre avis a été enregistré avec succès.';
           this.messageError = '';
           this.isSuccess.set(true);
-          this.show.set(true);
+          // Closes the window and triggers the parent refresh.
           this.context.completeWith();
         },
-        error: (error) => {
-          // console.log(error);
+
+        error: () => {
+          this.isSubmitting = false;
           this.messageSuccess = '';
-          this.messageError = 'Erreur lors de la sauvegarde du commentaire';
+          this.messageError =
+            'Une erreur est survenue lors de l’enregistrement de votre avis. Veuillez réessayer.';
           this.isSuccess.set(false);
           this.show.set(true);
         },
       });
   }
 
-  changeTheme() {
-    this.isDarkMode = this._themeService.isDarkMode(); // Get current theme
-    this._themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
+  private changeTheme(): void {
+    this.isDarkMode = this._themeService.isDarkMode();
+    this._themeService.darkMode$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((mode: boolean) => {
+        this.isDarkMode = mode;
+      });
   }
 }

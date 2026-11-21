@@ -67,7 +67,10 @@ export class CategoryMaterialEdit implements OnInit {
   }
 
   protected editCategoryForm = new FormGroup({
-    nameCategory: new FormControl('', Validators.required),
+    nameCategory: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.maxLength(100)],
+    }),
   });
 
   getRoute() {
@@ -86,43 +89,44 @@ export class CategoryMaterialEdit implements OnInit {
     });
   }
 
-  onSubmitEditCategory() {
+  onSubmitEditCategory(): void {
     this.editCategoryForm.markAllAsTouched();
+
     if (this.editCategoryForm.invalid) {
-      this.messageError = 'Le formulaire est invalide';
+      this.messageError = 'Veuillez renseigner le nom de la catégorie.';
+      this.messageSuccess = '';
       this.isSuccess.set(false);
       this.show.set(true);
+      return;
     }
 
-    this._categoryService
-      .editCategory(this.categoryId, <CategoryForm>this.editCategoryForm.value)
-      .subscribe({
-        next: (nameCategoryData) => {
-          this.editCategoryForm.patchValue(nameCategoryData);
-          this.messageSuccess = 'La mise à jour a été effectué avec succès.';
-          this.isSuccess.set(true);
-          this.show.set(true);
+    const categoryData: CategoryForm = {
+      nameCategory: this.editCategoryForm.controls.nameCategory.value!.trim(),
+    };
 
-          setTimeout(() => {
-            this._router.navigate(['/dashboard']);
-          }, 2000);
-        },
-        error: (error) => {
-          if (!typeof error.error) {
-            this.messageError = error.error.message;
-            this.isSuccess.set(false);
-            this.show.set(true);
-          } else if (error.error?.message) {
-            this.messageError = error.error.message;
-            this.isSuccess.set(false);
-            this.show.set(true);
-          } else {
-            this.messageError = 'Erreur lors de la mise à jour de la catégorie';
-            this.isSuccess.set(false);
-            this.show.set(true);
-          }
-        },
-      });
+    this._categoryService.editCategory(this.categoryId, categoryData).subscribe({
+      next: (updatedCategory) => {
+        this.editCategoryForm.patchValue(updatedCategory);
+
+        this.messageSuccess = 'La catégorie a été modifiée avec succès.';
+        this.messageError = '';
+        this.isSuccess.set(true);
+        this.show.set(true);
+
+        setTimeout(() => {
+          this._router.navigate(['/dashboard']);
+        }, 2000);
+      },
+      error: (error: { error?: { message?: string } }) => {
+        this.messageError =
+          error.error?.message ??
+          'Une erreur est survenue lors de la modification de la catégorie.';
+
+        this.messageSuccess = '';
+        this.isSuccess.set(false);
+        this.show.set(true);
+      },
+    });
   }
 
   changeTheme() {

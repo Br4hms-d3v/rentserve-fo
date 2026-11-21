@@ -1,125 +1,707 @@
-@light-background-color: #F1EFE8;
-@light-title: #3B6D11 !important;
-@light-breadcrumb: #5F5E5A !important;
-@light-label-input: #3B6D11 !important;
-@light-label: #5F5E5A !important;
-@light-btn-back: #D9764A;
-@light-btn-new: green;
-@light-btn-cancel: red;
+/* THÈME CLAIR */
+@light-primary: #173B57;
+@light-secondary: #3B82F6;
+@light-background: #FFFFFF;
+@light-surface: #F3F6F8;
+@light-input: #E8EEF3;
+@light-text: #263746;
+@light-text-secondary: #64748B;
+@light-border: #D8E1E9;
+@light-active: #2563EB;
 
-@dark-background-color: #1C1F17;
-@dark-title: #8FC15C;
-@dark-breadcrumb: #A6A599 !important;
-@dark-label-input: #8FC15C !important;
-@dark-label: #A6A599 !important;
+/* THÈME SOMBRE */
+@dark-primary: #0B1F33;
+@dark-secondary: #3B82F6;
+@dark-background: #071522;
+@dark-surface: #172A3D;
+@dark-input: #20364D;
+@dark-text: #F1F5F9;
+@dark-text-secondary: #A8B7C9;
+@dark-border: #30465C;
+@dark-active: #60A5FA;
 
+
+/* ==========================================
+   STRUCTURE GÉNÉRALE
+========================================== */
+
+:host {
+  display: block;
+  min-height: 100%;
+}
 
 .createUserMaterial-container {
-  height: 100vh;
-  padding: 20px;
+  min-height: 100vh;
+  width: 100%;
   box-sizing: border-box;
+  padding: 35px 24px;
+  transition: background-color 0.25s ease;
 }
 
-.titleEditUserMaterial {
-  margin-top: 25px;
-  text-align: center;
+.page-content {
+  width: 100%;
+  max-width: 1050px;
+  margin: 0 auto;
 }
+
+
+/* ==========================================
+   EN-TÊTE
+========================================== */
+
+.page-header {
+  margin-bottom: 32px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.header-icon {
+  width: 54px;
+  height: 54px;
+  min-width: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+
+  tui-icon {
+    font-size: 27px;
+  }
+}
+
+.page-title {
+  margin: 0;
+  font-size: clamp(24px, 3vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.page-description {
+  margin: 7px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* ==========================================
+   FORMULAIRE
+========================================== */
 
 .userMaterial-form {
-  width: 950px;
-  margin: auto;
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  box-sizing: border-box;
+  gap: 22px;
 }
+
+.form-section {
+  width: 100%;
+  padding: 25px;
+  border: 1px solid;
+  border-radius: 14px;
+  box-sizing: border-box;
+  transition: background-color 0.25s ease;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+
+  h2 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 650;
+  }
+
+  p {
+    margin: 5px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+}
+
+.section-number {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.section-content {
+  width: 100%;
+}
+
+.form-field {
+  width: 100%;
+  min-width: 0;
+
+  tui-textfield {
+    width: 100%;
+  }
+}
+
+.field-hint {
+  margin: 8px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* ==========================================
+   CARACTÉRISTIQUES
+========================================== */
 
 .material-options {
-  width: 100%;
-
   display: grid;
-  grid-template-columns: 1fr 0.6fr 0.8fr;
+  grid-template-columns: 1fr 0.8fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.availability-card {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 17px;
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.availability-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.availability-title {
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.availability-description {
+  font-size: 12px;
+}
+
+.availability-switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
+/* ==========================================
+   UPLOAD DES IMAGES
+========================================== */
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.upload-description {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 650;
+  }
+
+  p {
+    margin: 5px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+
+.upload-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+
+  tui-icon {
+    font-size: 22px;
+  }
+}
+
+.empty-list {
+  padding: 10px;
+  text-align: center;
+  font-size: 13px;
+}
+
+
+/* ==========================================
+   BOUTONS
+========================================== */
+
+.form-footer {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 20px;
+  padding: 5px 0 15px;
 }
 
-input[tuiSwitch] {
-  &:checked {
-    --tui-background-accent-1: #22c55e;
-    --tui-background-accent-1-hover: #16a34a;
-  }
-
-  &:not(:checked) {
-    --tui-background-neutral-1: #ef4444;
-    --tui-background-neutral-1-hover: #dc2626;
-  }
+.footer-information {
+  font-size: 12px;
 }
 
-.material-buttons{
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  justify-content: center;
+.material-buttons {
+  display: flex;
   align-items: center;
-  gap: 30px;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
 
-  margin-top: 10px;
+  button {
+    min-height: 44px;
+    border-radius: 9px;
+    font-weight: 600;
 
-  #btn-back {
-    background-color: @light-btn-back;
-    width: 250px;
-  }
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease;
 
-  #btn-cancel {
-    background-color: @light-btn-cancel;
-    width: 250px;
-  }
+    &:hover {
+      transform: translateY(-1px);
+    }
 
-  #btn-new {
-    background-color: @light-btn-new;
-    width: 250px;
+    tui-icon {
+      margin-right: 5px;
+    }
   }
 }
 
 
-// THEME
+/* ==========================================
+   THEME CLAIR
+========================================== */
 
 .light-mode {
-  background-color: @light-background-color;
+  background-color: @light-background;
+  color: @light-text;
 
-  .titleEditUserMaterial {
-    color: @light-title;
+  /* Variables Taiga UI */
+  --tui-background-base: #FFFFFF;
+  --tui-background-neutral-1: #F3F6F8;
+  --tui-background-neutral-1-hover: #E8EEF3;
+  --tui-background-neutral-2: #E8EEF3;
+
+  --tui-text-primary: #263746;
+  --tui-text-secondary: #64748B;
+  --tui-text-tertiary: #64748B;
+
+  --tui-border-normal: #D8E1E9;
+  --tui-border-hover: #3B82F6;
+
+  --tui-background-accent-1: #173B57;
+  --tui-text-primary-on-accent-1: #FFFFFF;
+
+  /* En-tête */
+  .header-icon {
+    background-color: @light-surface;
+    color: @light-primary;
   }
 
-  input[tuiInput] {
-    color: @light-label-input;
+  .page-title,
+  .section-header h2 {
+    color: @light-text;
   }
 
+  .page-description,
+  .section-header p,
+  .field-hint,
+  .availability-description,
+  .footer-information,
+  .upload-description p {
+    color: @light-text-secondary;
+  }
+
+  /* Cartes */
+  .form-section {
+    background-color: @light-background;
+    border-color: @light-border;
+    box-shadow: 0 2px 8px rgba(23, 59, 87, 0.035);
+  }
+
+  .section-number,
+  .upload-icon {
+    background-color: @light-surface;
+    color: @light-active;
+  }
+
+  .availability-card {
+    background-color: @light-surface;
+    border-color: @light-border;
+  }
+
+  .availability-title,
+  .availability-switch,
+  .upload-description h3 {
+    color: @light-text;
+  }
+
+  /* Champs Taiga UI */
+  tui-textfield {
+    --tui-background-base: #E8EEF3;
+    --tui-background-neutral-1: #E8EEF3;
+    --tui-text-primary: #263746;
+    --tui-text-secondary: #64748B;
+    --tui-border-normal: #D8E1E9;
+    --tui-border-hover: #3B82F6;
+  }
+
+  tui-textfield input,
+  tui-textfield textarea,
+  tui-textfield select,
+  input[tuiInput],
+  input[tuiComboBox],
+  input[tuiSelect],
+  textarea[tuiTextarea] {
+    background-color: @light-input !important;
+    color: @light-text !important;
+    caret-color: @light-active;
+  }
+
+  /* Labels */
+  tui-textfield label,
   label[tuiLabel] {
-    color: @light-label;
+    color: @light-text-secondary !important;
   }
 
-  .textDescription textarea {
-    color: @light-label-input;
+  /* Placeholders */
+  input::placeholder,
+  textarea::placeholder {
+    color: @light-text-secondary !important;
+    opacity: 1;
+  }
+
+  /* Boutons */
+  .material-buttons {
+    button[tuiButton][appearance="primary"] {
+      background-color: @light-primary;
+      color: #FFFFFF;
+
+      &:hover {
+        background-color: #214F70;
+      }
+    }
+
+    button[tuiButton][appearance="outline"] {
+      border-color: @light-border;
+      color: @light-primary;
+    }
+
+    button[tuiButton][appearance="secondary"] {
+      background-color: @light-surface;
+      color: @light-text;
+    }
+  }
+
+  /* Switch */
+  input[tuiSwitch] {
+    --tui-background-accent-1: #22C55E;
+  }
+}
+
+
+/* ==========================================
+   THEME SOMBRE
+========================================== */
+
+.dark-mode {
+  background-color: @dark-background;
+  color: @dark-text;
+
+  /* Variables Taiga UI */
+  --tui-background-base: #071522;
+  --tui-background-neutral-1: #172A3D;
+  --tui-background-neutral-1-hover: #20364D;
+  --tui-background-neutral-2: #20364D;
+
+  --tui-text-primary: #F1F5F9;
+  --tui-text-secondary: #A8B7C9;
+  --tui-text-tertiary: #A8B7C9;
+
+  --tui-border-normal: #30465C;
+  --tui-border-hover: #60A5FA;
+
+  --tui-background-accent-1: #3B82F6;
+  --tui-text-primary-on-accent-1: #FFFFFF;
+
+  /* En-tête */
+  .header-icon {
+    background-color: @dark-surface;
+    color: @dark-active;
+  }
+
+  .page-title,
+  .section-header h2 {
+    color: @dark-text;
+  }
+
+  .page-description,
+  .section-header p,
+  .field-hint,
+  .availability-description,
+  .footer-information,
+  .upload-description p {
+    color: @dark-text-secondary;
+  }
+
+  /* Cartes */
+  .form-section {
+    background-color: @dark-surface;
+    border-color: @dark-border;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  }
+
+  .section-number,
+  .upload-icon {
+    background-color: @dark-input;
+    color: @dark-active;
+  }
+
+  .availability-card {
+    background-color: @dark-input;
+    border-color: @dark-border;
+  }
+
+  .availability-title,
+  .availability-switch,
+  .upload-description h3 {
+    color: @dark-text;
+  }
+
+  /* Champs Taiga UI */
+  tui-textfield {
+    --tui-background-base: #20364D;
+    --tui-background-neutral-1: #20364D;
+    --tui-text-primary: #F1F5F9;
+    --tui-text-secondary: #A8B7C9;
+    --tui-border-normal: #30465C;
+    --tui-border-hover: #60A5FA;
+  }
+
+  tui-textfield input,
+  tui-textfield textarea,
+  tui-textfield select,
+  input[tuiInput],
+  input[tuiComboBox],
+  input[tuiSelect],
+  textarea[tuiTextarea] {
+    background-color: @dark-input !important;
+    color: @dark-text !important;
+    caret-color: @dark-active;
+  }
+
+  /* Labels */
+  tui-textfield label,
+  label[tuiLabel] {
+    color: @dark-text-secondary !important;
+  }
+
+  /* Placeholders */
+  input::placeholder,
+  textarea::placeholder {
+    color: @dark-text-secondary !important;
+    opacity: 1;
+  }
+
+  /* Boutons */
+  .material-buttons {
+    button[tuiButton][appearance="primary"] {
+      background-color: @dark-secondary;
+      color: #FFFFFF;
+
+      &:hover {
+        background-color: #2563EB;
+      }
+    }
+
+    button[tuiButton][appearance="outline"] {
+      border-color: @dark-border;
+      color: @dark-text;
+    }
+
+    button[tuiButton][appearance="secondary"] {
+      background-color: @dark-input;
+      color: @dark-text;
+    }
+  }
+
+  /* Switch */
+  input[tuiSwitch] {
+    --tui-background-accent-1: #22C55E;
+  }
+}
+
+
+/* ==========================================
+   RESPONSIVE : TABLETTES
+========================================== */
+
+@media screen and (max-width: 900px) {
+
+  .createUserMaterial-container {
+    padding: 28px 20px;
+  }
+
+  .form-section {
+    padding: 22px;
+  }
+
+  .form-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .material-buttons {
+    width: 100%;
+    justify-content: flex-end;
   }
 
 }
 
-.dark-mode {
-  background-color: @dark-background-color;
 
-  .titleEditUserMaterial {
-    color: @dark-title;
+/* ==========================================
+   RESPONSIVE : MOBILES
+========================================== */
+
+@media screen and (max-width: 600px) {
+
+  .createUserMaterial-container {
+    padding: 22px 14px;
   }
 
-  input[tuiInput] {
-    color: @dark-label-input;
+  .page-header {
+    margin-bottom: 24px;
   }
 
-  label[tuiLabel] {
-    color: @dark-label;
+  .header-content {
+    align-items: flex-start;
+    gap: 12px;
   }
 
-  .textDescription textarea {
-    color: @dark-label-input;
+  .header-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+
+    tui-icon {
+      font-size: 22px;
+    }
   }
+
+  .page-description {
+    font-size: 13px;
+  }
+
+  .userMaterial-form {
+    gap: 16px;
+  }
+
+  .form-section {
+    padding: 18px 15px;
+    border-radius: 11px;
+  }
+
+  .section-header {
+    gap: 11px;
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 15px;
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
+
+  .section-number {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+  }
+
+  .material-options {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .availability-card {
+    grid-column: auto;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .form-footer {
+    gap: 15px;
+  }
+
+  .material-buttons {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    gap: 10px;
+
+    button {
+      width: 100%;
+      max-width: none;
+    }
+  }
+
+  .upload-description {
+    align-items: flex-start;
+  }
+
+}
+
+
+/* ==========================================
+   RESPONSIVE : PETITS MOBILES
+========================================== */
+
+@media screen and (max-width: 360px) {
+
+  .createUserMaterial-container {
+    padding: 16px 10px;
+  }
+
+  .form-section {
+    padding: 15px 12px;
+  }
+
+  .page-title {
+    font-size: 22px;
+  }
+
+  .section-header h2 {
+    font-size: 14px;
+  }
+
 }

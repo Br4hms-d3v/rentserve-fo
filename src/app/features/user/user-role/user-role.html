@@ -1,51 +1,119 @@
-<p>
-  Nom : {{ user.name }}
-</p>
 
-<p>
-  Rôle : {{ user.role }}
-</p>
-
-<form
-  [formGroup]="editUserRoleForm"
-  (ngSubmit)="updateUSerRole()"
+<div
+  class="user-role"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
 >
-  <tui-textfield tuiChevron>
-    <input
-      tuiSelect
-      formControlName="role"
-      placeholder="Choisir un rôle"
-    />
+  <header class="user-role__header">
+    <div class="user-role__icon">
+      <tui-icon icon="@tui.shield-check"></tui-icon>
+    </div>
 
-    <tui-data-list-wrapper
-      *tuiDropdown
-      [items]="roles"
-    />
-  </tui-textfield>
+    <div class="user-role__heading">
+      <h2>Modifier le rôle</h2>
+      <p>
+        Gérez les autorisations associées à cet utilisateur.
+      </p>
+    </div>
+  </header>
 
-  @if (messageError) {
-    <p>{{ messageError }}</p>
-  }
+  <section class="user-role__user">
+    <div class="user-role__avatar">
+      <tui-icon icon="@tui.user-round"></tui-icon>
+    </div>
 
-  <button
-    tuiButton
-    type="submit"
-    [disabled]="editUserRoleForm.invalid"
+    <div class="user-role__user-info">
+      <span class="user-role__user-name">
+        {{ user.name }}
+      </span>
+
+      <span class="user-role__user-label">
+        Utilisateur
+      </span>
+    </div>
+  </section>
+
+  <form
+    class="user-role__form"
+    [formGroup]="editUserRoleForm"
+    (ngSubmit)="updateUserRole()"
   >
-    Enregistrer
-  </button>
-</form>
+    <div class="user-role__field">
+      <label class="user-role__label">
+        Rôle à attribuer
+      </label>
 
-<ng-template
-  [tuiNotificationOptions]="{label: 'Changement de role', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
-  [(tuiNotification)]="show"
->
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
-  <button
-    tuiButton
-    type="button"
-    (click)="show.set(false)"
+      <tui-textfield
+        tuiChevron
+        class="user-role__select"
+      >
+        <input
+          tuiSelect
+          formControlName="role"
+          placeholder="Sélectionner un rôle"
+        />
+
+        <tui-data-list-wrapper
+          *tuiDropdown
+          [items]="roles"
+        />
+      </tui-textfield>
+
+      @if (
+        editUserRoleForm.controls.role.invalid &&
+        editUserRoleForm.controls.role.touched
+        ) {
+        <span class="user-role__field-error">
+          Veuillez sélectionner un rôle.
+        </span>
+      }
+    </div>
+
+    @if (messageError && !show()) {
+      <div class="user-role__error">
+        <tui-icon icon="@tui.circle-alert"></tui-icon>
+        <span>{{ messageError }}</span>
+      </div>
+    }
+
+    <div class="user-role__actions">
+      <button
+        tuiButton
+        type="submit"
+        class="user-role__submit"
+        [disabled]="editUserRoleForm.invalid"
+      >
+        <tui-icon icon="@tui.save"></tui-icon>
+        Enregistrer les modifications
+      </button>
+    </div>
+  </form>
+
+  <ng-template
+    [tuiNotificationOptions]="{
+      label: isSuccess()
+        ? 'Modification effectuée'
+        : 'Une erreur est survenue',
+      autoClose: 0,
+      closable: false,
+      appearance: isSuccess() ? 'positive' : 'negative'
+    }"
+    [(tuiNotification)]="show"
   >
-    Close
-  </button>
-</ng-template>
+    <div class="user-role__notification">
+      <span tuiSubtitle>
+        {{ messageSuccess || messageError }}
+      </span>
+
+      <button
+        tuiButton
+        type="button"
+        appearance="flat"
+        size="s"
+        (click)="show.set(false)"
+      >
+        Fermer
+      </button>
+    </div>
+  </ng-template>
+</div>

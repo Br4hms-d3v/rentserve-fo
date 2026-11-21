@@ -1,136 +1,814 @@
-@light-background-color: #F1EFE8;
-@light-title: #3B6D11 !important;
-@light-breadcrumb: #5F5E5A !important;
-@light-label-input: #3B6D11 !important;
-@light-label: #5F5E5A !important;
-@light-btn-back: #D9764A;
-@light-btn-new: green;
-@light-btn-cancel: red;
+// ==========================================
+// THÈME CLAIR
+// ==========================================
 
-@dark-background-color: #1C1F17;
-@dark-title: #8FC15C;
-@dark-breadcrumb: #A6A599 !important;
-@dark-label-input: #8FC15C !important;
-@dark-label: #A6A599 !important;
+.light-mode {
+  --background: #FFFFFF;
+  --background-section: #F3F6F8;
+  --surface: #E8EEF3;
+
+  --primary: #173B57;
+  --primary-hover: #214F70;
+  --secondary: #3B82F6;
+  --active: #2563EB;
+
+  --text-primary: #263746;
+  --text-secondary: #64748B;
+
+  --border: #D8E1E9;
+
+  --card-shadow: 0 4px 20px rgba(23, 59, 87, 0.06);
+}
+
+
+// ==========================================
+// THÈME SOMBRE
+// ==========================================
+
+.dark-mode {
+  --background: #071522;
+  --background-section: #172A3D;
+  --surface: #20364D;
+
+  --primary: #0B1F33;
+  --primary-hover: #142E47;
+  --secondary: #3B82F6;
+  --active: #60A5FA;
+
+  --text-primary: #F1F5F9;
+  --text-secondary: #A8B7C9;
+
+  --border: #30465C;
+
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+// ==========================================
+// CONTENEUR PRINCIPAL
+// ==========================================
 
 .userMaterialReturn {
-  height: 90vh;
-}
-
-h1 {
-  margin-top: 3px;
-  text-align: center;
-}
-
-form {
-  max-width: 700px;
   width: 100%;
-  margin: 40px auto;
-  padding: 24px;
+  min-height: 90vh;
   box-sizing: border-box;
 
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+  padding: 40px 24px;
 
-  // Checkbox : 1/3 et list : 2/3
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    align-items: center;
-    gap: 20px;
+  background-color: var(--background);
+  color: var(--text-primary);
+
+  transition: background-color 0.25s ease,
+  color 0.25s ease;
+
+  .page-container {
     width: 100%;
+    max-width: 950px;
+    margin: 0 auto;
   }
+}
 
-  .inputAvailability {
+
+// ==========================================
+// ICÔNES TAIGA UI
+// ==========================================
+
+tui-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+
+// ==========================================
+// EN-TÊTE
+// ==========================================
+
+.page-header {
+  margin-bottom: 30px;
+
+  .header-content {
     display: flex;
     align-items: center;
+    gap: 18px;
+  }
 
-    label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
+  .header-icon {
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background-color: var(--background-section);
+    color: var(--active);
+
+    tui-icon {
+      font-size: 28px;
     }
   }
+
+  .header-text {
+
+    h1 {
+      margin: 0;
+
+      font-size: 27px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+
+      color: var(--text-primary);
+    }
+
+    p {
+      margin: 7px 0 0;
+
+      font-size: 14px;
+      line-height: 1.5;
+
+      color: var(--text-secondary);
+    }
+  }
+}
+
+
+// ==========================================
+// SECTION VÉRIFICATIONS
+// ==========================================
+
+.verification-section {
+  box-sizing: border-box;
+  width: 100%;
+
+  margin-bottom: 24px;
+  padding: 24px;
+
+  background-color: var(--background-section);
+
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  box-shadow: var(--card-shadow);
+
+
+  // En-tête
+
+  .verification-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    margin-bottom: 22px;
+  }
+
+  .verification-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background-color: var(--surface);
+    color: var(--active);
+
+    tui-icon {
+      font-size: 23px;
+    }
+  }
+
+  .verification-title {
+
+    h2 {
+      margin: 0;
+
+      font-size: 17px;
+      font-weight: 650;
+
+      color: var(--text-primary);
+    }
+
+    p {
+      margin: 6px 0 0;
+
+      font-size: 13px;
+      line-height: 1.5;
+
+      color: var(--text-secondary);
+    }
+  }
+
+
+  // Liste
+
+  .verification-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .verification-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+
+    padding: 12px;
+
+    background-color: var(--background);
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    transition: border-color 0.2s ease;
+
+    &:hover {
+      border-color: var(--active);
+    }
+  }
+
+  .verification-item-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background-color: var(--surface);
+    color: var(--active);
+
+    tui-icon {
+      font-size: 21px;
+    }
+  }
+
+  .verification-item-content {
+    flex: 1;
+    min-width: 0;
+
+    strong {
+      display: block;
+
+      font-size: 14px;
+      font-weight: 600;
+
+      color: var(--text-primary);
+    }
+
+    p {
+      margin: 5px 0 0;
+
+      font-size: 13px;
+      line-height: 1.5;
+
+      color: var(--text-secondary);
+    }
+  }
+
+
+  // Information complémentaire
+
+  .verification-footer {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+
+    margin-top: 20px;
+    padding: 12px;
+
+    background-color: var(--surface);
+    border-radius: 8px;
+
+    color: var(--active);
+
+    tui-icon {
+      font-size: 18px;
+      margin-top: 1px;
+    }
+
+    p {
+      margin: 0;
+
+      font-size: 12px;
+      line-height: 1.5;
+
+      color: var(--text-secondary);
+    }
+  }
+}
+
+
+// ==========================================
+// CARTE DU FORMULAIRE
+// ==========================================
+
+.return-card {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 32px;
+
+  background-color: var(--background-section);
+
+  border: 1px solid var(--border);
+  border-radius: 16px;
+
+  box-shadow: var(--card-shadow);
+
+  transition: background-color 0.25s ease,
+  border-color 0.25s ease;
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid var(--border);
+
+    h2 {
+      margin: 0;
+
+      font-size: 19px;
+      font-weight: 650;
+
+      color: var(--text-primary);
+    }
+
+    p {
+      margin: 8px 0 0;
+
+      font-size: 13px;
+      line-height: 1.5;
+
+      color: var(--text-secondary);
+    }
+  }
+
+  .required-indicator {
+    flex-shrink: 0;
+
+    font-size: 11px;
+    color: var(--text-secondary);
+
+    span {
+      color: #DC2626;
+    }
+  }
+}
+
+
+// ==========================================
+// FORMULAIRE
+// ==========================================
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+
+  width: 100%;
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    align-items: start;
+    gap: 30px;
+
+    width: 100%;
+  }
+}
+
+
+// ==========================================
+// LABELS
+// ==========================================
+
+.field-label,
+.inputAvailability > label {
+  display: block;
+
+  margin-bottom: 12px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: var(--text-primary);
+}
+
+.required-star {
+  color: #DC2626;
+}
+
+
+// ==========================================
+// DISPONIBILITÉ
+// ==========================================
+
+.inputAvailability {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .switch-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    min-height: 42px;
+  }
+
+  .availability-text {
+    font-size: 14px;
+    font-weight: 600;
+
+    color: var(--active);
+  }
+
+  small {
+    font-size: 12px;
+    line-height: 1.5;
+
+    color: var(--text-secondary);
+  }
+
+  input[tuiSwitch] {
+    --tui-background-accent-1: #2563EB;
+    --tui-background-accent-1-hover: #3B82F6;
+  }
+}
+
+
+// ==========================================
+// ÉTAT DU MATÉRIEL
+// ==========================================
+
+.inputState {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  width: 100%;
+  min-width: 0;
 
   tui-textfield {
     width: 100%;
-    min-width: 0;
+    color: var(--text-primary);
   }
 
-  // Boutons
-  .form-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
-
-    button {
-      min-width: 120px;
-    }
-  }
-
-}
-
-
-// THEME
-
-input[tuiSwitch] {
-  &:checked {
-    --tui-background-accent-1: #22c55e;
-    --tui-background-accent-1-hover: #16a34a;
-  }
-
-  &:not(:checked) {
-    --tui-background-neutral-1: #ef4444;
-    --tui-background-neutral-1-hover: #dc2626;
+  .error-message {
+    font-size: 12px;
+    color: #DC2626;
   }
 }
 
-#btn-back {
-  background-color: @light-btn-back;
-  width: 250px;
-}
 
-#btn-return {
-  background-color: @light-btn-new;
-  width: 250px;
-}
-
-.light-mode {
-  background-color: @light-background-color;
-
-  h1{
-    color: @light-title;
-  }
-
-  label{
-    color: @light-breadcrumb;
-  }
-
-  input{
-    color: @light-label-input;
-  }
-}
+// ==========================================
+// THÈME SOMBRE : TAIGA UI
+// ==========================================
 
 .dark-mode {
 
+  tui-textfield {
+    --tui-background-base: #20364D;
+    --tui-background-neutral-1: #20364D;
+
+    --tui-text-primary: #F1F5F9;
+    --tui-text-secondary: #A8B7C9;
+
+    --tui-border-normal: #30465C;
+  }
+
 }
 
 
-// Adaptation mobile
-@media (max-width: 600px) {
-  .form-row {
-    grid-template-columns: 1fr;
+// ==========================================
+// ACTIONS
+// ==========================================
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+
+  width: 100%;
+
+  padding-top: 25px;
+
+  border-top: 1px solid var(--border);
+
+  button {
+    min-width: 155px;
+    min-height: 44px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: background-color 0.2s ease,
+    transform 0.2s ease;
+
+    tui-icon {
+      font-size: 18px;
+    }
   }
 
-  .form-actions {
-    flex-direction: column;
+  #btn-return {
+    min-width: 205px;
 
-    button {
-      width: 100%;
+    background-color: var(--primary);
+    color: #FFFFFF;
+
+    &:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+  }
+
+  #btn-back {
+    background-color: transparent;
+
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+
+    &:hover {
+      background-color: var(--surface);
     }
   }
 }
+
+
+// ==========================================
+// TABLETTES
+// ==========================================
+
+@media (max-width: 768px) {
+
+  .userMaterialReturn {
+    padding: 30px 20px;
+  }
+
+  .return-card {
+    padding: 25px;
+  }
+
+  .verification-section {
+    padding: 20px;
+  }
+
+  form {
+    .form-row {
+      gap: 20px;
+    }
+  }
+
+  .page-header {
+    margin-bottom: 25px;
+  }
+}
+
+
+// ==========================================
+// MOBILES
+// ==========================================
+
+@media (max-width: 600px) {
+
+  .userMaterialReturn {
+    min-height: 90vh;
+    padding: 22px 14px;
+  }
+
+
+  // En-tête
+  .page-header {
+    margin-bottom: 22px;
+
+    .header-content {
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .header-icon {
+      width: 45px;
+      height: 45px;
+      min-width: 45px;
+
+      border-radius: 11px;
+
+      tui-icon {
+        font-size: 23px;
+      }
+    }
+
+    .header-text {
+
+      h1 {
+        font-size: 21px;
+      }
+
+      p {
+        font-size: 13px;
+      }
+    }
+  }
+
+
+  // Vérifications
+  .verification-section {
+    padding: 18px 15px;
+
+    .verification-header {
+      gap: 10px;
+
+      h2 {
+        font-size: 16px;
+      }
+    }
+
+    .verification-list {
+      gap: 12px;
+    }
+
+    .verification-item {
+      padding: 10px;
+      gap: 10px;
+
+      .verification-item-content {
+
+        strong {
+          font-size: 13px;
+        }
+
+        p {
+          font-size: 12px;
+        }
+      }
+    }
+
+    .verification-footer {
+      margin-top: 16px;
+    }
+  }
+
+
+  // Formulaire
+  .return-card {
+    padding: 20px 16px;
+    border-radius: 12px;
+
+    .card-header {
+      flex-direction: column;
+      gap: 10px;
+
+      margin-bottom: 25px;
+
+      h2 {
+        font-size: 17px;
+      }
+    }
+  }
+
+  form {
+    gap: 25px;
+
+    .form-row {
+      grid-template-columns: 1fr;
+      gap: 25px;
+    }
+  }
+
+
+  // Boutons
+  .form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 12px;
+
+    button {
+      width: 100%;
+      min-width: unset;
+      min-height: 46px;
+    }
+
+    #btn-return,
+    #btn-back {
+      width: 100%;
+      min-width: unset;
+    }
+  }
+
+}
+
+
+// ==========================================
+// PETITS MOBILES
+// ==========================================
+
+@media (max-width: 360px) {
+
+  .userMaterialReturn {
+    padding: 18px 10px;
+  }
+
+  .return-card {
+    padding: 16px 12px;
+  }
+
+  .verification-section {
+    padding: 15px 12px;
+  }
+
+  .page-header {
+
+    .header-text {
+
+      h1 {
+        font-size: 19px;
+      }
+
+    }
+  }
+}
+
+
+// ==========================================
+// CORRECTION INPUT TAIGA UI
+// ==========================================
+
+.inputState {
+  tui-textfield {
+    width: 100%;
+
+    // Mode clair
+    --tui-background-base: #E8EEF3;
+    --tui-background-neutral-1: #E8EEF3;
+    --tui-text-primary: #263746;
+    --tui-text-secondary: #64748B;
+    --tui-border-normal: #D8E1E9;
+
+    color: #263746;
+    background-color: #E8EEF3;
+    border-radius: 9px;
+  }
+
+  input[tuiSelect] {
+    color: #263746 !important;
+    background-color: #E8EEF3 !important;
+    -webkit-text-fill-color: #263746 !important;
+  }
+
+  input[tuiSelect]::placeholder {
+    color: #64748B !important;
+    opacity: 1;
+  }
+}
+
+// MODE SOMBRE
+.dark-mode {
+  .inputState {
+    tui-textfield {
+      --tui-background-base: #20364D;
+      --tui-background-neutral-1: #20364D;
+      --tui-text-primary: #F1F5F9;
+      --tui-text-secondary: #A8B7C9;
+      --tui-border-normal: #30465C;
+
+      color: #F1F5F9;
+      background-color: #20364D;
+    }
+
+    input[tuiSelect] {
+      color: #F1F5F9 !important;
+      background-color: #20364D !important;
+      -webkit-text-fill-color: #F1F5F9 !important;
+    }
+
+    input[tuiSelect]::placeholder {
+      color: #A8B7C9 !important;
+    }
+  }
+}
+

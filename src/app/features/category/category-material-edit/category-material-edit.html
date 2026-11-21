@@ -1,66 +1,149 @@
-<div class="editCategory-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
-  <!-- Breadcrumbs -->
-  <tui-breadcrumbs>
-    @for (link of links; track link) {
-      <a
-        *tuiItem
-        tuiLink
-        [routerLink]="link.routerLink"
+
+<div
+  class="edit-category"
+  [ngClass]="isDarkMode ? 'dark-mode' : 'light-mode'"
+>
+  <div class="edit-category__content">
+
+    <!-- Fil d’Ariane -->
+    <tui-breadcrumbs class="edit-category__breadcrumbs">
+      @for (link of links; track link.caption) {
+        <a
+          *tuiItem
+          tuiLink
+          [routerLink]="link.routerLink"
+        >
+          {{ link.caption }}
+        </a>
+      }
+    </tui-breadcrumbs>
+
+    <!-- En-tête -->
+    <header class="edit-category__header">
+      <h1 id="titleEditCategory">
+        {{ title }}
+      </h1>
+
+      <p class="edit-category__description">
+        Modifiez les informations de la catégorie ci-dessous.
+      </p>
+    </header>
+
+    <!-- Formulaire -->
+    <section
+      class="edit-category__card"
+      aria-labelledby="category-form-title"
+    >
+      <div class="edit-category__card-header">
+        <h2 id="category-form-title">
+          Informations générales
+        </h2>
+
+        <p>
+          Les champs marqués d’un astérisque sont obligatoires.
+        </p>
+      </div>
+
+      <form
+        [formGroup]="editCategoryForm"
+        (ngSubmit)="onSubmitEditCategory()"
+        class="category-form"
       >
-        {{ link.caption }}
-      </a>
-    }
-  </tui-breadcrumbs>
+        <div class="category-form__field">
+          <tui-textfield>
+            <label tuiLabel for="nameCategory">
+              Nom de la catégorie *
+            </label>
 
+            <input
+              tuiInput
+              id="nameCategory"
+              type="text"
+              formControlName="nameCategory"
+              placeholder="Ex. : Matériel informatique"
+              autocomplete="off"
+              required
+              maxlength="100"
+              [attr.aria-invalid]="
+                editCategoryForm.controls.nameCategory.invalid &&
+                editCategoryForm.controls.nameCategory.touched
+              "
+              aria-describedby="nameCategory-help nameCategory-error"
+            />
+          </tui-textfield>
 
-  <h1 id="titleEditCategory">
-    {{ title }}
-  </h1>
+          <p
+            id="nameCategory-help"
+            class="category-form__help"
+          >
+            Choisissez un nom clair et facilement identifiable.
+          </p>
 
-  <form [formGroup]="editCategoryForm" (ngSubmit)="onSubmitEditCategory()" class="category-form">
-    <tui-textfield>
-      <label tuiLabel> Nom de la catégorie</label>
-      <input
-        tuiInput
-        type="text"
-        formControlName="nameCategory"
-      />
-    </tui-textfield>
+          @if (
+            editCategoryForm.controls.nameCategory.touched &&
+            editCategoryForm.controls.nameCategory.hasError('required')
+            ) {
+            <p
+              id="nameCategory-error"
+              class="category-form__error"
+              role="alert"
+            >
+              Le nom de la catégorie est obligatoire.
+            </p>
+          }
+        </div>
 
-    <button
-      tuiButton
-      id="cancelDelete"
-      type="button"
-      appearance="primary"
-      size="xl"
-      [routerLink]="['/dashboard']"
-    >
-      Retour
-    </button>
+        <div class="category-form__actions">
+          <button
+            tuiButton
+            type="button"
+            appearance="outline"
+            size="l"
+            class="category-form__cancel"
+            [routerLink]="['/dashboard']"
+          >
+            Annuler
+          </button>
 
-    <button
-      tuiButton
-      id="butonUpdate"
-      type="submit"
-      appearance="primary"
-      size="xl"
-    >
-      Modifier
-    </button>
-  </form>
-
+          <button
+            tuiButton
+            type="submit"
+            appearance="primary"
+            size="l"
+            class="category-form__submit"
+            [disabled]="editCategoryForm.invalid"
+          >
+            Enregistrer les modifications
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
 </div>
 
+<!-- Notification de résultat -->
 <ng-template
-  [tuiNotificationOptions]="{label: 'Modification', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: isSuccess() ? 'Modification réussie' : 'Une erreur est survenue',
+    autoClose: 0,
+    closable: false,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
-  <button
-    tuiButton
-    type="button"
-    (click)="show.set(false)"
-  >
-    Close
-  </button>
+  <div class="edit-category__notification">
+    <span tuiSubtitle>
+      {{ messageSuccess || messageError }}
+    </span>
+
+    <button
+      tuiButton
+      type="button"
+      appearance="secondary"
+      size="s"
+      (click)="show.set(false)"
+    >
+      Fermer
+    </button>
+  </div>
 </ng-template>

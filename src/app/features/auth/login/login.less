@@ -1,75 +1,550 @@
-@light-background-color: #F1EFE8;
-@light-btn-login: #D9764A;
-@light-input-light: #5F5E5A;
-@light-icon-input: #5C8A3A !important;
-@light-label-input: #3B6D11 !important;
+/* =========================================================
+   THÈME CLAIR
+   ========================================================= */
 
-@dark-background-color: #1C1F17;
-@dark-btn-login: #E8845A;
-@dark-input-light: #F1EFE8;
-@dark-icon-input: #7FB84D !important;
-@dark-label-input: #8FC15C !important;
+@light-page: #FFFFFF;
+@light-surface: #FFFFFF;
+@light-surface-hover: #F3F6F8;
+@light-border: #D8E1E9;
+@light-text: #263746;
+@light-text-secondary: #64748B;
+@light-primary: #173B57;
+@light-action: #3B82F6;
+@light-action-hover: #2563EB;
+@light-accent: #173B57;
+@light-accent-hover: #102D43;
+@light-button-text: #FFFFFF;
+@light-shadow: 0 4px 20px rgb(23 59 87 / 6%);
+
+/* =========================================================
+   THÈME SOMBRE
+   ========================================================= */
+
+@dark-page: #071522;
+@dark-surface: #172A3D;
+@dark-surface-hover: #20364D;
+@dark-border: #30465C;
+@dark-text: #F1F5F9;
+@dark-text-secondary: #A8B7C9;
+@dark-primary: #F1F5F9;
+@dark-action: #3B82F6;
+@dark-action-hover: #60A5FA;
+@dark-accent: #3B82F6;
+@dark-accent-hover: #60A5FA;
+@dark-button-text: #FFFFFF;
+@dark-shadow: 0 4px 20px rgb(0 0 0 / 16%);
+
+/* =========================================================
+   DIMENSIONS
+   ========================================================= */
+
+@login-max-width: 700px;
+@login-padding: 30px;
+@login-radius: 18px;
+@field-radius: 10px;
+@button-height: 48px;
+@transition-speed: 180ms;
+
+
+/* =========================================================
+   CONTENEUR PRINCIPAL
+   ========================================================= */
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
 
 .login-container {
-  height: 80vh;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
-  padding: 20px;
+  width: 100%;
+  min-height: min(80vh, 760px);
+  padding: 32px 20px;
+
   box-sizing: border-box;
 
+  background: @light-page;
+  color: @light-text;
+
+  transition:
+    background-color @transition-speed ease,
+    color @transition-speed ease;
 }
 
-.login-form {
-  width: 100%;
-  max-width: 550px;
+
+/* =========================================================
+   CONTENU GLOBAL
+   Logo + identité + formulaire
+   ========================================================= */
+
+.login-content {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-}
+  align-items: center;
 
-.light-mode {
-  background-color: @light-background-color;
-
-  input[tuiInput] {
-    color: @light-input-light;
-  }
-
-  label[tuiLabel] {
-    color: @light-label-input;
-  }
-
-  .btn-login {
-    background-color: @light-btn-login;
-  }
-
-  .custom-icon-textfield,
-  .custom-icon-textfield:focus-within,
-  .custom-icon-textfield:hover {
-    color: @light-icon-input;
-  }
+  width: 100%;
+  max-width: @login-max-width;
+  min-width: 0;
+  gap: 24px;
 }
 
 
-.dark-mode {
-  background-color: @dark-background-color;
+/* =========================================================
+   IDENTITÉ RENTSERVE
+   ========================================================= */
+
+.login-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  gap: 8px;
+
+  text-align: center;
+}
+
+/* Logo */
+.login-brand-logo {
+  display: block;
+  flex: 0 0 auto;
+
+  width: 160px;
+  height: auto;
+  max-width: 100%;
+
+  object-fit: contain;
+  border-radius: 16px;
+}
+
+/* Nom RentServe */
+.login-brand-title {
+  margin: 0;
+
+  color: @light-primary;
+
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  line-height: 1.2;
+}
+
+/* Message de bienvenue */
+.login-brand-subtitle {
+  margin: 0;
+
+  color: @light-text-secondary;
+
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   FORMULAIRE
+   ========================================================= */
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: @login-padding;
+
+  box-sizing: border-box;
+
+  background: @light-surface;
+  border: 1px solid @light-border;
+  border-radius: @login-radius;
+  box-shadow: @light-shadow;
+
+  transition:
+    background-color @transition-speed ease,
+    border-color @transition-speed ease,
+    box-shadow @transition-speed ease;
+}
+
+
+/* =========================================================
+   TITRE ET INTRODUCTION DU FORMULAIRE
+   ========================================================= */
+
+.login-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  margin-bottom: 4px;
+
+  h1,
+  h2 {
+    margin: 0;
+
+    color: @light-primary;
+
+    font-size: clamp(24px, 4vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.25;
+  }
+
+  p {
+    margin: 0;
+
+    color: @light-text-secondary;
+
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
+
+/* =========================================================
+   CHAMPS TAIGA UI
+   ========================================================= */
+
+.custom-icon-textfield {
+  width: 100%;
+  height: 65px;
+  min-width: 0;
+
+  color: @light-action;
+
+  &:focus-within {
+    color: @light-action-hover;
+  }
 
   input[tuiInput] {
-    color: @dark-input-light;
+    color: @light-text;
+    caret-color: @light-action;
+  }
+
+  input[tuiInput]::placeholder {
+    color: @light-text-secondary;
+    opacity: 0.8;
   }
 
   label[tuiLabel] {
-    color: @dark-label-input;
+    color: @light-text-secondary;
+  }
+
+  button[tuiButton] {
+    flex-shrink: 0;
+    color: @light-text-secondary;
+  }
+
+  button[tuiButton]:hover {
+    color: @light-action-hover;
+  }
+}
+
+
+/* =========================================================
+   ERREURS DE VALIDATION
+   ========================================================= */
+
+.field-error {
+  margin: -10px 0 0;
+
+  color: @light-accent-hover;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   BOUTON DE CONNEXION
+   ========================================================= */
+
+.btn-login {
+  width: 100%;
+  min-height: @button-height;
+  margin-top: 2px;
+  padding: 12px 18px;
+
+  box-sizing: border-box;
+
+  border: none;
+  border-radius: @field-radius;
+
+  background: @light-accent;
+  color: @light-button-text;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  transition:
+    background-color @transition-speed ease,
+    transform @transition-speed ease;
+
+  &:hover {
+    background: @light-accent-hover;
+  }
+
+  &:active {
+    transform: scale(0.99);
+  }
+
+  &:focus-visible {
+    outline: 2px solid @light-action;
+    outline-offset: 3px;
+  }
+}
+
+
+/* =========================================================
+   THÈME CLAIR
+   ========================================================= */
+
+.login-container.light-mode {
+  background: @light-page;
+  color: @light-text;
+
+  .login-brand-title {
+    color: @light-primary;
+  }
+
+  .login-brand-subtitle {
+    color: @light-text-secondary;
+  }
+
+  .login-form {
+    background: @light-surface;
+    border-color: @light-border;
+    box-shadow: @light-shadow;
+  }
+
+  .login-heading {
+    h1,
+    h2 {
+      color: @light-primary;
+    }
+
+    p {
+      color: @light-text-secondary;
+    }
+  }
+
+  .custom-icon-textfield {
+    color: @light-action;
   }
 
   .btn-login {
-    background-color: @dark-btn-login;
+    background: @light-accent;
+    color: @light-button-text;
+
+    &:hover {
+      background: @light-accent-hover;
+    }
   }
 
-  .custom-icon-textfield,
-  .custom-icon-textfield:focus-within,
-  .custom-icon-textfield:hover {
-    color: @light-icon-input;
+  .field-error {
+    color: @light-accent-hover;
+  }
+}
+
+
+/* =========================================================
+   THÈME SOMBRE
+   ========================================================= */
+
+.login-container.dark-mode {
+  background: @dark-page;
+  color: @dark-text;
+
+  .login-brand-title {
+    color: @dark-primary;
+  }
+
+  .login-brand-subtitle {
+    color: @dark-text-secondary;
+  }
+
+  .login-form {
+    background: @dark-surface;
+    border-color: @dark-border;
+    box-shadow: @dark-shadow;
+  }
+
+  .login-heading {
+    h1,
+    h2 {
+      color: @dark-primary;
+    }
+
+    p {
+      color: @dark-text-secondary;
+    }
+  }
+
+  .custom-icon-textfield {
+    color: @dark-action;
+
+    &:focus-within {
+      color: @dark-action-hover;
+    }
+
+    input[tuiInput] {
+      color: @dark-text;
+      caret-color: @dark-action;
+    }
+
+    input[tuiInput]::placeholder,
+    label[tuiLabel],
+    button[tuiButton] {
+      color: @dark-text-secondary;
+    }
+
+    button[tuiButton]:hover {
+      color: @dark-action-hover;
+    }
+  }
+
+  .field-error {
+    color: @dark-accent-hover;
+  }
+
+  .btn-login {
+    background: @dark-accent;
+    color: @dark-button-text;
+
+    &:hover {
+      background: @dark-accent-hover;
+    }
+  }
+}
+
+
+/* =========================================================
+   TABLETTES
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .login-container {
+    min-height: 70vh;
+    padding: 28px 20px;
+  }
+
+  .login-content {
+    gap: 22px;
+  }
+
+  .login-form {
+    max-width: 100%;
+    padding: 26px;
+    gap: 18px;
+  }
+}
+
+
+/* =========================================================
+   TÉLÉPHONES
+   ========================================================= */
+
+@media (max-width: 480px) {
+  .login-container {
+    min-height: 60vh;
+    padding: 24px 14px;
+  }
+
+  .login-content {
+    gap: 20px;
+  }
+
+  .login-brand {
+    gap: 7px;
+  }
+
+  .login-brand-logo {
+    width: 72px;
+  }
+
+  .login-brand-title {
+    font-size: 30px;
+  }
+
+  .login-brand-subtitle {
+    font-size: 14px;
+  }
+
+  .login-form {
+    max-width: 100%;
+    padding: 22px 18px;
+    gap: 16px;
+
+    border-radius: 16px;
+  }
+
+  .login-heading {
+    h1,
+    h2 {
+      font-size: 25px;
+    }
+
+    p {
+      font-size: 13px;
+    }
+  }
+
+  .btn-login {
+    min-height: 46px;
+  }
+}
+
+
+/* =========================================================
+   TRÈS PETITS TÉLÉPHONES
+   ========================================================= */
+
+@media (max-width: 360px) {
+  .login-container {
+    padding: 20px 10px;
+  }
+
+  .login-content {
+    gap: 18px;
+  }
+
+  .login-brand-logo {
+    width: 64px;
+  }
+
+  .login-brand-title {
+    font-size: 28px;
+  }
+
+  .login-brand-subtitle {
+    font-size: 13px;
+  }
+
+  .login-form {
+    padding: 20px 14px;
+    gap: 15px;
+  }
+}
+
+
+/* =========================================================
+   ACCESSIBILITÉ
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .login-container,
+  .login-form,
+  .btn-login {
+    transition: none;
+  }
+
+  .btn-login:active {
+    transform: none;
   }
 }

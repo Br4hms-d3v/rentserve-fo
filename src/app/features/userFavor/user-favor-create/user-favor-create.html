@@ -1,140 +1,239 @@
-<div class="createUserFavor-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
 
-  <h1 class="titleEditUserFavor">
-    {{ title }}
-  </h1>
+<div
+  class="createUserFavor-container"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+  <div class="page-header">
+    <div class="header-content">
+      <span class="page-eyebrow">GESTION DES SERVICES</span>
 
-  <form [formGroup]="createUserFavorForm" (ngSubmit)="createUserFavor()" class="userFavor-form">
+      <h1 class="titleEditUserFavor">
+        {{ title }}
+      </h1>
 
-    <div class="inputNameFavor">
-      <tui-textfield tuiChevron [stringify]="stringify">
-        <label tuiLabel>Nom du service</label>
-        <input tuiComboBox formControlName="favor" placeholder="Choisir un service" />
-
-        <tui-data-list-wrapper
-          *tuiDropdown
-          new
-          [items]="favourList | tuiFilterByInput"
-          [emptyContent]="emptyFavor"
-        />
-
-        <ng-template #emptyFavor>
-          <div class="empty-list">
-            <p>Aucun service trouvé</p>
-          </div>
-        </ng-template>
-      </tui-textfield>
+      <p class="page-description">
+        Renseignez les informations de votre service afin de le proposer
+        aux utilisateurs.
+      </p>
     </div>
+  </div>
 
-    <div class="textDescription">
-      <tui-textfield>
-        <label tuiLabel>Description</label>
-        <textarea
-          placeholder="Écrivez votre description"
-          tuiTextarea
-          formControlName="descriptionFavor"
-          [limit]="150"
-          [max]="6"
-          [min]="3"
-        ></textarea>
-      </tui-textfield>
-    </div>
+  <form
+    [formGroup]="createUserFavorForm"
+    (ngSubmit)="createUserFavor()"
+    class="userFavor-form"
+  >
+    <!-- Informations générales -->
+    <section class="form-section">
+      <div class="section-header">
+        <div>
+          <h2>Informations générales</h2>
+          <p>Présentez votre service et ses caractéristiques.</p>
+        </div>
+      </div>
 
-    <div class="favor-options">
+      <div class="inputNameFavor">
+        <tui-textfield tuiChevron [stringify]="stringify">
+          <label tuiLabel>Nom du service</label>
 
-      <div class="inputPrice">
-        <tui-textfield [style.width.rem]="12">
-          <label tuiLabel>Prix par heure</label>
           <input
-            postfix=" €"
-            tuiInputNumber
-            formControlName="priceHourFavor"
-            [min]="1"
+            tuiComboBox
+            formControlName="favor"
+            placeholder="Sélectionnez un service"
           />
+
+          <tui-data-list-wrapper
+            *tuiDropdown
+            new
+            [items]="favourList | tuiFilterByInput"
+            [emptyContent]="emptyFavor"
+          />
+
+          <ng-template #emptyFavor>
+            <div class="empty-list">
+              <p>Aucun service trouvé.</p>
+            </div>
+          </ng-template>
         </tui-textfield>
       </div>
 
-      <div class="inputAvailability">
-        <label>
-          <input tuiSwitch type="checkbox" formControlName="isAvailable" />
-          Disponible
-        </label>
+      <div class="textDescription">
+        <tui-textfield>
+          <label tuiLabel>Description du service</label>
+
+          <textarea
+            placeholder="Décrivez votre service en quelques mots..."
+            tuiTextarea
+            formControlName="descriptionFavor"
+            [limit]="150"
+            [max]="6"
+            [min]="3"
+          ></textarea>
+        </tui-textfield>
+
+        <span class="field-hint">
+          Décrivez clairement les prestations proposées.
+        </span>
       </div>
-    </div>
-    <div class="inputImage">
-      <label tuiInputFiles>
-        <input
-          #validator="tuiInputFilesValidator"
-          accept="image/*"
-          tuiInputFiles
-          formControlName="pictures"
-          [multiple]="true"
-          (reject)="onReject($event)"
-        />
-      </label>
+    </section>
 
-      <tui-files class="tui-space_top-1">
-        @for (file of accepted$ | async; track file) {
-          <tui-file [file]="file" (remove)="onRemove(file)" />
-        }
+    <!-- Tarification et disponibilité -->
+    <section class="form-section">
+      <div class="section-header">
+        <div>
+          <h2>Tarification et disponibilité</h2>
+          <p>Définissez le prix et le statut de votre service.</p>
+        </div>
+      </div>
 
-        @for (file of rejected; track file) {
-          <tui-file
-            state="error"
-            [file]="(file | tuiFileRejected: validator | async) || file"
-            (remove)="onRemove(file)"
+      <div class="favor-options">
+
+        <div class="inputPrice">
+          <tui-textfield>
+            <label tuiLabel>Prix par heure</label>
+
+            <input
+              postfix=" €"
+              tuiInputNumber
+              formControlName="priceHourFavor"
+              [min]="1"
+            />
+          </tui-textfield>
+
+          <span class="field-hint">
+            Tarif horaire en euros.
+          </span>
+        </div>
+
+        <div class="inputAvailability">
+          <div class="availability-content">
+            <div class="availability-text">
+              <span class="availability-title">
+                Disponibilité du service
+              </span>
+              <span class="availability-description">
+                Autoriser les utilisateurs à consulter ce service.
+              </span>
+            </div>
+
+            <input
+              tuiSwitch
+              type="checkbox"
+              formControlName="isAvailable"
+            />
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Galerie d'images -->
+    <section class="form-section">
+      <div class="section-header">
+        <div>
+          <h2>Images du service</h2>
+          <p>Ajoutez des images pour illustrer votre prestation.</p>
+        </div>
+      </div>
+
+      <div class="inputImage">
+        <label tuiInputFiles>
+          <input
+            #validator="tuiInputFilesValidator"
+            accept="image/*"
+            tuiInputFiles
+            formControlName="pictures"
+            [multiple]="true"
+            (reject)="onReject($event)"
           />
-        }
-      </tui-files>
+        </label>
 
-      <tui-error
-        formControlName="pictures"
-        [order]="['maxLength']">
-      </tui-error>
-    </div>
+        <tui-files class="tui-space_top-1">
+          @for (file of accepted$ | async; track file) {
+            <tui-file
+              [file]="file"
+              (remove)="onRemove(file)"
+            />
+          }
 
+          @for (file of rejected; track file) {
+            <tui-file
+              state="error"
+              [file]="(file | tuiFileRejected: validator | async) || file"
+              (remove)="onRemove(file)"
+            />
+          }
+        </tui-files>
+
+        <tui-error
+          formControlName="pictures"
+          [order]="['maxLength']"
+        ></tui-error>
+      </div>
+    </section>
+
+    <!-- Actions -->
     <div class="favor-buttons">
+
       <button
-        [routerLink]="['/user-favor','my-user-favor']"
+        [routerLink]="['/user-favor', 'my-user-favor']"
         id="btn-back"
         tuiButton
-        size="m"
-      >
-        Retour
-      </button>
-
-      <button
-        (click)="onBack()"
         type="button"
-        id="btn-cancel"
-        tuiButton
-        size="m"
+        size="l"
       >
-        Annuler
+        <span>Retour</span>
       </button>
 
-      <button
-        type="submit"
-        id="btn-new"
-        tuiButton
-        size="m"
-      >
-        Créer
-      </button>
+      <div class="primary-actions">
+        <button
+          (click)="onBack()"
+          type="button"
+          id="btn-cancel"
+          tuiButton
+          size="l"
+        >
+          Annuler
+        </button>
+
+        <button
+          type="submit"
+          id="btn-new"
+          tuiButton
+          size="l"
+        >
+          Créer le service
+        </button>
+      </div>
+
     </div>
-  </form>
 
+  </form>
 </div>
+
+<!-- Notification -->
 <ng-template
-  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: isSuccess() ? 'Succès' : 'Erreur',
+    autoClose: 0,
+    closable: false,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
-  <button
-    tuiButton
-    type="button"
-    (click)="show.set(false)"
-  >
-    Close
-  </button>
+  <div class="notification-content">
+    <span tuiSubtitle>
+      {{ messageSuccess || messageError }}
+    </span>
+
+    <button
+      tuiButton
+      type="button"
+      size="s"
+      (click)="show.set(false)"
+    >
+      Fermer
+    </button>
+  </div>
 </ng-template>

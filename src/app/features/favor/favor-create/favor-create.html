@@ -1,6 +1,11 @@
-<div class="newFavor-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+<div
+  class="newFavor-container"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+
   <!-- Breadcrumbs -->
-  <tui-breadcrumbs>
+  <tui-breadcrumbs class="page-breadcrumbs">
     @for (link of links; track link) {
       <a
         *tuiItem
@@ -12,82 +17,185 @@
     }
   </tui-breadcrumbs>
 
+  <!-- Page header -->
+  <header class="page-header">
+    <div class="header-content">
+      <span class="page-eyebrow">GESTION DES SERVICES</span>
 
-  <h1 class="titleCreateFavor">
-    {{ title }}
-  </h1>
+      <h1 class="titleCreateFavor">
+        {{ title }}
+      </h1>
 
-  <!-- form to create a new favor -->
-  <form [formGroup]="newFavorForm" (ngSubmit)="onSubmitNewFavor()" class="favor-form">
+      <p class="page-description">
+        Ajoutez un nouveau service en renseignant les informations
+        nécessaires ci-dessous.
+      </p>
+    </div>
+  </header>
 
-    <!-- Category field with Taiga UI autocomplete -->
-    <tui-textfield tuiTextfieldSize="m" class="inputMatField">
-      <label tuiLabel>Nom de la catégorie:</label>
-      <input
-        #input
-        placeholder="Choisir une catégorie"
-        tuiInput
-        formControlName="category"
-      />
+  <!-- Main content -->
+  <main class="form-content">
 
-      @if (categoriesList | tuiFilterByInput; as filtered) {
-        @if (input.value) {
-          <tui-data-list-wrapper
-            *tuiDropdown
-            [items]="filtered"
-            [emptyContent]="emptyCategory"
-          />
-        }
-      }
-      <ng-template #emptyCategory>
-        <div class="empty-list">
-          <p>Aucune catégorie trouvée</p>
+    <section class="form-card">
+
+      <div class="form-card-header">
+        <div class="header-icon">
+          <tui-icon icon="@tui.file-plus"></tui-icon>
         </div>
-      </ng-template>
-    </tui-textfield>
 
+        <div>
+          <h2>Informations du service</h2>
+          <p>Les champs marqués sont obligatoires.</p>
+        </div>
+      </div>
 
-    <tui-textfield>
-      <label tuiLabel>Nom du Service :</label>
-      <input
-        tuiInput
-        type="text"
-        formControlName="nameFavor"
-      />
-    </tui-textfield>
+      <div class="form-divider"></div>
 
+      <!-- Form -->
+      <form
+        [formGroup]="newFavorForm"
+        (ngSubmit)="onSubmitNewFavor()"
+        class="favor-form"
+      >
 
-    <!-- Toggle / Switch -->
-    <p id="switchToggle">Rendre publique</p>
-    <input
-      tuiSwitch
-      type="checkbox"
-      formControlName="isAvailable"
-    />
-    <br />
+        <!-- Category -->
+        <div class="form-field">
+          <label class="field-label" for="category">
+            Catégorie
+            <span class="required">*</span>
+          </label>
 
-    <button
-      tuiButton
-      type="submit"
-      appearance="primary"
-      size="m"
-    >
-      Sauvegarder
-    </button>
-  </form>
+          <tui-textfield tuiTextfieldSize="l">
+
+            <input
+              #input
+              id="category"
+              tuiInput
+              formControlName="category"
+              placeholder="Sélectionnez une catégorie"
+              autocomplete="off"
+            />
+
+            @if (categoriesList | tuiFilterByInput; as filtered) {
+              @if (input.value) {
+                <tui-data-list-wrapper
+                  *tuiDropdown
+                  [items]="filtered"
+                  [emptyContent]="emptyCategory"
+                />
+              }
+            }
+
+            <ng-template #emptyCategory>
+              <div class="empty-list">
+                Aucune catégorie trouvée.
+              </div>
+            </ng-template>
+
+          </tui-textfield>
+
+          @if (
+            newFavorForm.controls.category.touched &&
+            newFavorForm.controls.category.invalid
+            ) {
+            <span class="field-error">
+              Veuillez sélectionner une catégorie.
+            </span>
+          }
+        </div>
+
+        <!-- Service name -->
+        <div class="form-field">
+
+          <label class="field-label" for="nameFavor">
+            Nom du service
+            <span class="required">*</span>
+          </label>
+
+          <tui-textfield tuiTextfieldSize="l">
+
+            <input
+              id="nameFavor"
+              tuiInput
+              type="text"
+              formControlName="nameFavor"
+              placeholder="Ex. : Assistance informatique"
+            />
+
+          </tui-textfield>
+
+          @if (
+            newFavorForm.controls.nameFavor.touched &&
+            newFavorForm.controls.nameFavor.invalid
+            ) {
+            <span class="field-error">
+              Veuillez renseigner le nom du service.
+            </span>
+          }
+
+        </div>
+
+        <!-- Availability -->
+        <div class="availability-section">
+
+          <div class="availability-info">
+            <span class="availability-title">
+              Rendre ce service public
+            </span>
+
+            <span class="availability-description">
+              Autoriser les autres utilisateurs à consulter ce service.
+            </span>
+          </div>
+
+          <input
+            tuiSwitch
+            type="checkbox"
+            formControlName="isAvailable"
+            aria-label="Rendre ce service public"
+          />
+
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+
+          <button
+            tuiButton
+            type="submit"
+            appearance="primary"
+            size="l"
+            [disabled]="isSubmitting"
+          >
+            {{ isSubmitting ? 'Enregistrement...' : 'Enregistrer le service' }}
+          </button>
+
+        </div>
+
+      </form>
+
+    </section>
+
+    <p class="form-footer">
+      <span class="required">*</span>
+      Les champs marqués d'un astérisque sont obligatoires.
+    </p>
+
+  </main>
 
 </div>
 
+<!-- Notification -->
 <ng-template
-  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: isSuccess() ? 'Opération réussie' : 'Une erreur est survenue',
+    autoClose: 5000,
+    closable: true,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
-  <button
-    tuiButton
-    type="button"
-    (click)="show.set(false)"
-  >
-    Close
-  </button>
+  <span tuiSubtitle>
+    {{ isSuccess() ? messageSuccess : messageError }}
+  </span>
 </ng-template>

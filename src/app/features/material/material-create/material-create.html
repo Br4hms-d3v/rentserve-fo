@@ -1,93 +1,204 @@
-<div class="newCategory-container" [attr.tuiTheme]="isDarkMode ? 'dark-mode' : 'light-mode'">
-  <!-- Breadcrumbs -->
-  <tui-breadcrumbs>
-    @for (link of links; track link) {
-      <a
-        *tuiItem
-        tuiLink
-        [routerLink]="link.routerLink"
-      >
-        {{ link.caption }}
-      </a>
-    }
-  </tui-breadcrumbs>
 
-
-  <h1 class="titleCreateMaterial">
-    {{ title }}
-  </h1>
-
-  <!-- form to create a new material -->
-  <form [formGroup]="newMaterialForm" (ngSubmit)="onSubmitNewMaterial()" class="material-form">
-
-    <!-- Category field with Taiga UI autocomplete -->
-    <tui-textfield tuiTextfieldSize="m" class="inputMatField">
-      <label tuiLabel>Nom de la catégorie:</label>
-      <input
-        #input
-        placeholder="Choisir une catégorie"
-        tuiInput
-        formControlName="category"
-      />
-
-      @if (categoriesList | tuiFilterByInput; as filtered) {
-        @if (input.value) {
-          <tui-data-list-wrapper
-            *tuiDropdown
-            [items]="filtered"
-            [emptyContent]="emptyCategory"
-          />
-        }
+<div
+  class="material-page"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+  <!-- En-tête et navigation -->
+  <header class="page-header">
+    <tui-breadcrumbs>
+      @for (link of links; track link.routerLink) {
+        <a *tuiItem tuiLink [routerLink]="link.routerLink">
+          {{ link.caption }}
+        </a>
       }
-      <ng-template #emptyCategory>
-        <div class="empty-list">
-          <p>Aucune catégorie trouvée</p>
+    </tui-breadcrumbs>
+
+    <div class="page-heading">
+      <div class="heading-content">
+        <h1 class="page-title">{{ title }}</h1>
+        <p class="page-description">
+          Ajoutez un nouveau matériel à votre inventaire
+          en renseignant les informations ci-dessous.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Formulaire -->
+  <main class="page-content">
+    <form
+      [formGroup]="newMaterialForm"
+      (ngSubmit)="onSubmitNewMaterial()"
+      class="material-form"
+    >
+      <section class="form-card">
+
+        <div class="card-header">
+          <div class="card-icon">
+            <tui-icon icon="@tui.package" />
+          </div>
+
+          <div>
+            <h2>Informations du matériel</h2>
+            <p>Les champs marqués d'un astérisque sont obligatoires.</p>
+          </div>
         </div>
-      </ng-template>
-    </tui-textfield>
 
+        <div class="card-body">
 
-    <tui-textfield>
-      <label tuiLabel>Nom du matériel :</label>
-      <input
-        tuiInput
-        type="text"
-        formControlName="nameMaterial"
-      />
-    </tui-textfield>
+          <!-- Catégorie -->
+          <div class="form-field">
+            <label tuiLabel for="category">
+              Catégorie <span class="required">*</span>
+            </label>
 
+            <tui-textfield tuiTextfieldSize="l">
+              <input
+                #input
+                id="category"
+                tuiInput
+                formControlName="category"
+                placeholder="Sélectionner une catégorie"
+                autocomplete="off"
+              />
 
-    <!-- Toggle / Switch -->
-    <p id="switchToggle">Rendre publique</p>
-    <input
-      tuiSwitch
-      type="checkbox"
-      formControlName="isAvailable"
-    />
-    <br />
+              @if (categoriesList | tuiFilterByInput; as filtered) {
+                @if (input.value) {
+                  <tui-data-list-wrapper
+                    *tuiDropdown
+                    [items]="filtered"
+                    [emptyContent]="emptyCategory"
+                  />
+                }
+              }
+
+              <ng-template #emptyCategory>
+                <div class="empty-list">
+                  Aucune catégorie trouvée.
+                </div>
+              </ng-template>
+            </tui-textfield>
+
+            @if (
+              newMaterialForm.controls.category.touched &&
+              newMaterialForm.controls.category.invalid
+              ) {
+              <span class="field-error">
+                Veuillez sélectionner une catégorie.
+              </span>
+            }
+          </div>
+
+          <!-- Nom du matériel -->
+          <div class="form-field">
+            <label tuiLabel for="nameMaterial">
+              Nom du matériel <span class="required">*</span>
+            </label>
+
+            <tui-textfield tuiTextfieldSize="l">
+              <input
+                id="nameMaterial"
+                tuiInput
+                type="text"
+                formControlName="nameMaterial"
+                placeholder="Ex. : Ordinateur portable"
+              />
+            </tui-textfield>
+
+            @if (
+              newMaterialForm.controls.nameMaterial.touched &&
+              newMaterialForm.controls.nameMaterial.invalid
+              ) {
+              <span class="field-error">
+                Veuillez renseigner le nom du matériel.
+              </span>
+            }
+          </div>
+
+          <!-- Disponibilité -->
+          <div class="visibility-section">
+            <div class="visibility-content">
+              <div class="visibility-icon">
+                <tui-icon icon="@tui.globe" />
+              </div>
+
+              <div class="visibility-text">
+                <label for="isAvailable">
+                  Rendre ce matériel public
+                </label>
+                <p>
+                  Autoriser les utilisateurs à consulter ce matériel.
+                </p>
+              </div>
+            </div>
+
+            <input
+              id="isAvailable"
+              tuiSwitch
+              type="checkbox"
+              formControlName="isAvailable"
+            />
+          </div>
+
+        </div>
+
+        <!-- Actions -->
+        <div class="card-footer">
+          <button
+            tuiButton
+            type="button"
+            appearance="secondary"
+            size="l"
+            (click)="newMaterialForm.reset({
+              category: '',
+              nameMaterial: '',
+              isAvailable: false
+            })"
+          >
+            Réinitialiser
+          </button>
+
+          <button
+            tuiButton
+            type="submit"
+            appearance="primary"
+            size="l"
+            [disabled]="newMaterialForm.invalid"
+          >
+            <tui-icon icon="@tui.save" />
+            Enregistrer le matériel
+          </button>
+        </div>
+
+      </section>
+    </form>
+  </main>
+</div>
+
+<!-- Notification -->
+<ng-template
+  [tuiNotificationOptions]="{
+    label: isSuccess() ? 'Opération réussie' : 'Une erreur est survenue',
+    autoClose: 5000,
+    closable: true,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
+  [(tuiNotification)]="show"
+>
+  <div class="notification-content">
+    <span tuiSubtitle>
+      {{ messageSuccess || messageError }}
+    </span>
 
     <button
       tuiButton
-      type="submit"
-      appearance="primary"
-      size="m"
+      type="button"
+      appearance="secondary"
+      size="s"
+      (click)="show.set(false)"
     >
-      Sauvegarder
+      Fermer
     </button>
-  </form>
-
-</div>
-
-<ng-template
-  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
-  [(tuiNotification)]="show"
->
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
-  <button
-    tuiButton
-    type="button"
-    (click)="show.set(false)"
-  >
-    Close
-  </button>
+  </div>
 </ng-template>

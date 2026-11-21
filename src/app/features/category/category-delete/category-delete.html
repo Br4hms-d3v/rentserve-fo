@@ -1,25 +1,70 @@
-<div>
-  <p>{{ message }}</p>
+<div
+  class="category-delete"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+  <div class="category-delete__header">
+    <div class="category-delete__icon" aria-hidden="true">
+      <span>!</span>
+    </div>
 
-  <button tuiButton type="button" appearance="secondary" (click)="cancelled.emit()">
-    Annuler
-  </button>
-  <button tuiButton type="button" (click)="onConfirm()">
-    Supprimer
-  </button>
+    <div>
+      <h2 class="category-delete__title">
+        Confirmer la suppression
+      </h2>
+
+      <p class="category-delete__message">
+        {{ message }}
+        Cette action est irréversible.
+      </p>
+    </div>
+  </div>
+
+  <div class="category-delete__actions">
+    <button
+      tuiButton
+      type="button"
+      appearance="secondary"
+      class="category-delete__cancel"
+      (click)="cancelled.emit()"
+    >
+      Annuler
+    </button>
+
+    <button
+      tuiButton
+      type="button"
+      appearance="primary"
+      class="category-delete__confirm"
+      (click)="onConfirm()"
+    >
+      Supprimer
+    </button>
+  </div>
 </div>
 
-
 <ng-template
-  [tuiNotificationOptions]="{label: 'Modification', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: isSuccess() ? 'Suppression réussie' : 'Échec de la suppression',
+    autoClose: 0,
+    closable: false,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
-  <button
-    tuiButton
-    type="button"
-    (click)="show.set(false)"
-  >
-    Close
-  </button>
+  <div class="category-delete__notification">
+    <span tuiSubtitle>
+      {{ messageSuccess || messageError }}
+    </span>
+
+    <button
+      tuiButton
+      type="button"
+      appearance="secondary"
+      size="s"
+      (click)="show.set(false)"
+    >
+      Fermer
+    </button>
+  </div>
 </ng-template>

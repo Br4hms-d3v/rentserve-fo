@@ -1,12 +1,29 @@
-<div [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
+<div
+  class="dashboard"
+  [class.dark-mode]="isDarkMode()"
+  [class.light-mode]="!isDarkMode()"
+>
+  <main class="dashboard-content">
+    <header class="dashboard-heading">
+      <div>
+        <h1>Bienvenue sur RentServe</h1>
+        <p>
+          Découvrez le matériel à louer et les services disponibles près de chez vous.
+        </p>
+      </div>
+    </header>
 
-  <div class="table-wrapper">
-    <div class="table-container">
-      <app-category-material />
-    </div>
+    <section
+      class="dashboard-categories"
+      aria-label="Catégories disponibles"
+    >
+      <article class="category-panel">
+        <app-category-material />
+      </article>
 
-    <div class="table-container">
-      <app-category-favor />
-    </div>
-  </div>
+      <article class="category-panel">
+        <app-category-favor />
+      </article>
+    </section>
+  </main>
 </div>

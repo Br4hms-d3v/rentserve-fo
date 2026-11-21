@@ -1,287 +1,515 @@
-// ==============================
-// COULEURS
-// ==============================
+/* THÈME CLAIR */
+@light-primary: #173B57;
+@light-secondary: #3B82F6;
+@light-active: #2563EB;
+@light-background: #F0F8FF;
+@light-surface: #F3F6F8;
+@light-input: #E8EEF3;
+@light-text: #263746;
+@light-muted: #64748B;
+@light-border: #D8E1E9;
 
-@light-bg: #3D4A2A;
-@light-text: #F1EFE8;
-@light-btn-login: #d9764a;
-@light-btn-rent: #6d7c5f;
+/* THÈME SOMBRE */
+@dark-primary: #0B1F33;
+@dark-secondary: #3B82F6;
+@dark-active: #60A5FA;
+@dark-background: #1754ea;
+@dark-surface: #172A3D;
+@dark-input: #20364D;
+@dark-text: #F1F5F9;
+@dark-muted: #A8B7C9;
+@dark-border: #30465C;
 
-@dark-bg: #2E331F;
-@dark-text: #F1EFE8;
-@dark-btn-login: #E8845A;
-@dark-btn-rent: #ccd5b9;
+/* DIMENSIONS */
+@nav-height: 68px;
+@nav-padding: 24px;
+@nav-gap: 10px;
+@nav-radius: 10px;
 
+/* ==========================================
+   STRUCTURE
+   ========================================== */
 
-// ==============================
-// TOOLBAR PRINCIPALE
-// ==============================
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
 
 .toolbar {
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: space-between;
 
   width: 100%;
-  min-height: 56px;
-  padding: 6px 16px;
+  min-height: @nav-height;
+  padding: 8px @nav-padding;
+  gap: 24px;
 
   box-sizing: border-box;
-  font-size: 17px;
+
+  border-bottom: 1px solid @light-border;
+  background: @light-background;
+  color: @light-text;
 
   transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+    background-color 180ms ease,
+    border-color 180ms ease;
 
-  // LOGO
+  /* LOGO */
 
   .logo-link {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    flex-shrink: 0;
-    gap: 12px;
+    flex: 0 0 auto;
+    gap: 10px;
 
     text-decoration: none;
-    min-width: 0;
+    color: inherit;
+    white-space: nowrap;
 
     .logo {
       display: block;
-      width: auto;
+      width: 42px;
       height: 42px;
-      max-width: 100%;
       object-fit: contain;
     }
 
-    #logoText {
-      font-size: 20px;
-      font-weight: 600;
-      white-space: nowrap;
+    .logo-text {
+      font-size: 21px;
+      font-weight: 750;
+      letter-spacing: -0.6px;
+      color: @light-primary;
     }
   }
 
-  // ESPACEMENT
+  /* NAVIGATION */
 
-  .spacer {
-    flex: 1 1 auto;
-    min-width: 8px;
-  }
-
-  // NAVIGATION ET ACTIONS
-
-  .nav-buttons,
-  .action-buttons {
+  .nav-buttons {
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: center;
+    flex: 1 1 auto;
+    gap: 8px;
     min-width: 0;
   }
 
-  .nav-buttons {
-    flex-shrink: 0;
-  }
-
   .action-buttons {
-    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 0 0 auto;
+    gap: 10px;
   }
 
-  // BOUTONS
+  /* BOUTONS COMMUNS */
 
-  button[tuiButton] {
-    min-height: 44px;
+  button[tuiButton],
+  a[tuiButton] {
+    min-height: 42px;
     height: auto;
-    max-width: 100%;
-    border-radius: 25px;
+    padding: 8px 14px;
+
+    border-radius: @nav-radius;
     box-sizing: border-box;
+
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+
+    transition:
+      background-color 160ms ease,
+      color 160ms ease,
+      border-color 160ms ease;
   }
 
-  .btn-login,
-  .btn-rentServeBasket {
-    white-space: nowrap;
+  /* LIENS DE NAVIGATION */
+
+  .nav-link {
+    color: @light-muted;
+    background: transparent;
+    border: 1px solid transparent;
+
+    &:hover {
+      color: @light-primary;
+      background: @light-surface;
+    }
+
+    &.nav-active {
+      color: @light-active;
+      background: fade(@light-secondary, 10%);
+      border-color: fade(@light-secondary, 12%);
+      font-weight: 700;
+    }
+  }
+
+  /* PANIER */
+
+  .btn-cart {
+    color: @light-primary;
+    background: @light-surface;
+    border: 1px solid @light-border;
+
+    &:hover {
+      color: @light-active;
+      background: @light-input;
+    }
+  }
+
+  /* COMPTE */
+
+  .btn-account {
+    color: @light-text;
+    background: transparent;
+    border: 1px solid transparent;
+
+    &:hover {
+      background: @light-surface;
+    }
   }
 
   .user-name {
+    display: inline-block;
+    max-width: 140px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  // THÈME CLAIR
+  /* CONNEXION */
 
-  &.light-mode {
-    background-color: @light-bg;
-    color: @light-text;
+  .btn-login {
+    color: #FFFFFF;
+    background: @light-primary;
+    border: 1px solid transparent;
 
-    #logoText {
-      color: @light-text;
-    }
-
-    .btn-login {
-      background-color: @light-btn-login;
-      color: #ffffff;
-    }
-
-    .btn-rentServeBasket {
-      background-color: @light-btn-rent;
-      color: #ffffff;
+    &:hover {
+      background: #122F47;
     }
   }
 
-  // THÈME SOMBRE
+  /* ======================================
+     THÈME CLAIR
+     ====================================== */
+
+  &.light-mode {
+    background: @light-background;
+    color: @light-text;
+    border-bottom-color: @light-border;
+
+    .logo-text {
+      color: @light-primary;
+    }
+  }
+
+  /* ======================================
+     THÈME SOMBRE
+     ====================================== */
 
   &.dark-mode {
-    background-color: @dark-bg;
+    background: @dark-primary;
     color: @dark-text;
+    border-bottom-color: @dark-border;
 
-    #logoText {
+    .logo-text {
       color: @dark-text;
+    }
+
+    .nav-link {
+      color: @dark-muted;
+
+      &:hover {
+        color: @dark-text;
+        background: @dark-surface;
+      }
+
+      &.nav-active {
+        color: @dark-active;
+        background: fade(@dark-active, 12%);
+        border-color: fade(@dark-active, 15%);
+      }
+    }
+
+    .btn-cart {
+      color: @dark-text;
+      background: @dark-surface;
+      border-color: @dark-border;
+
+      &:hover {
+        color: @dark-active;
+        background: @dark-input;
+      }
+    }
+
+    .btn-account {
+      color: @dark-text;
+
+      &:hover {
+        background: @dark-surface;
+      }
     }
 
     .btn-login {
-      background-color: @dark-btn-login;
-      color: @dark-text;
-    }
+      color: #FFFFFF;
+      background: @dark-secondary;
 
-    .btn-rentServeBasket {
-      background-color: @dark-btn-rent;
-      color: @dark-bg;
+      &:hover {
+        background: @dark-active;
+        color: @dark-primary;
+      }
     }
+  }
+
+  /* ACCESSIBILITÉ */
+
+  button:focus-visible,
+  a:focus-visible {
+    outline: 3px solid @light-secondary;
+    outline-offset: 3px;
   }
 }
 
-
-// ==============================
-// DRAWER
-// ==============================
+/* ==========================================
+   MENU LATÉRAL
+   ========================================== */
 
 .drawer {
-  width: min(360px, 100%);
+  display: flex;
+  flex-direction: column;
+
+  width: min(380px, 100%);
   max-width: 100%;
   height: 100%;
-  box-sizing: border-box;
-  padding: 20px;
+  padding: 24px;
 
+  box-sizing: border-box;
   overflow-y: auto;
 
+  background: @light-background;
+  color: @light-text;
+  border-left: 1px solid @light-border;
+
   .drawer-header {
-    margin-bottom: 24px;
+    margin-bottom: 28px;
   }
+
+  .drawer-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .drawer-welcome {
+    margin: 8px 0 0;
+    color: @light-muted;
+    font-size: 14px;
+  }
+
+  .btn-close {
+    flex: 0 0 auto;
+    color: @light-muted;
+    background: @light-surface;
+    border-radius: 10px;
+
+    &:hover {
+      color: @light-text;
+      background: @light-input;
+    }
+  }
+
+  /* LIENS */
 
   .drawer-links {
     display: flex;
     flex-direction: column;
     gap: 8px;
-  }
-
-  .link-drawer {
-    width: 100%;
-    box-sizing: border-box;
 
     a {
       display: flex;
       align-items: center;
+      gap: 13px;
 
-      min-height: 48px;
-      padding: 10px 12px;
+      width: 100%;
+      min-height: 50px;
+      padding: 12px 14px;
 
       box-sizing: border-box;
-      border-radius: 8px;
+      border-radius: 10px;
 
+      color: @light-text;
       text-decoration: none;
-      overflow-wrap: anywhere;
-      transition: background-color 0.2s ease;
+      font-size: 14px;
+      font-weight: 500;
+
+      transition:
+        background-color 160ms ease,
+        color 160ms ease;
+
+      tui-icon {
+        color: @light-muted;
+        font-size: 19px;
+      }
+
+      &:hover {
+        background: @light-surface;
+        color: @light-primary;
+      }
+
+      &.nav-active {
+        background: fade(@light-secondary, 10%);
+        color: @light-active;
+        font-weight: 700;
+
+        tui-icon {
+          color: @light-active;
+        }
+      }
     }
   }
 
+  /* DÉCONNEXION */
+
   .drawer-footer {
-    margin-top: 32px;
+    margin-top: auto;
+    padding-top: 24px;
 
     .btn-logout {
       width: 100%;
+      min-height: 46px;
+
+      color: @light-primary;
+      background: @light-surface;
+      border: 1px solid @light-border;
+      border-radius: 10px;
+
+      &:hover {
+        color: #FFFFFF;
+        background: @light-primary;
+      }
     }
   }
 }
 
+/* ==========================================
+   MENU LATÉRAL — THÈME SOMBRE
+   ========================================== */
 
-// ==============================
-// GSM ET PETITS ÉCRANS
-// ==============================
+.toolbar.dark-mode ~ .drawer,
+.drawer.dark-mode {
+  background: @dark-surface;
+  color: @dark-text;
+  border-color: @dark-border;
 
-@media (max-width: 480px) {
+  .drawer-welcome {
+    color: @dark-muted;
+  }
+
+  .btn-close {
+    color: @dark-muted;
+    background: @dark-input;
+
+    &:hover {
+      color: @dark-text;
+      background: #29435C;
+    }
+  }
+
+  .drawer-links {
+    a {
+      color: @dark-text;
+
+      tui-icon {
+        color: @dark-muted;
+      }
+
+      &:hover {
+        background: @dark-input;
+      }
+
+      &.nav-active {
+        color: @dark-active;
+        background: fade(@dark-active, 12%);
+
+        tui-icon {
+          color: @dark-active;
+        }
+      }
+    }
+  }
+
+  .drawer-footer {
+    .btn-logout {
+      color: @dark-text;
+      background: @dark-input;
+      border-color: @dark-border;
+
+      &:hover {
+        color: @dark-primary;
+        background: @dark-active;
+      }
+    }
+  }
+}
+
+/* ==========================================
+   TABLETTES
+   ========================================== */
+
+@media (max-width: 900px) {
   .toolbar {
-    gap: 6px;
-    min-height: 48px;
-    padding: 6px 8px;
-    font-size: 13px;
+    gap: 12px;
+    padding-inline: 16px;
+
+    .logo-link {
+      gap: 7px;
+
+      .logo {
+        width: 36px;
+        height: 36px;
+      }
+
+      .logo-text {
+        font-size: 19px;
+      }
+    }
+
+    .nav-buttons,
+    .action-buttons {
+      gap: 5px;
+    }
+
+    button[tuiButton],
+    a[tuiButton] {
+      padding-inline: 10px;
+      font-size: 13px;
+    }
+
+    .user-name {
+      max-width: 90px;
+    }
+  }
+}
+
+/* ==========================================
+   MOBILES
+   ========================================== */
+
+@media (max-width: 600px) {
+  .toolbar {
+    min-height: 60px;
+    padding: 8px 10px;
+    gap: 5px;
 
     .logo-link {
       gap: 5px;
 
       .logo {
+        width: 30px;
         height: 30px;
       }
 
-      #logoText {
-        font-size: 14px;
-      }
-    }
-
-    .spacer {
-      min-width: 0;
-    }
-
-    .nav-buttons,
-    .action-buttons {
-      gap: 4px;
-    }
-
-    .nav-buttons button[tuiButton],
-    .action-buttons button[tuiButton] {
-      min-height: 36px;
-      padding-inline: 8px;
-      font-size: 12px;
-    }
-
-    .btn-login,
-    .btn-rentServeBasket {
-      border-radius: 18px;
-    }
-
-    .user-name {
-      max-width: 64px;
-    }
-  }
-
-  .drawer {
-    padding: 16px;
-
-    .drawer-header {
-      margin-bottom: 16px;
-    }
-
-    .drawer-links {
-      gap: 6px;
-    }
-  }
-}
-
-
-// ==============================
-// TRÈS PETITS GSM
-// ==============================
-
-@media (max-width: 360px) {
-  .toolbar {
-    gap: 4px;
-    padding-inline: 5px;
-
-    .logo-link {
-      gap: 4px;
-
-      .logo {
-        height: 26px;
-      }
-
-      #logoText {
-        font-size: 12px;
+      .logo-text {
+        font-size: 16px;
       }
     }
 
@@ -290,97 +518,112 @@
       gap: 3px;
     }
 
-    .nav-buttons button[tuiButton],
-    .action-buttons button[tuiButton] {
-      min-height: 34px;
-      padding-inline: 5px;
+    button[tuiButton],
+    a[tuiButton] {
+      min-height: 38px;
+      padding: 6px 8px;
+      font-size: 12px;
+      border-radius: 8px;
+    }
+
+    .user-name {
+      max-width: 65px;
+    }
+  }
+
+  .drawer {
+    padding: 18px;
+  }
+}
+
+
+/* ==========================================
+   SMARTPHONES — ÉCRANS DE 380 PX MAXIMUM
+   ========================================== */
+
+@media screen and (max-width: 380px) {
+
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 4px;
+    padding: 8px 6px;
+
+    /* LOGO */
+
+    .logo-link {
+      gap: 4px;
+      flex-shrink: 0;
+
+      .logo {
+        width: 26px;
+        height: 26px;
+      }
+
+      .logo-text {
+        font-size: 14px;
+      }
+    }
+
+    /* NAVIGATION ET ACTIONS */
+
+    .nav-buttons,
+    .action-buttons {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      flex-shrink: 0;
+    }
+
+    /* BOUTONS ICONES UNIQUEMENT */
+
+    .nav-link,
+    .btn-cart,
+    .btn-account {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 36px;
+      min-width: 36px;
+      height: 36px;
+      min-height: 36px;
+
+      padding: 0 !important;
+
+      border-radius: 9px;
+      flex-shrink: 0;
+
+      /* Masquer uniquement les textes */
+      .button-label {
+        display: none !important;
+      }
+
+      /* Conserver les icônes Taiga UI */
+      tui-icon {
+        display: inline-flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        font-size: 18px;
+      }
+    }
+
+    /* Masquer la flèche du compte */
+
+    .btn-account {
+      [iconEnd] {
+        display: none;
+      }
+    }
+
+    /* CONNEXION */
+
+    .btn-login {
+      min-height: 36px;
+      padding: 0 8px;
       font-size: 11px;
     }
-
-    .user-name {
-      max-width: 42px;
-    }
-  }
-}
-
-
-// ==============================
-// TABLETTES
-// ==============================
-
-@media (min-width: 481px) and (max-width: 768px) {
-  .toolbar {
-    gap: 10px;
-    padding-inline: 12px;
-
-    .logo-link {
-      gap: 8px;
-
-      .logo {
-        height: 36px;
-      }
-
-      #logoText {
-        font-size: 17px;
-      }
-    }
-
-    .nav-buttons,
-    .action-buttons {
-      gap: 8px;
-    }
-
-    .nav-buttons button[tuiButton],
-    .action-buttons button[tuiButton] {
-      padding-inline: 10px;
-      font-size: 14px;
-    }
-
-    .user-name {
-      max-width: 110px;
-    }
-  }
-}
-
-
-// ==============================
-// PC ET GRANDS ÉCRANS
-// ==============================
-
-@media (min-width: 769px) {
-  .toolbar {
-    gap: 16px;
-    padding-inline: 20px;
-
-    .logo-link {
-      .logo {
-        height: 44px;
-      }
-
-      #logoText {
-        font-size: 20px;
-      }
-    }
-
-    .nav-buttons,
-    .action-buttons {
-      gap: 16px;
-    }
-
-    .user-name {
-      max-width: 180px;
-    }
-  }
-}
-
-
-// ==============================
-// ACCESSIBILITÉ
-// ==============================
-
-@media (prefers-reduced-motion: reduce) {
-  .toolbar,
-  .drawer .link-drawer a {
-    transition: none;
   }
 }

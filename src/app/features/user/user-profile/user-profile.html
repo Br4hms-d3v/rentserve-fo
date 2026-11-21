@@ -1,43 +1,78 @@
-<div  [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}" class="slide">
 
-  <tui-tabs>
-    <a
-      [routerLink]="['edit']"
-      routerLinkActive
-      tuiTab
+<div
+  class="profile-page"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+  <div class="profile-container">
+
+    <!-- En-tête -->
+    <header class="profile-header">
+      <div class="profile-header-icon">
+        <tui-icon icon="@tui.user-round" />
+      </div>
+
+      <div class="profile-header-content">
+        <h1>Paramètres du compte</h1>
+        <p>
+          Gérez vos informations personnelles ainsi que
+          les paramètres de sécurité de votre compte.
+        </p>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav
+      class="profile-navigation"
+      aria-label="Navigation des paramètres du compte"
     >
-      Modifier le profil
-    </a>
+      <tui-tabs>
 
-    <a
-      [routerLink]="['password']"
-      routerLinkActive
-      tuiTab
-    >
-      Mot de passe
-    </a>
+        <a
+          [routerLink]="['edit']"
+          routerLinkActive="active"
+          tuiTab
+        >
+          <tui-icon icon="@tui.user-round-pen" />
+          <span>Modifier le profil</span>
+        </a>
 
-    <a
-      [routerLink]="['delete']"
-      routerLinkActive
-      tuiTab
-    >
-      Supprimer le compte
-    </a>
+        <a
+          [routerLink]="['password']"
+          routerLinkActive="active"
+          tuiTab
+        >
+          <tui-icon icon="@tui.lock-keyhole" />
+          <span>Mot de passe</span>
+        </a>
 
-    @if(role == 'ADMIN'){
-      <a
-        [routerLink]="['list-user']"
-        routerLinkActive
-        tuiTab
-      >
-        Liste des utilisateurs
-      </a>
-    }
-  </tui-tabs>
+        <a
+          [routerLink]="['delete']"
+          routerLinkActive="active"
+          tuiTab
+        >
+          <tui-icon icon="@tui.user-x" />
+          <span>Supprimer le compte</span>
+        </a>
 
-  <p [tuiSlides]="direction()">
-    <router-outlet />
-  </p>
+        @if (role === 'ADMIN') {
+          <a
+            [routerLink]="['list-user']"
+            routerLinkActive="active"
+            tuiTab
+          >
+            <tui-icon icon="@tui.users" />
+            <span>Liste des utilisateurs</span>
+          </a>
+        }
 
+      </tui-tabs>
+    </nav>
+
+    <!-- Contenu des pages enfants -->
+    <main class="profile-content">
+      <router-outlet />
+    </main>
+
+  </div>
 </div>

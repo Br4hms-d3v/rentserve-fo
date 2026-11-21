@@ -1,7 +1,10 @@
-<div class="delete-container" [ngClass]="{'dark-mode': isDarkMode, 'light-mode': !isDarkMode}">
-
-  <!-- Breadcrumbs -->
-  <tui-breadcrumbs>
+<div
+  class="delete-container"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
+  <!-- Navigation -->
+  <tui-breadcrumbs class="breadcrumbs">
     @for (link of links; track link) {
       <a
         *tuiItem
@@ -13,44 +16,88 @@
     }
   </tui-breadcrumbs>
 
-  <h1 class="titleDeleteFavor">{{ title }}</h1>
+  <!-- Page title -->
+  <header class="page-header">
+    <h1 class="titleDeleteFavor">{{ title }}</h1>
+    <p class="page-description">
+      Gérez la suppression de vos services.
+    </p>
+  </header>
 
-  <div class="div-delete">
-    <div>
-      <p>Êtes vous sûr de vouloir supprimer le matériel : </p>
-      <p id="nameFavorSpan"><span>{{ nameFavor }}</span></p>
-    </div>
+  <!-- Confirmation card -->
+  <main class="delete-content">
+    <section class="delete-card">
 
+      <div class="warning-icon">
+        <tui-icon icon="@tui.trash-2"></tui-icon>
+      </div>
 
-    <button
-      tuiButton
-      id="cancelDelete"
-      type="button"
-      [routerLink]="['/favor','all-favour']"
-    >Retour
-    </button>
+      <h2>Confirmer la suppression</h2>
 
-    <button
-      tuiButton
-      id="butonDelete"
-      type="button"
-      (click)="deleteFavor()"
-    >Supprimer
-    </button>
+      <p class="delete-description">
+        Êtes-vous sûr de vouloir supprimer définitivement ce service ?
+        Cette action est irréversible.
+      </p>
 
-  </div>
+      <!-- Service information -->
+      <div class="service-information">
+        <span class="service-label">Service concerné</span>
+
+        <span class="service-name">
+          {{ nameFavor }}
+        </span>
+      </div>
+
+      <!-- Actions -->
+      <div class="delete-actions">
+
+        <button
+          tuiButton
+          appearance="secondary"
+          type="button"
+          class="cancel-button"
+          [routerLink]="['/favor', 'all-favour']"
+        >
+          Annuler
+        </button>
+
+        <button
+          tuiButton
+          appearance="primary"
+          type="button"
+          class="delete-button"
+          (click)="deleteFavor()"
+        >
+          <tui-icon icon="@tui.trash-2"></tui-icon>
+          Supprimer définitivement
+        </button>
+
+      </div>
+
+    </section>
+  </main>
 </div>
 
+<!-- Notification -->
 <ng-template
-  [tuiNotificationOptions]="{label: 'Directive', autoClose: 0, closable: false, appearance: isSuccess() ? 'positive' : 'negative',}"
+  [tuiNotificationOptions]="{
+    label: 'Notification',
+    autoClose: 0,
+    closable: false,
+    appearance: isSuccess() ? 'positive' : 'negative'
+  }"
   [(tuiNotification)]="show"
 >
-  <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+  <span tuiSubtitle>
+    {{ messageSuccess || messageError }}
+  </span>
+
   <button
     tuiButton
     type="button"
+    appearance="secondary"
     (click)="show.set(false)"
   >
-    Close
+    Fermer
   </button>
 </ng-template>

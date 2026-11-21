@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { UserService } from '../service/user-service';
 import { ThemeService } from '../../../core/services/ThemeService';
-import { NgClass } from '@angular/common';
 import { UserRoleModel } from '../model/UserRoleModel';
 import { TuiTable, TuiTableDirective } from '@taiga-ui/addon-table';
 import { TuiChevron, TuiDataListWrapper, TuiPagination, TuiSelect } from '@taiga-ui/kit';
@@ -23,11 +22,11 @@ import {
 import { FormsModule } from '@angular/forms';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { UserRole } from '../user-role/user-role';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-user-list',
   imports: [
-    NgClass,
     FormsModule,
     TuiTable,
     TuiTableDirective,
@@ -54,7 +53,7 @@ export class UserList implements OnInit {
   isDarkMode = false; // Change theme from light to dark
   protected userRoleList: UserRoleModel[] = [];
   role = 'MEMBER';
-  protected readonly roles = ['MEMBER', 'MODERATOR', 'ADMIN'];
+  protected readonly roles = ['MEMBER', 'MODERATOR'];
 
   // Pagination
   protected index = 0;
@@ -97,7 +96,7 @@ export class UserList implements OnInit {
   }
 
   // Change the role inside the dropdown
-  protected onChangeRole(value: string) {
+  protected onChangeRole(value: string): void {
     if (!this.roles.includes(value)) {
       return;
     }
@@ -151,15 +150,10 @@ export class UserList implements OnInit {
     this.length = Math.ceil(this.filteredUsersRole.length / this.size);
   }
 
-  changeTheme() {
-    this.isDarkMode = this.themeService.isDarkMode(); // Get current theme
-    this.themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
-  }
-
   // MODAL
   private readonly dialogs = inject(TuiDialogService);
 
-  openRoleModal(event: MouseEvent, user: any): void {
+  protected openRoleModal(event: MouseEvent, user: any): void {
     event.preventDefault();
 
     this.dialogs
@@ -170,6 +164,17 @@ export class UserList implements OnInit {
       })
       .subscribe(() =>{
           this.usersRole();
+      });
+  }
+
+  protected changeTheme() {
+    this.isDarkMode = this.themeService.isDarkMode();
+
+    this.themeService.darkMode$
+      .pipe(takeUntilDestroyed())
+      .subscribe((mode: boolean) => {
+        this.isDarkMode = mode;
+        this._cdr.markForCheck();
       });
   }
 }

@@ -1,96 +1,123 @@
-<div [class.dark-mode]="isDarkMode" [class.light-mode]="!isDarkMode">
+<div
+  class="category-material"
+  [class.dark-mode]="isDarkMode"
+  [class.light-mode]="!isDarkMode"
+>
   <div class="filter-container">
-    <tui-textfield class="custom-icon-textfield" iconStart="@tui.search">
-      <label tuiLabel>Filtre</label>
+    <tui-textfield
+      class="custom-icon-textfield"
+      iconStart="@tui.search"
+    >
+      <label tuiLabel>Rechercher une catégorie</label>
       <input
         tuiInput
-        placeholder="Nom de la catégorie matériel"
+        type="search"
+        placeholder="Ex. : perceuse, jardinage..."
+        [value]="searchTerm"
         (input)="onFilter($event)"
       />
     </tui-textfield>
-    <br />
   </div>
 
-  <table tuiTable class="category-table">
-    <thead>
-    <tr tuiThGroup>
-      <th tuiTh>No.</th>
-      <th tuiTh>Matériels</th>
-      @if (role == 'ADMIN' || role == 'MODERATOR') {
-        <th tuiTh>Modifier</th>
-      }
-      @if (role == 'ADMIN') {
-        <th tuiTh>Supprimer</th>
-      }
-    </tr>
-    </thead>
+  <div class="table-scroll" role="region" aria-label="Liste des catégories de matériel" tabindex="0">
+    <table tuiTable class="category-table">
+      <thead>
+      <tr tuiThGroup>
+        <th tuiTh scope="col" class="column-number">N°</th>
+        <th tuiTh scope="col">Catégorie</th>
 
-    <tbody tuiTbody>
-      @for (categoryMat of paginatedCategoriesMaterials; track categoryMat.id) {
-        <tr tuiTr>
-          <td tuiTd>
-            {{ categoryMat.position }}
-          </td>
+        @if (role === 'ADMIN' || role === 'MODERATOR') {
+          <th tuiTh scope="col" class="column-action">Modifier</th>
+        }
 
-          <td tuiTd>
-            <a id="linkToMaterial"
-               [routerLink]="['/material','list',categoryMat.nameCategory]"
+        @if (role === 'ADMIN') {
+          <th tuiTh scope="col" class="column-action">Supprimer</th>
+        }
+      </tr>
+      </thead>
+
+      <tbody tuiTbody>
+        @for (categoryMat of paginatedCategoriesMaterials; track categoryMat.id) {
+          <tr tuiTr>
+            <td tuiTd class="column-number">
+              {{ categoryMat.position }}
+            </td>
+
+            <td tuiTd class="category-name">
+              <a
+                class="category-link"
+                [routerLink]="['/material', 'list', categoryMat.nameCategory]"
+                [attr.aria-label]="'Voir les matériels de la catégorie ' + categoryMat.nameCategory"
+              >
+                {{ categoryMat.nameCategory }}
+              </a>
+            </td>
+
+            @if (role === 'ADMIN' || role === 'MODERATOR') {
+              <td tuiTd class="column-action">
+                <button
+                  tuiButton
+                  type="button"
+                  appearance="secondary"
+                  size="s"
+                  class="btn-edit"
+                  [routerLink]="['/category', categoryMat.id, 'edit-category']"
+                  [attr.aria-label]="'Modifier la catégorie ' + categoryMat.nameCategory"
+                >
+                  Modifier
+                </button>
+              </td>
+            }
+
+            @if (role === 'ADMIN') {
+              <td tuiTd class="column-action">
+                <button
+                  tuiButton
+                  type="button"
+                  appearance="secondary"
+                  size="s"
+                  class="btn-delete"
+                  (click)="openDialogDelete(categoryMat.id)"
+                  [attr.aria-label]="'Supprimer la catégorie ' + categoryMat.nameCategory"
+                >
+                  Supprimer
+                </button>
+              </td>
+            }
+          </tr>
+        } @empty {
+          <tr tuiTr>
+            <td
+              tuiTd
+              class="empty-state"
+              [attr.colspan]="role === 'ADMIN' ? 4 : role === 'MODERATOR' ? 3 : 2"
             >
-              {{ categoryMat.nameCategory }}
-            </a>
-          </td>
-
-          @if (role == 'ADMIN' || role == 'MODERATOR') {
-            <td tuiTd>
-              <button
-                id="btnEdit"
-                tuiButton
-                type="button"
-                appearance="secondary"
-                size="s"
-                [routerLink]="['/category', categoryMat.id, 'edit-category']"
-              >
-                Modifier
-              </button>
+              Aucune catégorie trouvée.
             </td>
-          }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 
-          @if (role == 'ADMIN') {
-            <td tuiTd>
-              <button
-                id="btnDelete"
-                tuiButton
-                type="button"
-                appearance="negative"
-                size="s"
-                (click)="openDialogDelete(categoryMat.id)"
-              >
-                Supprimer
-              </button>
-            </td>
-          }
-        </tr>
-      }
-    </tbody>
-  </table>
+  @if (length > 1) {
+    <div class="pagination-container">
+      <tui-pagination
+        [length]="length"
+        [(index)]="index"
+      />
+    </div>
+  }
 
-  <tui-pagination
-    [length]="length"
-    [style.float]="'center'"
-    [(index)]="index"
-  ></tui-pagination>
-
-  <!-- Dialog to delete category -->
   <ng-template
-    [tuiDialogOptions]="{size: 's', label: 'Confirmation'}"
+    [tuiDialogOptions]="{ size: 's', label: 'Confirmation de suppression' }"
     [(tuiDialog)]="open"
   >
     <app-category-delete
-      message="Supprimer cette catégorie ?"
+      message="Voulez-vous vraiment supprimer cette catégorie ?"
       [id]="selectId"
       (confirmed)="onDelete()"
       (cancelled)="open.set(false)"
     />
   </ng-template>
-
 </div>

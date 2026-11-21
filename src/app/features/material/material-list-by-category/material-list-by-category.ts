@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   inject,
   OnInit,
   signal,
@@ -10,15 +11,13 @@ import { TuiBreadcrumbs, TuiPagination } from '@taiga-ui/kit';
 import {
   TuiButton,
   TuiDataListComponent,
-  TuiDropdown,
+  TuiDropdown, TuiIcon,
   TuiInputDirective,
   TuiLabel,
   TuiLink,
   TuiOption,
   TuiTextfieldComponent,
-  TuiTitle,
 } from '@taiga-ui/core';
-import { NgClass } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TuiItem } from '@taiga-ui/cdk';
 import { MaterialService } from '../service/material-service';
@@ -28,13 +27,13 @@ import { MaterialModel } from '../model/Material';
 import { MaterialById } from '../material-by-id/material-by-id';
 import { TuiCardMedium } from '@taiga-ui/layout';
 import { TuiPopout } from '@taiga-ui/experimental';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-material-list-by-category',
   imports: [
     TuiBreadcrumbs,
     TuiLink,
-    NgClass,
     RouterLink,
     TuiItem,
     MaterialById,
@@ -47,8 +46,8 @@ import { TuiPopout } from '@taiga-ui/experimental';
     TuiPagination,
     TuiPopout,
     TuiTextfieldComponent,
-    TuiTitle,
     TuiDropdown,
+    TuiIcon,
   ],
   templateUrl: './material-list-by-category.html',
   styleUrl: './material-list-by-category.less',
@@ -60,8 +59,9 @@ export class MaterialListByCategory implements OnInit {
   private readonly _themeService = inject(ThemeService); // Call the service to change color theme
   private readonly _cdr = inject(ChangeDetectorRef); // Check if something change on the page
   private readonly _route = inject(ActivatedRoute); // Get the name of Category (by url)s
+  private readonly destroyRef = inject(DestroyRef);
 
-  isDarkMode = false; // Change theme from light to dark
+  protected readonly isDarkMode = signal(false); // Change theme from light to dark
   role: string | undefined; // Get a role for display authorization
   categorySelected!: string;
   protected open = signal(false);
@@ -154,9 +154,14 @@ export class MaterialListByCategory implements OnInit {
     this.length = Math.ceil(this.searchedMaterial.length / this.size);
   }
 
-  changeTheme() {
-    this.isDarkMode = this._themeService.isDarkMode(); // Get current theme
-    this._themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
+  private changeTheme(): void {
+    this.isDarkMode.set(this._themeService.isDarkMode());
+
+    this._themeService.darkMode$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((mode: boolean) => {
+        this.isDarkMode.set(mode);
+      });
   }
 
   protected onSearch(event: Event) {

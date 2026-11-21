@@ -1,5 +1,13 @@
-import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  inject,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import {
   NavigationStart,
   Router,
@@ -8,59 +16,66 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { filter, map, pairwise } from 'rxjs';
-import { NgClass } from '@angular/common';
-import { TuiSlides } from '@taiga-ui/layout';
 import { TuiTabs } from '@taiga-ui/kit';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { AuthService } from '../../auth/service/auth-service';
+import { TuiIcon } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [NgClass, RouterLink, RouterLinkActive, RouterOutlet, TuiSlides, TuiTabs],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet, TuiTabs, TuiIcon],
   templateUrl: './user-profile.html',
   styleUrl: './user-profile.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserProfile implements OnInit {
-  private _authService = inject(AuthService); // Call the service to get role of user
-  private _themeService = inject(ThemeService); // Call the service to change color theme
+  private readonly authService = inject(AuthService);
+  private readonly themeService = inject(ThemeService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   @Input() userId!: string;
-  isDarkMode = false; // Change theme from light to dark
-  role: string | undefined; // Get the role to display some infos
+
+  isDarkMode = false;
+  role: string | undefined;
 
   ngOnInit(): void {
-    this._authService.currentUser$.subscribe((user) => {
-      if (user) {
-        this.role = user.role;
-      }
+    // Récupération du rôle utilisateur
+    this.authService.currentUser$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((user) => {
+      this.role = user?.role;
+      this.cdr.markForCheck();
     });
 
-    this.changeTheme();
+    // Récupération du thème initial
+    this.isDarkMode = this.themeService.isDarkMode();
+
+    // Surveillance des changements du thème
+    this.themeService.darkMode$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((mode: boolean) => {
+        this.isDarkMode = mode;
+        this.cdr.markForCheck();
+      });
   }
 
   protected readonly direction = toSignal(
     inject(Router).events.pipe(
-      filter((event) => event instanceof NavigationStart),
-      map(({ url }) => {
-        const route = url.split('/').at(-1);
+      filter((event): event is NavigationStart => event instanceof NavigationStart),
+      map((event) => {
+        const route = event.url.split('/').filter(Boolean).at(-1);
 
         return (
           {
             edit: 0,
             password: 1,
             delete: 2,
+            'list-user': 3,
           }[route ?? 'edit'] ?? 0
         );
       }),
       pairwise(),
-      map(([prev, next]) => next - prev),
+      map(([previous, current]) => current - previous),
     ),
     { initialValue: 1 },
   );
-
-  changeTheme() {
-    this.isDarkMode = this._themeService.isDarkMode(); // Get current theme
-    this._themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
-  }
 }

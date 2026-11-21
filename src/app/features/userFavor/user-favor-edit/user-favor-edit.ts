@@ -7,7 +7,7 @@ import { UserFavorDetailModel } from '../model/user-favor-detail';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   TuiButton,
-  TuiDropdown,
+  TuiDropdown, TuiIcon,
   TuiInputDirective,
   TuiLabel,
   TuiNotificationTemplate,
@@ -21,7 +21,6 @@ import {
   TuiTextareaComponent,
   TuiTextareaDirective,
 } from '@taiga-ui/kit';
-import { NgClass } from '@angular/common';
 import { FavorService } from '../../favor/service/favor-service';
 import { UserFavorEditForm } from '../model/user-favor-edit-form';
 
@@ -34,15 +33,14 @@ import { UserFavorEditForm } from '../model/user-favor-edit-form';
     TuiFluidTypography,
     TuiInputDirective,
     TuiInputNumberDirective,
-    TuiLabel,
     TuiNotificationTemplate,
     TuiSwitch,
     TuiTextareaComponent,
     TuiTextareaDirective,
     TuiTextfieldComponent,
     RouterLink,
-    NgClass,
     TuiDropdown,
+    TuiIcon,
   ],
   templateUrl: './user-favor-edit.html',
   styleUrl: './user-favor-edit.less',
@@ -63,7 +61,7 @@ export class UserFavorEdit implements OnInit {
   favourList: string[] = [];
   favourModels: FavorModel[] = [];
   userFavorModel!: UserFavorDetailModel;
-  title = 'Modification Service';
+  title = 'Modifier mon service';
   protected messageError = '';
   protected messageSuccess = '';
 
@@ -143,7 +141,6 @@ export class UserFavorEdit implements OnInit {
           this.editUserFavorForm.controls.favorId.setValue(currentFavor?.id ?? null, {
             emitEvent: false,
           });
-
         }
       },
       error: (err) => console.error('Erreur récupération du service:', err),
@@ -182,7 +179,8 @@ export class UserFavorEdit implements OnInit {
 
     // console.log(this.editUserFavorForm.getRawValue());
     if (this.editUserFavorForm.invalid) {
-      this.messageError = 'Le formulaire est vide';
+      this.messageError =
+        'Veuillez vérifier les champs obligatoires et corriger les erreurs du formulaire.';
       this.isSuccess.set(false);
       this.show.set(true);
       return;
@@ -204,12 +202,14 @@ export class UserFavorEdit implements OnInit {
 
         this.isSuccess.set(true);
         this.show.set(true);
-        this.messageSuccess = 'Le service est bien à jour';
+        this.messageSuccess = 'Votre service a été modifié avec succès.';
       },
       error: (err) => {
         this.isSuccess.set(false);
         this.show.set(true);
-        this.messageError = err.error?.message ?? 'Erreur lors de la modification du service';
+        this.messageError =
+          err.error?.message ??
+          'Une erreur est survenue lors de la modification de votre service. Veuillez réessayer.';
       },
     });
   }

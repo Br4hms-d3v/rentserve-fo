@@ -1,46 +1,57 @@
-import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
+
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  inject,
+  signal,
+} from '@angular/core';
+import { RouterLink } from '@angular/router';
+
 import { AuthService } from '../../auth/service/auth-service';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { MaterialService } from '../service/material-service';
 import { MaterialModel } from '../model/Material';
+
 import {
   TuiButton,
   TuiDataList,
   TuiDropdown,
+  TuiIcon,
+  TuiInput,
+  TuiLabel,
   TuiLink,
   TuiOption,
   TuiTextfield,
   TuiTitle,
-  TuiLabel,
-  TuiInput,
 } from '@taiga-ui/core';
+
 import { TuiCardMedium } from '@taiga-ui/layout';
 import { TuiBreadcrumbs, TuiPagination } from '@taiga-ui/kit';
-import { RouterLink } from '@angular/router';
-import { TuiPopout } from '@taiga-ui/experimental';
-import { MaterialById } from '../material-by-id/material-by-id';
 import { TuiItem } from '@taiga-ui/cdk';
-import { NgClass } from '@angular/common';
+import { TuiPopout } from '@taiga-ui/experimental';
+
+import { MaterialById } from '../material-by-id/material-by-id';
 
 @Component({
   selector: 'app-material-list',
+  standalone: true,
   imports: [
     RouterLink,
-    NgClass,
-    TuiTextfield,
     TuiButton,
-    TuiCardMedium,
-    TuiTitle,
-    TuiDropdown,
     TuiDataList,
-    TuiOption,
-    TuiPagination,
-    RouterLink,
-    TuiBreadcrumbs,
-    TuiItem,
-    TuiLink,
+    TuiDropdown,
+    TuiIcon,
     TuiInput,
     TuiLabel,
+    TuiLink,
+    TuiOption,
+    TuiTextfield,
+    TuiTitle,
+    TuiCardMedium,
+    TuiBreadcrumbs,
+    TuiPagination,
+    TuiItem,
     TuiPopout,
     MaterialById,
   ],
@@ -48,120 +59,185 @@ import { NgClass } from '@angular/common';
   styleUrl: './material-list.less',
 })
 export class MaterialList implements OnInit {
-  private readonly _authService = inject(AuthService);
-  private readonly _themeService = inject(ThemeService);
-  private readonly _materialService = inject(MaterialService);
-  private readonly _cdr = inject(ChangeDetectorRef);
+  private readonly authService = inject(AuthService);
+  private readonly themeService = inject(ThemeService);
+  private readonly materialService = inject(MaterialService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
-  isDarkMode = false; // Change theme from light to dark
-  role: string | undefined; // Get a role for display authorization
+  // Thème clair / sombre
+  readonly isDarkMode = signal(false);
+
+  // Utilisateur et autorisations
+  role: string | undefined;
+
+  // Liste des matériels
   materialsList: MaterialModel[] = [];
-  protected messageError = '';
-  openMaterialId: number | null = null;
+  searchedMaterial: MaterialModel[] = [];
 
-  // Breadcrumbs
-  protected links = [
+  // Gestion des erreurs
+  messageError = '';
+
+  // Menu déroulant et fenêtre de détails
+  openMaterialId: number | null = null;
+  readonly open = signal(false);
+
+  // Fil d'Ariane
+  readonly links = [
     {
-      caption: "Page d\'accueil",
+      caption: 'Accueil',
       routerLink: '/dashboard',
     },
     {
-      caption: 'Liste materiels',
+      caption: 'Matériels',
       routerLink: '/material/all-materials',
     },
   ];
 
-  // Filter
-  protected sortDescending = false;
-  protected searchMaterial = '';
+  // Recherche et tri
+  sortDescending = false;
+  searchMaterial = '';
 
   // Pagination
-  protected index = 0;
-  protected length = 0;
-  protected size = 40;
-  searchedMaterial: MaterialModel[] = [];
+  index = 0;
+  length = 0;
+  size = 40;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.currentUser();
     this.getMaterials();
     this.changeTheme();
   }
 
-  protected getMaterials() {
-    this._materialService.getMaterials().subscribe({
+  /**
+   * Charge la liste des matériels.
+   */
+  protected getMaterials(): void {
+    this.materialService.getMaterials().subscribe({
       next: (allMaterials) => {
         this.materialsList = allMaterials.map((material) => ({
           id: material.id,
           nameMaterial: material.nameMaterial,
         }));
 
+        this.messageError = '';
         this.applyFilterAndSort();
-        this._cdr.detectChanges();
+        this.cdr.detectChanges();
       },
 
       error: (error) => {
-        if (this.materialsList.length === 0) {
-          this.messageError = 'La liste des matériaux est vide';
-        }
+        this.messageError =
+          error?.error?.message ??
+          'Une erreur est survenue lors du chargement des matériels.';
 
-        this.messageError = error?.error?.message ?? 'Erreur lors du chargement des matériaux';
+        this.cdr.detectChanges();
       },
     });
   }
 
-  protected onSort() {
-    this.sortDescending = !this.sortDescending;
-    this.applyFilterAndSort();
-  }
-
-  protected onSearch(event: Event) {
+  /**
+   * Filtre la liste en fonction du texte saisi.
+   */
+  protected onSearch(event: Event): void {
     const input = event.target as HTMLInputElement;
+
     this.searchMaterial = input.value.toLowerCase().trim();
     this.applyFilterAndSort();
   }
 
-  private applyFilterAndSort() {
+  /**
+   * Inverse le sens du tri alphabétique.
+   */
+  protected onSort(): void {
+    this.sortDescending = !this.sortDescending;
+    this.applyFilterAndSort();
+  }
+
+  /**
+   * Applique la recherche et le tri.
+   */
+  private applyFilterAndSort(): void {
     this.searchedMaterial = this.materialsList.filter((material) =>
-      material.nameMaterial?.toLowerCase().includes(this.searchMaterial),
+      (material.nameMaterial ?? '')
+        .toLowerCase()
+        .includes(this.searchMaterial),
     );
 
     this.searchedMaterial.sort((a, b) => {
-      const nameA = a.nameMaterial?.toLowerCase() ?? '';
-      const nameB = b.nameMaterial?.toLowerCase() ?? '';
+      const nameA = (a.nameMaterial ?? '').toLowerCase();
+      const nameB = (b.nameMaterial ?? '').toLowerCase();
 
-      return this.sortDescending ? nameB.localeCompare(nameA) : nameA.localeCompare(nameB);
+      return this.sortDescending
+        ? nameB.localeCompare(nameA)
+        : nameA.localeCompare(nameB);
     });
 
     this.index = 0;
     this.updatePagination();
   }
 
+  /**
+   * Retourne les matériels de la page courante.
+   */
   protected get paginatedMaterials(): MaterialModel[] {
     const start = this.index * this.size;
+
     return this.searchedMaterial.slice(start, start + this.size);
   }
 
-  protected updatePagination() {
-    this.length = Math.ceil(this.searchedMaterial.length / this.size);
+  /**
+   * Calcule le nombre de pages.
+   */
+  protected updatePagination(): void {
+    this.length = Math.ceil(
+      this.searchedMaterial.length / this.size,
+    );
   }
 
-  protected readonly open = signal(false);
+  /**
+   * Ouvre ou ferme le menu d'actions d'une carte.
+   */
+  protected toggleDropdown(id: number): void {
+    this.openMaterialId = this.openMaterialId === id ? null : id;
+  }
 
-  openDetailPopout(id: number): void {
+  /**
+   * Ouvre la fenêtre de détails d'un matériel.
+   */
+  protected openDetailPopout(id: number): void {
     this.openMaterialId = id;
     this.open.set(true);
   }
 
-  currentUser() {
-    this._authService.currentUser$.subscribe((user) => {
-      if (user) {
-        this.role = user.role;
-      }
+  /**
+   * Ferme la fenêtre de détails.
+   */
+  protected closeDetailPopOut(observer?: { complete: () => void }): void {
+    this.open.set(false);
+
+    if (observer) {
+      observer.complete();
+    }
+
+    this.openMaterialId = null;
+  }
+
+  /**
+   * Récupère le rôle de l'utilisateur connecté.
+   */
+  protected currentUser(): void {
+    this.authService.currentUser$.subscribe((user) => {
+      this.role = user?.role;
     });
   }
 
-  changeTheme() {
-    this.isDarkMode = this._themeService.isDarkMode(); // Get current theme
-    this._themeService.darkMode$.subscribe((mode: boolean) => (this.isDarkMode = mode)); // Watch changes in dark mode (reactive)
+  /**
+   * Synchronise le thème avec le ThemeService.
+   */
+  protected changeTheme(): void {
+    this.isDarkMode.set(this.themeService.isDarkMode());
+
+    this.themeService.darkMode$.subscribe((mode: boolean) => {
+      this.isDarkMode.set(mode);
+    });
   }
 }
