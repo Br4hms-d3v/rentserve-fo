@@ -12,10 +12,11 @@ import { RouterLink } from '@angular/router';
 import { ThemeService } from '../../../../core/services/ThemeService';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgClass } from '@angular/common';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-footer',
-  imports: [RouterLink, NgClass],
+  imports: [RouterLink, NgClass, TranslocoPipe],
   templateUrl: './footer.html',
   styleUrl: './footer.less',
 })

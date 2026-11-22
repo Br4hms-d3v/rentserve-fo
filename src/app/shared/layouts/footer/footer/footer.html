@@ -1,3 +1,4 @@
+
 <div
   class="footer-container"
   [ngClass]="{
@@ -14,7 +15,7 @@
       <a
         class="footer-logo"
         [routerLink]="['dashboard']"
-        aria-label="Accueil">
+        [attr.aria-label]="'footer.homeAriaLabel' | transloco">
 
         <img
           src="/logo/logoSmall.jpg"
@@ -27,8 +28,7 @@
       </a>
 
       <p class="footer-description">
-        Une plateforme pensée pour simplifier votre quotidien,
-        grâce à une expérience intuitive, performante et sécurisée.
+        {{ 'footer.brandDescription' | transloco }}
       </p>
 
     </section>
@@ -36,15 +36,36 @@
     <!-- Navigation -->
     <nav
       class="footer-section"
-      aria-label="Navigation secondaire">
+      [attr.aria-label]="'footer.secondaryNavigation' | transloco">
 
-      <h2 class="footer-heading">Navigation</h2>
+      <h2 class="footer-heading">
+        {{ 'footer.navigation' | transloco }}
+      </h2>
 
       <ul class="footer-links">
-        <li><a [routerLink]="['dashboard']">Accueil</a></li>
-        <li><a routerLink="/about">À propos</a></li>
-        <li><a routerLink="/contact">Nous contacter</a></li>
-        <li><a routerLink="/help">Centre d'aide</a></li>
+        <li>
+          <a [routerLink]="['dashboard']">
+            {{ 'footer.home' | transloco }}
+          </a>
+        </li>
+
+        <li>
+          <a routerLink="/about">
+            {{ 'footer.about' | transloco }}
+          </a>
+        </li>
+
+        <li>
+          <a routerLink="/contact">
+            {{ 'footer.contact' | transloco }}
+          </a>
+        </li>
+
+        <li>
+          <a routerLink="/help">
+            {{ 'footer.helpCenter' | transloco }}
+          </a>
+        </li>
       </ul>
 
     </nav>
@@ -52,30 +73,38 @@
     <!-- Informations légales -->
     <nav
       class="footer-section"
-      aria-label="Informations légales">
+      [attr.aria-label]="'footer.legalNavigation' | transloco">
 
-      <h2 class="footer-heading">Informations légales</h2>
+      <h2 class="footer-heading">
+        {{ 'footer.legalInformation' | transloco }}
+      </h2>
 
       <ul class="footer-links">
-        <li><a routerLink="/legal-notice">Mentions légales</a></li>
+
+        <li>
+          <a routerLink="/legal-notice">
+            {{ 'footer.legalNotice' | transloco }}
+          </a>
+        </li>
 
         <li>
           <a routerLink="/privacy-policy">
-            Politique de confidentialité
+            {{ 'footer.privacyPolicy' | transloco }}
           </a>
         </li>
 
         <li>
           <a routerLink="/cookie-policy">
-            Gestion des cookies
+            {{ 'footer.cookieManagement' | transloco }}
           </a>
         </li>
 
         <li>
           <a routerLink="/terms">
-            Conditions générales
+            {{ 'footer.terms' | transloco }}
           </a>
         </li>
+
       </ul>
 
     </nav>
@@ -83,26 +112,37 @@
     <!-- Coordonnées -->
     <section class="footer-section footer-company">
 
-      <h2 class="footer-heading">Coordonnées</h2>
+      <h2 class="footer-heading">
+        {{ 'footer.contactDetails' | transloco }}
+      </h2>
 
       <ul class="footer-company-list">
 
         <li>
-          <span class="footer-company-label">Entreprise</span>
+          <span class="footer-company-label">
+            {{ 'footer.company' | transloco }}
+          </span>
+
           <span class="footer-company-value">
             {{ companyName }}
           </span>
         </li>
 
         <li>
-          <span class="footer-company-label">E-mail</span>
+          <span class="footer-company-label">
+            {{ 'footer.email' | transloco }}
+          </span>
+
           <a [href]="'mailto:' + companyEmail">
             {{ companyEmail }}
           </a>
         </li>
 
         <li>
-          <span class="footer-company-label">Téléphone</span>
+          <span class="footer-company-label">
+            {{ 'footer.phone' | transloco }}
+          </span>
+
           <a [href]="'tel:' + companyPhone">
             {{ companyPhone }}
           </a>
@@ -110,15 +150,19 @@
 
         <li>
           <span class="footer-company-label">
-            N° d'entreprise (BCE)
+            {{ 'footer.companyNumber' | transloco }}
           </span>
+
           <span class="footer-company-value">
             {{ companyNumber }}
           </span>
         </li>
 
         <li>
-          <span class="footer-company-label">N° TVA</span>
+          <span class="footer-company-label">
+            {{ 'footer.vatNumber' | transloco }}
+          </span>
+
           <span class="footer-company-value">
             {{ vatNumber }}
           </span>
@@ -131,9 +175,11 @@
     <!-- Réseaux sociaux -->
     <section
       class="footer-section footer-social"
-      aria-label="Réseaux sociaux">
+      [attr.aria-label]="'footer.socialNetworks' | transloco">
 
-      <h2 class="footer-heading">Suivez-nous</h2>
+      <h2 class="footer-heading">
+        {{ 'footer.followUs' | transloco }}
+      </h2>
 
       <div class="footer-social-list">
 
@@ -143,13 +189,13 @@
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Facebook">
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true">
+
+          <svg viewBox="0 0 24 24" aria-hidden="true">
             <path
               d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.3-1.5 1.6-1.5h1.7V3.7c-.3 0-1.4-.1-2.6-.1-2.6 0-4.4 1.6-4.4 4.5v1.8H7v3.1h2.8v8h3.7Z"
               fill="currentColor" />
           </svg>
+
         </a>
 
         <!-- Instagram -->
@@ -158,9 +204,8 @@
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Instagram">
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true">
+
+          <svg viewBox="0 0 24 24" aria-hidden="true">
             <rect
               x="3"
               y="3"
@@ -170,6 +215,7 @@
               fill="none"
               stroke="currentColor"
               stroke-width="2" />
+
             <circle
               cx="12"
               cy="12"
@@ -177,13 +223,16 @@
               fill="none"
               stroke="currentColor"
               stroke-width="2" />
+
             <circle
               cx="17.5"
               cy="6.5"
               r="1.2"
               fill="currentColor" />
           </svg>
+
         </a>
+
       </div>
 
     </section>
@@ -198,15 +247,20 @@
 
     <p class="footer-copyright">
       © {{ currentYear }} {{ companyName }}.
-      Tous droits réservés.
+      {{ 'footer.copyright' | transloco }}
     </p>
 
     <nav
       class="footer-bottom-links"
-      aria-label="Liens complémentaires">
+      [attr.aria-label]="'footer.complementaryNavigation' | transloco">
 
-      <a routerLink="/accessibility">Accessibilité</a>
-      <a routerLink="/contact">Contact</a>
+      <a routerLink="/accessibility">
+        {{ 'footer.accessibility' | transloco }}
+      </a>
+
+      <a routerLink="/contact">
+        {{ 'footer.contact' | transloco }}
+      </a>
 
     </nav>
 
@@ -215,7 +269,7 @@
       type="button"
       class="footer-back-to-top"
       (click)="scrollToTop()"
-      aria-label="Revenir en haut de la page">
+      [attr.aria-label]="'footer.backToTopAriaLabel' | transloco">
 
       <span
         class="footer-back-to-top-icon"
@@ -223,7 +277,9 @@
         ↑
       </span>
 
-      <span>Retour en haut</span>
+      <span>
+        {{ 'footer.backToTop' | transloco }}
+      </span>
 
     </button>
 
