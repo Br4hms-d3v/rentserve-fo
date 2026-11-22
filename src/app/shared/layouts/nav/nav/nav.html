@@ -6,14 +6,12 @@
     'light-mode': !isDarkMode
   }"
 >
-  <!-- =====================================
-       LOGO RENTSERVE
-       ===================================== -->
+  <!-- LOGO RENTSERVE -->
 
   <a
     [routerLink]="['dashboard']"
     class="logo-link"
-    aria-label="RentServe — Accueil"
+    [attr.aria-label]="'nav.home' | transloco"
   >
     <img
       src="/logo/logoSmall.jpg"
@@ -24,16 +22,14 @@
     <span class="logo-text">RentServe</span>
   </a>
 
-  <!-- =====================================
-       NAVIGATION PRINCIPALE
-       ===================================== -->
+  <!-- MAIN NAVIGATION -->
 
   @if (isAuthenticated()) {
     <nav
       class="nav-buttons"
-      aria-label="Navigation principale"
+      [attr.aria-label]="'nav.mainNavigation' | transloco"
     >
-      <!-- MATÉRIELS -->
+      <!-- MATERIALS -->
 
       <a
         tuiButton
@@ -44,11 +40,11 @@
         class="nav-link"
         [routerLink]="['/material', 'all-materials']"
         routerLinkActive="nav-active"
-        aria-label="Consulter les matériels"
-        title="Matériels"
+        [attr.aria-label]="'nav.materials' | transloco"
+        [attr.title]="'nav.materials' | transloco"
       >
         <span class="button-label">
-          Matériels
+          {{ 'nav.materials' | transloco }}
         </span>
       </a>
 
@@ -63,25 +59,23 @@
         class="nav-link"
         [routerLink]="['/favor', 'all-favour']"
         routerLinkActive="nav-active"
-        aria-label="Consulter les services"
-        title="Services"
+        [attr.aria-label]="'nav.services' | transloco"
+        [attr.title]="'nav.services' | transloco"
       >
         <span class="button-label">
-          Services
+          {{ 'nav.services' | transloco }}
         </span>
       </a>
     </nav>
   }
 
-  <!-- =====================================
-       ACTIONS UTILISATEUR
-       ===================================== -->
+  <!-- USER ACTIONS -->
 
   <div class="action-buttons">
 
     @if (isAuthenticated()) {
 
-      <!-- PANIER -->
+      <!-- CART -->
 
       <a
         tuiButton
@@ -91,15 +85,15 @@
         iconStart="@tui.shopping-bag"
         class="btn-cart"
         [routerLink]="['/rental', 'basket', userId]"
-        aria-label="Ouvrir mon panier"
-        title="Panier"
+        [attr.aria-label]="'nav.cart' | transloco"
+        [attr.title]="'nav.cart' | transloco"
       >
         <span class="button-label">
-          Panier
+          {{ 'nav.cart' | transloco }}
         </span>
       </a>
 
-      <!-- COMPTE UTILISATEUR -->
+      <!-- USER ACCOUNT -->
 
       <button
         tuiButton
@@ -108,10 +102,10 @@
         iconStart="@tui.user"
         iconEnd="@tui.chevron-down"
         class="btn-account"
-        [attr.aria-label]="'Ouvrir le menu de ' + (firstname ?? 'mon compte')"
+        [attr.aria-label]="'nav.account.open' | transloco: { name: firstname ?? '' }"
         [attr.aria-expanded]="openDrawer()"
         aria-haspopup="dialog"
-        title="Mon compte"
+        [attr.title]="'nav.account.title' | transloco"
         (click)="openDrawer.set(true)"
       >
         <span class="button-label user-name">
@@ -121,7 +115,7 @@
 
     } @else {
 
-      <!-- CONNEXION -->
+      <!-- LOGIN -->
 
       <a
         tuiButton
@@ -131,10 +125,10 @@
         iconStart="@tui.user"
         routerLink="/auth/login"
         class="btn-login"
-        aria-label="Se connecter"
+        [attr.aria-label]="'nav.login' | transloco"
       >
         <span class="button-label">
-          Connexion
+          {{ 'nav.login' | transloco }}
         </span>
       </a>
 
@@ -144,9 +138,7 @@
 </header>
 
 
-<!-- ==========================================
-     MENU LATÉRAL DU COMPTE UTILISATEUR
-     ========================================== -->
+<!-- USER ACCOUNT DRAWER -->
 
 <tui-drawer
   *tuiPopup="openDrawer()"
@@ -156,7 +148,7 @@
   (tuiClose)="onClose()"
 >
 
-  <!-- EN-TÊTE DU MENU -->
+  <!-- DRAWER HEADER -->
 
   <header class="drawer-header">
 
@@ -166,17 +158,17 @@
 
         <h2 tuiHeader>
           <div tuiTitle>
-            Mon compte
+            {{ 'nav.account.title' | transloco }}
           </div>
         </h2>
 
         <p class="drawer-welcome">
-          Bienvenue, {{ firstname }}
+          {{ 'nav.account.welcome' | transloco: { name: firstname ?? '' } }}
         </p>
 
       </div>
 
-      <!-- FERMETURE -->
+      <!-- CLOSE BUTTON -->
 
       <button
         tuiButton
@@ -184,7 +176,7 @@
         appearance="flat"
         size="m"
         class="btn-close"
-        aria-label="Fermer le menu"
+        [attr.aria-label]="'nav.account.close' | transloco"
         (click)="onClose()"
       >
         <tui-icon icon="@tui.x" />
@@ -195,16 +187,14 @@
   </header>
 
 
-  <!-- =====================================
-       LIENS DU COMPTE
-       ===================================== -->
+  <!-- ACCOUNT LINKS -->
 
   <nav
     class="drawer-links"
-    aria-label="Menu utilisateur"
+    [attr.aria-label]="'nav.account.menu' | transloco"
   >
 
-    <!-- PROFIL -->
+    <!-- PROFILE -->
 
     <a
       [routerLink]="['user', 'profile']"
@@ -214,11 +204,11 @@
       <tui-icon icon="@tui.user-round" />
 
       <span>
-        Mon profil
+        {{ 'nav.account.profile' | transloco }}
       </span>
     </a>
 
-    <!-- MES OUTILS -->
+    <!-- MY TOOLS -->
 
     <a
       [routerLink]="['user-material', 'my-user-material']"
@@ -228,11 +218,11 @@
       <tui-icon icon="@tui.wrench" />
 
       <span>
-        Mes outils
+        {{ 'nav.account.myTools' | transloco }}
       </span>
     </a>
 
-    <!-- MES SERVICES -->
+    <!-- MY SERVICES -->
 
     <a
       [routerLink]="['user-favor', 'my-user-favor']"
@@ -242,11 +232,11 @@
       <tui-icon icon="@tui.handshake" />
 
       <span>
-        Mes services
+        {{ 'nav.account.myServices' | transloco }}
       </span>
     </a>
 
-    <!-- MON SOLDE -->
+    <!-- MY BALANCE -->
 
     <a
       [routerLink]="['earn', 'my-earn-this-month', userId]"
@@ -256,16 +246,14 @@
       <tui-icon icon="@tui.wallet" />
 
       <span>
-        Mon solde
+        {{ 'nav.account.balance' | transloco }}
       </span>
     </a>
 
   </nav>
 
 
-  <!-- =====================================
-       DÉCONNEXION
-       ===================================== -->
+  <!-- LOGOUT -->
 
   <footer class="drawer-footer">
 
@@ -277,7 +265,7 @@
       class="btn-logout"
       (click)="logout()"
     >
-      Déconnexion
+      {{ 'nav.account.logout' | transloco }}
     </button>
 
   </footer>

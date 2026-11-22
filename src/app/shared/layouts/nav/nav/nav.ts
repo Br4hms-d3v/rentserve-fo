@@ -17,6 +17,7 @@ import { TuiHeader } from '@taiga-ui/layout';
 
 import { ThemeService } from '../../../../core/services/ThemeService';
 import { AuthService } from '../../../../features/auth/service/auth-service';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-nav',
@@ -32,6 +33,7 @@ import { AuthService } from '../../../../features/auth/service/auth-service';
     TuiTitle,
     TuiClose,
     TuiIcon,
+    TranslocoPipe,
   ],
   templateUrl: './nav.html',
   styleUrl: './nav.less',
@@ -52,7 +54,7 @@ export class Nav implements OnInit {
   protected userId: number | undefined;
 
   ngOnInit(): void {
-    // Synchronisation du thème
+    // Theme synchronization
     this.isDarkMode = this.themeService.isDarkMode();
 
     this.themeService.darkMode$
@@ -62,7 +64,7 @@ export class Nav implements OnInit {
         this.cdr.markForCheck();
       });
 
-    // Synchronisation de l'utilisateur connecté
+    // Authenticated user synchronization
     this.authService.currentUser$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((user) => {
       if (user) {
         this.isAuthenticated.set(true);
@@ -79,14 +81,17 @@ export class Nav implements OnInit {
     });
   }
 
+  // Close account drawer
   protected onClose(): void {
     this.openDrawer.set(false);
   }
 
+  // Logout
   protected logout(): void {
     this.onClose();
 
     this.authService.logout();
+
     this.isAuthenticated.set(false);
     this.firstname = null;
     this.userId = undefined;
