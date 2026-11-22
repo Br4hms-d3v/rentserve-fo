@@ -21,6 +21,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../service/auth-service';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { LoginModel } from '../model/login';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +33,7 @@ import { LoginModel } from '../model/login';
     TuiLabel,
     TuiTextfield,
     TuiNotification,
+    TranslocoPipe,
   ],
   templateUrl: './login.html',
   styleUrl: './login.less',
@@ -50,6 +52,7 @@ export class Login implements OnInit {
   protected readonly isSuccess = signal(false);
   protected readonly showPassword = signal(false);
 
+  // Clés de traduction Transloco
   protected messageError = '';
   protected titleError = '';
 
@@ -58,6 +61,7 @@ export class Login implements OnInit {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
     }),
+
     password: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required],
@@ -97,12 +101,15 @@ export class Login implements OnInit {
         next: () => {
           void this.router.navigate(['/dashboard']);
         },
+
         error: () => {
-          this.titleError = 'Connexion impossible';
-          this.messageError = "Le nom d'utilisateur ou le mot de passe est incorrect.";
+          this.titleError = 'login.notification.errorTitle';
+
+          this.messageError = 'login.notification.errorMessage';
 
           this.isSuccess.set(false);
           this.show.set(true);
+
           this.cdr.markForCheck();
         },
       });
