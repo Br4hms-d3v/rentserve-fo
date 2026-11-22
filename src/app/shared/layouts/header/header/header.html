@@ -4,7 +4,7 @@
   [class.dark-mode]="isDarkMode"
   [class.light-mode]="!isDarkMode"
 >
-  <!-- Sélection de la langue -->
+  <!-- Language selection -->
   <div class="lang-selector">
     <button
       tuiIconButton
@@ -13,26 +13,26 @@
       size="s"
       iconStart="@tui.globe"
       class="icon-btn"
-      aria-label="Choisir la langue"
-      title="Choisir la langue"
+      [attr.aria-label]="'header.language' | transloco"
+      [attr.title]="'header.language' | transloco"
       [tuiDropdown]="languageMenu"
       [(tuiDropdownOpen)]="dropdownOpen"
     ></button>
 
     <span class="lang-text" aria-live="polite">
       {{
-        selectedLanguage === 'fr'
+        selectedLanguage() === 'fr'
           ? 'BE - Français'
-          : selectedLanguage === 'nl'
+          : selectedLanguage() === 'nl'
             ? 'NL - Nederlands'
-            : selectedLanguage === 'en'
+            : selectedLanguage() === 'en'
               ? 'EN - English'
               : 'DE - Deutsch'
       }}
     </span>
   </div>
 
-  <!-- Menu déroulant des langues -->
+  <!-- Language dropdown menu -->
   <ng-template #languageMenu>
     <tui-data-list>
       <button
@@ -91,7 +91,7 @@
 
   <span class="spacer" aria-hidden="true"></span>
 
-  <!-- Changement de thème -->
+  <!-- Theme selection -->
   <div class="theme-selector">
     <button
       tuiIconButton
@@ -101,20 +101,24 @@
       [iconStart]="isDarkMode ? '@tui.moon' : '@tui.sun'"
       class="icon-btn"
       [attr.aria-label]="
-        isDarkMode
-          ? 'Activer le thème clair'
-          : 'Activer le thème sombre'
+        (isDarkMode
+          ? 'header.theme.enableLight'
+          : 'header.theme.enableDark') | transloco
       "
       [attr.title]="
-        isDarkMode
-          ? 'Activer le thème clair'
-          : 'Activer le thème sombre'
+        (isDarkMode
+          ? 'header.theme.enableLight'
+          : 'header.theme.enableDark') | transloco
       "
       (click)="toggleTheme()"
     ></button>
 
     <span class="theme-text">
-      {{ isDarkMode ? 'Thème sombre' : 'Thème clair' }}
+      {{
+        (isDarkMode
+          ? 'header.theme.dark'
+          : 'header.theme.light') | transloco
+      }}
     </span>
   </div>
 </header>

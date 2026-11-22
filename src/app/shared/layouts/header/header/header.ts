@@ -1,27 +1,33 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+
 import { TuiButton, TuiDataList, TuiDropdown } from '@taiga-ui/core';
+
+import { TranslocoModule } from '@jsverse/transloco';
 import { Subscription } from 'rxjs';
 
 import { ThemeService } from '../../../../core/services/ThemeService';
 
-type Language = 'fr' | 'nl' | 'en' | 'de';
+import { LanguageService, AppLanguage } from '../../../../core/services/languageService';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, TuiButton, TuiDropdown, TuiDataList],
+  imports: [CommonModule, TuiButton, TuiDropdown, TuiDataList, TranslocoModule],
   templateUrl: './header.html',
   styleUrl: './header.less',
 })
 export class Header implements OnInit, OnDestroy {
+  private readonly themeService = inject(ThemeService);
+  private readonly languageService = inject(LanguageService);
+
   isDarkMode = false;
-  selectedLanguage: Language = 'fr';
   dropdownOpen = false;
 
-  private sub?: Subscription;
+  // Current selected language
+  readonly selectedLanguage = this.languageService.selectedLanguage;
 
-  constructor(private readonly themeService: ThemeService) {}
+  private sub?: Subscription;
 
   ngOnInit(): void {
     this.isDarkMode = this.themeService.isDarkMode();
@@ -31,12 +37,14 @@ export class Header implements OnInit, OnDestroy {
     });
   }
 
+  // Toggle dark/light theme
   toggleTheme(): void {
     this.themeService.toggleTheme();
   }
 
-  selectLanguage(lang: Language): void {
-    this.selectedLanguage = lang;
+  // Change application language
+  selectLanguage(language: AppLanguage): void {
+    this.languageService.setLanguage(language);
     this.dropdownOpen = false;
   }
 
