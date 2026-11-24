@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { DestroyRef } from '@angular/core';
 
 import { ThemeService } from '../../../core/services/ThemeService';
 import { CategoryMaterial } from '../../category/category-material/category-material';
