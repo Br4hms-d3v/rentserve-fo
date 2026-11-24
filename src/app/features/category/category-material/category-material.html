@@ -8,30 +8,47 @@
       class="custom-icon-textfield"
       iconStart="@tui.search"
     >
-      <label tuiLabel>Rechercher une catégorie</label>
+      <label tuiLabel>
+        {{ 'categoryMaterial.search.label' | transloco }}
+      </label>
+
       <input
         tuiInput
         type="search"
-        placeholder="Ex. : perceuse, jardinage..."
+        [placeholder]="'categoryMaterial.search.placeholder' | transloco"
         [value]="searchTerm"
         (input)="onFilter($event)"
       />
     </tui-textfield>
   </div>
 
-  <div class="table-scroll" role="region" aria-label="Liste des catégories de matériel" tabindex="0">
+  <div
+    class="table-scroll"
+    role="region"
+    [attr.aria-label]="'categoryMaterial.table.ariaLabel' | transloco"
+    tabindex="0"
+  >
     <table tuiTable class="category-table">
       <thead>
       <tr tuiThGroup>
-        <th tuiTh scope="col" class="column-number">N°</th>
-        <th tuiTh scope="col">Catégorie</th>
+        <th tuiTh scope="col" class="column-number">
+          {{ 'categoryMaterial.table.number' | transloco }}
+        </th>
+
+        <th tuiTh scope="col">
+          {{ 'categoryMaterial.table.category' | transloco }}
+        </th>
 
         @if (role === 'ADMIN' || role === 'MODERATOR') {
-          <th tuiTh scope="col" class="column-action">Modifier</th>
+          <th tuiTh scope="col" class="column-action">
+            {{ 'categoryMaterial.table.edit' | transloco }}
+          </th>
         }
 
         @if (role === 'ADMIN') {
-          <th tuiTh scope="col" class="column-action">Supprimer</th>
+          <th tuiTh scope="col" class="column-action">
+            {{ 'categoryMaterial.table.delete' | transloco }}
+          </th>
         }
       </tr>
       </thead>
@@ -47,7 +64,10 @@
               <a
                 class="category-link"
                 [routerLink]="['/material', 'list', categoryMat.nameCategory]"
-                [attr.aria-label]="'Voir les matériels de la catégorie ' + categoryMat.nameCategory"
+                [attr.aria-label]="
+                  'categoryMaterial.actions.view'
+                    | transloco: { name: categoryMat.nameCategory }
+                "
               >
                 {{ categoryMat.nameCategory }}
               </a>
@@ -62,9 +82,12 @@
                   size="s"
                   class="btn-edit"
                   [routerLink]="['/category', categoryMat.id, 'edit-category']"
-                  [attr.aria-label]="'Modifier la catégorie ' + categoryMat.nameCategory"
+                  [attr.aria-label]="
+                    'categoryMaterial.actions.edit'
+                      | transloco: { name: categoryMat.nameCategory }
+                  "
                 >
-                  Modifier
+                  {{ 'categoryMaterial.table.edit' | transloco }}
                 </button>
               </td>
             }
@@ -78,9 +101,12 @@
                   size="s"
                   class="btn-delete"
                   (click)="openDialogDelete(categoryMat.id)"
-                  [attr.aria-label]="'Supprimer la catégorie ' + categoryMat.nameCategory"
+                  [attr.aria-label]="
+                    'categoryMaterial.actions.delete'
+                      | transloco: { name: categoryMat.nameCategory }
+                  "
                 >
-                  Supprimer
+                  {{ 'categoryMaterial.table.delete' | transloco }}
                 </button>
               </td>
             }
@@ -92,7 +118,7 @@
               class="empty-state"
               [attr.colspan]="role === 'ADMIN' ? 4 : role === 'MODERATOR' ? 3 : 2"
             >
-              Aucune catégorie trouvée.
+              {{ 'categoryMaterial.table.empty' | transloco }}
             </td>
           </tr>
         }
@@ -110,11 +136,14 @@
   }
 
   <ng-template
-    [tuiDialogOptions]="{ size: 's', label: 'Confirmation de suppression' }"
+    [tuiDialogOptions]="{
+      size: 's',
+      label: 'categoryMaterial.dialog.title' | transloco
+    }"
     [(tuiDialog)]="open"
   >
     <app-category-delete
-      message="Voulez-vous vraiment supprimer cette catégorie ?"
+      [message]="'categoryMaterial.dialog.message' | transloco"
       [id]="selectId"
       (confirmed)="onDelete()"
       (cancelled)="open.set(false)"

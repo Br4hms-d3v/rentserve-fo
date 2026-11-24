@@ -9,6 +9,7 @@ import { CategoryModel } from '../model/Category';
 import { RouterLink } from '@angular/router';
 import { CategoryDelete } from '../category-delete/category-delete';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-category-material',
@@ -21,6 +22,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     RouterLink,
     TuiDialog,
     CategoryDelete,
+    TranslocoPipe,
   ],
   templateUrl: './category-material.html',
   styleUrl: './category-material.less',
@@ -47,6 +49,7 @@ export class CategoryMaterial implements OnInit {
     private readonly _categoryService: CategoryService,
     private themeService: ThemeService,
     private readonly _cdr: ChangeDetectorRef,
+    private readonly translocoService: TranslocoService,
   ) {}
 
   ngOnInit() {
@@ -73,21 +76,22 @@ export class CategoryMaterial implements OnInit {
           id: category.id,
           nameCategory: category.nameCategory,
         }));
-
-        // All categories are in this table filter
         this.filteredCategoriesMaterials = [...this.categoriesMaterials];
         this.updatePagination();
-
-        // Calculate the length for the size of table
-        this.length = Math.ceil(this.categoriesMaterials.length / this.size);
+        this.length = Math.ceil(
+          this.categoriesMaterials.length / this.size
+        );
         this._cdr.detectChanges();
       },
-
       error: (error) => {
-        if (this.categoriesMaterials.length == 0) {
-          this.messageError = 'La liste est vide';
+        if (this.categoriesMaterials.length === 0) {
+          this.messageError = this.translocoService.translate(
+            'categoryMaterial.errors.emptyList'
+          );
         }
-        this.messageError = error?.error?.message ?? 'Erreur lors du chargement des catégories';
+        this.messageError =
+          error?.error?.message ??
+          this.translocoService.translate('categoryMaterial.errors.load');
       },
     });
   }
