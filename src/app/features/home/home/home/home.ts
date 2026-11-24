@@ -2,10 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Registration } from '../../../auth/registration/registration/registration';
 import { ThemeService } from '../../../../core/services/ThemeService';
 import { Subscription } from 'rxjs';
+import { TranslocoDirective } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-home',
-  imports: [Registration],
+  imports: [Registration, TranslocoDirective],
   templateUrl: './home.html',
   styleUrl: './home.less',
 })

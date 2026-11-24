@@ -1,9 +1,10 @@
+
 <div
   class="home-page"
   [class.dark-mode]="isDarkMode"
   [class.light-mode]="!isDarkMode"
 >
-  <main class="home-main">
+  <main class="home-main" *transloco="let t">
 
     <!-- ============================= -->
     <!-- SECTION 1 : PRESENTATION      -->
@@ -17,28 +18,22 @@
 
         <div class="hero-eyebrow">
           <span class="hero-eyebrow__dot" aria-hidden="true"></span>
-          <span>Le partage au service de tous</span>
+          <span>{{ t('home.hero.eyebrow') }}</span>
         </div>
 
         <h1 id="home-title">
-          Le bon équipement,
+          {{ t('home.hero.title') }}
           <span class="hero-highlight">
-            au bon moment.
+            {{ t('home.hero.highlight') }}
           </span>
         </h1>
 
         <p class="hero-description">
-          Vous avez besoin d'un outil pour un projet ou du matériel
-          que vous utilisez rarement ?
-
-          RentServe vous permet de louer des équipements auprès
-          d'autres particuliers ou de proposer les vôtres à la location
-          pour générer des revenus complémentaires.
+          {{ t('home.hero.description') }}
         </p>
 
         <p class="hero-description hero-description--secondary">
-          Économisez, partagez et valorisez vos équipements tout en
-          favorisant l'entraide au sein de votre communauté.
+          {{ t('home.hero.descriptionSecondary') }}
         </p>
 
         <div class="hero-benefits">
@@ -51,7 +46,7 @@
               €
             </span>
 
-            <span>Faites des économies</span>
+            <span>{{ t('home.hero.benefits.savings') }}</span>
           </div>
 
           <div class="hero-benefit">
@@ -62,7 +57,7 @@
               ✓
             </span>
 
-            <span>Partagez en toute confiance</span>
+            <span>{{ t('home.hero.benefits.trust') }}</span>
           </div>
 
           <div class="hero-benefit">
@@ -73,7 +68,7 @@
               +
             </span>
 
-            <span>Générez des revenus complémentaires</span>
+            <span>{{ t('home.hero.benefits.income') }}</span>
           </div>
 
         </div>
@@ -88,11 +83,10 @@
           </div>
 
           <div class="hero-trust__content">
-            <h2>Une communauté basée sur l'entraide</h2>
+            <h2>{{ t('home.hero.community.title') }}</h2>
 
             <p>
-              Donnez une seconde vie à vos équipements et contribuez
-              à une consommation plus responsable.
+              {{ t('home.hero.community.description') }}
             </p>
           </div>
 
@@ -109,27 +103,30 @@
           <div class="registration-card__header">
 
             <span class="registration-card__eyebrow">
-              Bienvenue sur RentServe
+              {{ t('home.registration.eyebrow') }}
             </span>
 
             <h2>
-              Rejoignez la communauté
+              {{ t('home.registration.title') }}
             </h2>
 
             <p>
-              Créez votre compte pour commencer à louer ou à proposer
-              votre matériel.
+              {{ t('home.registration.description') }}
             </p>
 
           </div>
 
-          <div class="registration-card__form" [class.dark-mode]="isDarkMode">
+          <div
+            class="registration-card__form"
+            [class.dark-mode]="isDarkMode"
+          >
             <app-registration />
           </div>
 
         </div>
 
       </div>
+
     </section>
 
 
@@ -145,20 +142,18 @@
       <div class="section-heading">
 
         <span class="section-eyebrow">
-          Comment ça fonctionne ?
+          {{ t('home.benefits.eyebrow') }}
         </span>
 
         <h2 id="benefits-title">
-          Le partage qui profite
+          {{ t('home.benefits.title') }}
           <span class="hero-highlight">
-            à tout le monde.
+            {{ t('home.benefits.highlight') }}
           </span>
         </h2>
 
         <p>
-          Que vous souhaitiez louer un équipement ou rentabiliser
-          votre matériel, RentServe simplifie les échanges entre
-          particuliers.
+          {{ t('home.benefits.description') }}
         </p>
 
       </div>
@@ -176,7 +171,7 @@
               [src]="isDarkMode
                 ? '/pictogrammes/outillage_sombre.png'
                 : '/pictogrammes/outillage_claire.png'"
-              alt="Illustration d'outils et d'équipements"
+              [alt]="t('home.benefits.items.equipment.alt')"
               class="imgHomePresentation"
               loading="lazy"
             />
@@ -188,12 +183,11 @@
           </span>
 
           <h3>
-            Trouvez le matériel nécessaire
+            {{ t('home.benefits.items.equipment.title') }}
           </h3>
 
           <p>
-            Louez les outils et les équipements dont vous avez besoin
-            pour réaliser vos projets sans devoir tout acheter.
+            {{ t('home.benefits.items.equipment.description') }}
           </p>
 
         </article>
@@ -209,7 +203,7 @@
               [src]="isDarkMode
                 ? '/pictogrammes/rendre-service_sombre.png'
                 : '/pictogrammes/rendre-service_claire.png'"
-              alt="Illustration de l'entraide et du partage"
+              [alt]="t('home.benefits.items.sharing.alt')"
               class="imgHomePresentation"
               loading="lazy"
             />
@@ -221,12 +215,11 @@
           </span>
 
           <h3>
-            Partagez avec votre communauté
+            {{ t('home.benefits.items.sharing.title') }}
           </h3>
 
           <p>
-            Mettez vos équipements à disposition d'autres particuliers
-            et participez à une dynamique d'entraide locale.
+            {{ t('home.benefits.items.sharing.description') }}
           </p>
 
         </article>
@@ -242,7 +235,7 @@
               [src]="isDarkMode
                 ? '/pictogrammes/argent_sombre.png'
                 : '/pictogrammes/argent_claire.png'"
-              alt="Illustration des revenus issus de la location"
+              [alt]="t('home.benefits.items.income.alt')"
               class="imgHomePresentation"
               loading="lazy"
             />
@@ -254,13 +247,11 @@
           </span>
 
           <h3>
-            Valorisez vos équipements
+            {{ t('home.benefits.items.income.title') }}
           </h3>
 
           <p>
-            Louez le matériel que vous utilisez peu et générez
-            des revenus complémentaires tout en prolongeant
-            sa durée d'utilisation.
+            {{ t('home.benefits.items.income.description') }}
           </p>
 
         </article>
@@ -282,19 +273,18 @@
       <div class="carousel-intro">
 
         <span class="section-eyebrow">
-          Une autre façon de consommer
+          {{ t('home.sharing.eyebrow') }}
         </span>
 
         <h2 id="sharing-title">
-          Moins acheter,
+          {{ t('home.sharing.title') }}
           <span class="hero-highlight">
-            mieux partager.
+            {{ t('home.sharing.highlight') }}
           </span>
         </h2>
 
         <p>
-          Un équipement peut servir à plusieurs personnes.
-          Ensemble, faisons du partage un réflexe simple et utile.
+          {{ t('home.sharing.description') }}
         </p>
 
       </div>
