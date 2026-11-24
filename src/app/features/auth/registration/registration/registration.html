@@ -1,4 +1,6 @@
+
 <div
+  *transloco="let t"
   class="registration-page"
   [class.light-mode]="!isDarkMode"
   [class.dark-mode]="isDarkMode"
@@ -10,70 +12,81 @@
     aria-labelledby="registration-title"
   >
     <div class="registration-heading">
-      <h1 id="registration-title">Créer un compte</h1>
-      <p>
-        Rejoignez RentServe pour louer du matériel et découvrir des services
-        près de chez vous.
-      </p>
+      <h1 id="registration-title">{{ t('register.title') }}</h1>
+      <p>{{ t('register.description') }}</p>
     </div>
 
     <div class="form-fields">
+
       <!-- Nom -->
       <div class="form-field">
         <tui-textfield>
-          <label tuiLabel for="register-name">Nom</label>
+          <label tuiLabel for="register-name">
+            {{ t('register.fields.name.label') }}
+          </label>
           <input
             tuiInput
             id="register-name"
             formControlName="name"
             autocomplete="family-name"
-            placeholder="Votre nom"
+            [placeholder]="t('register.fields.name.placeholder')"
             required
           />
         </tui-textfield>
+
         @if (registerForm.controls.name.touched && registerForm.controls.name.invalid) {
-          <p class="field-error" role="alert">Veuillez saisir votre nom.</p>
+          <p class="field-error" role="alert">
+            {{ t('register.fields.name.required') }}
+          </p>
         }
       </div>
 
       <!-- Prénom -->
       <div class="form-field">
         <tui-textfield>
-          <label tuiLabel for="register-first-name">Prénom</label>
+          <label tuiLabel for="register-first-name">
+            {{ t('register.fields.firstName.label') }}
+          </label>
           <input
             tuiInput
             id="register-first-name"
             formControlName="firstName"
             autocomplete="given-name"
-            placeholder="Votre prénom"
+            [placeholder]="t('register.fields.firstName.placeholder')"
             required
           />
         </tui-textfield>
+
         @if (registerForm.controls.firstName.touched && registerForm.controls.firstName.invalid) {
-          <p class="field-error" role="alert">Veuillez saisir votre prénom.</p>
+          <p class="field-error" role="alert">
+            {{ t('register.fields.firstName.required') }}
+          </p>
         }
       </div>
 
       <!-- Adresse e-mail -->
       <div class="form-field">
         <tui-textfield>
-          <label tuiLabel for="register-email">Adresse e-mail</label>
+          <label tuiLabel for="register-email">
+            {{ t('register.fields.email.label') }}
+          </label>
           <input
             tuiInput
             id="register-email"
             type="email"
             formControlName="email"
             autocomplete="email"
-            placeholder="exemple@domaine.be"
+            [placeholder]="t('register.fields.email.placeholder')"
             required
           />
         </tui-textfield>
+
         @if (registerForm.controls.email.touched && registerForm.controls.email.invalid) {
           <p class="field-error" role="alert">
             @if (registerForm.controls.email.hasError('required')) {
-              Veuillez saisir votre adresse e-mail.
+              {{ t('register.fields.email.required') }}
             } @else {
-              Veuillez saisir une adresse e-mail valide.
+              {{ t('register.fields.email.invalid') }}
             }
           </p>
         }
@@ -82,24 +95,27 @@
       <!-- Pseudo -->
       <div class="form-field">
         <tui-textfield>
-          <label tuiLabel for="register-pseudo">Pseudo</label>
+          <label tuiLabel for="register-pseudo">
+            {{ t('register.fields.pseudo.label') }}
+          </label>
           <input
             tuiInput
             id="register-pseudo"
             formControlName="pseudo"
             autocomplete="username"
-            placeholder="Choisissez un pseudo"
+            [placeholder]="t('register.fields.pseudo.placeholder')"
             required
           />
         </tui-textfield>
+
         @if (registerForm.controls.pseudo.touched && registerForm.controls.pseudo.invalid) {
           <p class="field-error" role="alert">
             @if (registerForm.controls.pseudo.hasError('required')) {
-              Veuillez choisir un pseudo.
+              {{ t('register.fields.pseudo.required') }}
             } @else if (registerForm.controls.pseudo.hasError('minlength')) {
-              Le pseudo doit contenir au moins 3 caractères.
+              {{ t('register.fields.pseudo.minlength') }}
             } @else {
-              Le pseudo ne peut pas dépasser 100 caractères.
+              {{ t('register.fields.pseudo.maxlength') }}
             }
           </p>
         }
@@ -108,16 +124,19 @@
       <!-- Mot de passe -->
       <div class="form-field">
         <tui-textfield>
-          <label tuiLabel for="register-password">Mot de passe</label>
+          <label tuiLabel for="register-password">
+            {{ t('register.fields.password.label') }}
+          </label>
           <input
             tuiInput
             id="register-password"
             [type]="showPassword() ? 'text' : 'password'"
             formControlName="password"
             autocomplete="new-password"
-            placeholder="Choisissez un mot de passe"
+            [placeholder]="t('register.fields.password.placeholder')"
             required
           />
+
           <button
             tuiButton
             type="button"
@@ -126,15 +145,16 @@
             [iconStart]="showPassword() ? '@tui.eye-off' : '@tui.eye'"
             [attr.aria-label]="
               showPassword()
-                ? 'Masquer le mot de passe'
-                : 'Afficher le mot de passe'
+                ? t('register.fields.password.hide')
+                : t('register.fields.password.show')
             "
             (click)="togglePasswordVisibility()"
           ></button>
         </tui-textfield>
+
         @if (registerForm.controls.password.touched && registerForm.controls.password.invalid) {
           <p class="field-error" role="alert">
-            Veuillez saisir un mot de passe.
+            {{ t('register.fields.password.required') }}
           </p>
         }
       </div>
@@ -142,7 +162,9 @@
       <!-- Date de naissance -->
       <div class="form-field">
         <tui-textfield>
-          <label tuiLabel for="register-birthdate">Date de naissance</label>
+          <label tuiLabel for="register-birthdate">
+            {{ t('register.fields.birthdate.label') }}
+          </label>
           <input
             tuiInputDate
             id="register-birthdate"
@@ -152,70 +174,89 @@
           />
           <tui-calendar *tuiDropdown></tui-calendar>
         </tui-textfield>
+
         @if (registerForm.controls.birthdate.touched && registerForm.controls.birthdate.invalid) {
           <p class="field-error" role="alert">
-            Veuillez sélectionner votre date de naissance.
+            {{ t('register.fields.birthdate.required') }}
           </p>
         }
       </div>
 
-      <!-- Rue : pleine largeur -->
+      <!-- Rue -->
       <div class="form-field form-field--street">
         <tui-textfield>
-          <label tuiLabel for="register-street">Rue et numéro</label>
+          <label tuiLabel for="register-street">
+            {{ t('register.fields.street.label') }}
+          </label>
           <input
             tuiInput
             id="register-street"
             formControlName="street"
             autocomplete="street-address"
-            placeholder="Ex. : Rue de la Gare, 12"
+            [placeholder]="t('register.fields.street.placeholder')"
             required
           />
         </tui-textfield>
+
         @if (registerForm.controls.street.touched && registerForm.controls.street.invalid) {
-          <p class="field-error" role="alert">Veuillez saisir votre rue et votre numéro.</p>
+          <p class="field-error" role="alert">
+            {{ t('register.fields.street.required') }}
+          </p>
         }
       </div>
 
       <!-- Ville -->
       <div class="form-field">
         <tui-textfield>
-          <label tuiLabel for="register-city">Ville</label>
+          <label tuiLabel for="register-city">
+            {{ t('register.fields.city.label') }}
+          </label>
           <input
             tuiInput
             id="register-city"
             formControlName="city"
             autocomplete="address-level2"
-            placeholder="Votre ville"
+            [placeholder]="t('register.fields.city.placeholder')"
             required
           />
         </tui-textfield>
+
         @if (registerForm.controls.city.touched && registerForm.controls.city.invalid) {
-          <p class="field-error" role="alert">Veuillez saisir votre ville.</p>
+          <p class="field-error" role="alert">
+            {{ t('register.fields.city.required') }}
+          </p>
         }
       </div>
 
       <!-- Code postal -->
       <div class="form-field">
         <tui-textfield>
-          <label tuiLabel for="register-zip-code">Code postal</label>
+          <label tuiLabel for="register-zip-code">
+            {{ t('register.fields.zipCode.label') }}
+          </label>
           <input
             tuiInput
             id="register-zip-code"
             formControlName="zipCode"
             autocomplete="postal-code"
-            placeholder="Ex. : 5000"
+            [placeholder]="t('register.fields.zipCode.placeholder')"
             required
           />
         </tui-textfield>
+
         @if (registerForm.controls.zipCode.touched && registerForm.controls.zipCode.invalid) {
-          <p class="field-error" role="alert">Veuillez saisir votre code postal.</p>
+          <p class="field-error" role="alert">
+            {{ t('register.fields.zipCode.required') }}
+          </p>
         }
       </div>
+
     </div>
 
     <div class="registration-actions">
-      <p class="required-note">Tous les champs sont obligatoires.</p>
+      <p class="required-note">
+        {{ t('register.requiredNote') }}
+      </p>
 
       <button
         tuiButton
@@ -224,15 +265,18 @@
         class="btn-register"
         [disabled]="registerForm.invalid"
       >
-        Créer mon compte
+        {{ t('register.submit') }}
       </button>
     </div>
   </form>
 </div>
 
 <ng-template
+  *transloco="let t"
   [tuiNotificationOptions]="{
-    label: isSuccess() ? 'Inscription réussie' : 'Inscription impossible',
+    label: isSuccess()
+      ? t('register.notification.success')
+      : t('register.notification.error'),
     autoClose: 0,
     closable: false,
     appearance: isSuccess() ? 'positive' : 'negative'
@@ -240,12 +284,13 @@
   [(tuiNotification)]="show"
 >
   <span tuiSubtitle>{{ messageSuccess || messageError }}</span>
+
   <button
     tuiButton
     type="button"
     appearance="flat"
     (click)="show.set(false)"
   >
-    Fermer
+    {{ t('register.notification.close') }}
   </button>
 </ng-template>

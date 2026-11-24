@@ -28,6 +28,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AuthService } from '../../service/auth-service';
 import { RegistrationModel } from '../../model/registration';
 import { ThemeService } from '../../../../core/services/ThemeService';
+import { TranslocoDirective, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-registration',
@@ -41,6 +42,7 @@ import { ThemeService } from '../../../../core/services/ThemeService';
     TuiInput,
     TuiInputDate,
     TuiNotification,
+    TranslocoDirective,
   ],
   templateUrl: './registration.html',
   styleUrl: './registration.less',
@@ -62,6 +64,7 @@ export class Registration implements OnInit {
   constructor(
     private readonly _authService: AuthService,
     private readonly themeService: ThemeService,
+    private readonly translocoService: TranslocoService,
   ) {}
 
   ngOnInit(): void {
@@ -82,20 +85,14 @@ export class Registration implements OnInit {
   protected registerForm = new FormGroup({
     name: new FormControl('', Validators.required),
     firstName: new FormControl('', Validators.required),
-    email: new FormControl('', [
-      Validators.required,
-      Validators.email,
-    ]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required),
     pseudo: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
       Validators.maxLength(100),
     ]),
-    birthdate: new FormControl<Date | null>(
-      null,
-      Validators.required,
-    ),
+    birthdate: new FormControl<Date | null>(null, Validators.required),
     street: new FormControl('', Validators.required),
     city: new FormControl('', Validators.required),
     zipCode: new FormControl('', Validators.required),
@@ -111,32 +108,35 @@ export class Registration implements OnInit {
     this.show.set(false);
 
     this._authService
-      .register(
-        this.registerForm.getRawValue() as RegistrationModel,
-      )
+      .register(this.registerForm.getRawValue() as RegistrationModel)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
           this.messageError = '';
-          this.messageSuccess =
-            'Veuillez vérifier votre boîte e-mail pour activer votre compte.';
+
+          this.messageSuccess = this.translocoService.translate(
+            'register.notification.successMessage',
+          );
 
           this.registerForm.reset();
           this.showPassword.set(false);
           this.isSuccess.set(true);
           this.show.set(true);
+
           this.cdr.markForCheck();
         },
 
         error: (err) => {
           this.messageSuccess = '';
+
           this.messageError =
             typeof err?.error?.message === 'string'
               ? err.error.message
-              : "Une erreur est survenue lors de l'inscription. Veuillez réessayer.";
+              : this.translocoService.translate('register.notification.errorMessage');
 
           this.isSuccess.set(false);
           this.show.set(true);
+
           this.cdr.markForCheck();
         },
       });
