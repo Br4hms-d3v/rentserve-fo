@@ -8,11 +8,14 @@
       class="custom-icon-textfield"
       iconStart="@tui.search"
     >
-      <label tuiLabel>Rechercher une catégorie</label>
+      <label tuiLabel>
+        {{ 'categoryFavor.search.label' | transloco }}
+      </label>
+
       <input
         tuiInput
         type="search"
-        placeholder="Ex. : jardinage, nettoyage..."
+        [placeholder]="'categoryFavor.search.placeholder' | transloco"
         [value]="searchTerm"
         (input)="onFilter($event)"
       />
@@ -22,21 +25,30 @@
   <div
     class="table-scroll"
     role="region"
-    aria-label="Liste des catégories de services"
+    [attr.aria-label]="'categoryFavor.table.ariaLabel' | transloco"
     tabindex="0"
   >
     <table tuiTable class="category-table">
       <thead>
       <tr tuiThGroup>
-        <th tuiTh scope="col" class="column-number">N°</th>
-        <th tuiTh scope="col">Catégorie</th>
+        <th tuiTh scope="col" class="column-number">
+          {{ 'categoryFavor.table.number' | transloco }}
+        </th>
+
+        <th tuiTh scope="col">
+          {{ 'categoryFavor.table.category' | transloco }}
+        </th>
 
         @if (role === 'ADMIN' || role === 'MODERATOR') {
-          <th tuiTh scope="col" class="column-action">Modifier</th>
+          <th tuiTh scope="col" class="column-action">
+            {{ 'categoryFavor.table.edit' | transloco }}
+          </th>
         }
 
         @if (role === 'ADMIN') {
-          <th tuiTh scope="col" class="column-action">Supprimer</th>
+          <th tuiTh scope="col" class="column-action">
+            {{ 'categoryFavor.table.delete' | transloco }}
+          </th>
         }
       </tr>
       </thead>
@@ -52,7 +64,10 @@
               <a
                 class="category-link"
                 [routerLink]="['/favor', 'list', categoryFav.nameCategory]"
-                [attr.aria-label]="'Voir les services de la catégorie ' + categoryFav.nameCategory"
+                [attr.aria-label]="
+                  'categoryFavor.actions.view'
+                    | transloco: { name: categoryFav.nameCategory }
+                "
               >
                 {{ categoryFav.nameCategory }}
               </a>
@@ -67,9 +82,12 @@
                   size="s"
                   class="btn-edit"
                   [routerLink]="['/category', categoryFav.id, 'edit-favor']"
-                  [attr.aria-label]="'Modifier la catégorie ' + categoryFav.nameCategory"
+                  [attr.aria-label]="
+                    'categoryFavor.actions.edit'
+                      | transloco: { name: categoryFav.nameCategory }
+                  "
                 >
-                  Modifier
+                  {{ 'categoryFavor.table.edit' | transloco }}
                 </button>
               </td>
             }
@@ -83,9 +101,12 @@
                   size="s"
                   class="btn-delete"
                   (click)="openDialogDelete(categoryFav.id)"
-                  [attr.aria-label]="'Supprimer la catégorie ' + categoryFav.nameCategory"
+                  [attr.aria-label]="
+                    'categoryFavor.actions.delete'
+                      | transloco: { name: categoryFav.nameCategory }
+                  "
                 >
-                  Supprimer
+                  {{ 'categoryFavor.table.delete' | transloco }}
                 </button>
               </td>
             }
@@ -97,7 +118,7 @@
               class="empty-state"
               [attr.colspan]="role === 'ADMIN' ? 4 : role === 'MODERATOR' ? 3 : 2"
             >
-              Aucune catégorie trouvée.
+              {{ 'categoryFavor.table.empty' | transloco }}
             </td>
           </tr>
         }
@@ -117,12 +138,12 @@
   <ng-template
     [tuiDialogOptions]="{
       size: 's',
-      label: 'Confirmation de suppression'
+      label: 'categoryFavor.dialog.title' | transloco
     }"
     [(tuiDialog)]="open"
   >
     <app-category-delete
-      message="Voulez-vous vraiment supprimer cette catégorie ?"
+      [message]="'categoryFavor.dialog.message' | transloco"
       [id]="selectId"
       (confirmed)="onDelete()"
       (cancelled)="open.set(false)"

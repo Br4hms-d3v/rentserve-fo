@@ -10,6 +10,7 @@ import { AuthService } from '../../auth/service/auth-service';
 import { CategoryService } from '../service/category-service';
 import { ThemeService } from '../../../core/services/ThemeService';
 import { CategoryDelete } from '../category-delete/category-delete';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-category-favor',
@@ -22,6 +23,7 @@ import { CategoryDelete } from '../category-delete/category-delete';
     RouterLink,
     CategoryDelete,
     TuiDialog,
+    TranslocoPipe,
   ],
   templateUrl: './category-favor.html',
   styleUrl: './category-favor.less',
@@ -53,6 +55,7 @@ export class CategoryFavor implements OnInit {
     private readonly _categoryService: CategoryService,
     private readonly themeService: ThemeService,
     private readonly _cdr: ChangeDetectorRef,
+    private readonly translocoService: TranslocoService,
   ) {}
 
   ngOnInit(): void {
@@ -92,8 +95,9 @@ export class CategoryFavor implements OnInit {
 
         error: (error) => {
           this.messageError =
-            error?.error?.message ?? 'Erreur lors du chargement des catégories de services';
-        },
+            error?.error?.message ??
+            this.translocoService.translate('categoryFavor.errors.load');
+        }
       });
   }
 
