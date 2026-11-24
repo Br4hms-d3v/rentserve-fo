@@ -6,16 +6,16 @@
   <main class="dashboard-content">
     <header class="dashboard-heading">
       <div>
-        <h1>Bienvenue sur RentServe</h1>
+        <h1>{{ 'dashboard.title' | transloco }}</h1>
         <p>
-          Découvrez le matériel à louer et les services disponibles près de chez vous.
+          {{ 'dashboard.description' | transloco }}
         </p>
       </div>
     </header>
 
     <section
       class="dashboard-categories"
-      aria-label="Catégories disponibles"
+      [attr.aria-label]="'dashboard.categories.ariaLabel' | transloco"
     >
       <article class="category-panel">
         <app-category-material />
